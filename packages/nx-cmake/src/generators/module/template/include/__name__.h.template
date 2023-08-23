@@ -1,0 +1,6 @@
+#ifndef _<%= resolvedProject %>_<%= constantName %>
+#define _<%= resolvedProject %>_<%= constantName %>
+
+int <%= name %>(void);
+
+#endif

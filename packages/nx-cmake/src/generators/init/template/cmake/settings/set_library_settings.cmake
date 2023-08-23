@@ -1,0 +1,11 @@
+include(settings/set_project_settings)
+
+function(set_library_settings PROJECT SOURCE_DIR)
+    set_project_settings(${PROJECT} ${SOURCE_DIR})
+    add_library(${PROJECT} SHARED ${${PROJECT}_SOURCES})
+    add_library(${PROJECT}_static STATIC ${${PROJECT}_SOURCES})
+    set_target_properties(${PROJECT} ${PROJECT}_static PROPERTIES PREFIX "")
+    set_target_properties(${PROJECT}_static PROPERTIES OUTPUT_NAME ${PROJECT})
+    target_include_directories(${PROJECT} PUBLIC ${${PROJECT}_INCLUDE_DIR} ${WORKSPACE_INCLUDE_DIR})
+    target_include_directories(${PROJECT}_static PUBLIC ${${PROJECT}_INCLUDE_DIR} ${WORKSPACE_INCLUDE_DIR})
+endfunction()

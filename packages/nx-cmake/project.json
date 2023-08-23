@@ -1,0 +1,65 @@
+{
+    "name": "nx-cmake",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/nx-cmake/src",
+    "projectType": "library",
+    "targets": {
+        "build": {
+            "executor": "@nx/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/packages/nx-cmake",
+                "main": "packages/nx-cmake/src/index.ts",
+                "tsConfig": "packages/nx-cmake/tsconfig.lib.json",
+                "assets": [
+                    "packages/nx-cmake/*.md",
+                    {
+                        "input": "./packages/nx-cmake/src",
+                        "glob": "**/!(*.ts)",
+                        "output": "./src"
+                    },
+                    {
+                        "input": "./packages/nx-cmake/src",
+                        "glob": "**/*.d.ts",
+                        "output": "./src"
+                    },
+                    {
+                        "input": "./packages/nx-cmake",
+                        "glob": "generators.json",
+                        "output": "."
+                    },
+                    {
+                        "input": "./packages/nx-cmake",
+                        "glob": "executors.json",
+                        "output": "."
+                    }
+                ]
+            }
+        },
+        "lint": {
+            "executor": "@nx/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": [
+                    "packages/nx-cmake/**/*.ts",
+                    "packages/nx-cmake/package.json"
+                ]
+            }
+        },
+        "test": {
+            "executor": "@nx/jest:jest",
+            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+            "options": {
+                "jestConfig": "packages/nx-cmake/jest.config.ts",
+                "passWithNoTests": true
+            },
+            "configurations": {
+                "ci": {
+                    "ci": true,
+                    "codeCoverage": true
+                }
+            }
+        }
+    },
+    "tags": []
+}

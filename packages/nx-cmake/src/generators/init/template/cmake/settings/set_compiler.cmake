@@ -1,0 +1,8 @@
+function(set_compiler)
+    if (UNIX)
+        set(CMAKE_C_COMPILER gcc CACHE INTERNAL "")
+        set(CMAKE_CXX_COMPILER ${CMAKE_C_COMPILER} CACHE INTERNAL "")
+    else()
+        message(FATAL_ERROR "Unsupported platform. Please set the compiler manually.")
+    endif ()
+endfunction()

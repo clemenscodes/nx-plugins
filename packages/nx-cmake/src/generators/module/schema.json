@@ -1,0 +1,36 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "$id": "Module",
+    "title": "Module generator",
+    "description": "Generate a C or C++ module for a library or binary",
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "The name of the module",
+            "$default": {
+                "$source": "argv",
+                "index": 0
+            },
+            "x-prompt": "Filename?"
+        },
+        "project": {
+            "type": "string",
+            "description": "The project in which the module should be generated",
+            "aliases": ["project", "p"],
+            "$default": {
+                "$source": "argv",
+                "index": 1
+            },
+            "x-prompt": "For which project do you want to generate the module?",
+            "x-dropdown": "projects",
+            "x-priority": "important"
+        },
+        "skipFormat": {
+            "description": "Skip formatting.",
+            "type": "boolean",
+            "default": false
+        }
+    },
+    "required": ["name", "project"]
+}

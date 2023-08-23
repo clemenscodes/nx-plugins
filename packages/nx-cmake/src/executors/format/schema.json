@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "version": 2,
+    "title": "Format executor",
+    "description": "",
+    "type": "object",
+    "properties": {
+        "args": {
+            "type": "array"
+        }
+    },
+    "outputCapture": "direct-nodejs",
+    "required": []
+}

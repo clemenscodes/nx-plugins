@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "version": 2,
+    "title": "Cmake executor",
+    "description": "Build a C or C++ library with CMake",
+    "type": "object",
+    "properties": {
+        "args": {
+            "type": "array"
+        },
+        "release": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether to build in release mode"
+        }
+    },
+    "outputCapture": "direct-nodejs",
+    "required": []
+}

@@ -1,0 +1,15 @@
+# Add files here to ignore them from prettier formatting
+**/dist
+**/coverage
+**/target
+**/.next
+**/.yarn
+**/*.md
+tmp
+**/.docusaurus/
+node_modules/
+**/*.cpp
+**/*.hpp
+**/*.c
+**/*.h
+pnpm-lock.yaml

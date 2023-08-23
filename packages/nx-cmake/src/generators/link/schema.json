@@ -1,0 +1,52 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "$id": "Link",
+    "title": "Linking generator",
+    "description": "Link a library to another library or binary",
+    "type": "object",
+    "properties": {
+        "library": {
+            "type": "string",
+            "description": "The library to be linked to another project",
+            "aliases": ["library", "l"],
+            "$default": {
+                "$source": "argv",
+                "index": 0
+            },
+            "x-prompt": "Which library should be linked??",
+            "x-dropdown": "projects",
+            "x-priority": "important"
+        },
+        "project": {
+            "type": "string",
+            "description": "The project to link the library to",
+            "aliases": ["project", "p"],
+            "$default": {
+                "$source": "argv",
+                "index": 1
+            },
+            "x-prompt": "To which project do you want to link the library?",
+            "x-dropdown": "projects",
+            "x-priority": "important"
+        },
+        "link": {
+            "type": "string",
+            "description": "Whether to link the library statically or dynamically",
+            "aliases": ["linking", "l"],
+            "enum": ["shared", "static"],
+            "$default": {
+                "$source": "argv",
+                "index": 2
+            },
+            "default": "shared",
+            "x-prompt": "Static or shared library?",
+            "x-priority": "important"
+        },
+        "skipFormat": {
+            "description": "Skip formatting files.",
+            "type": "boolean",
+            "default": false
+        }
+    },
+    "required": ["library", "project"]
+}

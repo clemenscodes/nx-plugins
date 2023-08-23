@@ -1,0 +1,5 @@
+#include "<%= name %>.h"
+
+int main(int argc, char *argv[]) {
+    return <%= name %>(argc, argv);
+}
