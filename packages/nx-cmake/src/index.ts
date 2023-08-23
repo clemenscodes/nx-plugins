@@ -1,11 +1,11 @@
-import type {
-    NxPluginV2,
-    CreateNodes,
-    CreateDependencies,
-    CreateNodesFunction,
-    ProjectGraphDependencyWithFile,
-    CreateDependenciesContext,
-    ProjectConfiguration,
+import {
+    type NxPluginV2,
+    type CreateNodes,
+    type CreateDependencies,
+    type CreateNodesFunction,
+    type ProjectGraphDependencyWithFile,
+    type CreateDependenciesContext,
+    type ProjectConfiguration,
 } from '@nx/devkit';
 import { PLUGIN_NAME } from './config/pluginName';
 import { projectFile, projectFilePattern } from './config/projectFilePattern';
@@ -15,10 +15,18 @@ import { CProjectType } from './models/types';
 
 const createNodesFunction: CreateNodesFunction = (
     projectConfigurationFile: string
-): Record<string, ProjectConfiguration> => {
+) => {
     const [root] = projectConfigurationFile.split(`/${projectFile}`);
-    const name = root.split('/').pop();
+    const projectNameSplit = root.split('/');
+    const projectName = projectNameSplit.pop();
     const type = projectTypeOfFile(root);
+    const testProjectName = `test${projectNameSplit.pop()}`;
+    const name =
+        type === CProjectType.Lib
+            ? `lib${projectName}`
+            : type === CProjectType.Test
+            ? testProjectName
+            : projectName;
     const targets = getProjectTargets(type);
     const sourceRoot = `${root}/src`;
     const projectType: ProjectConfiguration['projectType'] =
@@ -32,8 +40,7 @@ const createNodesFunction: CreateNodesFunction = (
             targets,
         },
     };
-    console.log({ projects });
-    return projects;
+    return { projects };
 };
 
 const createNodes: CreateNodes = [projectFilePattern, createNodesFunction];
