@@ -56,7 +56,6 @@ const createDependencies: CreateDependencies = async (
     const { nodes } = graph;
     const filteredProjects = filterProjects(nodes);
     const deps = await getDependencies(libsDir, context, filteredProjects);
-    console.log({ deps });
     return deps;
 };
 
