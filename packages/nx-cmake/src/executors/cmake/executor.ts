@@ -1,6 +1,6 @@
 import { CmakeExecutorSchema } from './schema';
 import { ExecutorContext } from '@nx/devkit';
-import { runCommand } from '../../utils/runCommand';
+import { runCommand } from '../../utils/runCommand/runCommand';
 
 export default async function* runExecutor(
     options: CmakeExecutorSchema,

@@ -10,8 +10,8 @@ import {
     getProjects,
 } from '@nx/devkit';
 import { CProjectType } from '../../models/types';
-import { resolveOptions } from '../../utils/resolveOptions';
-import { getProjectTargets } from '../../utils/getProjectTargets';
+import { resolveOptions } from '../../utils/resolveOptions/resolveOptions';
+import { getProjectTargets } from '../../utils/getProjectTargets/getProjectTargets';
 
 const generateTestLib = async (tree: Tree, options: LibGeneratorSchema) => {
     const { testLib } = options;

@@ -1,9 +1,8 @@
-import { projectFile } from './../config/projectFilePattern';
+import { projectFile } from '../../config/projectFilePattern';
 import { workspaceLayout } from '@nx/devkit';
-import { getProjectTargets } from './getProjectTargets';
-import { CProjectType } from '../models/types';
+import { CProjectType } from '../../models/types';
 
-export const projectTypeOfFile = (file: string): null | CProjectType => {
+export const getProjectType = (file: string): null | CProjectType => {
     const directory = file.split('/').shift();
     if (!directory) {
         return null;
@@ -20,12 +19,4 @@ export const projectTypeOfFile = (file: string): null | CProjectType => {
         return CProjectType.Test;
     }
     return CProjectType.Lib;
-};
-
-export const registerProjectTargets = (file: string) => {
-    const projectType = projectTypeOfFile(file);
-    if (!projectType) {
-        return { build: {} };
-    }
-    return getProjectTargets(projectType);
 };

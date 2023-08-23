@@ -1,5 +1,5 @@
 import type { ProjectGraph } from '@nx/devkit';
-import type { CTag, FilteredProject } from '../models/types';
+import type { CTag, FilteredProject } from '../../../models/types';
 
 export const isC = (s: string) => s === 'c' || s === 'cpp';
 export const filterTags = (tags: string[]) => tags.filter(isC);

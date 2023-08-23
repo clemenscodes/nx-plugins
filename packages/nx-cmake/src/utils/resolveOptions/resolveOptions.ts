@@ -1,7 +1,7 @@
-import type { BaseOptions } from '../models/base';
+import { getCMakeC } from './../getCmakeC/getCMakeC';
+import type { BaseOptions } from '../../models/base';
 import { names } from '@nx/devkit';
-import { getLanguageExtension } from './getLanguageExtension';
-import { getCMakeC } from './getCMakeC';
+import { getLanguageExtension } from '../getLanguageExtension/getLanguageExtension';
 
 export const resolveOptions = <T extends Partial<BaseOptions>>(
     options: T

@@ -1,6 +1,6 @@
 import { formatFiles, type Tree } from '@nx/devkit';
 import type { LinkGeneratorSchema } from './schema';
-import { linkLibrary } from '../../utils/linkLibrary';
+import { linkLibrary } from '../../utils/linkLibrary/linkLibrary';
 
 export async function linkGenerator(tree: Tree, options: LinkGeneratorSchema) {
     const { library, project, link, skipFormat } = options;

@@ -7,9 +7,9 @@ import {
     type Tree,
 } from '@nx/devkit';
 import type { ModuleGeneratorSchema } from './schema';
-import { resolveOptions } from '../../utils/resolveOptions';
-import { trimLib } from '../../utils/trimLib';
-import { getTag } from '../../utils/filterProjects';
+import { resolveOptions } from '../../utils/resolveOptions/resolveOptions';
+import { trimLib } from '../../utils/trimLib/trimLib';
+import { getTag } from '../../utils/graphUtils/filterProjects/filterProjects';
 
 export async function moduleGenerator(
     tree: Tree,

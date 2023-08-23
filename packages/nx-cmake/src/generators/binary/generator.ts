@@ -8,10 +8,10 @@ import {
     offsetFromRoot,
     workspaceLayout,
 } from '@nx/devkit';
-import { getProjectTargets } from '../../utils/getProjectTargets';
-import { resolveOptions } from '../../utils/resolveOptions';
+import { getProjectTargets } from '../../utils/getProjectTargets/getProjectTargets';
+import { resolveOptions } from '../../utils/resolveOptions/resolveOptions';
 import libGenerator from '../library/generator';
-import { linkLibrary } from '../../utils/linkLibrary';
+import { linkLibrary } from '../../utils/linkLibrary/linkLibrary';
 import { LibGeneratorSchema } from '../library/schema';
 import { CProjectType } from '../../models/types';
 

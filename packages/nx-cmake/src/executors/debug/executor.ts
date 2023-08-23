@@ -1,7 +1,7 @@
 import { ExecutorContext } from '@nx/devkit';
 import { DebugExecutorSchema } from './schema';
-import { runCommand } from '../../utils/runCommand';
-import { trimLib } from '../../utils/trimLib';
+import { runCommand } from '../../utils/runCommand/runCommand';
+import { trimLib } from '../../utils/trimLib/trimLib';
 
 export default async function* runExecutor(
     options: DebugExecutorSchema,

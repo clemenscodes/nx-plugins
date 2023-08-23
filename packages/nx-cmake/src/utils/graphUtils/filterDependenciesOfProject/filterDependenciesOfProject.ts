@@ -1,10 +1,13 @@
-import type { ProjectGraphProcessorContext } from '@nx/devkit';
-import type { FilteredProject, Deps } from '../models/types';
+import type {
+    CreateDependenciesContext,
+    ProjectGraphDependencyWithFile,
+} from '@nx/devkit';
+import type { FilteredProject } from '../../../models/types';
 import { execSync } from 'child_process';
-import { filterOutput } from './filterOutput';
-import { getDependenciesOfProject } from './getDependenciesOfProject';
-import { getExternalFiles } from './getExternalFiles';
-import { trimLib } from './trimLib';
+import { filterOutput } from '../filterOutput/filterOutput';
+import { getDependenciesOfProject } from '../getDependenciesOfProject/getDependenciesOfProject';
+import { getExternalFiles } from '../getExternalFiles/getExternalFiles';
+import { trimLib } from '../../trimLib/trimLib';
 
 const getWorkspaceIncludeDir = () => {
     return 'include';
@@ -13,9 +16,9 @@ const getWorkspaceIncludeDir = () => {
 export const filterDependenciesOfProject = async (
     project: FilteredProject,
     libsDir: string,
-    ctx: ProjectGraphProcessorContext,
+    ctx: CreateDependenciesContext,
     projects: FilteredProject[]
-): Promise<Deps[]> => {
+): Promise<ProjectGraphDependencyWithFile[]> => {
     const { name, root: projectRoot, tag } = project;
     const trimmedName = trimLib(name);
     const fileName = `${projectRoot}/src/${trimmedName}.${tag}`;

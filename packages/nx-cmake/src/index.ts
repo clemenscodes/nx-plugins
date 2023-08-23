@@ -9,9 +9,11 @@ import {
 } from '@nx/devkit';
 import { PLUGIN_NAME } from './config/pluginName';
 import { projectFile, projectFilePattern } from './config/projectFilePattern';
-import { projectTypeOfFile } from './utils/registerProjectTargets';
-import { getProjectTargets } from './utils/getProjectTargets';
+import { getProjectType } from './utils/getProjectType/getProjectType';
+import { getProjectTargets } from './utils/getProjectTargets/getProjectTargets';
 import { CProjectType } from './models/types';
+import { filterProjects } from './utils/graphUtils/filterProjects/filterProjects';
+import { getDependencies } from './utils/graphUtils/getDependencies/getDependencies';
 
 const createNodesFunction: CreateNodesFunction = (
     projectConfigurationFile: string
@@ -19,7 +21,7 @@ const createNodesFunction: CreateNodesFunction = (
     const [root] = projectConfigurationFile.split(`/${projectFile}`);
     const projectNameSplit = root.split('/');
     const projectName = projectNameSplit.pop();
-    const type = projectTypeOfFile(root);
+    const type = getProjectType(root);
     const testProjectName = `test${projectNameSplit.pop()}`;
     const name =
         type === CProjectType.Lib
@@ -45,13 +47,17 @@ const createNodesFunction: CreateNodesFunction = (
 
 const createNodes: CreateNodes = [projectFilePattern, createNodesFunction];
 
-const createDependencies: CreateDependencies = (
+const createDependencies: CreateDependencies = async (
     context: CreateDependenciesContext
-): ProjectGraphDependencyWithFile[] => {
-    const { graph } = context;
+): Promise<ProjectGraphDependencyWithFile[]> => {
+    const { graph, nxJsonConfiguration } = context;
+    const { workspaceLayout } = nxJsonConfiguration;
+    const { libsDir } = workspaceLayout;
     const { nodes } = graph;
-    console.log({ nodes });
-    return [];
+    const filteredProjects = filterProjects(nodes);
+    const deps = await getDependencies(libsDir, context, filteredProjects);
+    console.log({ deps });
+    return deps;
 };
 
 const nxPlugin: NxPluginV2 = {

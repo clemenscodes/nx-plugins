@@ -1,4 +1,4 @@
-import type { FilteredProject } from '../models/types';
+import type { FilteredProject } from '../../../models/types';
 
 export const getProjectFromFile = (
     file: string,
