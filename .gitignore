@@ -41,9 +41,9 @@ Thumbs.db
 **/.gdb_history
 
 # nx-cmake plugin
-cmake
-include
+/cmake
+/include
 tools/format.sh
-.clang-format
-.clang-format-ignore
-CMakeLists.txt
+/.clang-format
+/.clang-format-ignore
+/CMakeLists.txt
