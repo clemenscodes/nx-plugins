@@ -39,3 +39,11 @@ testem.log
 Thumbs.db
 .gdb_history
 **/.gdb_history
+
+# nx-cmake plugin
+cmake
+include
+tools/format.sh
+.clang-format
+.clang-format-ignore
+CMakeLists.txt

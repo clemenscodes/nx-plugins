@@ -1,16 +1,25 @@
 {
+    "extends": "nx/presets/npm.json",
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "defaultProject": "nx-cmake",
     "tasksRunnerOptions": {
         "default": {
             "runner": "nx-cloud",
             "options": {
-                "cacheableOperations": ["build", "lint", "test", "e2e"],
+                "cacheableOperations": [
+                    "build",
+                    "lint",
+                    "test",
+                    "e2e",
+                    "cmake",
+                    "debug",
+                    "fmt"
+                ],
                 "accessToken": "ZTBkM2I2MjYtNTc4Mi00YjUxLTkzNDAtZWFlYjg1OGY0Y2UxfHJlYWQtd3JpdGU="
             }
         }
     },
-    "defaultProject": "nx-cmake",
-    "extends": "nx/presets/npm.json",
-    "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "plugins": ["nx-cmake"],
     "targetDefaults": {
         "lint": {
             "inputs": [
@@ -21,6 +30,37 @@
         },
         "test": {
             "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"]
+        },
+        "cmake": {
+            "dependsOn": ["^cmake"],
+            "inputs": ["cmake"]
+        },
+        "build": {
+            "dependsOn": ["^build", "cmake"],
+            "inputs": ["default"]
+        },
+        "debug": {
+            "dependsOn": ["build"],
+            "inputs": ["default"]
+        },
+        "execute": {
+            "dependsOn": ["build"],
+            "inputs": ["default"]
         }
+    },
+    "namedInputs": {
+        "cmake": [
+            "{projectRoot}/**/*.cpp",
+            "{projectRoot}/**/*.hpp",
+            "{projectRoot}/**/*.c",
+            "{projectRoot}/**/*.h",
+            "{projectRoot}/CMakeLists.txt",
+            "{workspaceRoot}/CMakeLists.txt",
+            "{workspaceRoot}/cmake/**/*.cmake"
+        ]
+    },
+    "workspaceLayout": {
+        "appsDir": "bin",
+        "libsDir": "packages"
     }
 }
