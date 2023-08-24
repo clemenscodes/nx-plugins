@@ -11,7 +11,7 @@ export default async function* runExecutor(
     const { root } = projects[projectName];
     const { release, args } = options;
 
-    const { success } = await runCommand(
+    const { success } = runCommand(
         'cmake',
         '-S',
         `${workspaceRoot}/${root}`,

@@ -6,7 +6,7 @@ import { trimLib } from '../../utils/trimLib/trimLib';
 export default async function* runExecutor(
     options: DebugExecutorSchema,
     ctx: ExecutorContext
-) {
+): AsyncGenerator<{ success: boolean }> {
     const { root: workspaceRoot, projectName, projectsConfigurations } = ctx;
     const { projects } = projectsConfigurations;
     const { root } = projects[projectName];
@@ -14,7 +14,7 @@ export default async function* runExecutor(
     const name = trimLib(projectName);
     const bin = `${workspaceRoot}/dist/${root}/${name}`;
 
-    const { success } = await runCommand('gdb', bin, ...args);
+    const { success } = runCommand('gdb', bin, ...args);
 
     yield {
         success,
