@@ -1,4 +1,4 @@
-#include <<%= name %>/include/<%= name %>.h>
+#include <<%= name %>/include/lib<%= name %>.h>
 
 int <%= name %>(int argc, char *argv[]) {
     (void)argc;

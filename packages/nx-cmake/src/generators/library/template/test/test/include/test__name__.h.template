@@ -1,7 +1,8 @@
 #ifndef _TEST<%= constantName %>_<%= constantName %>
 #define _TEST<%= constantName %>_<%= constantName %>
 
-#include <<%= testLib %>/include/<%= testLib %>.h>
-#include <<%= name %>/include/<%= name %>.h>
+#include "lib<%= testLib %>.h"
+#include <<%= testLib %>/include/lib<%= testLib %>.h>
+#include <<%= name %>/include/lib<%= name %>.h>
 
 #endif
