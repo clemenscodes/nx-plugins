@@ -19,7 +19,6 @@ const addCacheableTargets = (
             runner: 'nx/tasks-runners/default',
             options: {
                 cacheableOperations: [
-                    'cmake',
                     'build',
                     'debug',
                     'test',
