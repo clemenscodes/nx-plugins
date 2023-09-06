@@ -12,7 +12,7 @@ export default async function* runExecutor(
     const { args } = options;
 
     if (!args) {
-        const { success } = await runCommand(
+        const { success } = runCommand(
             'make',
             '-C',
             `${workspaceRoot}/dist/${root}`
@@ -23,7 +23,7 @@ export default async function* runExecutor(
         return;
     }
 
-    const { success } = await runCommand(
+    const { success } = runCommand(
         'make',
         '-C',
         `${workspaceRoot}/dist/${root}`,

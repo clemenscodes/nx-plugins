@@ -5,7 +5,7 @@ import { runCommand } from '../../utils/runCommand/runCommand';
 export default async function* runExecutor(
     options: LintExecutorSchema,
     ctx: ExecutorContext
-) {
+): AsyncGenerator<{ success: boolean }> {
     const { root: workspaceRoot, projectName, projectsConfigurations } = ctx;
     const { projects } = projectsConfigurations;
     const { root } = projects[projectName];
