@@ -18,13 +18,7 @@ const addCacheableTargets = (
         default: {
             runner: 'nx/tasks-runners/default',
             options: {
-                cacheableOperations: [
-                    'build',
-                    'debug',
-                    'test',
-                    'lint',
-                    'fmt',
-                ],
+                cacheableOperations: ['build', 'debug', 'test', 'lint', 'fmt'],
             },
         },
     };
