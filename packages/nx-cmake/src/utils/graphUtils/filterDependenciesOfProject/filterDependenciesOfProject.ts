@@ -63,7 +63,7 @@ export const filterDependenciesOfProject = async (
         throw e;
     }
     const files = filterOutput(output);
-    const externalFiles = getExternalFiles(files, libsDir);
+    const externalFiles = getExternalFiles(files, projectRoot, tag);
     const dependencies = getDependenciesOfProject(
         name,
         externalFiles,
