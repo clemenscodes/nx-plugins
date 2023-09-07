@@ -23,8 +23,8 @@ export const filterDependenciesOfProject = async (
     const { name, root: projectRoot, tag } = project;
     const fileName = `${projectRoot}/src/${name}.${tag}`;
     const includeDir = getWorkspaceIncludeDir();
-    const gtestInclude = `dist/${libsDir}/gtest/_deps/googletest-src/googletest/include`;
-    const cmockaInclude = `dist/${libsDir}/cmocka/_deps/cmocka-src/include`;
+    const gtestInclude = `dist/${projectRoot}/_deps/googletest-src/googletest/include`;
+    const cmockaInclude = `dist/${projectRoot}/_deps/cmocka-src/include`;
     const cmd = `gcc -M ${fileName} -I ${projectRoot}/include -I ${libsDir} -I ${includeDir} -I ${gtestInclude} -I ${cmockaInclude}`;
     let output = '';
     try {
@@ -42,25 +42,23 @@ export const filterDependenciesOfProject = async (
             console.error('An unexpected error happened');
             throw e;
         }
-        if (message.includes('#include <gtest/gtest.h>')) {
+        if (
+            message.includes('#include <gtest/gtest.h>') ||
+            message.includes('#include <cmocka.h>')
+        ) {
             runCommand(
                 'cmake',
                 '-S',
-                `${workspaceRoot}/${libsDir}/gtest`,
-                `${workspaceRoot}/dist/${libsDir}/gtest`
+                `${workspaceRoot}/${projectRoot}`,
+                `${workspaceRoot}/dist/${projectRoot}`
             );
-            return filterDependenciesOfProject(project, libsDir, ctx, projects);
+            output = execSync(cmd, {
+                encoding: 'utf-8',
+                stdio: ['inherit', 'pipe', 'pipe'],
+            });
+        } else {
+            throw e;
         }
-        if (message.includes('#include <cmocka.h>')) {
-            runCommand(
-                'cmake',
-                '-S',
-                `${workspaceRoot}/${libsDir}/cmocka`,
-                `${workspaceRoot}/dist/${libsDir}/cmocka`
-            );
-            return filterDependenciesOfProject(project, libsDir, ctx, projects);
-        }
-        throw e;
     }
     const files = filterOutput(output);
     const externalFiles = getExternalFiles(files, projectRoot, tag);

@@ -7,22 +7,10 @@ import {
     generateFiles,
     offsetFromRoot,
     workspaceLayout,
-    getProjects,
 } from '@nx/devkit';
 import { CProjectType } from '../../models/types';
 import { resolveOptions } from '../../utils/resolveOptions/resolveOptions';
 import { getProjectTargets } from '../../utils/getProjectTargets/getProjectTargets';
-
-const generateTestLib = async (tree: Tree, options: LibGeneratorSchema) => {
-    const { testLib } = options;
-    const projects = getProjects(tree);
-    const libName = `lib${testLib}`;
-    if (!projects.has(libName)) {
-        options.name = testLib;
-        options.generateTests = false;
-        await libGenerator(tree, options);
-    }
-};
 
 export async function libGenerator(tree: Tree, options: LibGeneratorSchema) {
     const resolvedOptions = resolveOptions(options);
@@ -35,15 +23,6 @@ export async function libGenerator(tree: Tree, options: LibGeneratorSchema) {
     const lib = `lib${name}`;
     const test = `test${name}`;
     resolvedOptions.relativeRootPath = relativeRootPath;
-
-    addProjectConfiguration(tree, lib, {
-        root: projectRoot,
-        projectType: 'library',
-        sourceRoot: `${projectRoot}/src`,
-        tags: [resolvedOptions.languageExtension],
-        targets,
-    });
-
     resolvedOptions.testLib = language === 'C++' ? 'gtest' : 'cmocka';
     resolvedOptions.linkTestLib =
         name === 'cmocka' || name === 'gtest'
@@ -56,6 +35,14 @@ export async function libGenerator(tree: Tree, options: LibGeneratorSchema) {
             ? `add_test(UnitTests ${test})`
             : `gtest_discover_tests(${test})`;
 
+    addProjectConfiguration(tree, lib, {
+        root: projectRoot,
+        projectType: 'library',
+        sourceRoot: `${projectRoot}/src`,
+        tags: [resolvedOptions.languageExtension],
+        targets,
+    });
+
     generateFiles(
         tree,
         join(__dirname, 'template', generateTests ? 'test' : 'config'),
@@ -63,17 +50,13 @@ export async function libGenerator(tree: Tree, options: LibGeneratorSchema) {
         resolvedOptions
     );
 
-    if (name !== 'gtest' && name !== 'cmocka') {
-        addProjectConfiguration(tree, test, {
-            root: `${projectRoot}/test`,
-            projectType: 'application',
-            sourceRoot: `${projectRoot}/src/test`,
-            tags: [resolvedOptions.languageExtension],
-            targets: testTargets,
-        });
-    }
-
-    await generateTestLib(tree, resolvedOptions);
+    addProjectConfiguration(tree, test, {
+        root: `${projectRoot}/test`,
+        projectType: 'application',
+        sourceRoot: `${projectRoot}/src/test`,
+        tags: [resolvedOptions.languageExtension],
+        targets: testTargets,
+    });
 
     if (!skipFormat) {
         await formatFiles(tree);

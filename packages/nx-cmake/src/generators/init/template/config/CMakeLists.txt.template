@@ -16,14 +16,9 @@ include(settings/set_global_settings)
 include(settings/set_library_settings)
 include(settings/set_binary_settings)
 make_var_readonly(WORKSPACE_DIR ${CURRENT_DIR})
-make_var_readonly(WORKSPACE_INCLUDE_DIR ${WORKSPACE_DIR})
+make_var_readonly(WORKSPACE_INCLUDE_DIR ${WORKSPACE_DIR}/include)
 make_var_readonly(WORKSPACE_LIBRARY_DIR ${WORKSPACE_DIR}/<%= libsDir %>)
 include_directories(SYSTEM ${WORKSPACE_LIBRARY_DIR})
-set(CMAKE_INCLUDE_PATH
-    ${WORKSPACE_INCLUDE_DIR}
-    ${WORKSPACE_INCLUDE_DIR}/include
-    ${WORKSPACE_INCLUDE_DIR}/dist/<%= libsDir %>/gtest/_deps/googletest-src/googletest/include
-    ${WORKSPACE_INCLUDE_DIR}/dist/<%= libsDir %>/cmocka/_deps/cmocka-src/include
-)
+set(CMAKE_INCLUDE_PATH ${WORKSPACE_INCLUDE_DIR})
 set(CMAKE_LIBRARY_PATH ${WORKSPACE_DIR}/dist/<%= libsDir %>)
 set_global_settings()
