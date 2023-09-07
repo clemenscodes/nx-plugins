@@ -1,5 +1,7 @@
 #include "<%= name %>.h"
 
 int main(int argc, char *argv[]) {
-    return <%= name %>(argc, argv);
+    (void)argc;
+    (void)argv;
+    return <%= name %>();
 }

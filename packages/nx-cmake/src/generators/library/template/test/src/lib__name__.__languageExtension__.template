@@ -1,7 +1,5 @@
 #include <<%= name %>/include/lib<%= name %>.h>
 
-int <%= name %>(int argc, char *argv[]) {
-    (void)argc;
-    (void)argv;
+int <%= name %>(void) {
     return 0;
 }

@@ -5,8 +5,5 @@ export interface LibGeneratorSchema extends BaseOptions {
     generateTests: boolean = true;
     setupTests: string;
     includeGoogleTest: 'include(GoogleTest)' | '';
-    linkTestLib:
-        | 'link_gtest(${CMAKE_PROJECT_NAME})'
-        | 'link_cmocka(${CMAKE_PROJECT_NAME})'
-        | '';
+    baseTest: string
 }

@@ -19,7 +19,7 @@ describe('lib generator', () => {
         testLib: 'gtest',
         setupTests: 'gtest_discover_tests(testgtest)',
         includeGoogleTest: 'include(GoogleTest)',
-        linkTestLib: 'link_gtest(${CMAKE_PROJECT_NAME})',
+        baseTest: ''
     };
 
     beforeEach(() => {
