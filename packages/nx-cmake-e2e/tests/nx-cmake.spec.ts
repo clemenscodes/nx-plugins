@@ -32,6 +32,34 @@ describe('nx-cmake', () => {
             stdio: 'inherit',
         });
     });
+
+    it('should initialize', () => {
+        execSync('nx g nx-cmake:init --no-interactive', {
+            cwd: projectDirectory,
+            stdio: 'inherit',
+        });
+    });
+
+    it('should generate binary', () => {
+        execSync(
+            'nx g nx-cmake:bin  --name=spl --language=C --no-interactive',
+            {
+                cwd: projectDirectory,
+                stdio: 'inherit',
+            }
+        );
+    });
+
+    it('should generate project graph', () => {
+        execSync(`nx graph --file=${projectDirectory}/output.json`, {
+            cwd: projectDirectory,
+            stdio: 'inherit',
+        });
+        execSync(`cat --file=${projectDirectory}/output.json`, {
+            cwd: projectDirectory,
+            stdio: 'inherit',
+        });
+    });
 });
 
 /**
