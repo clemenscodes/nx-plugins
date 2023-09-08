@@ -12,7 +12,10 @@
 
 ### Bug Fixes
 
+* .gitignore ([c72da7f](https://github.com/clemenscodes/nx-plugins/commit/c72da7f0d5003df6ef2f6897230beedc1e463d0a))
+* **ci:** no frozen lockfile ([820913a](https://github.com/clemenscodes/nx-plugins/commit/820913ac9ae0bd9c14acb15470bd1be719769fbc))
 * fix createNodes bug where test projects were not named correctly ([8adebda](https://github.com/clemenscodes/nx-plugins/commit/8adebdabbc27e8ff513d5e9337f2ffd4d7e776a3))
+* format dependabot.yml ([81508a0](https://github.com/clemenscodes/nx-plugins/commit/81508a0cf1702ec8c806d238b7453076c36341db))
 * **nx-cmake:** dont cache cmake step, will break builds ([85d244b](https://github.com/clemenscodes/nx-plugins/commit/85d244b9bf0885cab0a9aa2e3ee34c6496bdde46))
 * **nx-cmake:** global include path does not contain test headers ([49d871c](https://github.com/clemenscodes/nx-plugins/commit/49d871cffbe4f9c6c661f8de55a6c85aa0fe1823))
 * **nx-cmake:** including test frameworks and graph gen works ([2d64430](https://github.com/clemenscodes/nx-plugins/commit/2d64430d47940431aa86c1f30a1e6f5f23cb01cc))
@@ -21,3 +24,4 @@
 * **nx-cmake:** update include paths for test frameworks ([cd14e92](https://github.com/clemenscodes/nx-plugins/commit/cd14e922393a1b3b5a461fe4cec92b98d83cddbf))
 * **nx-plugins:** fix ts error ([c17aa45](https://github.com/clemenscodes/nx-plugins/commit/c17aa4512169381f7b70936233ae8e6043c216d7))
 * remove lint warnings ([9010721](https://github.com/clemenscodes/nx-plugins/commit/9010721a116a0348d31d8c1ae0b3bc6a7bbe259b))
+* run e2e in ci ([91d88bb](https://github.com/clemenscodes/nx-plugins/commit/91d88bbe11b547a4f9b5c2b9b4994a6b41a93603))
