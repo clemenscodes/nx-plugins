@@ -1,6 +1,3 @@
 #include <<%= name %>/test/include/test<%= name %>.h>
 
-int main() {
-    int result = 0;
-    return result;
-}
+<%= baseTest %>

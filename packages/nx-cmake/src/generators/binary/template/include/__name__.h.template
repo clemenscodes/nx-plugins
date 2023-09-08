@@ -1,6 +1,6 @@
 #ifndef _<%= constantName %>_<%= constantName %>
 #define _<%= constantName %>_<%= constantName %>
 
-#include <<%= name %>/include/<%= name %>.h>
+#include <<%= name %>/include/lib<%= name %>.h>
 
 #endif

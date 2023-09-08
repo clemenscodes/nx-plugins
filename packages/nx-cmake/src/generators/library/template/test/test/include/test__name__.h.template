@@ -2,7 +2,6 @@
 #define _TEST<%= constantName %>_<%= constantName %>
 
 #include "lib<%= testLib %>.h"
-#include <<%= testLib %>/include/<%= testLib %>.h>
-#include <<%= name %>/include/<%= name %>.h>
+#include <<%= name %>/include/lib<%= name %>.h>
 
 #endif

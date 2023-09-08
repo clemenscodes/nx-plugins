@@ -13,9 +13,14 @@ export const getDependenciesOfProject = (
     projects: FilteredProject[]
 ): ProjectGraphDependencyWithFile[] => {
     const deps: ProjectGraphDependencyWithFile[] = [];
-    for (const sourceFile of externalFiles) {
-        const project = getProjectFromFile(sourceFile, projects);
-        const depFile = ctx.fileMap[project].find((f) => f.file === sourceFile);
+    for (const externalFile of externalFiles) {
+        if (externalFile.startsWith('include')) {
+            continue;
+        }
+        const project = getProjectFromFile(externalFile, projects);
+        const depFile = ctx.fileMap[project].find(
+            (f) => f.file === externalFile
+        );
         if (!depFile) {
             continue;
         }
@@ -23,7 +28,7 @@ export const getDependenciesOfProject = (
         deps.push({
             source: projectName,
             target: project,
-            sourceFile,
+            sourceFile: externalFile,
             dependencyType: DependencyType.static,
         });
     }

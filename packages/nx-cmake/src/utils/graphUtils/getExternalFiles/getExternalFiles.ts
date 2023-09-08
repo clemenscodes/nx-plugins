@@ -1,16 +1,29 @@
+import { CTag } from '../../../models/types';
+
 export const getExternalFiles = (
     files: string[],
-    libsDir: string
+    root: string,
+    tag: CTag
 ): string[] => {
-    const externalDependentFiles = files.flatMap((file) => {
-        const firstSegment = file.split('/').shift();
-        if (firstSegment !== libsDir) {
+    return files.flatMap((f) => {
+        if (f.startsWith(root)) {
             return [];
         }
-        const f = libsDir + file.split(libsDir).pop();
-        const [n] = f.split('.h');
+        if (f.startsWith('dist') || f.startsWith('include')) {
+            return [f];
+        }
+        const [n] = f.endsWith('.h')
+            ? f.split('.h')
+            : f.endsWith('.c')
+            ? f.split('.c')
+            : f.endsWith('.cpp')
+            ? f.split('.cpp')
+            : f;
         const name = n.replace('include', 'src');
-        return [f, name + '.c', name + '.cpp'];
+        const externalDependentFiles = [
+            f,
+            tag === 'c' ? name + '.c' : name + '.cpp',
+        ];
+        return externalDependentFiles;
     });
-    return externalDependentFiles;
 };

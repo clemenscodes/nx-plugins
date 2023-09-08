@@ -2,6 +2,6 @@ include(utils/install_gtest)
 
 function(link_gtest PROJECT)
     install_gtest()
-    include(GoogleTest)
-    target_link_libraries(${PROJECT} PRIVATE GTest::gtest_main)
+    include_directories(${googletest_SOURCE_DIR}/googletest/include/gtest)
+    target_link_libraries(${PROJECT} GTest::gtest_main -Wl,--copy-dt-needed-entries)
 endfunction()

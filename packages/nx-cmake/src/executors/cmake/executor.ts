@@ -2,10 +2,10 @@ import { CmakeExecutorSchema } from './schema';
 import { ExecutorContext } from '@nx/devkit';
 import { runCommand } from '../../utils/runCommand/runCommand';
 
-export default async function* runExecutor(
+export const cmakeExecutor = (
     options: CmakeExecutorSchema,
     ctx: ExecutorContext
-): AsyncGenerator<{ success: boolean }> {
+): { success: boolean } => {
     const { root: workspaceRoot, projectName, projectsConfigurations } = ctx;
     const { projects } = projectsConfigurations;
     const { root } = projects[projectName];
@@ -19,8 +19,12 @@ export default async function* runExecutor(
         `-DCMAKE_BUILD_TYPE=${release ? 'Release' : 'Debug'}`,
         ...args
     );
+    return { success };
+};
 
-    yield {
-        success,
-    };
+export default async function* runExecutor(
+    options: CmakeExecutorSchema,
+    ctx: ExecutorContext
+): AsyncGenerator<{ success: boolean }> {
+    yield cmakeExecutor(options, ctx);
 }
