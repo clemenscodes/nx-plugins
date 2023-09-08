@@ -42,11 +42,14 @@
             "options": {
                 "lintFilePatterns": [
                     "packages/nx-cmake/**/*.ts",
-                    "packages/nx-cmake/package.json"
+                    "packages/nx-cmake/package.json",
+                    "packages/nx-cmake/generators.json",
+                    "packages/nx-cmake/executors.json"
                 ]
             }
         },
         "test": {
+            "dependsOn": ["build"],
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
             "options": {
@@ -59,6 +62,10 @@
                     "codeCoverage": true
                 }
             }
+        },
+        "publish": {
+            "command": "node tools/scripts/publish.mjs nx-cmake {args.ver} {args.tag}",
+            "dependsOn": ["test"]
         }
     },
     "tags": []
