@@ -10,19 +10,21 @@ export const createNodesFunction: CreateNodesFunction = (
 ) => {
     const [root] = projectConfigurationFile.split(`/${projectFile}`);
     const type = getProjectType(root);
+    if (!type) {
+        throw new Error('Failed to determine project type');
+    }
     const name = getProjectName(type, root);
     const targets = getProjectTargets(type);
     const sourceRoot = `${root}/src`;
     const projectType: ProjectConfiguration['projectType'] =
         type === CProjectType.Lib ? 'library' : 'application';
-    const projects: Record<string, ProjectConfiguration> = {
-        [name]: {
-            name,
-            root,
-            sourceRoot,
-            projectType,
-            targets,
-        },
+    const projects: Record<string, ProjectConfiguration> = {};
+    projects[name] = {
+        name,
+        root,
+        sourceRoot,
+        projectType,
+        targets,
     };
     return { projects };
 };
