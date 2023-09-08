@@ -237,22 +237,24 @@ jobs:
         steps:
             - name: Checkout [Pull Request]
               uses: actions/checkout@v3
-              if: github.event_name == 'pull_request'
+              if: github.event_name == 'pull_request' && startsWith(github.ref, 'refs/heads/main')
               with:
                   ref: ${{ github.event.pull_request.head.sha }}
                   fetch-depth: 0
 
             - name: Checkout [Main]
               uses: actions/checkout@v3
-              if: github.event_name != 'pull_request'
+              if: github.event_name != 'pull_request' && startsWith(github.ref, 'refs/heads/main')
               with:
                   fetch-depth: 0
                   token: ${{ secrets.PAT }}
 
             - name: Derive SHAs
+              if: startsWith(github.ref, 'refs/heads/main')
               uses: nrwl/nx-set-shas@v3
 
             - name: Install Node
+              if: startsWith(github.ref, 'refs/heads/main')
               uses: actions/setup-node@v3
               with:
                   node-version: 16
@@ -261,6 +263,7 @@ jobs:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
             - name: Install pnpm
+              if: startsWith(github.ref, 'refs/heads/main')
               uses: pnpm/action-setup@v2
               id: pnpm-install
               with:
@@ -268,6 +271,7 @@ jobs:
                   run_install: false
 
             - name: Get pnpm store directory
+              if: startsWith(github.ref, 'refs/heads/main')
               id: pnpm-cache
               shell: bash
               run: |
@@ -275,6 +279,7 @@ jobs:
 
             - name: Restore pnpm cache
               uses: actions/cache/restore@v3
+              if: startsWith(github.ref, 'refs/heads/main')
               id: cache
               with:
                   path: |

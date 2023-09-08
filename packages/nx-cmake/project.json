@@ -65,14 +65,13 @@
         },
         "publish": {
             "command": "node tools/scripts/publish.mjs nx-cmake {args.ver} {args.tag}",
-            "dependsOn": ["test"]
+            "dependsOn": ["build"]
         },
         "version": {
-            "dependsOn": ["test"],
             "executor": "@jscutlery/semver:version",
             "options": {
                 "preset": "conventional",
-                "syncVersions": false,
+                "syncVersions": true,
                 "tagPrefix": "nx-cmake-",
                 "allowEmptyRelease": false,
                 "skipCommitTypes": [
@@ -84,7 +83,7 @@
                     "test"
                 ],
                 "noVerify": true,
-                "changelogHeader": "# Changelog\n",
+                "changelogHeader": "# Changelog (nx-cmake)\n",
                 "push": false,
                 "commitMessageFormat": "chore({projectName}): release version ${version} [skip ci]",
                 "remote": "origin",
