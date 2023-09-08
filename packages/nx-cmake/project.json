@@ -86,7 +86,7 @@
                 "noVerify": true,
                 "changelogHeader": "# Changelog\n",
                 "push": true,
-                "commitMessageFormat": "chore(${projectName}): release version ${version} [skip ci]",
+                "commitMessageFormat": "chore({projectName}): release version ${version} [skip ci]",
                 "remote": "origin",
                 "baseBranch": "main"
             }
