@@ -69,7 +69,7 @@ jobs:
 
             - name: Install dependencies
               if: steps.cache.outputs.cache-hit != 'true'
-              run: pnpm install
+              run: pnpm install --no-frozen-lockfile
 
             - name: Check format
               run: pnpm nx format:check --all
