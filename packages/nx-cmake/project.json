@@ -66,6 +66,36 @@
         "publish": {
             "command": "node tools/scripts/publish.mjs nx-cmake {args.ver} {args.tag}",
             "dependsOn": ["test"]
+        },
+        "version": {
+            "dependsOn": ["test"],
+            "executor": "@jscutlery/semver:version",
+            "options": {
+                "preset": "conventional",
+                "syncVersions": false,
+                "tagPrefix": "nx-cmake-",
+                "allowEmptyRelease": false,
+                "skipCommitTypes": [
+                    "chore",
+                    "build",
+                    "ci",
+                    "docs",
+                    "refactor",
+                    "test"
+                ],
+                "noVerify": true,
+                "changelogHeader": "# Changelog\n",
+                "push": false,
+                "commitMessageFormat": "chore({projectName}): release version ${version} [skip ci]",
+                "remote": "origin",
+                "baseBranch": "main"
+            }
+        },
+        "deploy": {
+            "executor": "ngx-deploy-npm:deploy",
+            "options": {
+                "access": "public"
+            }
         }
     },
     "tags": []
