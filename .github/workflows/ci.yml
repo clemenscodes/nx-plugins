@@ -42,6 +42,7 @@ jobs:
               uses: actions/setup-node@v3
               with:
                   node-version: 16
+                  registry-url: 'https://registry.npmjs.org'
 
             - name: Install pnpm
               uses: pnpm/action-setup@v2
@@ -123,6 +124,7 @@ jobs:
               uses: actions/setup-node@v3
               with:
                   node-version: 16
+                  registry-url: 'https://registry.npmjs.org'
 
             - name: Install pnpm
               uses: pnpm/action-setup@v2
@@ -151,8 +153,8 @@ jobs:
             - name: Run Agent
               run: npx nx-cloud start-agent
 
-    test:
-        name: Test
+    main:
+        name: Main Job
         permissions:
             contents: read
             actions: read
@@ -179,6 +181,7 @@ jobs:
               uses: actions/setup-node@v3
               with:
                   node-version: 16
+                  registry-url: 'https://registry.npmjs.org'
 
             - name: Install pnpm
               uses: pnpm/action-setup@v2
@@ -225,3 +228,13 @@ jobs:
             - name: Stop Agents
               if: always()
               run: npx nx-cloud stop-all-agents
+
+    cleanup:
+        name: Cleanup
+        runs-on: ubuntu-latest
+        needs: [main, agents]
+        steps:
+            - name: Delete Artifacts
+              uses: geekyeggo/delete-artifact@v2
+              with:
+                  name: '*'

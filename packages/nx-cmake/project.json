@@ -68,6 +68,7 @@
             "dependsOn": ["test"]
         },
         "version": {
+            "dependsOn": ["test"],
             "executor": "@jscutlery/semver:version",
             "options": {
                 "preset": "conventional",
