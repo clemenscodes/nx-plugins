@@ -5,5 +5,5 @@ export interface LibGeneratorSchema extends BaseOptions {
     generateTests: boolean = true;
     setupTests: string;
     includeGoogleTest: 'include(GoogleTest)' | '';
-    baseTest: string
+    baseTest: string;
 }

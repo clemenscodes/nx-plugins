@@ -28,7 +28,7 @@ describe('link generator', () => {
         testLib: 'gtest',
         setupTests: 'gtest_discover_tests(testgtest)',
         includeGoogleTest: 'include(GoogleTest)',
-        linkTestLib: 'link_gtest(${CMAKE_PROJECT_NAME})',
+        baseTest: '',
     };
 
     const linkLibOptions: LibGeneratorSchema = {
@@ -44,7 +44,7 @@ describe('link generator', () => {
         testLib: 'gtest',
         setupTests: 'gtest_discover_tests(testgtest)',
         includeGoogleTest: 'include(GoogleTest)',
-        linkTestLib: 'link_gtest(${CMAKE_PROJECT_NAME})',
+        baseTest: '',
     };
 
     beforeEach(async () => {

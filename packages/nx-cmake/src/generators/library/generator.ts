@@ -30,7 +30,7 @@ export async function libGenerator(tree: Tree, options: LibGeneratorSchema) {
             ? `add_test(UnitTests ${test})`
             : `gtest_discover_tests(${test})`;
     const baseGtest =
-        `TEST(${lib}, ${name}) {\n` + `\tEXPECT_EQ(${name}(), 0);\n}\n`;
+        `TEST(${lib}, test_${name}) {\n` + `\tEXPECT_EQ(${name}(), 0);\n}\n`;
     const baseCmocka =
         `static int setup(void **state) {\n` +
         `\t(void) state;\n` +

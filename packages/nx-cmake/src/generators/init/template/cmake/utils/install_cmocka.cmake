@@ -1,10 +1,12 @@
 function(install_cmocka)
+    set(FETCHCONTENT_BASE_DIR ${WORKSPACE_LIBRARY_DIST_DIR}/cmocka)
 
     FetchContent_Declare(
         cmocka
         GIT_REPOSITORY https://git.cryptomilk.org/projects/cmocka.git
         GIT_TAG        cmocka-1.1.5
         GIT_SHALLOW    1
+        FIND_PACKAGE_ARGS NAMES cmocka
     )
 
     set(WITH_STATIC_LIB ON CACHE BOOL "CMocka: Build with a static library" FORCE)
@@ -14,5 +16,6 @@ function(install_cmocka)
     set(PICKY_DEVELOPER OFF CACHE BOOL "CMocka: Build with picky developer flags" FORCE)
 
     FetchContent_MakeAvailable(cmocka)
+    find_package(cmocka REQUIRED)
 endfunction(install_cmocka)
 

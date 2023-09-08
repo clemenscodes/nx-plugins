@@ -23,10 +23,10 @@ export const filterDependenciesOfProject = async (
     const { name, root: projectRoot, tag } = project;
     const fileName = `${projectRoot}/src/${name}.${tag}`;
     const includeDir = getWorkspaceIncludeDir();
-    const gtestInclude = `dist/${projectRoot}/_deps/googletest-src/googletest/include`;
-    const cmockaInclude = `dist/${projectRoot}/_deps/cmocka-src/include`;
+    const gtestInclude = `dist/${libsDir}/gtest/googletest-src/googletest/include`;
+    const cmockaInclude = `dist/${libsDir}/cmocka/cmocka-src/include`;
     const cmd = `gcc -M ${fileName} -I ${projectRoot}/include -I ${libsDir} -I ${includeDir} -I ${gtestInclude} -I ${cmockaInclude}`;
-    let output = '';
+    let output: string;
     try {
         output = execSync(cmd, {
             encoding: 'utf-8',
@@ -59,6 +59,9 @@ export const filterDependenciesOfProject = async (
         } else {
             throw e;
         }
+    }
+    if (!output) {
+        throw Error(`Failed process dependencies of project: ${project}`);
     }
     const files = filterOutput(output);
     const externalFiles = getExternalFiles(files, projectRoot, tag);

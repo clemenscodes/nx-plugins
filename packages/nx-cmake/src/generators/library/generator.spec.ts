@@ -19,7 +19,7 @@ describe('lib generator', () => {
         testLib: 'gtest',
         setupTests: 'gtest_discover_tests(testgtest)',
         includeGoogleTest: 'include(GoogleTest)',
-        baseTest: ''
+        baseTest: '',
     };
 
     beforeEach(() => {
