@@ -281,10 +281,10 @@ jobs:
                       ${{ runner.os }}-pnpm-store-
 
             - name: Semantic Versioning
-              run: pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t version
+              run: NX_CLOUD_DISTRIBUTED_EXECUTION=false pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t version
 
             - name: Check npm auth
               run: npm whoami
 
             - name: Publish packages
-              run: pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t deploy --dry-run
+              run: NX_CLOUD_DISTRIBUTED_EXECUTION=false pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t deploy --dry-run
