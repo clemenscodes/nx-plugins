@@ -280,8 +280,16 @@ jobs:
                   restore-keys: |
                       ${{ runner.os }}-pnpm-store-
 
+            - name: Setup Git
+              run: |
+                  git config user.name "GitHub Bot"
+                  git config user.email "gituser@example.com"
+
             - name: Semantic Versioning
+              shell: bash
               run: NX_CLOUD_DISTRIBUTED_EXECUTION=false pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t version
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Check npm auth
               run: npm whoami
