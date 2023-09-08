@@ -28,11 +28,6 @@
             "factory": "./src/generators/link/generator",
             "schema": "./src/generators/link/schema.json",
             "description": "Link a C or C++ library."
-        },
-        "test": {
-            "factory": "./src/generators/test/generator",
-            "schema": "./src/generators/test/schema.json",
-            "description": "Generate a C or C++ test binary for a project."
         }
     }
 }

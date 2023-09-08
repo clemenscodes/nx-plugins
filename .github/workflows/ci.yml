@@ -220,6 +220,7 @@ jobs:
                   cmd1: $NX_EXEC lint
                   cmd2: $NX_EXEC build --configuration=production
                   cmd3: $NX_EXEC test --configuration=ci
+                  cmd4: $NX_EXEC e2e --configuration=ci
 
             - name: Stop Agents
               if: always()
