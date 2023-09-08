@@ -284,9 +284,11 @@ jobs:
                       ${{ runner.os }}-pnpm-store-
 
             - name: Check npm auth
+              if: startsWith(github.ref, 'refs/heads/main')
               run: npm whoami
 
             - name: Setup Git
+              if: startsWith(github.ref, 'refs/heads/main')
               uses: fregante/setup-git-user@v2
 
             - name: Semantic Versioning
@@ -295,9 +297,6 @@ jobs:
               run: NX_CLOUD_DISTRIBUTED_EXECUTION=false pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t version
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-            - name: Push release
-              run: git push origin --all && git push origin --tags
 
             - name: Publish packages
               if: startsWith(github.ref, 'refs/heads/main')
