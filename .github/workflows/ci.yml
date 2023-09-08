@@ -209,7 +209,7 @@ jobs:
               if: needs.agents.result != 'failure' &&
                   needs.agents.result != 'cancelled' &&
                   needs.agents.result != 'skipped'
-              run: npx nx-cloud start-ci-run --stop-agents-after=test
+              run: npx nx-cloud start-ci-run --stop-agents-after=e2e
 
             - name: Run Agents
               id: agents
@@ -290,12 +290,12 @@ jobs:
               uses: fregante/setup-git-user@v2
 
             - name: Semantic Versioning
-            #   if: startsWith(github.ref, 'refs/heads/main')
+              #   if: startsWith(github.ref, 'refs/heads/main')
               shell: bash
               run: NX_CLOUD_DISTRIBUTED_EXECUTION=false pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t version
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Publish packages
-            #   if: startsWith(github.ref, 'refs/heads/main')
+              #   if: startsWith(github.ref, 'refs/heads/main')
               run: NX_CLOUD_DISTRIBUTED_EXECUTION=false pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t deploy --dry-run
