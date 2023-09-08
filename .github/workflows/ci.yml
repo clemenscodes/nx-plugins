@@ -283,11 +283,11 @@ jobs:
                   restore-keys: |
                       ${{ runner.os }}-pnpm-store-
 
-            - name: Setup Git
-              uses: fregante/setup-git-user@v2
-
             - name: Check npm auth
               run: npm whoami
+
+            - name: Setup Git
+              uses: fregante/setup-git-user@v2
 
             - name: Semantic Versioning
               if: startsWith(github.ref, 'refs/heads/main')
