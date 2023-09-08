@@ -26,6 +26,12 @@
             "options": {
                 "lintFilePatterns": ["packages/nx-cmake-e2e/**/*.ts"]
             }
+        },
+        "version": {
+            "executor": "@jscutlery/semver:version",
+            "options": {
+                "preset": "conventional"
+            }
         }
     },
     "implicitDependencies": ["nx-cmake"]
