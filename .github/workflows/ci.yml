@@ -247,6 +247,7 @@ jobs:
               if: github.event_name != 'pull_request'
               with:
                   fetch-depth: 0
+                  token: ${{ secrets.PAT }}
 
             - name: Derive SHAs
               uses: nrwl/nx-set-shas@v3
@@ -295,8 +296,15 @@ jobs:
               if: startsWith(github.ref, 'refs/heads/main')
               shell: bash
               run: NX_CLOUD_DISTRIBUTED_EXECUTION=false pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t version
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Push
+              uses: ad-m/github-push-action@master
+              if: startsWith(github.ref, 'refs/heads/main')
+              with:
+                  github_token: ${{ secrets.PAT }}
+                  branch: main
+                  force: true
+                  tags: true
 
             - name: Publish packages
               if: startsWith(github.ref, 'refs/heads/main')
