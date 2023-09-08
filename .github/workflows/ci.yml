@@ -296,6 +296,9 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+            - name: Push release
+              run: git push origin --all && git push origin --tags
+
             - name: Publish packages
               #   if: startsWith(github.ref, 'refs/heads/main')
               run: NX_CLOUD_DISTRIBUTED_EXECUTION=false pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t deploy --dry-run
