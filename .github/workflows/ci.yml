@@ -301,10 +301,10 @@ jobs:
               uses: ad-m/github-push-action@master
               if: startsWith(github.ref, 'refs/heads/main')
               with:
-                github_token: ${{ secrets.PAT }}
-                branch: main
-                force: true
-                tags: true
+                  github_token: ${{ secrets.PAT }}
+                  branch: main
+                  force: true
+                  tags: true
 
             - name: Publish packages
               if: startsWith(github.ref, 'refs/heads/main')
