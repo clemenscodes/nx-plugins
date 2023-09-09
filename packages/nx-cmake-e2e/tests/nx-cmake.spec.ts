@@ -1,9 +1,18 @@
 import { execSync } from 'child_process';
 import { join, dirname } from 'path';
 import { mkdirSync, rmSync } from 'fs';
+import { ProjectGraph, readJsonFile } from '@nx/devkit';
+
+type Graph = {
+    graph: {
+        nodes: ProjectGraph['nodes'];
+        dependencies: ProjectGraph['dependencies'];
+    };
+};
 
 describe('nx-cmake', () => {
     let projectDirectory: string;
+    const projectName = 'nx-cmake-test';
 
     beforeAll(() => {
         projectDirectory = createTestProject();
@@ -42,7 +51,7 @@ describe('nx-cmake', () => {
 
     it('should generate binary', () => {
         execSync(
-            'nx g nx-cmake:bin  --name=spl --language=C --no-interactive',
+            `nx g nx-cmake:bin  --name=${projectName} --language=C --no-interactive`,
             {
                 cwd: projectDirectory,
                 stdio: 'inherit',
@@ -50,18 +59,34 @@ describe('nx-cmake', () => {
         );
     });
 
-    it('should generate project graph', () => {
-        execSync(
-            `NX_DAEMON=false nx graph --file=${projectDirectory}/output.json`,
-            {
-                cwd: projectDirectory,
-                stdio: 'inherit',
-            }
-        );
-        execSync(`cat ${projectDirectory}/output.json`, {
+    it('should generate project graph and process dependencies correctly', () => {
+        const cmd = `NX_DAEMON=false nx graph --file=${projectDirectory}/graph.json`;
+        execSync(cmd, {
             cwd: projectDirectory,
             stdio: 'inherit',
         });
+
+        const file: Graph = readJsonFile(`${projectDirectory}/graph.json`);
+        const { graph } = file;
+        expect(graph).toBeDefined();
+        const projectLibName = `lib${projectName}`;
+        const projectTestName = `test${projectName}`;
+        const projectBinaryDeps = graph.dependencies[projectName];
+        const projectTestDeps = graph.dependencies[projectTestName];
+        expect(projectBinaryDeps).toStrictEqual([
+            {
+                source: projectName,
+                target: projectLibName,
+                type: 'static',
+            },
+        ]);
+        expect(projectTestDeps).toStrictEqual([
+            {
+                source: projectTestName,
+                target: projectLibName,
+                type: 'static',
+            },
+        ]);
     });
 });
 
