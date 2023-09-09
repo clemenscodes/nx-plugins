@@ -10,6 +10,8 @@ import type { ModuleGeneratorSchema } from './schema';
 import { resolveOptions } from '../../utils/resolveOptions/resolveOptions';
 import { trimLib } from '../../utils/trimLib/trimLib';
 import { getTag } from '../../utils/graphUtils/filterProjects/filterProjects';
+import { getIncludeDirective } from './utils/getIncludeDirective';
+import { projectIsApp } from './utils/projectIsApp';
 
 export async function moduleGenerator(
     tree: Tree,
@@ -20,8 +22,9 @@ export async function moduleGenerator(
     const { root, projectType, tags } = readProjectConfiguration(tree, project);
     const resolvedProject = names(project).constantName;
     const dirName = trimLib(project);
-    const isApp = projectType === 'application';
-    const include = isApp ? `"${name}.h"` : `<${dirName}/include/${name}.h>`;
+    const isApp = projectIsApp(projectType);
+    const include = getIncludeDirective(isApp, name, dirName);
+
     resolvedOptions.resolvedProject = resolvedProject;
     resolvedOptions.include = include;
     resolvedOptions.tag = getTag(tags);

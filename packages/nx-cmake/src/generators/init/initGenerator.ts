@@ -2,9 +2,9 @@ import type { InitGeneratorSchema } from './schema';
 import { type Tree, formatFiles, readNxJson, updateNxJson } from '@nx/devkit';
 import { getUpdatedNxJson } from './utils/getUpdatedNxJson';
 import { generateCmakeConfigFiles } from './utils/generateCmakeConfigFiles';
+import { generateGlobalIncludeDir } from './utils/generateGlobalIncludeDir';
 import { generateRootConfig } from './utils/generateRootConfig';
 import { generateClangFormatPreset } from './utils/generateClangFormatPreset';
-import { generateGlobalIncludeDir } from './utils/generateGlobalIncludeDir';
 
 export async function initGenerator(tree: Tree, options: InitGeneratorSchema) {
     const { skipFormat } = options;
@@ -24,5 +24,3 @@ export async function initGenerator(tree: Tree, options: InitGeneratorSchema) {
         await formatFiles(tree);
     }
 }
-
-export default initGenerator;
