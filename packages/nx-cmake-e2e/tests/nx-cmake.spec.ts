@@ -51,10 +51,13 @@ describe('nx-cmake', () => {
     });
 
     it('should generate project graph', () => {
-        execSync(`NX_DAEMON=false nx graph --file=${projectDirectory}/output.json`, {
-            cwd: projectDirectory,
-            stdio: 'inherit',
-        });
+        execSync(
+            `NX_DAEMON=false nx graph --file=${projectDirectory}/output.json`,
+            {
+                cwd: projectDirectory,
+                stdio: 'inherit',
+            }
+        );
         execSync(`cat ${projectDirectory}/output.json`, {
             cwd: projectDirectory,
             stdio: 'inherit',

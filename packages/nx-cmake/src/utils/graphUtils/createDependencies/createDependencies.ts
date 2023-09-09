@@ -13,6 +13,10 @@ export const createDependencies: CreateDependencies = async (
     const { workspaceLayout } = nxJsonConfiguration;
     const { nodes } = graph;
     const filteredProjects = filterProjects(nodes);
-    const deps = await getDependencies(workspaceLayout, context, filteredProjects);
+    const deps = await getDependencies(
+        workspaceLayout,
+        context,
+        filteredProjects
+    );
     return deps;
 };
