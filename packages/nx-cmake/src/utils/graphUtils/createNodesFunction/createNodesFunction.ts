@@ -8,9 +8,12 @@ import { CProjectType } from '../../../models/types';
 export const createNodesFunction: CreateNodesFunction = (
     projectConfigurationFile: string
 ) => {
+    console.log({ projectConfigurationFile });
     const [root] = projectConfigurationFile.split(`/${projectFile}`);
+    console.log({ root });
     const type = getProjectType(root);
-    if (!type) {
+    console.log({ type });
+    if (type === null) {
         throw new Error('Failed to determine project type');
     }
     const name = getProjectName(type, root);
@@ -18,13 +21,14 @@ export const createNodesFunction: CreateNodesFunction = (
     const sourceRoot = `${root}/src`;
     const projectType: ProjectConfiguration['projectType'] =
         type === CProjectType.Lib ? 'library' : 'application';
-    const projects: Record<string, ProjectConfiguration> = {};
-    projects[name] = {
-        name,
-        root,
-        sourceRoot,
-        projectType,
-        targets,
+    const projects: Record<string, ProjectConfiguration> = {
+        [name]: {
+            name,
+            root,
+            sourceRoot,
+            projectType,
+            targets,
+        },
     };
     return { projects };
 };

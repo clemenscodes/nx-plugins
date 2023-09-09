@@ -11,6 +11,7 @@ describe('init generator', () => {
         cmakeConfigDir: 'cmake',
         addClangFormatPreset: true,
         skipFormat: false,
+        projectNameAndRootFormat: 'as-provided'
     };
 
     beforeEach(() => {

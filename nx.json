@@ -19,6 +19,11 @@
             }
         }
     },
+    "pluginsConfig": {
+        "@nx/js": {
+            "analyzeSourceFiles": true
+        }
+    },
     "plugins": ["nx-cmake"],
     "targetDefaults": {
         "lint": {
@@ -61,11 +66,7 @@
     },
     "workspaceLayout": {
         "appsDir": "bin",
-        "libsDir": "packages"
-    },
-    "pluginsConfig": {
-        "@nx/js": {
-            "analyzeSourceFiles": true
-        }
+        "libsDir": "packages",
+        "projectNameAndRootFormat": "as-provided"
     }
 }

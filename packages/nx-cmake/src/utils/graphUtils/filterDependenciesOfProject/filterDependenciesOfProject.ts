@@ -1,5 +1,6 @@
 import {
     CreateDependenciesContext,
+    NxJsonConfiguration,
     ProjectGraphDependencyWithFile,
     workspaceRoot,
 } from '@nx/devkit';
@@ -16,13 +17,14 @@ const getWorkspaceIncludeDir = () => {
 
 export const filterDependenciesOfProject = async (
     project: FilteredProject,
-    libsDir: string,
+    workspaceLayout: NxJsonConfiguration['workspaceLayout'],
     ctx: CreateDependenciesContext,
     projects: FilteredProject[]
 ): Promise<ProjectGraphDependencyWithFile[]> => {
     const { name, root: projectRoot, tag } = project;
     const fileName = `${projectRoot}/src/${name}.${tag}`;
     const includeDir = getWorkspaceIncludeDir();
+    const { libsDir } = workspaceLayout;
     const gtestInclude = `dist/${libsDir}/gtest/googletest-src/googletest/include`;
     const cmockaInclude = `dist/${libsDir}/cmocka/cmocka-src/include`;
     const cmd = `gcc -M ${fileName} -I ${projectRoot}/include -I ${libsDir} -I ${includeDir} -I ${gtestInclude} -I ${cmockaInclude}`;

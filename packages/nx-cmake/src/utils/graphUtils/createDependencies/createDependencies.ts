@@ -11,9 +11,8 @@ export const createDependencies: CreateDependencies = async (
 ): Promise<ProjectGraphDependencyWithFile[]> => {
     const { graph, nxJsonConfiguration } = context;
     const { workspaceLayout } = nxJsonConfiguration;
-    const { libsDir } = workspaceLayout;
     const { nodes } = graph;
     const filteredProjects = filterProjects(nodes);
-    const deps = await getDependencies(libsDir, context, filteredProjects);
+    const deps = await getDependencies(workspaceLayout, context, filteredProjects);
     return deps;
 };
