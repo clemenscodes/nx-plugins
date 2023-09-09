@@ -2,14 +2,14 @@ import { projectFile } from '../../config/projectFilePattern';
 import { workspaceLayout } from '@nx/devkit';
 import { CProjectType } from '../../models/types';
 
-export const getProjectType = (file: string): null | CProjectType => {
+export const getProjectType = (file: string): CProjectType => {
     const directory = file.split('/').shift();
     if (!directory) {
-        return null;
+        throw new Error('Failed to determine project type');
     }
     const { appsDir, libsDir } = workspaceLayout();
     if (directory !== appsDir && directory !== libsDir) {
-        return null;
+        throw new Error('Failed to determine project type');
     }
     if (directory === appsDir) {
         return CProjectType.App;
