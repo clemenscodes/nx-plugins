@@ -11,16 +11,48 @@ import { getDependenciesOfProject } from '../getDependenciesOfProject/getDepende
 import { getExternalFiles } from '../getExternalFiles/getExternalFiles';
 import { runCommand } from '../../runCommand/runCommand';
 
-const getWorkspaceIncludeDir = () => {
-    return 'include';
+const getWorkspaceIncludeDir = () => 'include';
+
+const configureTestFrameworks = (cmd: string, projectRoot: string): string => {
+    const runCmd = (cmd: string) => {
+        return execSync(cmd, {
+            encoding: 'utf-8',
+            stdio: ['inherit', 'pipe', 'pipe'],
+        });
+    };
+
+    try {
+        return runCmd(cmd);
+    } catch (error) {
+        if (!(error instanceof Error)) {
+            throw error;
+        }
+
+        const { message } = error;
+        const includesGtest = message.includes('#include <gtest/gtest.h>');
+        const includesCmocka = message.includes('#include <cmocka.h>');
+
+        if (includesGtest || includesCmocka) {
+            runCommand(
+                'cmake',
+                '-S',
+                `${workspaceRoot}/${projectRoot}`,
+                `${workspaceRoot}/dist/${projectRoot}`
+            );
+
+            return runCmd(cmd);
+        }
+
+        throw error;
+    }
 };
 
-export const filterDependenciesOfProject = async (
+export const filterDependenciesOfProject = (
     project: FilteredProject,
     workspaceLayout: NxJsonConfiguration['workspaceLayout'],
     ctx: CreateDependenciesContext,
     projects: FilteredProject[]
-): Promise<ProjectGraphDependencyWithFile[]> => {
+): ProjectGraphDependencyWithFile[] => {
     const { name, root: projectRoot, tag } = project;
     const fileName = `${projectRoot}/src/${name}.${tag}`;
     const includeDir = getWorkspaceIncludeDir();
@@ -28,44 +60,11 @@ export const filterDependenciesOfProject = async (
     const gtestInclude = `dist/${libsDir}/gtest/googletest-src/googletest/include`;
     const cmockaInclude = `dist/${libsDir}/cmocka/cmocka-src/include`;
     const cmd = `gcc -M ${fileName} -I ${projectRoot}/include -I ${libsDir} -I ${includeDir} -I ${gtestInclude} -I ${cmockaInclude}`;
-    let output: string;
-    try {
-        output = execSync(cmd, {
-            encoding: 'utf-8',
-            stdio: ['inherit', 'pipe', 'pipe'],
-        });
-    } catch (e) {
-        if (!(e instanceof Error)) {
-            console.error('An unexpected error happened');
-            throw e;
-        }
-        const { message } = e;
-        if (!message.includes('Command failed: gcc')) {
-            console.error('An unexpected error happened');
-            throw e;
-        }
-        if (
-            message.includes('#include <gtest/gtest.h>') ||
-            message.includes('#include <cmocka.h>')
-        ) {
-            runCommand(
-                'cmake',
-                '-S',
-                `${workspaceRoot}/${projectRoot}`,
-                `${workspaceRoot}/dist/${projectRoot}`
-            );
-            output = execSync(cmd, {
-                encoding: 'utf-8',
-                stdio: ['inherit', 'pipe', 'pipe'],
-            });
-        } else {
-            throw e;
-        }
-    }
-    if (!output) {
+    const stdout = configureTestFrameworks(cmd, projectRoot);
+    if (!stdout) {
         throw Error(`Failed process dependencies of project: ${project}`);
     }
-    const files = filterOutput(output);
+    const files = filterOutput(stdout);
     const externalFiles = getExternalFiles(files, projectRoot, tag);
     const dependencies = getDependenciesOfProject(
         name,

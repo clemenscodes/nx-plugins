@@ -6,14 +6,14 @@ import type {
 import type { FilteredProject } from '../../../models/types';
 import { filterDependenciesOfProject } from '../filterDependenciesOfProject/filterDependenciesOfProject';
 
-export const getDependencies = async (
+export const getDependencies = (
     workspaceLayout: NxJsonConfiguration['workspaceLayout'],
     ctx: CreateDependenciesContext,
     projects: FilteredProject[]
-): Promise<ProjectGraphDependencyWithFile[]> => {
+): ProjectGraphDependencyWithFile[] => {
     const deps: ProjectGraphDependencyWithFile[] = [];
     for (const project of projects) {
-        const dependencies = await filterDependenciesOfProject(
+        const dependencies = filterDependenciesOfProject(
             project,
             workspaceLayout,
             ctx,

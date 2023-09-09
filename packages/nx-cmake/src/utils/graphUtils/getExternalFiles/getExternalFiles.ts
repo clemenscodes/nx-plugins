@@ -9,21 +9,47 @@ export const getExternalFiles = (
         if (f.startsWith(root)) {
             return [];
         }
-        if (f.startsWith('dist') || f.startsWith('include')) {
+
+        if (f.startsWith('include') || f.startsWith('dist')) {
             return [f];
         }
-        const [n] = f.endsWith('.h')
+
+        const isHFile = f.endsWith('.h');
+        const isCFile = f.endsWith('.c');
+        const isCppFile = f.endsWith('.cpp');
+
+        if (!isHFile && !isCFile && !isCppFile) {
+            return [];
+        }
+
+        const [n] = isHFile
             ? f.split('.h')
-            : f.endsWith('.c')
+            : isCFile
             ? f.split('.c')
-            : f.endsWith('.cpp')
+            : isCppFile
             ? f.split('.cpp')
-            : f;
+            : [f];
+
         const name = n.replace('include', 'src');
-        const externalDependentFiles = [
-            f,
-            tag === 'c' ? name + '.c' : name + '.cpp',
-        ];
+        const externalDependentFiles = [f];
+
+        if (isHFile) {
+            // Add corresponding .c or .cpp file for .h files
+            if (tag === 'c') {
+                externalDependentFiles.push(name + '.c');
+            } else if (tag === 'cpp') {
+                externalDependentFiles.push(name + '.cpp');
+            }
+        }
+
+        if (isCFile && tag === 'cpp') {
+            return [];
+        }
+
+        if (isCppFile && tag === 'c') {
+            return [];
+        }
+
         return externalDependentFiles;
     });
 };

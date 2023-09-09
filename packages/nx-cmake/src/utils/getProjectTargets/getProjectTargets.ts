@@ -59,14 +59,29 @@ export const fmtTarget = {
     ...defaultConfiguration,
 };
 
+export const defaultTargets = {
+    cmake: cmakeTarget,
+    build: buildTarget,
+    lint: lintTarget,
+    fmt: fmtTarget,
+};
+
+export const appTargets = {
+    ...defaultTargets,
+    debug: debugTarget,
+    execute: executeTarget,
+};
+
+export const testTargets = {
+    ...defaultTargets,
+    test: testTarget,
+};
+
 export const getProjectTargets = (
     projectType: CProjectType
 ): ProjectConfiguration['targets'] => {
     const targets: ProjectConfiguration['targets'] = {
-        cmake: cmakeTarget,
-        build: buildTarget,
-        lint: lintTarget,
-        fmt: fmtTarget,
+        ...defaultTargets,
         ...(projectType === CProjectType.Test ? { test: testTarget } : {}),
         ...(projectType === CProjectType.App ? { debug: debugTarget } : {}),
         ...(projectType === CProjectType.App ? { execute: executeTarget } : {}),

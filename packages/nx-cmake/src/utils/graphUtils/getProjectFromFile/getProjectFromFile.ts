@@ -1,21 +1,29 @@
 import type { FilteredProject } from '../../../models/types';
 
-export const getProjectRootOfFile = (file: string) => {
+export const getProjectRootOfFile = (file: string): string | null => {
+    let projectRoot: string | null = null;
+
     if (file.includes('/include/')) {
-        const [projectRoot] = file.split('/include');
-        return projectRoot;
+        projectRoot = file.split('/include')[0];
+    } else if (file.includes('/src/')) {
+        projectRoot = file.split('/src')[0];
     }
-    if (file.includes('/src/')) {
-        const [projectRoot] = file.split('/src');
-        return projectRoot;
-    }
+
+    return projectRoot || null;
 };
 
 export const getProjectFromFile = (
     file: string,
     projects: FilteredProject[]
-) => {
+): string | null => {
+    if (projects.length === 0) {
+        return null;
+    }
     const fileProjectRoot = getProjectRootOfFile(file);
+    if (fileProjectRoot === null) {
+        return null;
+    }
+
     const project = projects
         .filter((project) => {
             const { root } = project;
@@ -27,5 +35,6 @@ export const getProjectFromFile = (
             return name;
         })
         .pop();
+
     return project;
 };

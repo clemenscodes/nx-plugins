@@ -6,17 +6,13 @@ import type {
 import { filterProjects } from '../filterProjects/filterProjects';
 import { getDependencies } from '../getDependencies/getDependencies';
 
-export const createDependencies: CreateDependencies = async (
+export const createDependencies: CreateDependencies = (
     context: CreateDependenciesContext
-): Promise<ProjectGraphDependencyWithFile[]> => {
+): ProjectGraphDependencyWithFile[] => {
     const { graph, nxJsonConfiguration } = context;
     const { workspaceLayout } = nxJsonConfiguration;
     const { nodes } = graph;
     const filteredProjects = filterProjects(nodes);
-    const deps = await getDependencies(
-        workspaceLayout,
-        context,
-        filteredProjects
-    );
+    const deps = getDependencies(workspaceLayout, context, filteredProjects);
     return deps;
 };

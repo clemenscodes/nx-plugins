@@ -1,14 +1,8 @@
 import { execSync } from 'child_process';
 import { join, dirname } from 'path';
 import { mkdirSync, rmSync } from 'fs';
-import { ProjectGraph, readJsonFile } from '@nx/devkit';
-
-type Graph = {
-    graph: {
-        nodes: ProjectGraph['nodes'];
-        dependencies: ProjectGraph['dependencies'];
-    };
-};
+import { readCachedProjectGraph } from '@nx/devkit';
+import { runNxCommandAsync } from '@nx/plugin/testing';
 
 describe('nx-cmake', () => {
     let projectDirectory: string;
@@ -42,33 +36,20 @@ describe('nx-cmake', () => {
         });
     });
 
-    it('should initialize', () => {
-        execSync('nx g nx-cmake:init --no-interactive', {
-            cwd: projectDirectory,
-            stdio: 'inherit',
-        });
+    it('should initialize', async () => {
+        const cmd = 'generate nx-cmake:init --no-interactive';
+        const result = await runNxCommandAsync(cmd, { cwd: projectDirectory });
+        console.log({ result });
     });
 
-    it('should generate binary', () => {
-        execSync(
-            `nx g nx-cmake:bin  --name=${projectName} --language=C --no-interactive`,
-            {
-                cwd: projectDirectory,
-                stdio: 'inherit',
-            }
-        );
+    it('should generate binary', async () => {
+        const cmd = `g nx-cmake:bin --name=${projectName} --language=C --no-interactive`;
+        const result = await runNxCommandAsync(cmd, { cwd: projectDirectory });
+        console.log({ result });
     });
 
-    it('should generate project graph and process dependencies correctly', () => {
-        const cmd = `NX_DAEMON=false nx graph --file=${projectDirectory}/graph.json`;
-        execSync(cmd, {
-            cwd: projectDirectory,
-            stdio: 'inherit',
-        });
-
-        const file: Graph = readJsonFile(`${projectDirectory}/graph.json`);
-        const { graph } = file;
-        expect(graph).toBeDefined();
+    it('should process dependencies correctly', () => {
+        const graph = readCachedProjectGraph();
         const projectLibName = `lib${projectName}`;
         const projectTestName = `test${projectName}`;
         const projectBinaryDeps = graph.dependencies[projectName];

@@ -9,7 +9,12 @@ export const filterProjects = (
     nodes: ProjectGraph['nodes']
 ): FilteredProject[] => {
     const filteredProjects = Object.values(nodes)
-        .filter(({ data }) => data.tags.some(isC))
+        .filter(({ data }) => {
+            if (data.tags === undefined) {
+                return false;
+            }
+            return data.tags.some(isC);
+        })
         .map(({ data, type }) => {
             const { name, root, tags } = data;
             const tag = getTag(tags);

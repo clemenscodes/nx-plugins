@@ -9,7 +9,9 @@ export const getProjectName = (type: CProjectType, root: string) => {
         return libProjectName;
     }
     if (type === CProjectType.Test) {
-        return testProjectName;
+        return appProjectName === 'test'
+            ? testProjectName
+            : `test${appProjectName}`;
     }
     return appProjectName;
 };
