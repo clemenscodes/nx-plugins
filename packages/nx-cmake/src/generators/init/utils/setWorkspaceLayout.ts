@@ -6,18 +6,42 @@ export const setWorkspaceLayout = (
     updatedNxJson: NxJsonConfiguration,
     options: InitGeneratorSchema
 ): [NxJsonConfiguration, InitGeneratorSchema] => {
-    const { appsDir, libsDir } = options;
+    const { appsDir, libsDir, projectNameAndRootFormat } = options;
 
     if (!nxJson.workspaceLayout) {
         updatedNxJson.workspaceLayout = {
             appsDir,
             libsDir,
+            projectNameAndRootFormat,
         };
         return [updatedNxJson, options];
     }
 
-    options.appsDir = nxJson.workspaceLayout.appsDir;
-    options.libsDir = nxJson.workspaceLayout.libsDir;
+    if (!nxJson.workspaceLayout.appsDir) {
+        updatedNxJson.workspaceLayout.appsDir = options.appsDir;
+    }
+
+    if (!nxJson.workspaceLayout.libsDir) {
+        updatedNxJson.workspaceLayout.libsDir = options.libsDir;
+    }
+
+    if (!nxJson.workspaceLayout.projectNameAndRootFormat) {
+        updatedNxJson.workspaceLayout.projectNameAndRootFormat =
+            options.projectNameAndRootFormat;
+    }
+
+    if (nxJson.workspaceLayout.appsDir) {
+        options.appsDir = nxJson.workspaceLayout.appsDir;
+    }
+
+    if (nxJson.workspaceLayout.libsDir) {
+        options.libsDir = nxJson.workspaceLayout.libsDir;
+    }
+
+    if (nxJson.workspaceLayout.projectNameAndRootFormat) {
+        options.projectNameAndRootFormat =
+            nxJson.workspaceLayout.projectNameAndRootFormat;
+    }
 
     return [updatedNxJson, options];
 };

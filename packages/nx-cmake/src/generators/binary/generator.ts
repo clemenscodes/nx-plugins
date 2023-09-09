@@ -4,7 +4,7 @@ import { getProjectTargets } from '../../utils/getProjectTargets/getProjectTarge
 import { resolveOptions } from '../../utils/resolveOptions/resolveOptions';
 import { CProjectType } from '../../models/types';
 import { linkLibrary } from '../link/utils/linkLibrary/linkLibrary';
-import { getProjectRoot } from './utils/getProjectRoot';
+import { getProjectRoot } from '../../utils/getProjectRoot/getProjectRoot';
 import type { BinGeneratorSchema } from './schema';
 import type { LibGeneratorSchema } from '../library/schema';
 import {
@@ -18,7 +18,7 @@ import {
 export async function binGenerator(tree: Tree, options: BinGeneratorSchema) {
     const resolvedOptions = resolveOptions(options);
     const { name, skipFormat, languageExtension } = resolvedOptions;
-    const projectRoot = getProjectRoot(tree, name);
+    const projectRoot = getProjectRoot(name, CProjectType.App);
     const relativeRootPath = offsetFromRoot(projectRoot);
     const targets = getProjectTargets(CProjectType.App);
 

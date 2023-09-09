@@ -1,10 +1,11 @@
 import { getProjectType } from './getProjectType';
 import { CProjectType } from '../../models/types';
 
-jest.mock('@nx/devkit', () => ({
-    workspaceLayout: () => ({
+jest.mock('../getWorkspaceLayout/getWorkspaceLayout', () => ({
+    getWorkspaceLayout: () => ({
         appsDir: 'apps',
         libsDir: 'libs',
+        projectNameAndRootFormat: 'as-provided',
     }),
 }));
 

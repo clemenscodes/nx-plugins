@@ -6,7 +6,6 @@ import {
     formatFiles,
     generateFiles,
     offsetFromRoot,
-    workspaceLayout,
 } from '@nx/devkit';
 import { CProjectType } from '../../models/types';
 import { resolveOptions } from '../../utils/resolveOptions/resolveOptions';
@@ -17,12 +16,12 @@ import { getLibName } from './utils/getLibName';
 import { getTestLib } from './utils/getTestLib';
 import { getTestName } from './utils/getTestName';
 import { getTestSetup } from './utils/getTestSetup';
+import { getProjectRoot } from '../../utils/getProjectRoot/getProjectRoot';
 
 export async function libGenerator(tree: Tree, options: LibGeneratorSchema) {
     const resolvedOptions = resolveOptions(options);
     const { name, skipFormat, generateTests, language } = resolvedOptions;
-    const { libsDir } = workspaceLayout();
-    const projectRoot = `${libsDir}/${name}`;
+    const projectRoot = getProjectRoot(name, CProjectType.Lib);
     const relativeRootPath = offsetFromRoot(projectRoot);
     const targets = getProjectTargets(CProjectType.Lib);
     const testTargets = getProjectTargets(CProjectType.Test);
