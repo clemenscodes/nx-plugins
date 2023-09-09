@@ -1,7 +1,13 @@
 import { getCMakeC } from './getCMakeC';
 
 describe('getCMakeC', () => {
-    test('should get the string for CMake C version', () => {
-        expect(getCMakeC).toBeDefined();
+    it('should return "C" for input "C"', () => {
+        const result = getCMakeC('C');
+        expect(result).toBe('C');
+    });
+
+    it('should return "CXX" for input "C++"', () => {
+        const result = getCMakeC('C++');
+        expect(result).toBe('CXX');
     });
 });

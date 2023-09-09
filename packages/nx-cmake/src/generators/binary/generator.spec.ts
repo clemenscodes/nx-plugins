@@ -8,7 +8,7 @@ describe('bin generator', () => {
     let tree: Tree;
     const options: BinGeneratorSchema = {
         name: 'test',
-        upperName: 'TEST',
+        constantName: 'TEST',
         relativeRootPath: '../../',
         generateTests: true,
         language: 'C',

@@ -24,7 +24,7 @@ describe('file generator', () => {
 
     const libOptions: LibGeneratorSchema = {
         name: 'test',
-        upperName: 'TEST',
+        constantName: 'TEST',
         language: 'C++',
         relativeRootPath: '../../',
         cmakeC: 'CXX',

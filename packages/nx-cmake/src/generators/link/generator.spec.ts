@@ -17,7 +17,7 @@ describe('link generator', () => {
 
     const libOptions: LibGeneratorSchema = {
         name: 'test',
-        upperName: 'TEST',
+        constantName: 'TEST',
         language: 'C++',
         relativeRootPath: '../../',
         cmakeC: 'CXX',
@@ -33,7 +33,7 @@ describe('link generator', () => {
 
     const linkLibOptions: LibGeneratorSchema = {
         name: 'link',
-        upperName: 'LINK',
+        constantName: 'LINK',
         language: 'C++',
         relativeRootPath: '../../',
         cmakeC: 'CXX',

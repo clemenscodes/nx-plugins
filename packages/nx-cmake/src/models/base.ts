@@ -2,7 +2,7 @@ import type { C, CMakeC, Link } from './types';
 
 export interface BaseOptions {
     name: string;
-    upperName: string;
+    constantName: string;
     relativeRootPath: string;
     languageExtension: string;
     language: C;

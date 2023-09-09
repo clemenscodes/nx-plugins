@@ -8,7 +8,7 @@ describe('lib generator', () => {
 
     const options: LibGeneratorSchema = {
         name: 'test',
-        upperName: 'TEST',
+        constantName: 'TEST',
         language: 'C++',
         relativeRootPath: '../../',
         cmakeC: 'CXX',
