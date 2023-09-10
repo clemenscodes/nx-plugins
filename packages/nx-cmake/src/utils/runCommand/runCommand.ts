@@ -5,7 +5,7 @@ export const runCommand = (
     ...args: string[]
 ): { success: boolean } => {
     process.env.FORCE_COLOR = 'true';
-    const cmd = `${command} ${args.join(' ')}`;
+    const cmd = args.length > 0 ? `${command} ${args.join(' ')}` : command;
     try {
         execSync(cmd, {
             encoding: 'utf-8',
