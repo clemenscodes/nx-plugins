@@ -1,7 +1,7 @@
 import type { CreateNodesFunction } from '@nx/devkit';
-import { getProjectType } from '../../getProjectType/getProjectType';
-import { projectFile } from '../../../config/projectFilePattern';
 import { getProjectConfiguration } from '../getProjectConfiguration/getProjectConfiguration';
+import { projectFile } from '../../config/projectFilePattern';
+import { getProjectType } from '../getProjectType/getProjectType';
 
 export const createNodesFunction: CreateNodesFunction = (
     projectConfigurationFile: string

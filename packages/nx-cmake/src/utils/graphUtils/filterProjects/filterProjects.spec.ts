@@ -1,7 +1,7 @@
 import type { ProjectGraphProjectNode } from '@nx/devkit';
 import { filterProjects, filterTags, getTag, isC } from './filterProjects';
-import { getProjectConfiguration } from '../getProjectConfiguration/getProjectConfiguration';
 import { CProjectType } from '../../../models/types';
+import { getProjectConfiguration } from '../../getProjectConfiguration/getProjectConfiguration';
 
 describe('isC', () => {
     it('should return true for "c" or "cpp"', () => {

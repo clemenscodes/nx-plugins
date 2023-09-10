@@ -3,8 +3,8 @@ import type {
     CreateDependenciesContext,
     ProjectGraphDependencyWithFile,
 } from '@nx/devkit';
-import { filterProjects } from '../filterProjects/filterProjects';
-import { getDependencies } from '../getDependencies/getDependencies';
+import { filterProjects } from '../graphUtils/filterProjects/filterProjects';
+import { getDependencies } from '../graphUtils/getDependencies/getDependencies';
 
 export const createDependencies: CreateDependencies = (
     context: CreateDependenciesContext

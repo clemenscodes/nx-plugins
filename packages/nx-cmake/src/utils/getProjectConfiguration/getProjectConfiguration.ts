@@ -1,8 +1,8 @@
 import type { ProjectConfiguration } from '@nx/devkit';
-import { CProjectType } from '../../../models/types';
-import { getProjectName } from '../getProjectName/getProjectName';
-import { getProjectTargets } from '../../getProjectTargets/getProjectTargets';
 import { getProjectConfigurationType } from '../getProjectConfigurationType/getProjectConfigurationType';
+import { CProjectType } from '../../models/types';
+import { getProjectName } from '../getProjectName/getProjectName';
+import { getProjectTargets } from '../getProjectTargets/getProjectTargets';
 
 export const getProjectConfiguration = (
     root: string,

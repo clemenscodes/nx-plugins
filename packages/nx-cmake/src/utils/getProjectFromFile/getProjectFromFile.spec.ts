@@ -1,4 +1,4 @@
-import { FilteredProject } from './../../../models/types';
+import type { FilteredProject } from '../../models/types';
 import { getProjectRootOfFile, getProjectFromFile } from './getProjectFromFile';
 
 const projects: FilteredProject[] = [

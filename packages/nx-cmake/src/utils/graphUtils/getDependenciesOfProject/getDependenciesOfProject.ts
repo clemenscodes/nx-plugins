@@ -4,7 +4,7 @@ import {
     DependencyType,
 } from '@nx/devkit';
 import type { FilteredProject } from '../../../models/types';
-import { getProjectFromFile } from '../getProjectFromFile/getProjectFromFile';
+import { getProjectFromFile } from '../../getProjectFromFile/getProjectFromFile';
 
 export const getDependenciesOfProject = (
     projectName: string,

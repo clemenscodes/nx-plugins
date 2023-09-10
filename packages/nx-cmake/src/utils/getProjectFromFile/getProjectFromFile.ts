@@ -1,4 +1,4 @@
-import type { FilteredProject } from '../../../models/types';
+import { FilteredProject } from '../../models/types';
 
 export const getProjectRootOfFile = (file: string): string | null => {
     let projectRoot: string | null = null;

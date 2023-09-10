@@ -1,6 +1,6 @@
 import type { CreateNodes } from '@nx/devkit';
-import { projectFilePattern } from '../../../config/projectFilePattern';
 import { createNodesFunction } from '../createNodesFunction/createNodesFunction';
+import { projectFilePattern } from '../../config/projectFilePattern';
 
 export const createNodes: CreateNodes = [
     projectFilePattern,

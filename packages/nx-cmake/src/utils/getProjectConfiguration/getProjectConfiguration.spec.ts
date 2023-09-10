@@ -1,10 +1,10 @@
-import { getProjectConfiguration } from './getProjectConfiguration';
-import { CProjectType } from '../../../models/types';
+import { CProjectType } from '../../models/types';
 import {
-    appTargets,
     defaultTargets,
+    appTargets,
     testTargets,
-} from '../../getProjectTargets/getProjectTargets';
+} from '../getProjectTargets/getProjectTargets';
+import { getProjectConfiguration } from './getProjectConfiguration';
 
 describe('getProjectConfiguration', () => {
     it('should return the correct configuration for a library project', () => {
