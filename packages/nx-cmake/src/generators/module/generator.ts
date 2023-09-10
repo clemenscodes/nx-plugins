@@ -2,7 +2,6 @@ import { join } from 'path';
 import {
     formatFiles,
     generateFiles,
-    names,
     readProjectConfiguration,
     type Tree,
 } from '@nx/devkit';
@@ -18,14 +17,13 @@ export async function moduleGenerator(
     options: ModuleGeneratorSchema
 ) {
     const resolvedOptions = resolveOptions(options);
-    const { skipFormat, project, name } = resolvedOptions;
-    const { root, projectType, tags } = readProjectConfiguration(tree, project);
-    const resolvedProject = names(project).constantName;
-    const dirName = trimLib(project);
+    const { skipFormat, name, constantName } = resolvedOptions;
+    const { root, projectType, tags } = readProjectConfiguration(tree, name);
+    const dirName = trimLib(name);
     const isApp = projectIsApp(projectType);
     const include = getIncludeDirective(isApp, name, dirName);
 
-    resolvedOptions.resolvedProject = resolvedProject;
+    resolvedOptions.resolvedProject = constantName;
     resolvedOptions.include = include;
     resolvedOptions.tag = getTag(tags);
 

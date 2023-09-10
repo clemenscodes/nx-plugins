@@ -6,15 +6,13 @@ import { BinGeneratorSchema } from './schema';
 
 describe('bin generator', () => {
     let tree: Tree;
+
     const options: BinGeneratorSchema = {
         name: 'test',
-        constantName: 'TEST',
-        relativeRootPath: '../../',
         generateTests: true,
         language: 'C',
-        cmakeC: 'C',
         skipFormat: false,
-        languageExtension: '',
+        link: 'shared',
     };
 
     beforeEach(() => {

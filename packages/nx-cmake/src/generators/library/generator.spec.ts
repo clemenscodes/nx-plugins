@@ -8,18 +8,10 @@ describe('lib generator', () => {
 
     const options: LibGeneratorSchema = {
         name: 'test',
-        constantName: 'TEST',
         language: 'C++',
-        relativeRootPath: '../../',
-        cmakeC: 'CXX',
         link: 'shared',
         skipFormat: false,
         generateTests: true,
-        languageExtension: 'cpp',
-        testLib: 'gtest',
-        setupTests: 'gtest_discover_tests(testgtest)',
-        includeGoogleTest: 'include(GoogleTest)',
-        baseTest: '',
     };
 
     beforeEach(() => {

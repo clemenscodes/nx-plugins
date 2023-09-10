@@ -1,10 +1,8 @@
 import type { BaseOptions } from '../../models/base';
 import type { CTag } from '../../models/types';
 
-export type ModuleGeneratorSchema = Required<
-    Omit<BaseOptions, 'link', 'language'>
-> & {
-    resolvedProject: string;
-    tag: CTag;
-    include: string;
+export type ModuleGeneratorSchema = Omit<BaseOptions, 'link'> & {
+    resolvedProject?: string;
+    include?: string;
+    tag?: CTag;
 };

@@ -5,13 +5,14 @@ import { InitGeneratorSchema } from './schema';
 
 describe('init generator', () => {
     let tree: Tree;
+
     const options: InitGeneratorSchema = {
         appsDir: 'bin',
         libsDir: 'packages',
+        projectNameAndRootFormat: 'as-provided',
         cmakeConfigDir: 'cmake',
         addClangFormatPreset: true,
         skipFormat: false,
-        projectNameAndRootFormat: 'as-provided',
     };
 
     beforeEach(() => {
