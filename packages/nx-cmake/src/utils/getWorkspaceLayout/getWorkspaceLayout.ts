@@ -6,7 +6,7 @@ export const getWorkspaceLayout = (): WorkspaceLayout => {
     const nxJson = getNxJsonConfiguration();
     const layout = nxJson['workspaceLayout'];
     const defaultLayout = workspaceLayout();
-    if (!workspaceLayout) {
+    if (!layout) {
         return {
             ...defaultLayout,
             projectNameAndRootFormat: 'as-provided',

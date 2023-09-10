@@ -18,9 +18,7 @@ export const getProjectRoot = (
     }
 
     if (projectType === CProjectType.Test) {
-        return projectNameAndRootFormat === 'as-provided'
-            ? `test${projectName}`
-            : `${libsDir}/${projectName}/test`;
+        return `${libsDir}/${projectName}/test`;
     }
 
     return projectNameAndRootFormat === 'as-provided'
