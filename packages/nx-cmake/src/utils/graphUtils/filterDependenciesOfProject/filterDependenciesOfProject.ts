@@ -132,5 +132,6 @@ export const filterDependenciesOfProject = (
         ctx,
         projects
     );
+    console.log({ dependencies });
     return dependencies;
 };
