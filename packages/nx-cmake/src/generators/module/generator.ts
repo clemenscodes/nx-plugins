@@ -2,27 +2,28 @@ import { join } from 'path';
 import {
     formatFiles,
     generateFiles,
-    names,
     readProjectConfiguration,
     type Tree,
 } from '@nx/devkit';
 import type { ModuleGeneratorSchema } from './schema';
-import { resolveOptions } from '../../utils/resolveOptions/resolveOptions';
-import { trimLib } from '../../utils/trimLib/trimLib';
 import { getTag } from '../../utils/graphUtils/filterProjects/filterProjects';
+import { getIncludeDirective } from './utils/getIncludeDirective';
+import { projectIsApp } from './utils/projectIsApp';
+import { resolveOptions } from '../../utils/generatorUtils/resolveOptions/resolveOptions';
+import { trimLib } from '../../utils/generatorUtils/trimLib/trimLib';
 
 export async function moduleGenerator(
     tree: Tree,
     options: ModuleGeneratorSchema
 ) {
     const resolvedOptions = resolveOptions(options);
-    const { skipFormat, project, name } = resolvedOptions;
-    const { root, projectType, tags } = readProjectConfiguration(tree, project);
-    const resolvedProject = names(project).constantName;
-    const dirName = trimLib(project);
-    const isApp = projectType === 'application';
-    const include = isApp ? `"${name}.h"` : `<${dirName}/include/${name}.h>`;
-    resolvedOptions.resolvedProject = resolvedProject;
+    const { skipFormat, name, constantName } = resolvedOptions;
+    const { root, projectType, tags } = readProjectConfiguration(tree, name);
+    const dirName = trimLib(name);
+    const isApp = projectIsApp(projectType);
+    const include = getIncludeDirective(isApp, name, dirName);
+
+    resolvedOptions.resolvedProject = constantName;
     resolvedOptions.include = include;
     resolvedOptions.tag = getTag(tags);
 

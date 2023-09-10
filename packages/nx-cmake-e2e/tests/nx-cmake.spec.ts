@@ -1,9 +1,18 @@
 import { execSync } from 'child_process';
 import { join, dirname } from 'path';
 import { mkdirSync, rmSync } from 'fs';
+import { ProjectGraph, readJsonFile } from '@nx/devkit';
+
+type Graph = {
+    graph: {
+        nodes: ProjectGraph['nodes'];
+        dependencies: ProjectGraph['dependencies'];
+    };
+};
 
 describe('nx-cmake', () => {
     let projectDirectory: string;
+    const projectName = 'nx-cmake-test';
 
     beforeAll(() => {
         projectDirectory = createTestProject();
@@ -13,7 +22,10 @@ describe('nx-cmake', () => {
         execSync(`npm install nx-cmake@e2e`, {
             cwd: projectDirectory,
             stdio: 'inherit',
-            env: process.env,
+            env: {
+                ...process.env,
+                NX_DAEMON: 'false',
+            },
         });
     });
 
@@ -31,6 +43,54 @@ describe('nx-cmake', () => {
             cwd: projectDirectory,
             stdio: 'inherit',
         });
+    });
+
+    it('should initialize', async () => {
+        const cmd = 'nx g nx-cmake:init --no-interactive';
+        execSync(cmd, {
+            cwd: projectDirectory,
+            stdio: 'inherit',
+            env: process.env,
+        });
+    });
+
+    it('should generate binary', async () => {
+        const cmd = `nx g nx-cmake:bin --name=${projectName} --language=C --no-interactive`;
+        execSync(cmd, {
+            cwd: projectDirectory,
+            stdio: 'inherit',
+            env: process.env,
+        });
+    });
+
+    it('should process dependencies correctly', () => {
+        const cmd = `nx graph --file=${projectDirectory}/graph.json`;
+        execSync(cmd, {
+            cwd: projectDirectory,
+            stdio: 'inherit',
+            env: { ...process.env, NX_DAEMON: 'false' },
+        });
+        const file: Graph = readJsonFile(`${projectDirectory}/graph.json`);
+        const { graph } = file;
+        expect(graph).toBeDefined();
+        const projectLibName = `lib${projectName}`;
+        const projectTestName = `test${projectName}`;
+        const projectBinaryDeps = graph.dependencies[projectName];
+        const projectTestDeps = graph.dependencies[projectTestName];
+        expect(projectBinaryDeps).toStrictEqual([
+            {
+                source: projectName,
+                target: projectLibName,
+                type: 'static',
+            },
+        ]);
+        expect(projectTestDeps).toStrictEqual([
+            {
+                source: projectTestName,
+                target: projectLibName,
+                type: 'static',
+            },
+        ]);
     });
 });
 

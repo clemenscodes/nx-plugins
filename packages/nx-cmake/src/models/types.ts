@@ -1,4 +1,4 @@
-import type { ProjectGraphProjectNode } from '@nx/devkit';
+import type { NxJsonConfiguration, ProjectGraphProjectNode } from '@nx/devkit';
 
 export enum CProjectType {
     App,
@@ -23,3 +23,5 @@ export type FilteredProject = {
     type: ProjectGraphProjectNode['type'];
     tag: CTag;
 };
+
+export type WorkspaceLayout = NxJsonConfiguration['workspaceLayout'];

@@ -17,34 +17,18 @@ describe('link generator', () => {
 
     const libOptions: LibGeneratorSchema = {
         name: 'test',
-        upperName: 'TEST',
         language: 'C++',
-        relativeRootPath: '../../',
-        cmakeC: 'CXX',
         link: 'shared',
         skipFormat: false,
         generateTests: true,
-        languageExtension: 'cpp',
-        testLib: 'gtest',
-        setupTests: 'gtest_discover_tests(testgtest)',
-        includeGoogleTest: 'include(GoogleTest)',
-        baseTest: '',
     };
 
     const linkLibOptions: LibGeneratorSchema = {
         name: 'link',
-        upperName: 'LINK',
         language: 'C++',
-        relativeRootPath: '../../',
-        cmakeC: 'CXX',
         link: 'shared',
         skipFormat: false,
         generateTests: true,
-        languageExtension: 'cpp',
-        testLib: 'gtest',
-        setupTests: 'gtest_discover_tests(testgtest)',
-        includeGoogleTest: 'include(GoogleTest)',
-        baseTest: '',
     };
 
     beforeEach(async () => {

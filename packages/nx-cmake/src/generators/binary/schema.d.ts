@@ -1,5 +1,5 @@
 import type { BaseOptions } from '../../models/base';
 
-export type BinGeneratorSchema = Omit<BaseOptions, 'project' | 'link'> & {
+export type BinGeneratorSchema = BaseOptions & {
     generateTests: boolean = true;
 };

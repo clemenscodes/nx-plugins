@@ -1,27 +1,27 @@
 import { join } from 'path';
+import libGenerator from '../library/generator';
+import { CProjectType } from '../../models/types';
+import { linkLibrary } from '../link/utils/linkLibrary/linkLibrary';
+import { getProjectRoot } from '../../utils/generatorUtils/getProjectRoot/getProjectRoot';
+import { getProjectTargets } from '../../utils/generatorUtils/getProjectTargets/getProjectTargets';
+import { resolveOptions } from '../../utils/generatorUtils/resolveOptions/resolveOptions';
 import type { BinGeneratorSchema } from './schema';
+import type { LibGeneratorSchema } from '../library/schema';
 import {
     type Tree,
     addProjectConfiguration,
     formatFiles,
     generateFiles,
     offsetFromRoot,
-    workspaceLayout,
 } from '@nx/devkit';
-import { getProjectTargets } from '../../utils/getProjectTargets/getProjectTargets';
-import { resolveOptions } from '../../utils/resolveOptions/resolveOptions';
-import libGenerator from '../library/generator';
-import { linkLibrary } from '../../utils/linkLibrary/linkLibrary';
-import { LibGeneratorSchema } from '../library/schema';
-import { CProjectType } from '../../models/types';
 
 export async function binGenerator(tree: Tree, options: BinGeneratorSchema) {
     const resolvedOptions = resolveOptions(options);
     const { name, skipFormat, languageExtension } = resolvedOptions;
-    const { appsDir } = workspaceLayout();
-    const projectRoot = `${appsDir}/${name}`;
+    const projectRoot = getProjectRoot(name, CProjectType.App);
     const relativeRootPath = offsetFromRoot(projectRoot);
     const targets = getProjectTargets(CProjectType.App);
+
     resolvedOptions.relativeRootPath = relativeRootPath;
 
     await libGenerator(tree, resolvedOptions as LibGeneratorSchema);

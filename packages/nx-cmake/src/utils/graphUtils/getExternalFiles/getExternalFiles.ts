@@ -1,29 +1,50 @@
 import { CTag } from '../../../models/types';
 
+export const hasValidExtension = (file: string, tag: CTag): boolean => {
+    if (tag === 'c') {
+        return file.endsWith('.h') || file.endsWith('.c');
+    } else if (tag === 'cpp') {
+        return file.endsWith('.h') || file.endsWith('.cpp');
+    }
+    return false;
+};
+
+export const generateExternalDependentFiles = (
+    file: string,
+    tag: CTag
+): string[] => {
+    const externalDependentFiles: string[] = [file];
+
+    if (file.endsWith('.h')) {
+        const name = file.replace('include', 'src').replace('.h', '');
+        if (tag === 'c') {
+            externalDependentFiles.push(name + '.c');
+        } else if (tag === 'cpp') {
+            externalDependentFiles.push(name + '.cpp');
+        }
+    }
+
+    return externalDependentFiles;
+};
+
 export const getExternalFiles = (
     files: string[],
     root: string,
     tag: CTag
 ): string[] => {
-    return files.flatMap((f) => {
-        if (f.startsWith(root)) {
+    return files.flatMap((file) => {
+        if (file.startsWith(root)) {
             return [];
         }
-        if (f.startsWith('dist') || f.startsWith('include')) {
-            return [f];
+
+        if (file.startsWith('include') || file.startsWith('dist')) {
+            return [file];
         }
-        const [n] = f.endsWith('.h')
-            ? f.split('.h')
-            : f.endsWith('.c')
-            ? f.split('.c')
-            : f.endsWith('.cpp')
-            ? f.split('.cpp')
-            : f;
-        const name = n.replace('include', 'src');
-        const externalDependentFiles = [
-            f,
-            tag === 'c' ? name + '.c' : name + '.cpp',
-        ];
-        return externalDependentFiles;
+
+        if (!hasValidExtension(file, tag)) {
+            return [];
+        }
+
+        return generateExternalDependentFiles(file, tag);
     });
 };

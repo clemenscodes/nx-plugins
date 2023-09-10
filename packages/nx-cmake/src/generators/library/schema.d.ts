@@ -1,9 +1,11 @@
 import type { BaseOptions } from '../../models/base';
 
-export interface LibGeneratorSchema extends BaseOptions {
-    testLib: 'gtest' | 'cmocka';
+export type GoogleTestInclude = 'include(GoogleTest)' | '';
+
+export type LibGeneratorSchema = BaseOptions & {
     generateTests: boolean = true;
-    setupTests: string;
-    includeGoogleTest: 'include(GoogleTest)' | '';
-    baseTest: string;
-}
+    testLib?: 'gtest' | 'cmocka';
+    setupTests?: string;
+    includeGoogleTest?: GoogleTestInclude;
+    baseTest?: string;
+};
