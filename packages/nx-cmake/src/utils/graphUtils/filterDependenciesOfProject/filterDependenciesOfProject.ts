@@ -79,6 +79,40 @@ export const getFileName = (
     return fileName;
 };
 
+export const installTestFrameworksIfNotInstalled = (
+    cmd: string,
+    projectRoot: string
+): string => {
+    try {
+        return executeCommand(cmd);
+    } catch (error) {
+        if (!(error instanceof Error)) {
+            throw error;
+        }
+
+        const { message } = error;
+
+        if (detectTestFramework(message)) {
+            runCommand(
+                'cmake',
+                '-S',
+                `${workspaceRoot}/${projectRoot}`,
+                `${workspaceRoot}/dist/${projectRoot}`
+            );
+
+            const stdout = executeCommand(cmd);
+
+            if (!stdout) {
+                throw Error(`Failed process dependencies`);
+            }
+
+            return stdout;
+        }
+
+        throw error;
+    }
+};
+
 export const filterDependenciesOfProject = (
     project: FilteredProject,
     workspaceLayout: NxJsonConfiguration['workspaceLayout'],
@@ -88,49 +122,14 @@ export const filterDependenciesOfProject = (
     const { name, root, tag } = project;
     const fileName = getFileName(root, name, tag);
     const cmd = getFilterCommand(fileName, root, workspaceLayout);
-
-    try {
-        const stdout = executeCommand(cmd);
-
-        const files = filterOutput(stdout);
-        const externalFiles = getExternalFiles(files, root, tag);
-        const dependencies = getDependenciesOfProject(
-            name,
-            externalFiles,
-            ctx,
-            projects
-        );
-        return dependencies;
-    } catch (error) {
-        if (!(error instanceof Error)) {
-            throw error;
-        }
-
-        if (detectTestFramework(error.message)) {
-            runCommand(
-                'cmake',
-                '-S',
-                `${workspaceRoot}/${root}`,
-                `${workspaceRoot}/dist/${root}`
-            );
-
-            const stdout = executeCommand(cmd);
-
-            if (!stdout) {
-                throw Error(`Failed to process dependencies`);
-            }
-
-            const files = filterOutput(stdout);
-            const externalFiles = getExternalFiles(files, root, tag);
-            const dependencies = getDependenciesOfProject(
-                name,
-                externalFiles,
-                ctx,
-                projects
-            );
-            return dependencies;
-        }
-
-        throw error;
-    }
+    const stdout = installTestFrameworksIfNotInstalled(cmd, root);
+    const files = filterOutput(stdout);
+    const externalFiles = getExternalFiles(files, root, tag);
+    const dependencies = getDependenciesOfProject(
+        name,
+        externalFiles,
+        ctx,
+        projects
+    );
+    return dependencies;
 };

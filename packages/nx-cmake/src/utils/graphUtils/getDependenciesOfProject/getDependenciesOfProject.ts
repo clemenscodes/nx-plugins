@@ -11,26 +11,27 @@ export const shouldIgnoreExternalFile = (externalFile: string): boolean => {
     return externalFile.startsWith('include');
 };
 
-const findDependencyFile = (
+export const findDependencyFile = (
     project: string,
     externalFile: string,
     ctx: CreateDependenciesContext
 ): FileData | undefined => {
-    const depFile = ctx.fileMap[project].find((f) => f.file === externalFile);
+    console.log({ ctx, project });
+    const projectFiles = ctx.fileMap[project];
+    if (!projectFiles) {
+        return undefined;
+    }
+    const depFile = projectFiles.find((f) => f.file === externalFile);
     return depFile;
 };
 
 export const getProjectGraphDependencyWithFile = (
-    projectName: string,
-    project: string,
-    externalFile: string
+    source: string,
+    target: string,
+    sourceFile: string
 ): ProjectGraphDependencyWithFile => {
-    const dependency = {
-        source: projectName,
-        target: project,
-        sourceFile: externalFile,
-        dependencyType: DependencyType.static,
-    };
+    const dependencyType = DependencyType.static;
+    const dependency = { source, target, sourceFile, dependencyType };
     return dependency;
 };
 
@@ -47,9 +48,14 @@ export const getDependenciesOfProject = (
         }
 
         const project = getProjectFromFile(externalFile, projects);
+
+        if (project === null) {
+            continue;
+        }
+
         const depFile = findDependencyFile(project, externalFile, ctx);
 
-        if (depFile) {
+        if (!depFile) {
             continue;
         }
 
