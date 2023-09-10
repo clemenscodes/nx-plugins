@@ -16,7 +16,6 @@ export const findDependencyFile = (
     externalFile: string,
     ctx: CreateDependenciesContext
 ): FileData | undefined => {
-    console.log({ ctx, project });
     const projectFiles = ctx.fileMap[project];
     if (!projectFiles) {
         return undefined;
