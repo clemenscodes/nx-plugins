@@ -8,15 +8,15 @@ import {
     offsetFromRoot,
 } from '@nx/devkit';
 import { CProjectType } from '../../models/types';
-import { resolveOptions } from '../../utils/resolveOptions/resolveOptions';
-import { getProjectTargets } from '../../utils/getProjectTargets/getProjectTargets';
 import { getBaseTest } from './utils/getBaseTest';
 import { getGoogleTestInclude } from './utils/getGoogleTestInclude';
 import { getLibName } from './utils/getLibName';
 import { getTestLib } from './utils/getTestLib';
 import { getTestName } from './utils/getTestName';
 import { getTestSetup } from './utils/getTestSetup';
-import { getProjectRoot } from '../../utils/getProjectRoot/getProjectRoot';
+import { getProjectRoot } from '../../utils/generatorUtils/getProjectRoot/getProjectRoot';
+import { getProjectTargets } from '../../utils/generatorUtils/getProjectTargets/getProjectTargets';
+import { resolveOptions } from '../../utils/generatorUtils/resolveOptions/resolveOptions';
 
 export async function libGenerator(tree: Tree, options: LibGeneratorSchema) {
     const resolvedOptions = resolveOptions(options);

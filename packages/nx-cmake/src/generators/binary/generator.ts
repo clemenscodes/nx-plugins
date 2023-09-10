@@ -1,10 +1,10 @@
 import { join } from 'path';
 import libGenerator from '../library/generator';
-import { getProjectTargets } from '../../utils/getProjectTargets/getProjectTargets';
-import { resolveOptions } from '../../utils/resolveOptions/resolveOptions';
 import { CProjectType } from '../../models/types';
 import { linkLibrary } from '../link/utils/linkLibrary/linkLibrary';
-import { getProjectRoot } from '../../utils/getProjectRoot/getProjectRoot';
+import { getProjectRoot } from '../../utils/generatorUtils/getProjectRoot/getProjectRoot';
+import { getProjectTargets } from '../../utils/generatorUtils/getProjectTargets/getProjectTargets';
+import { resolveOptions } from '../../utils/generatorUtils/resolveOptions/resolveOptions';
 import type { BinGeneratorSchema } from './schema';
 import type { LibGeneratorSchema } from '../library/schema';
 import {

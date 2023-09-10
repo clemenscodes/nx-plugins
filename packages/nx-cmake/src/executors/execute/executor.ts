@@ -1,6 +1,6 @@
 import { ExecutorContext } from '@nx/devkit';
 import { ExecuteExecutorSchema } from './schema';
-import { runCommand } from '../../utils/runCommand/runCommand';
+import { runCommand } from '../../utils/commandUtils/runCommand/runCommand';
 
 export default async function* runExecutor(
     options: ExecuteExecutorSchema,

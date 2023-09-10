@@ -12,8 +12,8 @@ import type {
 import { filterGccDependencyOutput } from '../filterGccDependencyOutput/filterGccDependencyOutput';
 import { getDependenciesOfProject } from '../getDependenciesOfProject/getDependenciesOfProject';
 import { getExternalFiles } from '../getExternalFiles/getExternalFiles';
-import { runCommand } from '../../runCommand/runCommand';
-import { executeCommand } from '../../executeCommand/executeCommand';
+import { runCommand } from '../../commandUtils/runCommand/runCommand';
+import { executeCommand } from '../../commandUtils/executeCommand/executeCommand';
 
 export const getWorkspaceIncludeDir = () => 'include';
 

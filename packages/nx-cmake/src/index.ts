@@ -1,8 +1,8 @@
 import { CreateNodes, type NxPluginV2 } from '@nx/devkit';
 import { PLUGIN_NAME } from './config/pluginName';
-import { createDependencies } from './utils/createDependencies/createDependencies';
 import { projectFilePattern } from './config/projectFilePattern';
-import { createNodesFunction } from './utils/createNodesFunction/createNodesFunction';
+import { createNodesFunction } from './createNodesFunction/createNodesFunction';
+import { createDependencies } from './createDependencies/createDependencies';
 
 const createNodes: CreateNodes = [projectFilePattern, createNodesFunction];
 

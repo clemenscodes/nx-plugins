@@ -5,7 +5,7 @@ import {
     FileData,
 } from '@nx/devkit';
 import type { FilteredProject } from '../../../models/types';
-import { getProjectFromFile } from '../../getProjectFromFile/getProjectFromFile';
+import { getProjectFromFile } from '../../generatorUtils/getProjectFromFile/getProjectFromFile';
 
 export const shouldIgnoreExternalFile = (externalFile: string): boolean => {
     return externalFile.startsWith('include');

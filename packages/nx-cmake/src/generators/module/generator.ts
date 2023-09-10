@@ -6,11 +6,11 @@ import {
     type Tree,
 } from '@nx/devkit';
 import type { ModuleGeneratorSchema } from './schema';
-import { resolveOptions } from '../../utils/resolveOptions/resolveOptions';
-import { trimLib } from '../../utils/trimLib/trimLib';
 import { getTag } from '../../utils/graphUtils/filterProjects/filterProjects';
 import { getIncludeDirective } from './utils/getIncludeDirective';
 import { projectIsApp } from './utils/projectIsApp';
+import { resolveOptions } from '../../utils/generatorUtils/resolveOptions/resolveOptions';
+import { trimLib } from '../../utils/generatorUtils/trimLib/trimLib';
 
 export async function moduleGenerator(
     tree: Tree,

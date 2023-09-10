@@ -12,9 +12,9 @@ import {
     installTestFramework,
     filterDependenciesOfProject,
 } from './filterDependenciesOfProject';
-import * as executeCommandModule from '../../executeCommand/executeCommand';
+import * as executeCommandModule from '../../commandUtils/executeCommand/executeCommand';
 import * as filterDependenciesOfProjectModule from './filterDependenciesOfProject';
-import * as runCommandModule from '../../runCommand/runCommand';
+import * as runCommandModule from '../../commandUtils/runCommand/runCommand';
 import {
     ProjectGraphDependencyWithFile,
     type CreateDependenciesContext,

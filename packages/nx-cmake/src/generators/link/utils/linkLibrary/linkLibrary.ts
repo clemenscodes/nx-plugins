@@ -1,6 +1,6 @@
 import { type Tree, updateProjectConfiguration, getProjects } from '@nx/devkit';
 import { Link } from '../../../../models/types';
-import { trimLib } from '../../../../utils/trimLib/trimLib';
+import { trimLib } from '../../../../utils/generatorUtils/trimLib/trimLib';
 
 export const linkLibrary = (
     tree: Tree,
