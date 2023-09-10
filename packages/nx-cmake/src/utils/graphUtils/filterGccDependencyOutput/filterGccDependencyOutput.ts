@@ -1,14 +1,16 @@
+export const isValidGccOutput = (chunk: string): boolean => {
+    return (
+        /\.(h|c|cpp)/.test(chunk) &&
+        !chunk.includes('.o') &&
+        !chunk.startsWith('/usr/') &&
+        !chunk.startsWith('dist/')
+    );
+};
+
 export const filterGccDependencyOutput = (output: string): string[] => {
     const filteredOutput = output
         .split(' ')
-        .filter(
-            (line) =>
-                /\.(h|c|cpp)/.test(line) &&
-                !line.includes('.o') &&
-                !line.includes('/usr/include') &&
-                !line.startsWith('dist/') &&
-                !line.includes('/usr/lib')
-        )
+        .filter(isValidGccOutput)
         .map((line) => line.trim());
     return filteredOutput;
 };
