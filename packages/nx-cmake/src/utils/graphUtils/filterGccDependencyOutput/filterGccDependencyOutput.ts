@@ -1,4 +1,4 @@
-export const filterOutput = (output: string): string[] => {
+export const filterGccDependencyOutput = (output: string): string[] => {
     const filteredOutput = output
         .split(' ')
         .filter(

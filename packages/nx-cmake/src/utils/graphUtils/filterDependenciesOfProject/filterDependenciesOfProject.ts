@@ -9,34 +9,13 @@ import type {
     FilteredProject,
     WorkspaceLayout,
 } from '../../../models/types';
-import { execSync } from 'child_process';
-import { filterOutput } from '../filterOutput/filterOutput';
+import { filterGccDependencyOutput } from '../filterGccDependencyOutput/filterGccDependencyOutput';
 import { getDependenciesOfProject } from '../getDependenciesOfProject/getDependenciesOfProject';
 import { getExternalFiles } from '../getExternalFiles/getExternalFiles';
 import { runCommand } from '../../runCommand/runCommand';
+import { executeCommand } from '../../executeCommand/executeCommand';
 
 export const getWorkspaceIncludeDir = () => 'include';
-
-export const messageIncludesGtest = (message: string) => {
-    return message.includes('#include <gtest/gtest.h>');
-};
-
-export const messageIncludesCmocka = (message: string) => {
-    return message.includes('#include <cmocka.h>');
-};
-
-export const detectTestFramework = (message: string) => {
-    const includesGtest = messageIncludesGtest(message);
-    const includesCmocka = messageIncludesCmocka(message);
-    return includesGtest || includesCmocka;
-};
-
-export const executeCommand = (cmd: string) => {
-    return execSync(cmd, {
-        encoding: 'utf-8',
-        stdio: ['inherit', 'pipe', 'pipe'],
-    });
-};
 
 export const getGtestInclude = (workspaceLayout: WorkspaceLayout): string => {
     const { libsDir } = workspaceLayout;
@@ -50,7 +29,7 @@ export const getCmockaInclude = (workspaceLayout: WorkspaceLayout): string => {
     return cmockaInclude;
 };
 
-export const getFilterCommand = (
+export const getGccDependenciesCommand = (
     fileName: string,
     projectRoot: string,
     workspaceLayout: WorkspaceLayout
@@ -79,9 +58,45 @@ export const getFileName = (
     return fileName;
 };
 
-export const installTestFrameworksIfNotInstalled = (
+export const messageIncludesGtest = (message: string) => {
+    return message.includes('#include <gtest/gtest.h>');
+};
+
+export const messageIncludesCmocka = (message: string) => {
+    return message.includes('#include <cmocka.h>');
+};
+
+export const detectTestFramework = (message: string) => {
+    const includesGtest = messageIncludesGtest(message);
+    const includesCmocka = messageIncludesCmocka(message);
+    return includesGtest || includesCmocka;
+};
+
+export const installTestFramework = (
+    workspaceRoot: string,
+    projectRoot: string,
+    cmd: string
+) => {
+    runCommand(
+        'cmake',
+        '-S',
+        `${workspaceRoot}/${projectRoot}`,
+        `${workspaceRoot}/dist/${projectRoot}`
+    );
+
+    const stdout = executeCommand(cmd);
+
+    if (!stdout) {
+        throw Error(`Failed process dependencies`);
+    }
+
+    return stdout;
+};
+
+export const getGccDependencies = (
     cmd: string,
-    projectRoot: string
+    projectRoot: string,
+    workspaceRoot: string
 ): string => {
     try {
         return executeCommand(cmd);
@@ -89,24 +104,10 @@ export const installTestFrameworksIfNotInstalled = (
         if (!(error instanceof Error)) {
             throw error;
         }
-
         const { message } = error;
 
         if (detectTestFramework(message)) {
-            runCommand(
-                'cmake',
-                '-S',
-                `${workspaceRoot}/${projectRoot}`,
-                `${workspaceRoot}/dist/${projectRoot}`
-            );
-
-            const stdout = executeCommand(cmd);
-
-            if (!stdout) {
-                throw Error(`Failed process dependencies`);
-            }
-
-            return stdout;
+            return installTestFramework(workspaceRoot, projectRoot, cmd);
         }
 
         throw error;
@@ -121,9 +122,9 @@ export const filterDependenciesOfProject = (
 ): ProjectGraphDependencyWithFile[] => {
     const { name, root, tag } = project;
     const fileName = getFileName(root, name, tag);
-    const cmd = getFilterCommand(fileName, root, workspaceLayout);
-    const stdout = installTestFrameworksIfNotInstalled(cmd, root);
-    const files = filterOutput(stdout);
+    const cmd = getGccDependenciesCommand(fileName, root, workspaceLayout);
+    const stdout = getGccDependencies(cmd, root, workspaceRoot);
+    const files = filterGccDependencyOutput(stdout);
     const externalFiles = getExternalFiles(files, root, tag);
     const dependencies = getDependenciesOfProject(
         name,

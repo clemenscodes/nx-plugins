@@ -1,6 +1,6 @@
-import { filterOutput } from './filterOutput';
+import { filterGccDependencyOutput } from './filterGccDependencyOutput';
 
-describe('filterOutput', () => {
+describe('filterGccDependencyOutput', () => {
     it('should filter and trim valid file lines from the output', () => {
         const inputOutput = `
             main.o
@@ -14,7 +14,7 @@ describe('filterOutput', () => {
         `;
         const expectedOutput = ['src/file1.h', 'src/file2.c', 'src/file3.cpp'];
 
-        const result = filterOutput(inputOutput);
+        const result = filterGccDependencyOutput(inputOutput);
 
         expect(result).toEqual(expectedOutput);
     });
@@ -23,7 +23,7 @@ describe('filterOutput', () => {
         const inputOutput = '';
         const expectedOutput: string[] = [];
 
-        const result = filterOutput(inputOutput);
+        const result = filterGccDependencyOutput(inputOutput);
 
         expect(result).toEqual(expectedOutput);
     });
@@ -35,7 +35,7 @@ describe('filterOutput', () => {
         `;
         const expectedOutput: string[] = [];
 
-        const result = filterOutput(inputOutput);
+        const result = filterGccDependencyOutput(inputOutput);
 
         expect(result).toEqual(expectedOutput);
     });
@@ -48,7 +48,7 @@ describe('filterOutput', () => {
         `;
         const expectedOutput = ['src/file1.h', 'src/file2.c', 'src/file3.cpp'];
 
-        const result = filterOutput(inputOutput);
+        const result = filterGccDependencyOutput(inputOutput);
 
         expect(result).toEqual(expectedOutput);
     });
