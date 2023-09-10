@@ -1,55 +1,50 @@
 import { CTag } from '../../../models/types';
 
+export const hasValidExtension = (file: string, tag: CTag): boolean => {
+    if (tag === 'c') {
+        return file.endsWith('.h') || file.endsWith('.c');
+    } else if (tag === 'cpp') {
+        return file.endsWith('.h') || file.endsWith('.cpp');
+    }
+    return false;
+};
+
+export const generateExternalDependentFiles = (
+    file: string,
+    tag: CTag
+): string[] => {
+    const externalDependentFiles: string[] = [file];
+
+    if (file.endsWith('.h')) {
+        const name = file.replace('include', 'src').replace('.h', '');
+        if (tag === 'c') {
+            externalDependentFiles.push(name + '.c');
+        } else if (tag === 'cpp') {
+            externalDependentFiles.push(name + '.cpp');
+        }
+    }
+
+    return externalDependentFiles;
+};
+
 export const getExternalFiles = (
     files: string[],
     root: string,
     tag: CTag
 ): string[] => {
-    return files.flatMap((f) => {
-        if (f.startsWith(root)) {
+    return files.flatMap((file) => {
+        if (file.startsWith(root)) {
             return [];
         }
 
-        if (f.startsWith('include') || f.startsWith('dist')) {
-            return [f];
+        if (file.startsWith('include') || file.startsWith('dist')) {
+            return [file];
         }
 
-        const isHFile = f.endsWith('.h');
-        const isCFile = f.endsWith('.c');
-        const isCppFile = f.endsWith('.cpp');
-
-        if (!isHFile && !isCFile && !isCppFile) {
+        if (!hasValidExtension(file, tag)) {
             return [];
         }
 
-        const [n] = isHFile
-            ? f.split('.h')
-            : isCFile
-            ? f.split('.c')
-            : isCppFile
-            ? f.split('.cpp')
-            : [f];
-
-        const name = n.replace('include', 'src');
-        const externalDependentFiles = [f];
-
-        if (isHFile) {
-            // Add corresponding .c or .cpp file for .h files
-            if (tag === 'c') {
-                externalDependentFiles.push(name + '.c');
-            } else if (tag === 'cpp') {
-                externalDependentFiles.push(name + '.cpp');
-            }
-        }
-
-        if (isCFile && tag === 'cpp') {
-            return [];
-        }
-
-        if (isCppFile && tag === 'c') {
-            return [];
-        }
-
-        return externalDependentFiles;
+        return generateExternalDependentFiles(file, tag);
     });
 };

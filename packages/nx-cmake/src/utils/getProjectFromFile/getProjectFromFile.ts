@@ -16,7 +16,6 @@ export const getProjectFromFile = (
     file: string,
     projects: FilteredProject[]
 ): string | null => {
-    console.log({ file, projects });
     if (projects.length === 0) {
         return null;
     }
