@@ -250,4 +250,87 @@ describe('getDependenciesOfProject', () => {
         // No dependencies should be added
         expect(result).toEqual([]);
     });
+
+    it('should return an array of ProjectGraphDependencyWithFile objects for valid dependencies and update ctx', () => {
+        const file1 = 'root/projectB/src/file1.c';
+        const file2 = 'root/projectB/src/file2.c';
+        const ctx: CreateDependenciesContext = {
+            fileMap: {
+                projectA: [],
+                projectB: [
+                    { file: file1, hash: 'hash1' },
+                    { file: file2, hash: 'hash2' },
+                ],
+            },
+            graph: undefined,
+            projectsConfigurations: undefined,
+            nxJsonConfiguration: undefined,
+            filesToProcess: undefined,
+        };
+
+        // Define sample FilteredProjects
+        const projects: FilteredProject[] = [
+            {
+                name: 'projectA',
+                root: 'root/projectA',
+                type: 'app',
+                tag: 'c',
+            },
+            {
+                name: 'projectB',
+                root: 'root/projectB',
+                type: 'app',
+                tag: 'cpp',
+            },
+        ];
+
+        const externalFiles: string[] = [file1, file2];
+
+        const result = getDependenciesOfProject(
+            'projectA',
+            externalFiles,
+            ctx,
+            projects
+        );
+
+        // Assertions on the return value
+        expect(result).toEqual([
+            {
+                source: 'projectA',
+                target: 'projectB',
+                sourceFile: file1,
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'projectA',
+                target: 'projectB',
+                sourceFile: file2,
+                dependencyType: DependencyType.static,
+            },
+        ]);
+
+        // Assertions on the side effect (changes to ctx)
+        expect(ctx.fileMap['projectA']).toEqual([
+            {
+                file: file1,
+                hash: 'hash1',
+            },
+            {
+                file: file2,
+                hash: 'hash2',
+            },
+        ]);
+
+        // Ensure ctx.fileMap['projectB'] remains unchanged
+        expect(ctx.fileMap['projectB']).toEqual([
+            {
+                file: file1,
+                hash: 'hash1',
+            },
+            {
+                file: file2,
+                hash: 'hash2',
+            },
+        ]);
+    });
 });
