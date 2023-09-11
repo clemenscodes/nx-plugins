@@ -1,5 +1,5 @@
 import { type Tree, generateFiles } from '@nx/devkit';
-import type { InitGeneratorSchema } from '../schema';
+import type { InitGeneratorSchema } from '../../schema';
 import { join } from 'path';
 
 export const generateClangFormatPreset = (
@@ -8,7 +8,7 @@ export const generateClangFormatPreset = (
 ) => {
     generateFiles(
         tree,
-        join(__dirname, '..', 'template', 'style'),
+        join(__dirname, '../../', 'template', 'style'),
         '.',
         options
     );

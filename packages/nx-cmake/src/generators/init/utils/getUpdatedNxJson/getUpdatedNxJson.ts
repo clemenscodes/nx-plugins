@@ -1,11 +1,11 @@
 import type { NxJsonConfiguration } from '@nx/devkit';
-import type { InitGeneratorSchema } from '../schema';
-import { addTargetDefaults } from './addTargetDefaults';
-import { addCacheableTargets } from './addCacheableTargets';
-import { addCmakeNamedInput } from './addCmakeNamedInput';
-import { addCmakePlugin } from './addCmakePlugin';
-import { setWorkspaceLayout } from './setWorkspaceLayout';
-import { formatNxJson } from './formatNxJson';
+import type { InitGeneratorSchema } from '../../schema';
+import { addTargetDefaults } from '../addTargetDefaults/addTargetDefaults';
+import { addCacheableTargets } from '../addCacheableTargets/addCacheableTargets';
+import { addCmakeNamedInput } from '../addCmakeNamedInput/addCmakeNamedInput';
+import { addCmakePlugin } from '../addCmakePlugin/addCmakePlugin';
+import { setWorkspaceLayout } from '../setWorkspaceLayout/setWorkspaceLayout';
+import { formatNxJson } from '../formatNxJson/formatNxJson';
 
 export const getUpdatedNxJson = (
     nxJson: NxJsonConfiguration,

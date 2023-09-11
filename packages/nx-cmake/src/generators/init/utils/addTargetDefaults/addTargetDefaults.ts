@@ -51,6 +51,22 @@ export const addTargetDefaults = (
         updatedNxJson.targetDefaults.execute = executeTargetDefault;
     }
 
+    if (!updatedNxJson.targetDefaults.cmake.dependsOn) {
+        updatedNxJson.targetDefaults.cmake.dependsOn = ['^cmake'];
+    }
+
+    if (!updatedNxJson.targetDefaults.cmake.dependsOn.includes('^cmake')) {
+        updatedNxJson.targetDefaults.cmake.dependsOn.push('^cmake');
+    }
+
+    if (!updatedNxJson.targetDefaults.cmake.inputs) {
+        updatedNxJson.targetDefaults.cmake.inputs = ['cmake'];
+    }
+
+    if (!updatedNxJson.targetDefaults.cmake.inputs.includes('cmake')) {
+        updatedNxJson.targetDefaults.cmake.inputs.push('cmake');
+    }
+
     if (!updatedNxJson.targetDefaults.build.dependsOn) {
         updatedNxJson.targetDefaults.build.dependsOn = dependsOnBuild;
         updatedNxJson.targetDefaults.build.dependsOn.push('^build');

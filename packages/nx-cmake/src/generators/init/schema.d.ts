@@ -1,9 +1,9 @@
-import type { NxJsonConfiguration } from '@nx/devkit';
+import type { WorkspaceLayout } from '../../models/types';
 
 export interface InitGeneratorSchema {
-    appsDir: string;
-    libsDir: string;
-    projectNameAndRootFormat: NxJsonConfiguration['workspaceLayout']['projectNameAndRootFormat'];
+    appsDir: WorkspaceLayout['appsDir'];
+    libsDir: WorkspaceLayout['libsDir'];
+    projectNameAndRootFormat: WorkspaceLayout['projectNameAndRootFormat'];
     cmakeConfigDir: string;
     addClangFormatPreset: boolean;
     skipFormat: boolean;

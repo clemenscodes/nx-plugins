@@ -1,15 +1,15 @@
 import { type Tree, generateFiles } from '@nx/devkit';
-import type { InitGeneratorSchema } from '../schema';
+import type { InitGeneratorSchema } from '../../schema';
 import { join } from 'path';
 
-export const generateGlobalIncludeDir = (
+export const generateRootConfig = (
     tree: Tree,
     options: InitGeneratorSchema
 ) => {
     generateFiles(
         tree,
-        join(__dirname, '..', 'template', 'include'),
-        'include',
+        join(__dirname, '../../', 'template', 'config'),
+        '.',
         options
     );
 };
