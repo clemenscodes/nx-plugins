@@ -1,4 +1,4 @@
-import type { BaseOptions } from '../../models/base';
+import type { BaseOptions } from '../../models/types';
 
 export type GoogleTestInclude = 'include(GoogleTest)' | '';
 

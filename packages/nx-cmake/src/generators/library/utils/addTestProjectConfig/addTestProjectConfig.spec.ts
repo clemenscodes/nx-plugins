@@ -2,7 +2,7 @@ import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { Tree, readProjectConfiguration } from '@nx/devkit';
 import { addTestProjectConfig } from './addTestProjectConfig';
 import { LibGeneratorSchema } from '../../schema';
-import { resolveLibOptions } from '../resolvedLibOptions/resolveLibOptions';
+import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
 
 describe('addTestProjectConfig', () => {
     let tree: Tree;

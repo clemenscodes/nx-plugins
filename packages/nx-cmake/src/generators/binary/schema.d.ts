@@ -1,4 +1,4 @@
-import type { BaseOptions } from '../../models/base';
+import type { BaseOptions } from '../../models/types';
 
 export type BinGeneratorSchema = BaseOptions & {
     generateTests: boolean = true;

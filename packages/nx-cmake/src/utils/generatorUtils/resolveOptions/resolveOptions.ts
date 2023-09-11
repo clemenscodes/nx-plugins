@@ -1,5 +1,5 @@
 import { getCMakeC } from '../getCmakeC/getCMakeC';
-import type { BaseOptions } from '../../../models/base';
+import type { BaseOptions } from '../../../models/types';
 import { names, offsetFromRoot } from '@nx/devkit';
 import { getLanguageExtension } from '../getLanguageExtension/getLanguageExtension';
 import { getProjectRoot } from '../getProjectRoot/getProjectRoot';

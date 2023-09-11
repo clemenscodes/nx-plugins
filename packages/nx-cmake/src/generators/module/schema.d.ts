@@ -1,5 +1,4 @@
-import type { BaseOptions } from '../../models/base';
-import type { CTag } from '../../models/types';
+import type { CTag, BaseOptions } from '../../models/types';
 
 export type ModuleGeneratorSchema = Omit<BaseOptions, 'link'> & {
     resolvedProject?: string;

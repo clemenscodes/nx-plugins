@@ -1,5 +1,3 @@
-import { readFileSync } from 'fs';
-import { join } from 'path';
 import { getBaseCmockaTest } from './getBaseCmockaTest';
 
 describe('getBaseCmockaTest', () => {
@@ -33,9 +31,28 @@ describe('getBaseCmockaTest', () => {
     it('should generate full test code with the project name', () => {
         const projectName = 'parser';
         const result = getBaseCmockaTest(projectName);
-        const expected = readFileSync(join(__dirname, 'expected.txt'), {
-            encoding: 'utf-8',
-        }).replace(/ {4}/g, '\t');
+        const expected =
+            'static int setup(void **state) {\n' +
+            '\t(void) state;\n' +
+            '\treturn 0;\n' +
+            '}\n' +
+            '\n' +
+            'static int teardown(void **state) {\n' +
+            '\t(void) state;\n' +
+            '\treturn 0;\n' +
+            '}\n' +
+            '\n' +
+            'static void test_parser(void **state) {\n' +
+            '\t(void) state;\n' +
+            '\tparser();\n' +
+            '}\n' +
+            '\n' +
+            'int main(void) {\n' +
+            '\tconst struct CMUnitTest parser_tests[] = {\n' +
+            '\t\tcmocka_unit_test(test_parser),\n' +
+            '\t};\n' +
+            '\treturn cmocka_run_group_tests(parser_tests, setup, teardown);\n' +
+            '}\n';
         expect(result).toEqual(expected);
     });
 });

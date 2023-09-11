@@ -1,3 +1,0 @@
-TEST(libgui, test_gui) {
-    EXPECT_EQ(gui(), 0);
-}

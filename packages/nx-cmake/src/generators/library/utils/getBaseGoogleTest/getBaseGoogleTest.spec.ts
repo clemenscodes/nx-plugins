@@ -1,6 +1,4 @@
-import { readFileSync } from 'fs';
 import { getBaseGoogleTest } from './getBaseGoogleTest';
-import { join } from 'path';
 
 describe('getBaseGoogleTest', () => {
     it('should generate test code with the library name and project name', () => {
@@ -15,9 +13,8 @@ describe('getBaseGoogleTest', () => {
         const libName = 'libgui';
         const projectName = 'gui';
         const result = getBaseGoogleTest(libName, projectName);
-        const expected = readFileSync(join(__dirname, 'expected.txt'), {
-            encoding: 'utf-8',
-        }).replace(/ {4}/g, '\t');
+        const expected =
+            'TEST(libgui, test_gui) {\n\tEXPECT_EQ(gui(), 0);\n}\n';
         expect(result).toEqual(expected);
     });
 });
