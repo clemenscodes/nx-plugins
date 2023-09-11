@@ -12,7 +12,6 @@ describe('bin generator', () => {
         generateTests: true,
         language: 'C',
         skipFormat: false,
-        link: 'shared',
     };
 
     beforeEach(() => {

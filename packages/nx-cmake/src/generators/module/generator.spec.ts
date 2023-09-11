@@ -17,7 +17,6 @@ describe('module generator', () => {
     const libOptions: LibGeneratorSchema = {
         name: 'test',
         language: 'C++',
-        link: 'shared',
         skipFormat: false,
         generateTests: true,
     };

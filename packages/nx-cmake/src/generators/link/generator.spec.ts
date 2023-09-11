@@ -18,7 +18,6 @@ describe('link generator', () => {
     const libOptions: LibGeneratorSchema = {
         name: 'test',
         language: 'C++',
-        link: 'shared',
         skipFormat: false,
         generateTests: true,
     };
@@ -26,7 +25,6 @@ describe('link generator', () => {
     const linkLibOptions: LibGeneratorSchema = {
         name: 'link',
         language: 'C++',
-        link: 'shared',
         skipFormat: false,
         generateTests: true,
     };

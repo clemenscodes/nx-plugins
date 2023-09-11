@@ -3,14 +3,15 @@ import { resolveOptions } from './resolveOptions';
 
 describe('resolveOptions', () => {
     it('should resolve options correctly', () => {
-        const inputOptions: Partial<BaseOptions> = {
+        const inputOptions: BaseOptions = {
             name: 'exampleName',
             language: 'C++',
-            link: 'static',
+            skipFormat: false,
         };
 
-        const expected: Partial<BaseOptions> = {
+        const expected: Required<BaseOptions> = {
             ...inputOptions,
+            relativeRootPath: '../../',
             constantName: 'EXAMPLE_NAME',
             languageExtension: 'cpp',
             cmakeC: 'CXX',
@@ -22,14 +23,15 @@ describe('resolveOptions', () => {
     });
 
     it('should resolve options correctly', () => {
-        const inputOptions: Partial<BaseOptions> = {
+        const inputOptions: BaseOptions = {
             name: 'exampleName',
             language: 'C',
-            link: 'static',
+            skipFormat: false,
         };
 
-        const expected: Partial<BaseOptions> = {
+        const expected: Required<BaseOptions> = {
             ...inputOptions,
+            relativeRootPath: '../../',
             constantName: 'EXAMPLE_NAME',
             languageExtension: 'c',
             cmakeC: 'C',

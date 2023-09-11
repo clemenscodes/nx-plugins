@@ -9,7 +9,6 @@ describe('lib generator', () => {
     const options: LibGeneratorSchema = {
         name: 'test',
         language: 'C++',
-        link: 'shared',
         skipFormat: false,
         generateTests: true,
     };
