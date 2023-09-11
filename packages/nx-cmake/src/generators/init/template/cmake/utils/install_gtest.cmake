@@ -1,5 +1,5 @@
 function(install_gtest)
-    set(FETCHCONTENT_BASE_DIR ${WORKSPACE_LIBRARY_DIST_DIR}/gtest)
+    set(FETCHCONTENT_BASE_DIR ${CMAKE_LIBRARY_PATH}/gtest)
 
     FetchContent_Declare(
         googletest

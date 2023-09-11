@@ -7,10 +7,10 @@ import { generateLibFiles } from './utils/generateLibFiles/generateLibFiles';
 
 export async function libGenerator(tree: Tree, options: LibGeneratorSchema) {
     const resolvedOptions = resolveLibOptions(options);
-    const { generateTests, skipFormat } = resolvedOptions;
+    const { skipFormat } = resolvedOptions;
     generateLibFiles(tree, resolvedOptions);
     addLibProjectConfig(tree, resolvedOptions);
-    generateTests && addTestProjectConfig(tree, resolvedOptions);
+    addTestProjectConfig(tree, resolvedOptions);
     skipFormat || (await formatFiles(tree));
 }
 
