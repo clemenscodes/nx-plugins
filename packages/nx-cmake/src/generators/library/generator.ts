@@ -8,12 +8,12 @@ import {
     offsetFromRoot,
 } from '@nx/devkit';
 import { CProjectType } from '../../models/types';
-import { getBaseTest } from './utils/getBaseTest';
-import { getGoogleTestInclude } from './utils/getGoogleTestInclude';
-import { getLibName } from './utils/getLibName';
-import { getTestLib } from './utils/getTestLib';
-import { getTestName } from './utils/getTestName';
-import { getTestSetup } from './utils/getTestSetup';
+import { getBaseTest } from './utils/getBaseTest/getBaseTest';
+import { getGoogleTestInclude } from './utils/getGoogleTestInclude/getGoogleTestInclude';
+import { getLibName } from './utils/getLibName/getLibName';
+import { getTestLib } from './utils/getTestLib/getTestLib';
+import { getTestName } from './utils/getTestName/getTestName';
+import { getTestSetup } from './utils/getTestSetup/getTestSetup';
 import { getProjectRoot } from '../../utils/generatorUtils/getProjectRoot/getProjectRoot';
 import { getProjectTargets } from '../../utils/generatorUtils/getProjectTargets/getProjectTargets';
 import { resolveOptions } from '../../utils/generatorUtils/resolveOptions/resolveOptions';

@@ -1,5 +1,5 @@
-import type { C } from '../../../models/types';
-import type { GoogleTestInclude } from '../schema';
+import type { C } from '../../../../models/types';
+import type { GoogleTestInclude } from '../../schema';
 
 export const getGoogleTestInclude = (
     generateTests: boolean,

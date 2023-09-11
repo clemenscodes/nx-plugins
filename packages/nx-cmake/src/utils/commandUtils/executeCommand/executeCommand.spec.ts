@@ -7,7 +7,6 @@ describe('executeCommand', () => {
     });
 
     it('should execute the given command and return the output', () => {
-        // Mock execSync to simulate a successful command execution
         const expectedOutput = 'Command output';
         const execSyncMock = jest
             .spyOn(child_process, 'execSync')
@@ -26,7 +25,6 @@ describe('executeCommand', () => {
     });
 
     it('should throw an error if the command execution fails', () => {
-        // Mock execSync to throw an error, simulating a failed command execution
         const execSyncMock = jest
             .spyOn(child_process, 'execSync')
             .mockImplementation(() => {
@@ -35,7 +33,6 @@ describe('executeCommand', () => {
 
         const cmd = 'invalid-command';
 
-        // Use a try-catch block to capture the error thrown by executeCommand
         let error: Error;
         try {
             executeCommand(cmd);
@@ -43,7 +40,6 @@ describe('executeCommand', () => {
             error = e;
         }
 
-        // Verify that the error was thrown
         expect(error).toBeInstanceOf(Error);
         expect(error.message).toBe('Command failed');
         expect(execSyncMock).toHaveBeenCalledWith(cmd, {
@@ -53,6 +49,4 @@ describe('executeCommand', () => {
 
         execSyncMock.mockRestore();
     });
-
-    // Add more test cases to cover different scenarios as needed
 });
