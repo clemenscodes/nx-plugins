@@ -20,6 +20,12 @@ describe('resolveBinOptions ', () => {
             relativeRootPath: '../../',
             cmakeC: 'CXX',
             projectRoot: 'base',
+            linkOptions: {
+                source: 'base',
+                target: 'libbase',
+                link: 'shared',
+                skipFormat: false,
+            },
         };
     });
 

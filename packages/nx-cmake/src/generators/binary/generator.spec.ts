@@ -29,7 +29,7 @@ describe('bin generator', () => {
         expect(binConfig).toBeDefined();
         expect(libConfig).toBeDefined();
         expect(testConfig).toBeDefined();
-        expect(formatFilesMock).toHaveBeenCalledTimes(2);
+        expect(formatFilesMock).toHaveBeenCalledTimes(3);
         formatFilesMock.mockReset();
     });
 

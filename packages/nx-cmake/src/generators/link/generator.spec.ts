@@ -9,8 +9,8 @@ describe('link generator', () => {
     let tree: Tree;
 
     const options: LinkGeneratorSchema = {
-        library: 'liblink',
-        project: 'libtest',
+        source: 'liblink',
+        target: 'libtest',
         link: 'shared',
         skipFormat: false,
     };

@@ -3,31 +3,28 @@
         "init": {
             "factory": "./src/generators/init/generator",
             "schema": "./src/generators/init/schema.json",
-            "description": "Initialize CMake support."
+            "description": "Initialize CMake support.",
+            "aliases": ["install", "i"]
         },
         "binary": {
             "factory": "./src/generators/binary/generator",
             "schema": "./src/generators/binary/schema.json",
             "x-type": "application",
             "description": "Generate a C or C++ binary.",
-            "aliases": ["bin"]
+            "aliases": ["b", "bin"]
         },
         "library": {
             "factory": "./src/generators/library/generator",
             "schema": "./src/generators/library/schema.json",
             "x-type": "library",
             "description": "Generate a C or C++ libary and link it to another library or binary.",
-            "aliases": ["lib"]
-        },
-        "module": {
-            "factory": "./src/generators/module/generator",
-            "schema": "./src/generators/module/schema.json",
-            "description": "Generate a C or C++ module for a library or binary."
+            "aliases": ["l", "lib"]
         },
         "link": {
             "factory": "./src/generators/link/generator",
             "schema": "./src/generators/link/schema.json",
-            "description": "Link a C or C++ library."
+            "description": "Link a C or C++ library.",
+            "aliases": ["ld"]
         }
     }
 }

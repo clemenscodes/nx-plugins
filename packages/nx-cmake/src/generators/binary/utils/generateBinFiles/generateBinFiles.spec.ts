@@ -26,7 +26,6 @@ describe('generateBinFiles', () => {
         const readIncludeFile = tree.read(binaryIncludeFile, 'utf8');
         const readSourceFile = tree.read(binarySourceFile, 'utf8');
         const readListsFile = tree.read(binaryListsFile, 'utf8');
-        console.log({ readIncludeFile, readListsFile, readSourceFile });
         expect(readIncludeFile).toStrictEqual(expectedIncludeFile);
         expect(readSourceFile).toStrictEqual(expectedSourceFile);
         expect(readListsFile).toStrictEqual(expectedListsFile);

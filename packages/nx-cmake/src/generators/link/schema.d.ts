@@ -1,8 +1,12 @@
 import type { Link } from '../../models/types';
 
-export interface LinkGeneratorSchema {
-    library: string;
-    project: string;
+export type LinkGeneratorSchema = {
+    source: string;
+    target: string;
     link: Link;
     skipFormat: boolean;
-}
+};
+
+export type LinkSchema = LinkGeneratorSchema & {
+    targetProjectRoot: string;
+};
