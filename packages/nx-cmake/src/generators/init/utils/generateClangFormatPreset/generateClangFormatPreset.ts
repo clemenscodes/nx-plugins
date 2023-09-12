@@ -6,6 +6,10 @@ export const generateClangFormatPreset = (
     tree: Tree,
     options: InitGeneratorSchema
 ) => {
+    const { addClangFormatPreset } = options;
+    if (!addClangFormatPreset) {
+        return;
+    }
     generateFiles(
         tree,
         join(__dirname, '../../', 'template', 'style'),

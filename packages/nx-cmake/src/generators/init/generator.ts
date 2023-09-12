@@ -10,19 +10,12 @@ export async function initGenerator(tree: Tree, options: InitGeneratorSchema) {
     const { skipFormat } = options;
     const nxJson = readNxJson(tree);
     const [updatedNxJson, updatedOptions] = getUpdatedNxJson(nxJson, options);
-
     updateNxJson(tree, updatedNxJson);
     generateCmakeConfigFiles(tree, updatedOptions);
     generateGlobalIncludeDir(tree, updatedOptions);
     generateRootConfig(tree, updatedOptions);
-
-    if (options.addClangFormatPreset) {
-        generateClangFormatPreset(tree, updatedOptions);
-    }
-
-    if (!skipFormat) {
-        await formatFiles(tree);
-    }
+    generateClangFormatPreset(tree, updatedOptions);
+    skipFormat || (await formatFiles(tree));
 }
 
 export default initGenerator;

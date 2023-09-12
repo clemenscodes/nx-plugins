@@ -8,10 +8,10 @@
             "options": {
                 "cacheableOperations": [
                     "build",
-                    "lint",
+                    "debug",
                     "test",
                     "e2e",
-                    "debug",
+                    "lint",
                     "fmt"
                 ],
                 "accessToken": "ZTBkM2I2MjYtNTc4Mi00YjUxLTkzNDAtZWFlYjg1OGY0Y2UxfHJlYWQtd3JpdGU=",
@@ -24,18 +24,7 @@
             "analyzeSourceFiles": true
         }
     },
-    "plugins": ["nx-cmake"],
     "targetDefaults": {
-        "lint": {
-            "inputs": [
-                "default",
-                "{workspaceRoot}/.eslintrc.json",
-                "{workspaceRoot}/.eslintignore"
-            ]
-        },
-        "test": {
-            "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"]
-        },
         "cmake": {
             "dependsOn": ["^cmake"],
             "inputs": ["cmake"]
@@ -64,6 +53,7 @@
             "{workspaceRoot}/cmake/**/*.cmake"
         ]
     },
+    "plugins": ["nx-cmake"],
     "workspaceLayout": {
         "appsDir": "bin",
         "libsDir": "packages",
