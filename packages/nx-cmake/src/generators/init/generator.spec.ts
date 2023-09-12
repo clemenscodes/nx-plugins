@@ -6,13 +6,14 @@ import * as devkit from '@nx/devkit';
 
 describe('init generator', () => {
     let tree: Tree;
+    let options: InitGeneratorSchema;
+    const formatFilesMock = jest
+        .spyOn(devkit, 'formatFiles')
+        .mockImplementation(jest.fn());
 
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
-    });
-
-    it('should run successfully with formatting', async () => {
-        const options: InitGeneratorSchema = {
+        options = {
             appsDir: 'bin',
             libsDir: 'packages',
             projectNameAndRootFormat: 'as-provided',
@@ -20,29 +21,17 @@ describe('init generator', () => {
             addClangFormatPreset: true,
             skipFormat: true,
         };
+    });
 
+    it('should run successfully with formatting', async () => {
         await initGenerator(tree, options);
-        const formatFilesMock = jest
-            .spyOn(devkit, 'formatFiles')
-            .mockImplementation(jest.fn());
         expect(formatFilesMock).toHaveBeenCalledTimes(0);
         formatFilesMock.mockReset();
     });
 
     it('should run successfully without formatting', async () => {
-        const options: InitGeneratorSchema = {
-            appsDir: 'bin',
-            libsDir: 'packages',
-            projectNameAndRootFormat: 'as-provided',
-            cmakeConfigDir: 'cmake',
-            addClangFormatPreset: true,
-            skipFormat: false,
-        };
-
+        options.skipFormat = false;
         await initGenerator(tree, options);
-        const formatFilesMock = jest
-            .spyOn(devkit, 'formatFiles')
-            .mockImplementation(jest.fn());
         expect(formatFilesMock).toHaveBeenCalledTimes(1);
         formatFilesMock.mockReset();
     });

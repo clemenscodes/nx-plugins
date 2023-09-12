@@ -6,20 +6,25 @@ import { BinGeneratorSchema } from './schema';
 
 describe('bin generator', () => {
     let tree: Tree;
+    let options: BinGeneratorSchema;
 
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
-    });
-
-    it('should run successfully', async () => {
-        const options: BinGeneratorSchema = {
+        options = {
             name: 'test',
             generateTests: true,
             language: 'C',
             skipFormat: false,
         };
+    });
+
+    it('should run successfully', async () => {
         await binGenerator(tree, options);
-        const config = readProjectConfiguration(tree, 'testtest');
-        expect(config).toBeDefined();
+        const binConfig = readProjectConfiguration(tree, 'test');
+        const libConfig = readProjectConfiguration(tree, 'libtest');
+        const testConfig = readProjectConfiguration(tree, 'testtest');
+        expect(binConfig).toBeDefined();
+        expect(libConfig).toBeDefined();
+        expect(testConfig).toBeDefined();
     });
 });
