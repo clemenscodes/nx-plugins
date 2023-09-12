@@ -1,27 +1,49 @@
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import { Tree, readNxJson } from '@nx/devkit';
 import { initGenerator } from './generator';
-import { InitGeneratorSchema } from './schema';
+import type { Tree } from '@nx/devkit';
+import type { InitGeneratorSchema } from './schema';
+import * as devkit from '@nx/devkit';
 
 describe('init generator', () => {
     let tree: Tree;
-
-    const options: InitGeneratorSchema = {
-        appsDir: 'bin',
-        libsDir: 'packages',
-        projectNameAndRootFormat: 'as-provided',
-        cmakeConfigDir: 'cmake',
-        addClangFormatPreset: true,
-        skipFormat: false,
-    };
 
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
     });
 
-    it('should run successfully', async () => {
+    it('should run successfully with formatting', async () => {
+        const options: InitGeneratorSchema = {
+            appsDir: 'bin',
+            libsDir: 'packages',
+            projectNameAndRootFormat: 'as-provided',
+            cmakeConfigDir: 'cmake',
+            addClangFormatPreset: true,
+            skipFormat: true,
+        };
+
         await initGenerator(tree, options);
-        const config = readNxJson(tree);
-        expect(config).toBeDefined();
+        const formatFilesMock = jest
+            .spyOn(devkit, 'formatFiles')
+            .mockImplementation(jest.fn());
+        expect(formatFilesMock).toHaveBeenCalledTimes(0);
+        formatFilesMock.mockReset();
+    });
+
+    it('should run successfully without formatting', async () => {
+        const options: InitGeneratorSchema = {
+            appsDir: 'bin',
+            libsDir: 'packages',
+            projectNameAndRootFormat: 'as-provided',
+            cmakeConfigDir: 'cmake',
+            addClangFormatPreset: true,
+            skipFormat: false,
+        };
+
+        await initGenerator(tree, options);
+        const formatFilesMock = jest
+            .spyOn(devkit, 'formatFiles')
+            .mockImplementation(jest.fn());
+        expect(formatFilesMock).toHaveBeenCalledTimes(1);
+        formatFilesMock.mockReset();
     });
 });
