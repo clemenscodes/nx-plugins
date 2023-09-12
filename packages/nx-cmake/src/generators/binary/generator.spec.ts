@@ -7,20 +7,19 @@ import { BinGeneratorSchema } from './schema';
 describe('bin generator', () => {
     let tree: Tree;
 
-    const options: BinGeneratorSchema = {
-        name: 'test',
-        generateTests: true,
-        language: 'C',
-        skipFormat: false,
-    };
-
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
     });
 
     it('should run successfully', async () => {
+        const options: BinGeneratorSchema = {
+            name: 'test',
+            generateTests: true,
+            language: 'C',
+            skipFormat: false,
+        };
         await binGenerator(tree, options);
-        const config = readProjectConfiguration(tree, 'test');
+        const config = readProjectConfiguration(tree, 'testtest');
         expect(config).toBeDefined();
     });
 });
