@@ -1,15 +1,42 @@
-import type { Tree } from '@nx/devkit';
-import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { resolveBinOptions } from './resolveBinOptions';
+import { BinGeneratorSchema, BinSchema } from '../../schema';
 
 describe('resolveBinOptions ', () => {
-    let tree: Tree;
+    let options: BinGeneratorSchema;
+    let expected: BinSchema;
 
     beforeEach(() => {
-        tree = createTreeWithEmptyWorkspace();
+        options = {
+            name: 'base',
+            language: 'C++',
+            skipFormat: false,
+            generateTests: false,
+        };
+
+        expected = {
+            ...options,
+            constantName: 'BASE',
+            languageExtension: 'cpp',
+            relativeRootPath: '../../',
+            cmakeC: 'CXX',
+            projectRoot: 'base',
+        };
     });
 
-    it('should resolve binary options', () => {
-        expect(resolveBinOptions).toBeDefined();
+    const defaultTest = () => {
+        const result = resolveBinOptions(options);
+        expect(result).toStrictEqual(expected);
+    };
+
+    it('should resolve default binary options', defaultTest);
+
+    it('should resolve binary options when language is C', () => {
+        options.language = 'C';
+        options.generateTests = true;
+        expected.language = 'C';
+        expected.generateTests = true;
+        expected.languageExtension = 'c';
+        expected.cmakeC = 'C';
+        defaultTest();
     });
 });

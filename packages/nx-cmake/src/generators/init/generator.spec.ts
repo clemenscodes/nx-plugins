@@ -1,7 +1,7 @@
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import { initGenerator } from './generator';
 import type { Tree } from '@nx/devkit';
 import type { InitGeneratorSchema } from './schema';
+import initGenerator from './generator';
 import * as devkit from '@nx/devkit';
 
 describe('init generator', () => {

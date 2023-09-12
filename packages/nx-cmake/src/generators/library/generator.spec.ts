@@ -6,6 +6,9 @@ import * as devkit from '@nx/devkit';
 
 describe('lib generator', () => {
     let tree: Tree;
+    const formatFilesMock = jest
+        .spyOn(devkit, 'formatFiles')
+        .mockImplementation(jest.fn());
 
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
@@ -19,9 +22,6 @@ describe('lib generator', () => {
             generateTests: true,
         };
 
-        const formatFilesMock = jest
-            .spyOn(devkit, 'formatFiles')
-            .mockImplementation(jest.fn());
         await libGenerator(tree, options);
         const config = readProjectConfiguration(tree, 'libtest');
         expect(config).toBeDefined();
@@ -36,9 +36,6 @@ describe('lib generator', () => {
             skipFormat: true,
             generateTests: true,
         };
-        const formatFilesMock = jest
-            .spyOn(devkit, 'formatFiles')
-            .mockImplementation(jest.fn());
         await libGenerator(tree, options);
         const config = readProjectConfiguration(tree, 'libtest');
         expect(config).toBeDefined();
