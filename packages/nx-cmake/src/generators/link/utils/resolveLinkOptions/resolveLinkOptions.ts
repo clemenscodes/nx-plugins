@@ -5,9 +5,9 @@ export const resolveLinkOptions = (
     tree: Tree,
     options: LinkGeneratorSchema
 ): LinkSchema => {
-    const { target } = options;
-    const targetProjectConfig = readProjectConfiguration(tree, target);
-    const targetProjectRoot = targetProjectConfig.root;
-    const resolvedOptions: LinkSchema = { ...options, targetProjectRoot };
+    const { source } = options;
+    const sourceProjectConfig = readProjectConfiguration(tree, source);
+    const sourceProjectRoot = sourceProjectConfig.root;
+    const resolvedOptions: LinkSchema = { ...options, sourceProjectRoot };
     return resolvedOptions;
 };

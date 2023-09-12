@@ -8,5 +8,5 @@ export type LinkGeneratorSchema = {
 };
 
 export type LinkSchema = LinkGeneratorSchema & {
-    targetProjectRoot: string;
+    sourceProjectRoot: string;
 };
