@@ -5,10 +5,10 @@
     "description": "Link a library to another library or binary",
     "type": "object",
     "properties": {
-        "library": {
+        "source": {
             "type": "string",
-            "description": "The library to be linked to another project",
-            "aliases": ["library", "l"],
+            "description": "The library to be linked into another project",
+            "aliases": ["s"],
             "$default": {
                 "$source": "argv",
                 "index": 0
@@ -17,10 +17,10 @@
             "x-dropdown": "projects",
             "x-priority": "important"
         },
-        "project": {
+        "target": {
             "type": "string",
-            "description": "The project to link the library to",
-            "aliases": ["project", "p"],
+            "description": "The target to link to",
+            "aliases": ["t"],
             "$default": {
                 "$source": "argv",
                 "index": 1
@@ -48,5 +48,5 @@
             "default": false
         }
     },
-    "required": ["library", "project"]
+    "required": ["source", "target"]
 }

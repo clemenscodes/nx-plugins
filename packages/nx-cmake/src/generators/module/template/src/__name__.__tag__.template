@@ -1,5 +1,0 @@
-#include <%- include %>
-
-int <%= name %>(void) {
-    return 0;
-}

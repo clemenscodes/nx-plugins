@@ -1,45 +1,56 @@
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import { Tree, readProjectConfiguration } from '@nx/devkit';
+import { type Tree } from '@nx/devkit';
 import { linkGenerator } from './generator';
-import { LinkGeneratorSchema } from './schema';
-import { LibGeneratorSchema } from '../library/schema';
+import type { LinkGeneratorSchema } from './schema';
+import type { LibGeneratorSchema } from '../library/schema';
 import libGenerator from '../library/generator';
 
 describe('link generator', () => {
     let tree: Tree;
-
-    const options: LinkGeneratorSchema = {
-        library: 'liblink',
-        project: 'libtest',
-        link: 'shared',
-        skipFormat: false,
-    };
-
-    const libOptions: LibGeneratorSchema = {
-        name: 'test',
-        language: 'C++',
-        link: 'shared',
-        skipFormat: false,
-        generateTests: true,
-    };
-
-    const linkLibOptions: LibGeneratorSchema = {
-        name: 'link',
-        language: 'C++',
-        link: 'shared',
-        skipFormat: false,
-        generateTests: true,
-    };
+    let libOptions: LibGeneratorSchema;
+    let linkOptions: LinkGeneratorSchema;
+    let expectedCmakeFile: string;
+    let expectedCmakeFileContent: string;
+    let expectedUpdatedCmakeFileContent: string;
 
     beforeEach(async () => {
         tree = createTreeWithEmptyWorkspace();
-        await libGenerator(tree, linkLibOptions);
+        libOptions = {
+            name: 'link',
+            language: 'C++',
+            skipFormat: false,
+            generateTests: true,
+        };
         await libGenerator(tree, libOptions);
+        expectedCmakeFile = 'packages/link/CMakeLists.txt';
+        expectedCmakeFileContent =
+            'include("../../CMakeLists.txt")\n' +
+            '\n' +
+            'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
+            'project(liblink CXX)\n' +
+            'set_library_settings(${CMAKE_PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})\n';
+        expectedUpdatedCmakeFileContent =
+            'include("../../CMakeLists.txt")\n' +
+            '\n' +
+            'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
+            'project(liblink CXX)\n' +
+            'set_library_settings(${CMAKE_PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})\n' +
+            'link_shared_library(${CMAKE_PROJECT_NAME} libtarget)\n';
+        libOptions.name = 'target';
+        await libGenerator(tree, libOptions);
+        linkOptions = {
+            source: 'liblink',
+            target: 'libtarget',
+            link: 'shared',
+            skipFormat: false,
+        };
     });
 
     it('should run successfully', async () => {
-        await linkGenerator(tree, options);
-        const config = readProjectConfiguration(tree, 'libtest');
-        expect(config).toBeDefined();
+        const cmakeFileContent = tree.read(expectedCmakeFile, 'utf-8');
+        expect(cmakeFileContent).toBe(expectedCmakeFileContent);
+        await linkGenerator(tree, linkOptions);
+        const updatedCmakeFileContent = tree.read(expectedCmakeFile, 'utf-8');
+        expect(updatedCmakeFileContent).toBe(expectedUpdatedCmakeFileContent);
     });
 });

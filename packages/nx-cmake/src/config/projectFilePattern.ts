@@ -1,2 +1,2 @@
-export const projectFile = 'CMakeLists.txt';
-export const projectFilePattern = `**/*/${projectFile}`;
+export const PROJECT_FILE = 'CMakeLists.txt';
+export const PROJECT_FILE_PATTERN = `**/*/${PROJECT_FILE}`;
