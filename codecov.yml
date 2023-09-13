@@ -1,18 +1,20 @@
-precision: 2
-round: down
-status:
-    project:
-        nx-cmake:
-            target: 90%
-            flags: nx-cmake
-    patch:
-        default:
-            enabled: no
-            if_not_found: success
-    changes:
-        default:
-            enabled: no
-            if_not_found: success
+coverage:
+    precision: 2
+    round: down
+    status:
+        project:
+            nx-cmake:
+                target: 90%
+                flags:
+                    - nx-cmake
+        patch:
+            default:
+                enabled: no
+                if_not_found: success
+        changes:
+            default:
+                enabled: no
+                if_not_found: success
 flags:
     nx-cmake:
         paths:
