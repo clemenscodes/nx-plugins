@@ -9,5 +9,5 @@ export default {
         ],
     },
     moduleFileExtensions: ['ts', 'js', 'html'],
-    coverageDirectory: '../../coverage/packages/nx-cmake'
+    coverageDirectory: '../../coverage/packages/nx-cmake',
 };
