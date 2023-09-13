@@ -21,6 +21,9 @@ export const getUpdatedCmakeFileContent = (
     oldContent: string,
     newContent: string
 ): string => {
+    if (oldContent.includes(newContent)) {
+        return oldContent;
+    }
     const updatedContent = `${oldContent}${newContent}`;
     return updatedContent;
 };

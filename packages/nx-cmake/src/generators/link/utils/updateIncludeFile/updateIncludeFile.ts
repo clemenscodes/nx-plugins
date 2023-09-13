@@ -31,14 +31,17 @@ export const getUpdatedIncludeFileContent = (
     tree: Tree,
     includeFile: string,
     macroDefinition: string,
-    newContent: string
+    includeDirective: string
 ): string => {
     const includeFileContent = readFileWithTree(tree, includeFile);
+    if (includeFileContent.includes(includeDirective)) {
+        return includeFileContent;
+    }
     const [start, appendBeforeThis] = includeFileContent.split(macroDefinition);
     const updatedIncludeFileContent = [
         ...(start ? [start] : []),
         macroDefinition,
-        newContent,
+        includeDirective,
         appendBeforeThis,
     ].join('\n');
     return updatedIncludeFileContent;
