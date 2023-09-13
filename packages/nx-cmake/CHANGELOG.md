@@ -1,5 +1,12 @@
 # Changelog (nx-cmake)
 
+## [0.1.1](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.1.0...nx-cmake-0.1.1) (2023-09-13)
+
+
+### Bug Fixes
+
+* **nx-cmake:** determine project types correctly to check if project can be linked ([1561237](https://github.com/clemenscodes/nx-plugins/commit/156123719dba3bb2b6c50d3a0ef0339c9fb68d87))
+
 ## 0.1.0 (2023-09-10)
 
 
