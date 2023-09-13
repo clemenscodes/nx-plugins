@@ -2,9 +2,13 @@ import { type Tree } from '@nx/devkit';
 import type { LinkSchema } from '../../schema';
 import type { Link } from '../../../../models/types';
 import { PROJECT_FILE } from '../../../../config/projectFilePattern';
+import { trimLib } from '../../../../utils/generatorUtils/trimLib/trimLib';
+import { writeFileWithTree } from '../../../../utils/generatorUtils/writeFileWithTree/writeFileWithTree';
+import { readFileWithTree } from '../../../../utils/generatorUtils/readFileWithTree/readFileWithTree';
 
 export const getCmakeLink = (link: Link, target: string): string => {
-    const cmakeLink = `link_${link}_library(\${CMAKE_PROJECT_NAME} ${target})\n`;
+    const trimmedTarget = trimLib(target);
+    const cmakeLink = `link_${link}_library(\${CMAKE_PROJECT_NAME} ${trimmedTarget})\n`;
     return cmakeLink;
 };
 
@@ -17,32 +21,21 @@ export const getUpdatedCmakeFileContent = (
     oldContent: string,
     newContent: string
 ): string => {
+    if (oldContent.includes(newContent)) {
+        return oldContent;
+    }
     const updatedContent = `${oldContent}${newContent}`;
     return updatedContent;
 };
 
-export const readCmakeFile = (tree: Tree, cmakeFile: string): string => {
-    const readCmakeFile = tree.read(cmakeFile, 'utf-8');
-    return readCmakeFile;
-};
-
-export const writeCmakeFile = (
-    tree: Tree,
-    cmakeFile: string,
-    newContent: string
-): string => {
-    tree.write(cmakeFile, newContent);
-    return newContent;
-};
-
-export const linkLibrary = (tree: Tree, options: LinkSchema): string => {
+export const updateCmakeFile = (tree: Tree, options: LinkSchema) => {
     const { target, link, sourceProjectRoot } = options;
     const cmakeLink = getCmakeLink(link, target);
     const cmakeFile = getSourceCmakeFile(sourceProjectRoot);
-    const cmakeFileContent = readCmakeFile(tree, cmakeFile);
+    const cmakeFileContent = readFileWithTree(tree, cmakeFile);
     const updatedCmakeFileContent = getUpdatedCmakeFileContent(
         cmakeFileContent,
         cmakeLink
     );
-    return writeCmakeFile(tree, cmakeFile, updatedCmakeFileContent);
+    return writeFileWithTree(tree, cmakeFile, updatedCmakeFileContent);
 };

@@ -25,7 +25,7 @@ describe('addTestProjectConfig', () => {
             $schema: '../../../node_modules/nx/schemas/project-schema.json',
             projectType: 'application',
             sourceRoot: 'packages/test/test/src',
-            tags: ['c'],
+            tags: ['c', 'test'],
             targets: {
                 cmake: {
                     executor: 'nx-cmake:cmake',
@@ -91,7 +91,7 @@ describe('addTestProjectConfig', () => {
             $schema: '../../../node_modules/nx/schemas/project-schema.json',
             projectType: 'application',
             sourceRoot: 'packages/test/test/src',
-            tags: ['cpp'],
+            tags: ['cpp', 'test'],
             targets: {
                 cmake: {
                     executor: 'nx-cmake:cmake',

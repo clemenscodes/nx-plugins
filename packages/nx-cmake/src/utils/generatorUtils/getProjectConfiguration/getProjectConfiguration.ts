@@ -3,6 +3,7 @@ import { getProjectConfigurationType } from '../getProjectConfigurationType/getP
 import { CProjectType } from '../../../models/types';
 import { getProjectName } from '../getProjectName/getProjectName';
 import { getProjectTargets } from '../getProjectTargets/getProjectTargets';
+import { getProjectTags } from '../getProjectTags/getProjectTags';
 
 export const getProjectConfiguration = (
     root: string,
@@ -12,6 +13,7 @@ export const getProjectConfiguration = (
     const name = getProjectName(type, root);
     const targets = getProjectTargets(type);
     const projectType = getProjectConfigurationType(type);
+    const tags = getProjectTags(type);
     const project: Record<string, ProjectConfiguration> = {
         [name]: {
             name,
@@ -19,6 +21,7 @@ export const getProjectConfiguration = (
             sourceRoot,
             projectType,
             targets,
+            tags,
         },
     };
     return project;

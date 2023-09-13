@@ -19,7 +19,7 @@ describe('resolveBinOptions ', () => {
             languageExtension: 'cpp',
             relativeRootPath: '../../',
             cmakeC: 'CXX',
-            projectRoot: 'base',
+            projectRoot: 'bin/base',
             linkOptions: {
                 source: 'base',
                 target: 'libbase',
@@ -43,6 +43,7 @@ describe('resolveBinOptions ', () => {
         expected.generateTests = true;
         expected.languageExtension = 'c';
         expected.cmakeC = 'C';
+        expected.projectRoot = 'bin/base';
         defaultTest();
     });
 });

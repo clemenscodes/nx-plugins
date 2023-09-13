@@ -1,6 +1,6 @@
 #ifndef _LIB<%= constantName %>_<%= constantName %>
 #define _LIB<%= constantName %>_<%= constantName %>
 
-int <%= name %>(int argc, char *argv[]);
+int <%= name %>(void);
 
 #endif
