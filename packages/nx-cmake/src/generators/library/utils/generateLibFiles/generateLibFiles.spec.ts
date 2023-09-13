@@ -34,15 +34,13 @@ describe('generateLibFiles', () => {
             '#ifndef _LIBTEST_TEST\n' +
             '#define _LIBTEST_TEST\n' +
             '\n' +
-            'int test(int argc, char *argv[]);\n' +
+            'int test(void);\n' +
             '\n' +
             '#endif\n';
         const expectedSourceFile =
             '#include <test/include/libtest.h>\n' +
             '\n' +
-            'int test(int argc, char *argv[]) {\n' +
-            '    (void)argc;\n' +
-            '    (void)argv;\n' +
+            'int test() {\n' +
             '    return 0;\n' +
             '}\n';
         const expectedListsFile =
@@ -79,15 +77,13 @@ describe('generateLibFiles', () => {
             '#ifndef _LIBTEST_TEST\n' +
             '#define _LIBTEST_TEST\n' +
             '\n' +
-            'int test(int argc, char *argv[]);\n' +
+            'int test(void);\n' +
             '\n' +
             '#endif\n';
         const expectedSourceFile =
             '#include <test/include/libtest.h>\n' +
             '\n' +
-            'int test(int argc, char *argv[]) {\n' +
-            '    (void)argc;\n' +
-            '    (void)argv;\n' +
+            'int test() {\n' +
             '    return 0;\n' +
             '}\n';
         const expectedListsFile =

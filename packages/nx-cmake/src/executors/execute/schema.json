@@ -2,10 +2,11 @@
     "$schema": "http://json-schema.org/schema",
     "version": 2,
     "title": "Execute executor",
-    "description": "",
+    "description": "Execute a C or C++ binary",
     "type": "object",
     "properties": {
         "args": {
+            "description": "Optional arguments which will be forwarded to the executed binary",
             "type": "array"
         }
     },

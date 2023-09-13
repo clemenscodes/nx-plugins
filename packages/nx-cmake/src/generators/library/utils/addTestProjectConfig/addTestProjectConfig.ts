@@ -16,7 +16,7 @@ export const addTestProjectConfig = (
         root: `${projectRoot}/test`,
         projectType: 'application',
         sourceRoot: `${projectRoot}/test/src`,
-        tags: [languageExtension],
+        tags: [languageExtension, 'test'],
         targets: testTargets,
     });
 };

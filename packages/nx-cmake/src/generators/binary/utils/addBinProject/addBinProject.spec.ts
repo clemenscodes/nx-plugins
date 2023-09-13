@@ -23,10 +23,10 @@ describe('addBinProject', () => {
         };
         expected = {
             name: 'test',
-            root: 'test',
-            $schema: '../node_modules/nx/schemas/project-schema.json',
+            root: 'bin/test',
+            $schema: '../../node_modules/nx/schemas/project-schema.json',
             projectType: 'application',
-            sourceRoot: 'test/src',
+            sourceRoot: 'bin/test/src',
             tags: ['cpp'],
             targets: {
                 cmake: {

@@ -3,6 +3,10 @@ import type { NxJsonConfiguration } from '@nx/devkit';
 export const addTargetDefaults = (
     updatedNxJson: NxJsonConfiguration
 ): NxJsonConfiguration => {
+    const dependsOnBuild = ['build'];
+
+    const defaultInput = ['default'];
+
     const cmakeTargetDefault = {
         dependsOn: ['^cmake'],
         inputs: ['cmake'],
@@ -13,8 +17,10 @@ export const addTargetDefaults = (
         inputs: ['default'],
     };
 
-    const dependsOnBuild = ['build'];
-    const defaultInput = ['default'];
+    const testTargetDefault = {
+        dependsOn: dependsOnBuild,
+        inputs: defaultInput,
+    };
 
     const debugTargetDefault = {
         dependsOn: dependsOnBuild,
@@ -30,9 +36,14 @@ export const addTargetDefaults = (
         updatedNxJson.targetDefaults = {
             cmake: cmakeTargetDefault,
             build: buildTargetDefault,
+            test: testTargetDefault,
             debug: debugTargetDefault,
             execute: executeTargetDefault,
         };
+    }
+
+    if (!('test' in updatedNxJson.targetDefaults)) {
+        updatedNxJson.targetDefaults.test = testTargetDefault;
     }
 
     if (!('cmake' in updatedNxJson.targetDefaults)) {
@@ -78,6 +89,14 @@ export const addTargetDefaults = (
 
     if (!updatedNxJson.targetDefaults.build.dependsOn.includes('cmake')) {
         updatedNxJson.targetDefaults.build.dependsOn.push('cmake');
+    }
+
+    if (!updatedNxJson.targetDefaults.test.dependsOn) {
+        updatedNxJson.targetDefaults.test.dependsOn = dependsOnBuild;
+    }
+
+    if (!updatedNxJson.targetDefaults.test.dependsOn.includes('build')) {
+        updatedNxJson.targetDefaults.test.dependsOn.push('build');
     }
 
     if (!updatedNxJson.targetDefaults.debug.dependsOn) {
