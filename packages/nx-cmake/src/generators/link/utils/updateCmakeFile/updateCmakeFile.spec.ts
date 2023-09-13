@@ -2,22 +2,20 @@ import {
     getCmakeLink,
     getSourceCmakeFile,
     getUpdatedCmakeFileContent,
-    linkLibrary,
-    readCmakeFile,
-    writeCmakeFile,
-} from './linkLibrary';
+    updateCmakeFile,
+} from './updateCmakeFile';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import type { Tree } from '@nx/devkit';
 import type { LinkSchema } from '../../schema';
 import type { LibGeneratorSchema } from '../../../library/schema';
 import libGenerator from '../../../library/generator';
+import { readFileWithTree } from '../../../../utils/generatorUtils/readFileWithTree/readFileWithTree';
 
-describe('linkLibrary', () => {
+describe('updateCmakeFile', () => {
     let tree: Tree;
     let libOptions: LibGeneratorSchema;
     let linkOptions: LinkSchema;
     let expectedCmakeFile: string;
-    let expectedCmakeLink: string;
     let expectedCmakeFileContent: string;
     let expectedUpdatedCmakeFileContent: string;
 
@@ -31,8 +29,6 @@ describe('linkLibrary', () => {
         };
         await libGenerator(tree, libOptions);
         expectedCmakeFile = 'packages/link/CMakeLists.txt';
-        expectedCmakeLink =
-            'link_shared_library(${CMAKE_PROJECT_NAME} target)\n';
         expectedCmakeFileContent =
             'include("../../CMakeLists.txt")\n' +
             '\n' +
@@ -97,29 +93,14 @@ describe('linkLibrary', () => {
         expect(updatedContent).toBe(oldContent + newContent);
     });
 
-    it('should read the CMake file correctly', () => {
-        const readContent = readCmakeFile(tree, expectedCmakeFile);
-        expect(readContent).toBe(expectedCmakeFileContent);
-    });
-
-    it('should write the CMake file correctly', () => {
-        const newContent = getUpdatedCmakeFileContent(
-            expectedCmakeFileContent,
-            expectedCmakeLink
-        );
-        const updatedCmakeFileContent = writeCmakeFile(
-            tree,
-            expectedCmakeFile,
-            newContent
-        );
-        expect(updatedCmakeFileContent).toBe(newContent);
-    });
-
-    it('should link library', () => {
-        const cmakeFileContent = tree.read(expectedCmakeFile, 'utf-8');
+    it('should update cmake file', () => {
+        const cmakeFileContent = readFileWithTree(tree, expectedCmakeFile);
         expect(cmakeFileContent).toBe(expectedCmakeFileContent);
-        linkLibrary(tree, linkOptions);
-        const updatedCmakeFileContent = tree.read(expectedCmakeFile, 'utf-8');
+        updateCmakeFile(tree, linkOptions);
+        const updatedCmakeFileContent = readFileWithTree(
+            tree,
+            expectedCmakeFile
+        );
         expect(updatedCmakeFileContent).toBe(expectedUpdatedCmakeFileContent);
     });
 });

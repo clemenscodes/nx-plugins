@@ -54,12 +54,7 @@ describe('generateBinFiles', () => {
             'project(test CXX)\n' +
             'set_binary_settings(${CMAKE_PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})\n';
         expectedIncludeFile =
-            '#ifndef _TEST_TEST\n' +
-            '#define _TEST_TEST\n' +
-            '\n' +
-            '#include <test/include/libtest.h>\n' +
-            '\n' +
-            '#endif\n';
+            '#ifndef _TEST_TEST\n' + '#define _TEST_TEST\n' + '\n' + '#endif\n';
     });
 
     it('should generate a C++ binary', defaultTest);

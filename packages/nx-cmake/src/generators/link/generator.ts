@@ -1,12 +1,14 @@
 import { formatFiles, type Tree } from '@nx/devkit';
 import type { LinkGeneratorSchema } from './schema';
-import { linkLibrary } from './utils/linkLibrary/linkLibrary';
 import { resolveLinkOptions } from './utils/resolveLinkOptions/resolveLinkOptions';
+import { updateCmakeFile } from './utils/updateCmakeFile/updateCmakeFile';
+import { updateIncludeFile } from './utils/updateIncludeFile/updateIncludeFile';
 
 export async function linkGenerator(tree: Tree, options: LinkGeneratorSchema) {
     const resolvedOptions = resolveLinkOptions(tree, options);
     const { skipFormat } = resolvedOptions;
-    linkLibrary(tree, resolvedOptions);
+    updateCmakeFile(tree, resolvedOptions);
+    updateIncludeFile(tree, resolvedOptions);
     skipFormat || (await formatFiles(tree));
 }
 
