@@ -45,7 +45,7 @@ describe('linkLibrary', () => {
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
             'project(liblink CXX)\n' +
             'set_library_settings(${CMAKE_PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})\n' +
-            'link_shared_library(${CMAKE_PROJECT_NAME} libtarget)\n';
+            'link_shared_library(${CMAKE_PROJECT_NAME} target)\n';
         libOptions.name = 'target';
         await libGenerator(tree, libOptions);
         linkOptions = {
@@ -62,6 +62,14 @@ describe('linkLibrary', () => {
         const target = 'myTarget';
         const cmakeLink = getCmakeLink(link, target);
         const expected = `link_${link}_library($\{CMAKE_PROJECT_NAME} ${target})\n`;
+        expect(cmakeLink).toBe(expected);
+    });
+
+    it('should generate the correct CMake shared link for a library', () => {
+        const link = 'shared';
+        const target = 'libtarget';
+        const cmakeLink = getCmakeLink(link, target);
+        const expected = `link_${link}_library($\{CMAKE_PROJECT_NAME} target)\n`;
         expect(cmakeLink).toBe(expected);
     });
 

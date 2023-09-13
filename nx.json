@@ -57,6 +57,6 @@
     "workspaceLayout": {
         "appsDir": "bin",
         "libsDir": "packages",
-        "projectNameAndRootFormat": "as-provided"
+        "projectNameAndRootFormat": "derived"
     }
 }

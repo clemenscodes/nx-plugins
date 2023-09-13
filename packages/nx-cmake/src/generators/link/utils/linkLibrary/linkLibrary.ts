@@ -2,9 +2,11 @@ import { type Tree } from '@nx/devkit';
 import type { LinkSchema } from '../../schema';
 import type { Link } from '../../../../models/types';
 import { PROJECT_FILE } from '../../../../config/projectFilePattern';
+import { trimLib } from '../../../../utils/generatorUtils/trimLib/trimLib';
 
 export const getCmakeLink = (link: Link, target: string): string => {
-    const cmakeLink = `link_${link}_library(\${CMAKE_PROJECT_NAME} ${target})\n`;
+    const trimmedTarget = trimLib(target);
+    const cmakeLink = `link_${link}_library(\${CMAKE_PROJECT_NAME} ${trimmedTarget})\n`;
     return cmakeLink;
 };
 
