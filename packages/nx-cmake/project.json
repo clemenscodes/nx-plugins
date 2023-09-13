@@ -84,6 +84,7 @@
                     "test"
                 ],
                 "noVerify": true,
+                "skipRootChangelog": true,
                 "changelogHeader": "# Changelog (nx-cmake)\n",
                 "push": false,
                 "commitMessageFormat": "chore({projectName}): release version ${version} [skip ci]",
