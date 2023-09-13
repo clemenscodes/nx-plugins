@@ -13,6 +13,7 @@
                 "tsConfig": "packages/nx-cmake/tsconfig.lib.json",
                 "assets": [
                     "packages/nx-cmake/*.md",
+                    "LICENSE",
                     {
                         "input": "./packages/nx-cmake/src",
                         "glob": "**/!(*.ts)",
@@ -60,6 +61,7 @@
                 "ci": {
                     "ci": true,
                     "silent": true,
+                    "coverageReporters": ["lcov"],
                     "codeCoverage": true
                 }
             }
