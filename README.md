@@ -16,4 +16,4 @@ This project was inspired by [monodon](https://github.com/cammisuli/monodon).
 
 ## Social
 
-![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/clemenscodes)
+[![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/clemenscodes)](https://twitter.com/intent/follow?screen_name=clemenscodes)
