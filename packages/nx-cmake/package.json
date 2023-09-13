@@ -1,5 +1,6 @@
 {
     "name": "nx-cmake",
+    "description": "An Nx plugin to add CMake, C and C++ support.",
     "version": "0.1.0",
     "license": "MIT",
     "type": "commonjs",
@@ -12,8 +13,8 @@
         "name": "Clemens Horn",
         "url": "https://clemenshorn.com"
     },
-    "description": "An Nx plugin to add CMake, C and C++ support.",
     "os": [
+        "macos",
         "linux"
     ],
     "keywords": [

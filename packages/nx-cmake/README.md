@@ -8,7 +8,7 @@ An [Nx](https://nx.dev) plugin that adds support for CMake, C and C++ in an Nx m
 
 ### Prerequisites
 
-NOTE: Windows is not supported.
+NOTE: Windows is not natively supported. Using WSL2 and installing the dependencies should work though.
 
 The following tools need to be installed for this plugin to work correctly:
 
