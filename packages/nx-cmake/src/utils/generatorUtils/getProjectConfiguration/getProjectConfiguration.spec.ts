@@ -20,6 +20,7 @@ describe('getProjectConfiguration', () => {
                 sourceRoot: 'libs/my-lib/src',
                 projectType: 'library',
                 targets: defaultTargets,
+                tags: [],
             },
         });
     });
@@ -37,6 +38,7 @@ describe('getProjectConfiguration', () => {
                 sourceRoot: 'apps/my-app/src',
                 projectType: 'application',
                 targets: appTargets,
+                tags: [],
             },
         });
     });
@@ -54,6 +56,7 @@ describe('getProjectConfiguration', () => {
                 sourceRoot: 'apps/my-app/src',
                 projectType: 'application',
                 targets: testTargets,
+                tags: ['test'],
             },
         });
     });
