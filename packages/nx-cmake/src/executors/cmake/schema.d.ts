@@ -1,4 +1,4 @@
-import { ExecutorBaseOptions } from '../../models/executorBase';
+import type { ExecutorBaseOptions } from '../../models/types';
 
 export type CmakeExecutorSchema = ExecutorBaseOptions & {
     release: boolean;

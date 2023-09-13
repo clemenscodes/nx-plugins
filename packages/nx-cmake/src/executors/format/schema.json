@@ -2,10 +2,11 @@
     "$schema": "http://json-schema.org/schema",
     "version": 2,
     "title": "Format executor",
-    "description": "",
+    "description": "Lint a C or C++ project with clang-format",
     "type": "object",
     "properties": {
         "args": {
+            "description": "Optional arguments which will be forwarded to clang-format",
             "type": "array"
         }
     },

@@ -11,18 +11,6 @@ export default async function* runExecutor(
     const { root } = projects[projectName];
     const { args } = options;
 
-    if (!args) {
-        const { success } = runCommand(
-            'make',
-            '-C',
-            `${workspaceRoot}/dist/${root}`
-        );
-        yield {
-            success,
-        };
-        return;
-    }
-
     const { success } = runCommand(
         'make',
         '-C',
