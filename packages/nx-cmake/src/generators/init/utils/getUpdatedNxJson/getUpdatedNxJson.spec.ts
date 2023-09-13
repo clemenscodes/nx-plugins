@@ -39,6 +39,7 @@ describe('getUpdatedNxJson', () => {
                             'debug',
                             'test',
                             'lint',
+                            'cmake',
                             'fmt',
                         ],
                     },
@@ -48,6 +49,7 @@ describe('getUpdatedNxJson', () => {
             targetDefaults: {
                 cmake: { dependsOn: ['^cmake'], inputs: ['cmake'] },
                 build: { dependsOn: ['^build', 'cmake'], inputs: ['default'] },
+                test: { dependsOn: ['build'], inputs: ['default'] },
                 debug: { dependsOn: ['build'], inputs: ['default'] },
                 execute: { dependsOn: ['build'], inputs: ['default'] },
             },
