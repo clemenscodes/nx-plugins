@@ -39,7 +39,6 @@ describe('linkLibrary', () => {
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
             'project(liblink CXX)\n' +
             'set_library_settings(${CMAKE_PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})\n';
-
         expectedUpdatedCmakeFileContent =
             'include("../../CMakeLists.txt")\n' +
             '\n' +
