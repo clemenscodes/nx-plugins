@@ -13,11 +13,6 @@ export const getSourceCmakeFile = (sourceProjectRoot: string): string => {
     return cmakeFile;
 };
 
-export const readCmakeFile = (tree: Tree, cmakeFile: string): string => {
-    const readCmakeFile = tree.read(cmakeFile, 'utf-8');
-    return readCmakeFile;
-};
-
 export const getUpdatedCmakeFileContent = (
     oldContent: string,
     newContent: string
@@ -26,15 +21,21 @@ export const getUpdatedCmakeFileContent = (
     return updatedContent;
 };
 
+export const readCmakeFile = (tree: Tree, cmakeFile: string): string => {
+    const readCmakeFile = tree.read(cmakeFile, 'utf-8');
+    return readCmakeFile;
+};
+
 export const writeCmakeFile = (
     tree: Tree,
     cmakeFile: string,
     newContent: string
-): void => {
+): string => {
     tree.write(cmakeFile, newContent);
+    return newContent;
 };
 
-export const linkLibrary = (tree: Tree, options: LinkSchema) => {
+export const linkLibrary = (tree: Tree, options: LinkSchema): string => {
     const { target, link, sourceProjectRoot } = options;
     const cmakeLink = getCmakeLink(link, target);
     const cmakeFile = getSourceCmakeFile(sourceProjectRoot);
@@ -43,5 +44,5 @@ export const linkLibrary = (tree: Tree, options: LinkSchema) => {
         cmakeFileContent,
         cmakeLink
     );
-    writeCmakeFile(tree, cmakeFile, updatedCmakeFileContent);
+    return writeCmakeFile(tree, cmakeFile, updatedCmakeFileContent);
 };
