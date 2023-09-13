@@ -1,5 +1,19 @@
 import type { NxJsonConfiguration, ProjectGraphProjectNode } from '@nx/devkit';
 
+export type BaseOptions = {
+    name: string;
+    language: C;
+    skipFormat: boolean;
+    constantName?: string;
+    relativeRootPath?: string;
+    languageExtension?: string;
+    cmakeC?: CMakeC;
+};
+
+export type ExecutorBaseOptions = {
+    args: string[];
+};
+
 export enum CProjectType {
     App,
     Lib,

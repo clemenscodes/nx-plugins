@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-pnpm nx affected -t test
+pnpm nx affected -t test --output-style=stream

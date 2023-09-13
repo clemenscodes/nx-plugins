@@ -1,4 +1,4 @@
-import { projectFile } from '../../../config/projectFilePattern';
+import { PROJECT_FILE } from '../../../config/projectFilePattern';
 import { CProjectType } from '../../../models/types';
 import { getWorkspaceLayout } from '../getWorkspaceLayout/getWorkspaceLayout';
 
@@ -17,7 +17,7 @@ export const getProjectType = (file: string): CProjectType => {
     if (directory === appsDir) {
         return CProjectType.App;
     }
-    const maybeTest = file.split(projectFile).shift().split('/').pop();
+    const maybeTest = file.split(PROJECT_FILE).shift().split('/').pop();
     if (maybeTest === 'test') {
         return CProjectType.Test;
     }

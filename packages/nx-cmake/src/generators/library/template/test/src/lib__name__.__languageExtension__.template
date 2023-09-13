@@ -1,5 +1,0 @@
-#include <<%= name %>/include/lib<%= name %>.h>
-
-int <%= name %>(void) {
-    return 0;
-}

@@ -1,20 +1,48 @@
-import { type Tree, updateProjectConfiguration, getProjects } from '@nx/devkit';
-import { Link } from '../../../../models/types';
-import { trimLib } from '../../../../utils/generatorUtils/trimLib/trimLib';
+import { type Tree } from '@nx/devkit';
+import type { LinkSchema } from '../../schema';
+import type { Link } from '../../../../models/types';
+import { PROJECT_FILE } from '../../../../config/projectFilePattern';
 
-export const linkLibrary = (
+export const getCmakeLink = (link: Link, target: string): string => {
+    const cmakeLink = `link_${link}_library(\${CMAKE_PROJECT_NAME} ${target})\n`;
+    return cmakeLink;
+};
+
+export const getSourceCmakeFile = (sourceProjectRoot: string): string => {
+    const cmakeFile = `${sourceProjectRoot}/${PROJECT_FILE}`;
+    return cmakeFile;
+};
+
+export const getUpdatedCmakeFileContent = (
+    oldContent: string,
+    newContent: string
+): string => {
+    const updatedContent = `${oldContent}${newContent}`;
+    return updatedContent;
+};
+
+export const readCmakeFile = (tree: Tree, cmakeFile: string): string => {
+    const readCmakeFile = tree.read(cmakeFile, 'utf-8');
+    return readCmakeFile;
+};
+
+export const writeCmakeFile = (
     tree: Tree,
-    project: string,
-    link: Link,
-    lib: string
-) => {
-    const projects = getProjects(tree);
-    const config = projects.get(project);
-    const name = trimLib(lib);
-    const { root } = config;
-    const cmake = `${root}/CMakeLists.txt`;
-    const cmakeBuffer = tree.read(cmake);
-    const cmakeLink = `link_${link}_library(\${CMAKE_PROJECT_NAME} ${name})\n`;
-    tree.write(cmake, `${cmakeBuffer.toString()}${cmakeLink}`);
-    updateProjectConfiguration(tree, project, config);
+    cmakeFile: string,
+    newContent: string
+): string => {
+    tree.write(cmakeFile, newContent);
+    return newContent;
+};
+
+export const linkLibrary = (tree: Tree, options: LinkSchema): string => {
+    const { target, link, sourceProjectRoot } = options;
+    const cmakeLink = getCmakeLink(link, target);
+    const cmakeFile = getSourceCmakeFile(sourceProjectRoot);
+    const cmakeFileContent = readCmakeFile(tree, cmakeFile);
+    const updatedCmakeFileContent = getUpdatedCmakeFileContent(
+        cmakeFileContent,
+        cmakeLink
+    );
+    return writeCmakeFile(tree, cmakeFile, updatedCmakeFileContent);
 };

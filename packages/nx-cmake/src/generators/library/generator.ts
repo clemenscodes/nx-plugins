@@ -1,69 +1,19 @@
-import { join } from 'path';
 import type { LibGeneratorSchema } from './schema';
-import {
-    type Tree,
-    addProjectConfiguration,
-    formatFiles,
-    generateFiles,
-    offsetFromRoot,
-} from '@nx/devkit';
-import { CProjectType } from '../../models/types';
-import { getBaseTest } from './utils/getBaseTest';
-import { getGoogleTestInclude } from './utils/getGoogleTestInclude';
-import { getLibName } from './utils/getLibName';
-import { getTestLib } from './utils/getTestLib';
-import { getTestName } from './utils/getTestName';
-import { getTestSetup } from './utils/getTestSetup';
-import { getProjectRoot } from '../../utils/generatorUtils/getProjectRoot/getProjectRoot';
-import { getProjectTargets } from '../../utils/generatorUtils/getProjectTargets/getProjectTargets';
-import { resolveOptions } from '../../utils/generatorUtils/resolveOptions/resolveOptions';
+import { type Tree, formatFiles } from '@nx/devkit';
+import { resolveLibOptions } from './utils/resolveLibOptions/resolveLibOptions';
+import { addTestProjectConfig } from './utils/addTestProjectConfig/addTestProjectConfig';
+import { addLibProjectConfig } from './utils/addLibProjectConfig/addLibProjectConfig';
+import { generateLibFiles } from './utils/generateLibFiles/generateLibFiles';
+import { generateLibTestFiles } from './utils/generateLibTestFiles/generateLibTestFiles';
 
 export async function libGenerator(tree: Tree, options: LibGeneratorSchema) {
-    const resolvedOptions = resolveOptions(options);
-    const { name, skipFormat, generateTests, language } = resolvedOptions;
-    const projectRoot = getProjectRoot(name, CProjectType.Lib);
-    const relativeRootPath = offsetFromRoot(projectRoot);
-    const targets = getProjectTargets(CProjectType.Lib);
-    const testTargets = getProjectTargets(CProjectType.Test);
-    const libName = getLibName(name);
-    const testName = getTestName(name);
-    const testLib = getTestLib(language);
-    const includeGoogleTest = getGoogleTestInclude(generateTests, language);
-    const setupTests = getTestSetup(generateTests, language, testName);
-    const baseTest = getBaseTest(generateTests, language, libName, name);
-
-    resolvedOptions.includeGoogleTest = includeGoogleTest;
-    resolvedOptions.setupTests = setupTests;
-    resolvedOptions.baseTest = baseTest;
-    resolvedOptions.testLib = testLib;
-    resolvedOptions.relativeRootPath = relativeRootPath;
-
-    addProjectConfiguration(tree, libName, {
-        root: projectRoot,
-        projectType: 'library',
-        sourceRoot: `${projectRoot}/src`,
-        tags: [resolvedOptions.languageExtension],
-        targets,
-    });
-
-    generateFiles(
-        tree,
-        join(__dirname, 'template', generateTests ? 'test' : 'config'),
-        projectRoot,
-        resolvedOptions
-    );
-
-    addProjectConfiguration(tree, testName, {
-        root: `${projectRoot}/test`,
-        projectType: 'application',
-        sourceRoot: `${projectRoot}/src/test`,
-        tags: [resolvedOptions.languageExtension],
-        targets: testTargets,
-    });
-
-    if (!skipFormat) {
-        await formatFiles(tree);
-    }
+    const resolvedOptions = resolveLibOptions(options);
+    const { skipFormat } = resolvedOptions;
+    generateLibFiles(tree, resolvedOptions);
+    addLibProjectConfig(tree, resolvedOptions);
+    generateLibTestFiles(tree, resolvedOptions);
+    addTestProjectConfig(tree, resolvedOptions);
+    skipFormat || (await formatFiles(tree));
 }
 
 export default libGenerator;
