@@ -24,6 +24,6 @@ export const getClangFormatFile = async (
     }
 
     throw new Error(
-        'Could not find .clang-format. Please generate a preset using nx-cmake:init or provide your own.'
+        `Could not find ${clangFormatFile}. Please generate a preset using nx-cmake:init or provide your own.`
     );
 };
