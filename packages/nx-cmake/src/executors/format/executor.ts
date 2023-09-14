@@ -1,6 +1,6 @@
-import { runCommand } from '../../utils/commandUtils/runCommand/runCommand';
 import { FormatExecutorSchema } from './schema';
 import { ExecutorContext } from '@nx/devkit';
+import { formatFilesWithClangFormat } from './utils/formatFilesWithClangFormat/formatFilesWithClangFormat';
 
 export default async function* runExecutor(
     options: FormatExecutorSchema,
@@ -8,10 +8,13 @@ export default async function* runExecutor(
 ): AsyncGenerator<{ success: boolean }> {
     const { root: workspaceRoot, projectName, projectsConfigurations } = ctx;
     const { projects } = projectsConfigurations;
-    const { root } = projects[projectName];
-    const { args } = options;
+    const { root: projectRoot } = projects[projectName];
 
-    const { success } = runCommand('clang-format', ...args);
+    const success = await formatFilesWithClangFormat(
+        workspaceRoot,
+        projectRoot,
+        options
+    );
 
     yield {
         success,
