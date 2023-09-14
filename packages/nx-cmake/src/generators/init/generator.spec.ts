@@ -18,7 +18,7 @@ describe('init generator', () => {
             libsDir: 'packages',
             projectNameAndRootFormat: 'as-provided',
             cmakeConfigDir: 'cmake',
-            addClangFormatPreset: true,
+            addClangPreset: true,
             skipFormat: true,
         };
     });

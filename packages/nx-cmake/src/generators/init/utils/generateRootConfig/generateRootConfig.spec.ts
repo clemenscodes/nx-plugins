@@ -16,7 +16,7 @@ describe('generateRootConfig', () => {
             libsDir: 'packages',
             projectNameAndRootFormat: 'derived',
             cmakeConfigDir: 'cmake',
-            addClangFormatPreset: false,
+            addClangPreset: false,
             skipFormat: false,
         };
         generateRootConfig(tree, options);
@@ -30,7 +30,7 @@ describe('generateRootConfig', () => {
             libsDir: 'packages',
             projectNameAndRootFormat: 'derived',
             cmakeConfigDir: 'cmake',
-            addClangFormatPreset: false,
+            addClangPreset: false,
             skipFormat: false,
         };
         generateRootConfig(tree, options);

@@ -6,7 +6,7 @@ import { setWorkspaceLayout } from './setWorkspaceLayout';
 describe('setWorkspaceLayout', () => {
     const baseOptions = {
         cmakeConfigDir: 'cmake',
-        addClangFormatPreset: false,
+        addClangPreset: false,
         skipFormat: false,
     };
 

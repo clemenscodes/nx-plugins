@@ -33,7 +33,7 @@ describe('generateGlobalIncludeDir', () => {
             libsDir: 'packages',
             projectNameAndRootFormat: 'derived',
             cmakeConfigDir: 'cmake',
-            addClangFormatPreset: false,
+            addClangPreset: false,
             skipFormat: false,
         };
         generateGlobalIncludeDir(tree, options);
@@ -52,7 +52,7 @@ describe('generateGlobalIncludeDir', () => {
             libsDir: 'packages',
             projectNameAndRootFormat: 'derived',
             cmakeConfigDir: 'cmake',
-            addClangFormatPreset: false,
+            addClangPreset: false,
             skipFormat: false,
         };
         generateGlobalIncludeDir(tree, options);

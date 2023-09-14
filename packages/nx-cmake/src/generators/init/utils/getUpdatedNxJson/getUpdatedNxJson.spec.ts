@@ -23,7 +23,7 @@ describe('getUpdatedNxJson', () => {
             appsDir: 'bin',
             libsDir: 'packages',
             cmakeConfigDir: 'cmake',
-            addClangFormatPreset: true,
+            addClangPreset: true,
             skipFormat: false,
         };
         const mockUpdatedNxJson = {

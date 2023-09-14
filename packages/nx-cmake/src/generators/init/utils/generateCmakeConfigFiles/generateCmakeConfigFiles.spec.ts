@@ -5,6 +5,7 @@ import { InitGeneratorSchema } from '../../schema';
 
 describe('generateCmakeConfigFiles', () => {
     let tree: Tree;
+    let options: InitGeneratorSchema;
     const expectedCmakeSettingsFiles = [
         'set_binary_settings.cmake',
         'set_compiler.cmake',
@@ -25,17 +26,17 @@ describe('generateCmakeConfigFiles', () => {
     ];
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
-    });
-
-    it('should generate cmake config in cmake', async () => {
-        const options: InitGeneratorSchema = {
+        options = {
             appsDir: 'bin',
             libsDir: 'packages',
             projectNameAndRootFormat: 'derived',
             cmakeConfigDir: 'cmake',
-            addClangFormatPreset: false,
+            addClangPreset: false,
             skipFormat: false,
         };
+    });
+
+    it('should generate cmake config in cmake', async () => {
         generateCmakeConfigFiles(tree, options);
         const cmakeChildren = tree.children('cmake');
         const expectedCmakeChildren = ['settings', 'utils'];
@@ -43,14 +44,7 @@ describe('generateCmakeConfigFiles', () => {
     });
 
     it('should generate cmake config in .cmake', async () => {
-        const options: InitGeneratorSchema = {
-            appsDir: 'bin',
-            libsDir: 'packages',
-            projectNameAndRootFormat: 'derived',
-            cmakeConfigDir: '.cmake',
-            addClangFormatPreset: false,
-            skipFormat: false,
-        };
+        options.cmakeConfigDir = '.cmake';
         generateCmakeConfigFiles(tree, options);
         const cmakeChildren = tree.children('.cmake');
         const expectedCmakeChildren = ['settings', 'utils'];
@@ -58,14 +52,6 @@ describe('generateCmakeConfigFiles', () => {
     });
 
     it('should generate cmake config files', async () => {
-        const options: InitGeneratorSchema = {
-            appsDir: 'bin',
-            libsDir: 'packages',
-            projectNameAndRootFormat: 'derived',
-            cmakeConfigDir: 'cmake',
-            addClangFormatPreset: false,
-            skipFormat: false,
-        };
         generateCmakeConfigFiles(tree, options);
         const cmakeSettingsFiles = tree.children('cmake/settings');
         const cmakeUtilsFiles = tree.children('cmake/utils');
@@ -74,14 +60,6 @@ describe('generateCmakeConfigFiles', () => {
     });
 
     it('should generate cmake/settings/set_binary_settings.cmake correctly', async () => {
-        const options: InitGeneratorSchema = {
-            appsDir: 'bin',
-            libsDir: 'packages',
-            projectNameAndRootFormat: 'derived',
-            cmakeConfigDir: 'cmake',
-            addClangFormatPreset: false,
-            skipFormat: false,
-        };
         generateCmakeConfigFiles(tree, options);
         const file = 'cmake/settings/set_binary_settings.cmake';
         const readFile = tree.read(file, 'utf-8');
@@ -97,14 +75,6 @@ describe('generateCmakeConfigFiles', () => {
     });
 
     it('should generate cmake/settings/set_compiler_settings.cmake correctly', async () => {
-        const options: InitGeneratorSchema = {
-            appsDir: 'bin',
-            libsDir: 'packages',
-            projectNameAndRootFormat: 'derived',
-            cmakeConfigDir: 'cmake',
-            addClangFormatPreset: false,
-            skipFormat: false,
-        };
         generateCmakeConfigFiles(tree, options);
         const file = 'cmake/settings/set_compiler_settings.cmake';
         const readFile = tree.read(file, 'utf-8');
@@ -163,14 +133,6 @@ describe('generateCmakeConfigFiles', () => {
     });
 
     it('should generate cmake/settings/set_compiler.cmake correctly', async () => {
-        const options: InitGeneratorSchema = {
-            appsDir: 'bin',
-            libsDir: 'packages',
-            projectNameAndRootFormat: 'derived',
-            cmakeConfigDir: 'cmake',
-            addClangFormatPreset: false,
-            skipFormat: false,
-        };
         generateCmakeConfigFiles(tree, options);
         const file = 'cmake/settings/set_compiler.cmake';
         const readFile = tree.read(file, 'utf-8');
@@ -187,14 +149,6 @@ describe('generateCmakeConfigFiles', () => {
     });
 
     it('should generate cmake/settings/set_global_settings.cmake correctly', async () => {
-        const options: InitGeneratorSchema = {
-            appsDir: 'bin',
-            libsDir: 'packages',
-            projectNameAndRootFormat: 'derived',
-            cmakeConfigDir: 'cmake',
-            addClangFormatPreset: false,
-            skipFormat: false,
-        };
         generateCmakeConfigFiles(tree, options);
         const file = 'cmake/settings/set_global_settings.cmake';
         const readFile = tree.read(file, 'utf-8');
@@ -218,14 +172,6 @@ describe('generateCmakeConfigFiles', () => {
     });
 
     it('should generate cmake/settings/set_library_settings.cmake correctly', async () => {
-        const options: InitGeneratorSchema = {
-            appsDir: 'bin',
-            libsDir: 'packages',
-            projectNameAndRootFormat: 'derived',
-            cmakeConfigDir: 'cmake',
-            addClangFormatPreset: false,
-            skipFormat: false,
-        };
         generateCmakeConfigFiles(tree, options);
         const file = 'cmake/settings/set_library_settings.cmake';
         const readFile = tree.read(file, 'utf-8');
@@ -245,14 +191,6 @@ describe('generateCmakeConfigFiles', () => {
     });
 
     it('should generate cmake/settings/set_project_settings.cmake correctly', async () => {
-        const options: InitGeneratorSchema = {
-            appsDir: 'bin',
-            libsDir: 'packages',
-            projectNameAndRootFormat: 'derived',
-            cmakeConfigDir: 'cmake',
-            addClangFormatPreset: false,
-            skipFormat: false,
-        };
         generateCmakeConfigFiles(tree, options);
         const file = 'cmake/settings/set_project_settings.cmake';
         const readFile = tree.read(file, 'utf-8');
@@ -273,14 +211,6 @@ describe('generateCmakeConfigFiles', () => {
     });
 
     it('should generate cmake/utils/install_cmocka.cmake correctly', async () => {
-        const options: InitGeneratorSchema = {
-            appsDir: 'bin',
-            libsDir: 'packages',
-            projectNameAndRootFormat: 'derived',
-            cmakeConfigDir: 'cmake',
-            addClangFormatPreset: false,
-            skipFormat: false,
-        };
         generateCmakeConfigFiles(tree, options);
         const file = 'cmake/utils/install_cmocka.cmake';
         const readFile = tree.read(file, 'utf-8');
@@ -310,14 +240,6 @@ describe('generateCmakeConfigFiles', () => {
     });
 
     it('should generate cmake/utils/install_gtest.cmake correctly', async () => {
-        const options: InitGeneratorSchema = {
-            appsDir: 'bin',
-            libsDir: 'packages',
-            projectNameAndRootFormat: 'derived',
-            cmakeConfigDir: 'cmake',
-            addClangFormatPreset: false,
-            skipFormat: false,
-        };
         generateCmakeConfigFiles(tree, options);
         const file = 'cmake/utils/install_gtest.cmake';
         const readFile = tree.read(file, 'utf-8');
@@ -340,14 +262,6 @@ describe('generateCmakeConfigFiles', () => {
     });
 
     it('should generate cmake/utils/link_cmocka.cmake correctly', async () => {
-        const options: InitGeneratorSchema = {
-            appsDir: 'bin',
-            libsDir: 'packages',
-            projectNameAndRootFormat: 'derived',
-            cmakeConfigDir: 'cmake',
-            addClangFormatPreset: false,
-            skipFormat: false,
-        };
         generateCmakeConfigFiles(tree, options);
         const file = 'cmake/utils/link_cmocka.cmake';
         const readFile = tree.read(file, 'utf-8');
@@ -364,14 +278,6 @@ describe('generateCmakeConfigFiles', () => {
     });
 
     it('should generate cmake/utils/link_gtest.cmake correctly', async () => {
-        const options: InitGeneratorSchema = {
-            appsDir: 'bin',
-            libsDir: 'packages',
-            projectNameAndRootFormat: 'derived',
-            cmakeConfigDir: 'cmake',
-            addClangFormatPreset: false,
-            skipFormat: false,
-        };
         generateCmakeConfigFiles(tree, options);
         const file = 'cmake/utils/link_gtest.cmake';
         const readFile = tree.read(file, 'utf-8');
@@ -387,14 +293,6 @@ describe('generateCmakeConfigFiles', () => {
     });
 
     it('should generate cmake/utils/link_shared_library.cmake correctly', async () => {
-        const options: InitGeneratorSchema = {
-            appsDir: 'bin',
-            libsDir: 'packages',
-            projectNameAndRootFormat: 'derived',
-            cmakeConfigDir: 'cmake',
-            addClangFormatPreset: false,
-            skipFormat: false,
-        };
         generateCmakeConfigFiles(tree, options);
         const file = 'cmake/utils/link_shared_library.cmake';
         const readFile = tree.read(file, 'utf-8');
@@ -418,14 +316,6 @@ describe('generateCmakeConfigFiles', () => {
     });
 
     it('should generate cmake/utils/link_static_library.cmake correctly', async () => {
-        const options: InitGeneratorSchema = {
-            appsDir: 'bin',
-            libsDir: 'packages',
-            projectNameAndRootFormat: 'derived',
-            cmakeConfigDir: 'cmake',
-            addClangFormatPreset: false,
-            skipFormat: false,
-        };
         generateCmakeConfigFiles(tree, options);
         const file = 'cmake/utils/link_static_library.cmake';
         const readFile = tree.read(file, 'utf-8');
@@ -448,14 +338,6 @@ describe('generateCmakeConfigFiles', () => {
     });
 
     it('should generate cmake/utils/make_var_readonly.cmake correctly', async () => {
-        const options: InitGeneratorSchema = {
-            appsDir: 'bin',
-            libsDir: 'packages',
-            projectNameAndRootFormat: 'derived',
-            cmakeConfigDir: 'cmake',
-            addClangFormatPreset: false,
-            skipFormat: false,
-        };
         generateCmakeConfigFiles(tree, options);
         const file = 'cmake/utils/make_var_readonly.cmake';
         const readFile = tree.read(file, 'utf-8');
@@ -481,14 +363,6 @@ describe('generateCmakeConfigFiles', () => {
     });
 
     it('should generate cmake/utils/print_variables.cmake correctly', async () => {
-        const options: InitGeneratorSchema = {
-            appsDir: 'bin',
-            libsDir: 'packages',
-            projectNameAndRootFormat: 'derived',
-            cmakeConfigDir: 'cmake',
-            addClangFormatPreset: false,
-            skipFormat: false,
-        };
         generateCmakeConfigFiles(tree, options);
         const file = 'cmake/utils/print_variables.cmake';
         const readFile = tree.read(file, 'utf-8');

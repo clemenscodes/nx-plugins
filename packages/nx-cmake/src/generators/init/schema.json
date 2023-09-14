@@ -53,8 +53,8 @@
             "x-priority": "important",
             "x-prompt": "Where do you want to generate the CMake configuration?"
         },
-        "addClangFormatPreset": {
-            "description": "Generate a clang formatting preset",
+        "addClangPreset": {
+            "description": "Generate a clang preset",
             "type": "boolean",
             "default": true
         },
