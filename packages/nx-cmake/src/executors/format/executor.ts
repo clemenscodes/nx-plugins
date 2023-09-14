@@ -1,6 +1,7 @@
 import { FormatExecutorSchema } from './schema';
 import { ExecutorContext } from '@nx/devkit';
 import { formatFilesWithClangFormat } from './utils/formatFilesWithClangFormat/formatFilesWithClangFormat';
+import { getProjectTypeFromConfig } from '../../utils/generatorUtils/getProjectTypeFromConfig/getProjectTypeFromConfig';
 
 export default async function* runExecutor(
     options: FormatExecutorSchema,
@@ -8,12 +9,15 @@ export default async function* runExecutor(
 ): AsyncGenerator<{ success: boolean }> {
     const { root: workspaceRoot, projectName, projectsConfigurations } = ctx;
     const { projects } = projectsConfigurations;
-    const { root: projectRoot } = projects[projectName];
+    const project = projects[projectName];
+    const { root: projectRoot } = project;
+    const projectType = getProjectTypeFromConfig(project);
 
     const success = await formatFilesWithClangFormat(
         workspaceRoot,
         projectRoot,
-        options
+        options,
+        projectType
     );
 
     yield {

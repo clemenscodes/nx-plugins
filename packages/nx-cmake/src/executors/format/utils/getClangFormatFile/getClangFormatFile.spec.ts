@@ -1,5 +1,5 @@
 import { getClangFormatFile } from './getClangFormatFile';
-import * as fileExistsModule from '../../../../utils/commandUtils/fileExists/fileExists';
+import * as fileExistsModule from '../../../../utils/fileUtils/fileExists/fileExists';
 
 describe('getClangFormatFile', () => {
     const workspaceRoot = '/workspaceRoot';

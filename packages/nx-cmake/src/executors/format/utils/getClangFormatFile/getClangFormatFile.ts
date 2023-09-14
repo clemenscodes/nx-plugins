@@ -1,4 +1,4 @@
-import { fileExists } from '../../../../utils/commandUtils/fileExists/fileExists';
+import { fileExists } from '../../../../utils/fileUtils/fileExists/fileExists';
 
 export const getClangFormatFile = async (
     workspaceRoot: string,

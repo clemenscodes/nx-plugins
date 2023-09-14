@@ -1,45 +1,35 @@
 import type { FormatExecutorSchema } from '../../schema';
-import { getClangFormatFile } from '../getClangFormatFile/getClangFormatFile';
-import { commandExists } from '../../../../utils/commandUtils/commandExists/commandExists';
-import { runCommand } from '../../../../utils/commandUtils/runCommand/runCommand';
+import { getFormatArguments } from '../getFormatArguments/getFormatArguments';
+import { checkClangFormatExists } from '../checkClangFormatExists/checkClangFormatExists';
+import { getProjectFiles } from '../../../../utils/fileUtils/getProjectFiles/getProjectFiles';
+import { filterSourceFiles } from '../../../../utils/fileUtils/filterSourceFiles/filterSourceFiles';
+import { executeFormatCommand } from '../executeFormatCommand/executeFormatCommand';
+import { CProjectType } from '../../../../models/types';
 
 export const formatFilesWithClangFormat = async (
     workspaceRoot: string,
     projectRoot: string,
-    options: FormatExecutorSchema
+    options: FormatExecutorSchema,
+    projectType: CProjectType
 ): Promise<boolean> => {
     const { args } = options;
-
-    const fullProjectRoot = `${workspaceRoot}/${projectRoot}`;
-
-    const clangFormatExists = commandExists('clang-format');
-
-    if (!clangFormatExists) {
-        throw new Error(
-            `clang-format is not installed but required for this executor to run`
-        );
-    }
-
-    const clangFormatFile = await getClangFormatFile(
+    const formatCommand = checkClangFormatExists();
+    const formatArgs = await getFormatArguments(
         workspaceRoot,
-        projectRoot
+        projectRoot,
+        args
     );
-
-    const clangFormatFileArgument = `--style=file:"${clangFormatFile}"`;
-    const testFile = `${fullProjectRoot}/src/libparser.c`;
-
-    // const cmd =
-    //     `echo` +
-    //     `${fullProjectRoot}/src/libparser.c\n` +
-    //     `${fullProjectRoot}/include/libparser.h\n` +
-    //     `| clang-format ` +
-    //     clangFormatFileArgument;
-
-    const { success } = runCommand(
-        'clang-format',
-        clangFormatFileArgument,
-        testFile,
-        ...args
+    const files = getProjectFiles(workspaceRoot, projectRoot);
+    const sourceFiles = filterSourceFiles(
+        workspaceRoot,
+        projectRoot,
+        projectType,
+        files
+    );
+    const success = executeFormatCommand(
+        formatCommand,
+        formatArgs,
+        sourceFiles
     );
     return success;
 };
