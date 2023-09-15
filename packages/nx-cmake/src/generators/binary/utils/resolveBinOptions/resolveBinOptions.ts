@@ -4,6 +4,7 @@ import { getProjectRoot } from '../../../../utils/generatorUtils/getProjectRoot/
 import { CProjectType } from '../../../../models/types';
 import { LinkGeneratorSchema } from '../../../link/schema';
 import { getLibName } from '../../../library/utils/getLibName/getLibName';
+import { offsetFromRoot } from '@nx/devkit';
 
 export const resolveBinOptions = (options: BinGeneratorSchema): BinSchema => {
     const resolvedOptions = resolveOptions<BinGeneratorSchema, BinSchema>(
@@ -18,6 +19,7 @@ export const resolveBinOptions = (options: BinGeneratorSchema): BinSchema => {
     };
     const projectRoot = getProjectRoot(name, CProjectType.App);
     resolvedOptions.projectRoot = projectRoot;
+    resolvedOptions.relativeRootPath = offsetFromRoot(projectRoot);
     resolvedOptions.linkOptions = linkOptions;
     return resolvedOptions;
 };
