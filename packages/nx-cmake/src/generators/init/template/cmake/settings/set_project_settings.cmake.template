@@ -2,6 +2,7 @@ include(settings/set_compiler_settings)
 
 function(set_project_settings PROJECT SOURCE_DIR)
     set(${PROJECT}_SOURCES_DIR ${SOURCE_DIR}/src CACHE INTERNAL "")
+    set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
     set(${PROJECT}_TEST_SOURCES_DIR ${SOURCE_DIR}/test CACHE INTERNAL "")
     set(${PROJECT}_INCLUDE_DIR ${SOURCE_DIR}/include CACHE INTERNAL "")
     file(GLOB_RECURSE SOURCES ${${PROJECT}_SOURCES_DIR}/*.c*)
