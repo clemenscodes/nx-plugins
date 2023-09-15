@@ -45,6 +45,10 @@
         "test": {
             "dependsOn": ["build"],
             "inputs": ["default"]
+        },
+        "lint": {
+            "dependsOn": ["cmake"],
+            "inputs": ["default"]
         }
     },
     "namedInputs": {

@@ -45,5 +45,5 @@ Thumbs.db
 /include
 tools/format.sh
 /.clang-format
-/.clang-format-ignore
+/.clang-tidy
 /CMakeLists.txt

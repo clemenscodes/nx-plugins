@@ -16,6 +16,10 @@ describe('addTargetDefaults', () => {
                     dependsOn: ['^build', 'cmake'],
                     inputs: ['default'],
                 },
+                lint: {
+                    dependsOn: ['cmake'],
+                    inputs: ['default'],
+                },
                 test: {
                     dependsOn: ['build'],
                     inputs: ['default'],
@@ -39,6 +43,10 @@ describe('addTargetDefaults', () => {
                 },
                 build: {
                     dependsOn: ['^build', 'cmake'],
+                    inputs: ['default'],
+                },
+                lint: {
+                    dependsOn: ['cmake'],
                     inputs: ['default'],
                 },
                 test: {

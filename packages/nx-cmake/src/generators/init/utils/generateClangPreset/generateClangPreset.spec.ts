@@ -1,12 +1,15 @@
 import type { Tree } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import { generateClangFormatPreset } from './generateClangFormatPreset';
+import { generateClangPreset } from './generateClangPreset';
 import { InitGeneratorSchema } from '../../schema';
+import { readFileWithTree } from '../../../../utils/generatorUtils/readFileWithTree/readFileWithTree';
 
-describe('generateClangFormatPreset', () => {
+describe('generateClangPreset', () => {
     let tree: Tree;
     const clangFormatFile = '.clang-format';
-    const expectedClangFormatFile =
+    const clangTidyFile = '.clang-tidy';
+    const expectedClangTidyFileContent = '';
+    const expectedClangFormatFileContent =
         'BasedOnStyle: LLVM\n' +
         'Language: Cpp\n' +
         'IndentWidth: 4\n' +
@@ -54,43 +57,47 @@ describe('generateClangFormatPreset', () => {
         tree = createTreeWithEmptyWorkspace();
     });
 
-    it('should not generate clang format preset when addClangFormatPreset is false', async () => {
+    it('should not generate clang preset when addClangPreset is false', async () => {
         const options: InitGeneratorSchema = {
             appsDir: 'bin',
             libsDir: 'packages',
             projectNameAndRootFormat: 'derived',
             cmakeConfigDir: 'cmake',
-            addClangFormatPreset: false,
+            addClangPreset: false,
             skipFormat: false,
         };
-        generateClangFormatPreset(tree, options);
+        generateClangPreset(tree, options);
         expect(tree.exists('.clang-format')).toBe(false);
+        expect(tree.exists('.clang-tidy')).toBe(false);
     });
 
-    it('should generate clang format preset when addClangFormatPreset is true', async () => {
+    it('should generate clang preset when addClangFormatPreset is true', async () => {
         const options: InitGeneratorSchema = {
             appsDir: 'bin',
             libsDir: 'packages',
             projectNameAndRootFormat: 'derived',
             cmakeConfigDir: 'cmake',
-            addClangFormatPreset: true,
+            addClangPreset: true,
             skipFormat: false,
         };
-        generateClangFormatPreset(tree, options);
+        generateClangPreset(tree, options);
         expect(tree.exists('.clang-format')).toBe(true);
+        expect(tree.exists('.clang-tidy')).toBe(true);
     });
 
-    it('should generate clang format preset correctly', async () => {
+    it('should generate clang preset correctly', async () => {
         const options: InitGeneratorSchema = {
             appsDir: 'bin',
             libsDir: 'packages',
             projectNameAndRootFormat: 'derived',
             cmakeConfigDir: 'cmake',
-            addClangFormatPreset: true,
+            addClangPreset: true,
             skipFormat: false,
         };
-        generateClangFormatPreset(tree, options);
-        const readClangFormatFile = tree.read(clangFormatFile, 'utf-8');
-        expect(readClangFormatFile).toStrictEqual(expectedClangFormatFile);
+        generateClangPreset(tree, options);
+        const clangFileContent = readFileWithTree(tree, clangFormatFile);
+        const clangTidyContent = readFileWithTree(tree, clangTidyFile);
+        expect(clangFileContent).toStrictEqual(expectedClangFormatFileContent);
+        expect(clangTidyContent).toStrictEqual(expectedClangTidyFileContent);
     });
 });

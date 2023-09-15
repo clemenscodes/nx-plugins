@@ -2,12 +2,12 @@ import { type Tree, generateFiles } from '@nx/devkit';
 import type { InitGeneratorSchema } from '../../schema';
 import { join } from 'path';
 
-export const generateClangFormatPreset = (
+export const generateClangPreset = (
     tree: Tree,
     options: InitGeneratorSchema
 ) => {
-    const { addClangFormatPreset } = options;
-    if (!addClangFormatPreset) {
+    const { addClangPreset } = options;
+    if (!addClangPreset) {
         return;
     }
     generateFiles(
