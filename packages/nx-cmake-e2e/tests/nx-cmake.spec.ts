@@ -22,6 +22,69 @@ describe('nx-cmake', () => {
         return file;
     };
 
+    const testExecutor = (executorName: string) => {
+        describe(`nx-cmake:${executorName}`, () => {
+            let projectName: string;
+            let cmd: string;
+
+            beforeEach(() => {
+                projectName = 'nx-cmake-test-c';
+                cmd = `nx ${executorName} ${projectName} --output-style=stream --parallel=1 --skip-nx-cache`;
+            });
+
+            it(`should run ${executorName} executor successfully`, () => {
+                execSync(cmd, {
+                    cwd: projectDirectory,
+                    stdio: 'inherit',
+                    env: process.env,
+                });
+                cmd = `nx ${executorName} lib${projectName} --output-style=stream --parallel=1 --skip-nx-cache`;
+                execSync(cmd, {
+                    cwd: projectDirectory,
+                    stdio: 'inherit',
+                    env: process.env,
+                });
+                cmd = `nx ${executorName} lib${projectName}-lib --output-style=stream --parallel=1 --skip-nx-cache`;
+                execSync(cmd, {
+                    cwd: projectDirectory,
+                    stdio: 'inherit',
+                    env: process.env,
+                });
+                cmd = `nx ${executorName} test${projectName} --output-style=stream --parallel=1 --skip-nx-cache`;
+                execSync(cmd, {
+                    cwd: projectDirectory,
+                    stdio: 'inherit',
+                    env: process.env,
+                });
+                projectName = 'nx-cmake-test-cpp';
+                cmd = `nx ${executorName} ${projectName} --output-style=stream --parallel=1 --skip-nx-cache`;
+                execSync(cmd, {
+                    cwd: projectDirectory,
+                    stdio: 'inherit',
+                    env: process.env,
+                });
+                cmd = `nx ${executorName} lib${projectName} --output-style=stream --parallel=1 --skip-nx-cache`;
+                execSync(cmd, {
+                    cwd: projectDirectory,
+                    stdio: 'inherit',
+                    env: process.env,
+                });
+                cmd = `nx ${executorName} lib${projectName}-lib --output-style=stream --parallel=1 --skip-nx-cache`;
+                execSync(cmd, {
+                    cwd: projectDirectory,
+                    stdio: 'inherit',
+                    env: process.env,
+                });
+                cmd = `nx ${executorName} test${projectName} --output-style=stream --parallel=1 --skip-nx-cache`;
+                execSync(cmd, {
+                    cwd: projectDirectory,
+                    stdio: 'inherit',
+                    env: process.env,
+                });
+            });
+        });
+    };
+
     let projectDirectory: string;
 
     beforeAll(() => {
@@ -273,59 +336,75 @@ describe('nx-cmake', () => {
     });
 
     describe('executors', () => {
-        describe('nx-cmake:cmake', () => {
+        testExecutor('cmake');
+        testExecutor('fmt');
+        testExecutor('lint');
+        testExecutor('build');
+
+        describe('nx-cmake:execute', () => {
             let projectName: string;
             let cmd: string;
 
             beforeEach(() => {
                 projectName = 'nx-cmake-test-c';
-                cmd = `nx cmake ${projectName}`;
+                cmd = `nx execute ${projectName} --output-style=stream --parallel=1 --skip-nx-cache`;
             });
 
-            it('should run cmake executor successfully', () => {
-                execSync(cmd, {
-                    cwd: projectDirectory,
-                    stdio: 'inherit',
-                    env: process.env,
-                });
-                cmd = `nx cmake lib${projectName} --skip-nx-cache`;
-                execSync(cmd, {
-                    cwd: projectDirectory,
-                    stdio: 'inherit',
-                    env: process.env,
-                });
-                cmd = `nx cmake lib${projectName}-lib --skip-nx-cache`;
-                execSync(cmd, {
-                    cwd: projectDirectory,
-                    stdio: 'inherit',
-                    env: process.env,
-                });
-                cmd = `nx cmake test${projectName} --skip-nx-cache`;
+            it('should run nx-cmake:execute successfully', () => {
                 execSync(cmd, {
                     cwd: projectDirectory,
                     stdio: 'inherit',
                     env: process.env,
                 });
                 projectName = 'nx-cmake-test-cpp';
-                cmd = `nx cmake ${projectName} --skip-nx-cache`;
                 execSync(cmd, {
                     cwd: projectDirectory,
                     stdio: 'inherit',
                     env: process.env,
                 });
-                cmd = `nx cmake lib${projectName} --skip-nx-cache`;
+            });
+        });
+
+        describe('nx-cmake:test', () => {
+            let projectName: string;
+            let cmd: string;
+
+            beforeEach(() => {
+                projectName = 'testnx-cmake-test-c';
+                cmd = `nx test ${projectName} --output-style=stream --parallel=1 --skip-nx-cache`;
+            });
+
+            it('should run nx-cmake:test successfully', () => {
                 execSync(cmd, {
                     cwd: projectDirectory,
                     stdio: 'inherit',
                     env: process.env,
                 });
-                cmd = `nx cmake lib${projectName}-lib --skip-nx-cache`;
+                projectName = 'testnx-cmake-test-cpp';
                 execSync(cmd, {
                     cwd: projectDirectory,
                     stdio: 'inherit',
                     env: process.env,
                 });
-                cmd = `nx cmake test${projectName} --skip-nx-cache`;
+            });
+        });
+
+        describe('nx-cmake:debug', () => {
+            let projectName: string;
+            let cmd: string;
+
+            beforeEach(() => {
+                projectName = 'nx-cmake-test-c';
+                cmd = `nx debug ${projectName} --output-style=stream --parallel=1 --skip-nx-cache --args=-ex=r,-ex=q`;
+            });
+
+            it('should run nx-cmake:debug successfully', () => {
+                execSync(cmd, {
+                    cwd: projectDirectory,
+                    stdio: 'inherit',
+                    env: process.env,
+                });
+                projectName = 'nx-cmake-test-cpp';
                 execSync(cmd, {
                     cwd: projectDirectory,
                     stdio: 'inherit',

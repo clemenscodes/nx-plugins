@@ -3,8 +3,8 @@ import { getProjectFiles } from '../../../../utils/fileUtils/getProjectFiles/get
 import { filterSourceFiles } from '../../../../utils/fileUtils/filterSourceFiles/filterSourceFiles';
 import { CProjectType } from '../../../../models/types';
 import { checkCommandExists } from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
-import { executeCommandForFiles } from '../../../../utils/commandUtils/executeCommandForFiles/executeCommandForFiles';
 import { getLintArguments } from '../getLintArguments/getLintArguments';
+import { runCommand } from '../../../../utils/commandUtils/runCommand/runCommand';
 
 export const lintFilesWithClangTidy = async (
     workspaceRoot: string,
@@ -22,6 +22,6 @@ export const lintFilesWithClangTidy = async (
         projectType,
         files
     );
-    const success = executeCommandForFiles(lintCommand, lintArgs, sourceFiles);
+    const { success } = runCommand(lintCommand, ...lintArgs, ...sourceFiles);
     return success;
 };

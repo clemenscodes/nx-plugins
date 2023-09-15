@@ -13,6 +13,7 @@ describe('resolveOptions', () => {
             ...inputOptions,
             relativeRootPath: '../../',
             constantName: 'EXAMPLE_NAME',
+            snakeCaseName: 'example_name',
             languageExtension: 'cpp',
             cmakeC: 'CXX',
         };
@@ -33,6 +34,7 @@ describe('resolveOptions', () => {
             ...inputOptions,
             relativeRootPath: '../../',
             constantName: 'EXAMPLE_NAME',
+            snakeCaseName: 'example_name',
             languageExtension: 'c',
             cmakeC: 'C',
         };

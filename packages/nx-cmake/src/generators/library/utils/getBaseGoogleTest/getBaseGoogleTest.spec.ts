@@ -2,12 +2,13 @@ import { getBaseGoogleTest } from './getBaseGoogleTest';
 
 describe('getBaseGoogleTest', () => {
     it('should generate test code with the library name and project name', () => {
-        const libName = 'MyLib';
-        const projectName = 'MyProject';
+        const libName = 'libnx-cmake-test-c';
+        const projectName = 'nx-cmake-test-c';
         const result = getBaseGoogleTest(libName, projectName);
-
-        expect(result).toContain(`TEST(${libName}, test_${projectName})`);
-        expect(result).toContain(`EXPECT_EQ(${projectName}(), 0);`);
+        expect(result).toContain(
+            `TEST(libnx_cmake_test_c, test_nx_cmake_test_c)`
+        );
+        expect(result).toContain(`EXPECT_EQ(nx_cmake_test_c(), 0);`);
     });
     it('should generate test code with the library name and project name', () => {
         const libName = 'libgui';

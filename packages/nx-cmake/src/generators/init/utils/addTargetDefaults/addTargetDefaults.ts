@@ -18,7 +18,7 @@ export const addTargetDefaults = (
     };
 
     const buildTargetDefault = {
-        dependsOn: ['^build', 'cmake'],
+        dependsOn: ['^cmake', '^build', 'cmake'],
         inputs: ['default'],
     };
 
@@ -93,8 +93,16 @@ export const addTargetDefaults = (
         updatedNxJson.targetDefaults.build.dependsOn.push('^build');
     }
 
+    if (!(updatedNxJson.targetDefaults.build.dependsOn[0] === '^cmake')) {
+        updatedNxJson.targetDefaults.build.dependsOn.unshift('^cmake');
+    }
+
     if (!updatedNxJson.targetDefaults.build.dependsOn.includes('^build')) {
         updatedNxJson.targetDefaults.build.dependsOn.push('^build');
+    }
+
+    if (!updatedNxJson.targetDefaults.build.dependsOn.includes('cmake')) {
+        updatedNxJson.targetDefaults.build.dependsOn.push('cmake');
     }
 
     if (!updatedNxJson.targetDefaults.build.dependsOn.includes('cmake')) {

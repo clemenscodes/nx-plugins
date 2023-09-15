@@ -12,8 +12,7 @@
                     "test",
                     "e2e",
                     "lint",
-                    "fmt",
-                    "cmake"
+                    "fmt"
                 ],
                 "accessToken": "ZTBkM2I2MjYtNTc4Mi00YjUxLTkzNDAtZWFlYjg1OGY0Y2UxfHJlYWQtd3JpdGU=",
                 "useDaemonProcess": false
@@ -31,7 +30,7 @@
             "inputs": ["cmake"]
         },
         "build": {
-            "dependsOn": ["^build", "cmake"],
+            "dependsOn": ["^cmake", "^build", "cmake"],
             "inputs": ["default"]
         },
         "debug": {

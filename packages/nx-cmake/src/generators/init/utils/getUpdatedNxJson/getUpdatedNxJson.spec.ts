@@ -39,7 +39,6 @@ describe('getUpdatedNxJson', () => {
                             'debug',
                             'test',
                             'lint',
-                            'cmake',
                             'fmt',
                         ],
                     },
@@ -48,7 +47,10 @@ describe('getUpdatedNxJson', () => {
             pluginsConfig: { '@nx/js': { analyzeSourceFiles: true } },
             targetDefaults: {
                 cmake: { dependsOn: ['^cmake'], inputs: ['cmake'] },
-                build: { dependsOn: ['^build', 'cmake'], inputs: ['default'] },
+                build: {
+                    dependsOn: ['^cmake', '^build', 'cmake'],
+                    inputs: ['default'],
+                },
                 lint: { dependsOn: ['cmake'], inputs: ['default'] },
                 test: { dependsOn: ['build'], inputs: ['default'] },
                 debug: { dependsOn: ['build'], inputs: ['default'] },
