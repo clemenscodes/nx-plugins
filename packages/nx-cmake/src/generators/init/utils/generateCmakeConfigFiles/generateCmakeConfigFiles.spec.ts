@@ -157,6 +157,7 @@ describe('generateCmakeConfigFiles', () => {
             '\n' +
             'function(set_global_settings)\n' +
             '    set(CMAKE_MINIMUM_REQUIRED_VERSION 3.16.3 CACHE INTERNAL "")\n' +
+            '    set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")\n' +
             '    set(CMAKE_CXX_STANDARD 17 CACHE INTERNAL "")\n' +
             '    set(CMAKE_CXX_EXTENSIONS OFF CACHE INTERNAL "")\n' +
             '    set(CMAKE_CXX_STANDARD_REQUIRED ON CACHE INTERNAL "")\n' +
@@ -199,7 +200,6 @@ describe('generateCmakeConfigFiles', () => {
             '\n' +
             'function(set_project_settings PROJECT SOURCE_DIR)\n' +
             '    set(${PROJECT}_SOURCES_DIR ${SOURCE_DIR}/src CACHE INTERNAL "")\n' +
-            '    set(CMAKE_EXPORT_COMPILE_COMMANDS ON)\n' +
             '    set(${PROJECT}_TEST_SOURCES_DIR ${SOURCE_DIR}/test CACHE INTERNAL "")\n' +
             '    set(${PROJECT}_INCLUDE_DIR ${SOURCE_DIR}/include CACHE INTERNAL "")\n' +
             '    file(GLOB_RECURSE SOURCES ${${PROJECT}_SOURCES_DIR}/*.c*)\n' +

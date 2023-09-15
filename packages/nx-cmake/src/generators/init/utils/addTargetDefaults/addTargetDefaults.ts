@@ -12,6 +12,11 @@ export const addTargetDefaults = (
         inputs: ['cmake'],
     };
 
+    const lintTargetDefault = {
+        dependsOn: ['cmake'],
+        inputs: defaultInput,
+    };
+
     const buildTargetDefault = {
         dependsOn: ['^build', 'cmake'],
         inputs: ['default'],
@@ -39,7 +44,12 @@ export const addTargetDefaults = (
             test: testTargetDefault,
             debug: debugTargetDefault,
             execute: executeTargetDefault,
+            lint: lintTargetDefault,
         };
+    }
+
+    if (!('lint' in updatedNxJson.targetDefaults)) {
+        updatedNxJson.targetDefaults.lint = lintTargetDefault;
     }
 
     if (!('test' in updatedNxJson.targetDefaults)) {
@@ -89,6 +99,10 @@ export const addTargetDefaults = (
 
     if (!updatedNxJson.targetDefaults.build.dependsOn.includes('cmake')) {
         updatedNxJson.targetDefaults.build.dependsOn.push('cmake');
+    }
+
+    if (!updatedNxJson.targetDefaults.lint.dependsOn.includes('cmake')) {
+        updatedNxJson.targetDefaults.lint.dependsOn.push('cmake');
     }
 
     if (!updatedNxJson.targetDefaults.test.dependsOn) {

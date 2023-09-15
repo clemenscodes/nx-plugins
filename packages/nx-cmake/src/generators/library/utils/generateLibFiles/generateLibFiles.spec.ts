@@ -40,7 +40,7 @@ describe('generateLibFiles', () => {
         const expectedSourceFile =
             '#include <test/include/libtest.h>\n' +
             '\n' +
-            'int test() {\n' +
+            'int test(void) {\n' +
             '    return 0;\n' +
             '}\n';
         const expectedListsFile =
@@ -83,7 +83,7 @@ describe('generateLibFiles', () => {
         const expectedSourceFile =
             '#include <test/include/libtest.h>\n' +
             '\n' +
-            'int test() {\n' +
+            'int test(void) {\n' +
             '    return 0;\n' +
             '}\n';
         const expectedListsFile =
