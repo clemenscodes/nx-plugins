@@ -133,7 +133,9 @@ jobs:
                   run_install: false
 
             - name: Install gdb
-              run: sudo apt-get install gdb -y
+              run: |
+                  sudo apt-get update -y
+                  sudo apt-get install gdb -y
 
             - name: Get pnpm store directory
               id: pnpm-cache
@@ -192,7 +194,9 @@ jobs:
                   run_install: false
 
             - name: Install gdb
-              run: sudo apt-get install gdb -y
+              run: |
+                  sudo apt-get update -y
+                  sudo apt-get install gdb -y
 
             - name: Get pnpm store directory
               id: pnpm-cache
