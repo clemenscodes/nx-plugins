@@ -30,12 +30,6 @@ export const getClangTidyConfigArgument = async (
     return configArgument;
 };
 
-export const getClangTidyChecksArgument = (): string => {
-    const clangTidyChecks = '';
-    const checksArgument = `--checks=${clangTidyChecks}`;
-    return checksArgument;
-};
-
 export const getLintArguments = async (
     workspaceRoot: string,
     projectRoot: string,
@@ -45,16 +39,10 @@ export const getLintArguments = async (
         workspaceRoot,
         projectRoot
     );
-    const checksArgument = getClangTidyChecksArgument();
     const buildArgument = getClangTidyBuildPathArgument(
         workspaceRoot,
         projectRoot
     );
-    const lintCommandArguments = [
-        configArgument,
-        checksArgument,
-        buildArgument,
-        ...args,
-    ];
+    const lintCommandArguments = [configArgument, buildArgument, ...args];
     return lintCommandArguments;
 };
