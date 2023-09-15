@@ -1,18 +1,22 @@
 import { getBaseCmockaTest } from './getBaseCmockaTest';
 
 describe('getBaseCmockaTest', () => {
+    let projectName: string;
+
+    beforeEach(() => {
+        projectName = 'nx-cmake-test-c';
+    });
+
     it('should generate test code with the project name', () => {
-        const projectName = 'MyProject';
         const result = getBaseCmockaTest(projectName);
 
         expect(result).toContain(
-            `static void test_${projectName}(void **state)`
+            `static void test_nx_cmake_test_c(void **state)`
         );
-        expect(result).toContain(`${projectName}();`);
+        expect(result).toContain(`nx_cmake_test_c();`);
     });
 
     it('should generate test code with setup and teardown functions', () => {
-        const projectName = 'MyProject';
         const result = getBaseCmockaTest(projectName);
 
         expect(result).toContain(`static int setup(void **state)`);
@@ -20,16 +24,16 @@ describe('getBaseCmockaTest', () => {
     });
 
     it('should generate test code with cmocka_unit_test and cmocka_run_group_tests', () => {
-        const projectName = 'MyProject';
         const result = getBaseCmockaTest(projectName);
 
-        expect(result).toContain(`cmocka_unit_test(test_${projectName})`);
+        expect(result).toContain(`cmocka_unit_test(test_nx_cmake_test_c)`);
         expect(result).toContain(
-            `cmocka_run_group_tests(${projectName}_tests, setup, teardown)`
+            `cmocka_run_group_tests(nx_cmake_test_c_tests, setup, teardown)`
         );
     });
+
     it('should generate full test code with the project name', () => {
-        const projectName = 'parser';
+        projectName = 'parser';
         const result = getBaseCmockaTest(projectName);
         const expected =
             'static int setup(void **state) {\n' +

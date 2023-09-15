@@ -16,6 +16,7 @@ describe('resolveBinOptions ', () => {
         expected = {
             ...options,
             constantName: 'BASE',
+            snakeCaseName: 'base',
             languageExtension: 'cpp',
             relativeRootPath: '../../',
             cmakeC: 'CXX',

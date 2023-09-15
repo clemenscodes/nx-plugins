@@ -1,6 +1,8 @@
 export const getBaseGoogleTest = (libName: string, projectName: string) => {
+    const snakeCaseProjectName = projectName.replace(/-/g, '_').toLowerCase();
+    const snakeCaseLibName = libName.replace(/-/g, '_').toLowerCase();
     return (
-        `TEST(${libName}, test_${projectName}) {\n` +
-        `\tEXPECT_EQ(${projectName}(), 0);\n}\n`
+        `TEST(${snakeCaseLibName}, test_${snakeCaseProjectName}) {\n` +
+        `\tEXPECT_EQ(${snakeCaseProjectName}(), 0);\n}\n`
     );
 };

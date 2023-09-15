@@ -3,7 +3,7 @@ import { type Tree, formatFiles, readNxJson, updateNxJson } from '@nx/devkit';
 import { getUpdatedNxJson } from './utils/getUpdatedNxJson/getUpdatedNxJson';
 import { generateCmakeConfigFiles } from './utils/generateCmakeConfigFiles/generateCmakeConfigFiles';
 import { generateRootConfig } from './utils/generateRootConfig/generateRootConfig';
-import { generateClangFormatPreset } from './utils/generateClangFormatPreset/generateClangFormatPreset';
+import { generateClangPreset } from './utils/generateClangPreset/generateClangPreset';
 import { generateGlobalIncludeDir } from './utils/generateGlobalIncludeDir/generateGlobalIncludeDir';
 
 export async function initGenerator(tree: Tree, options: InitGeneratorSchema) {
@@ -14,7 +14,7 @@ export async function initGenerator(tree: Tree, options: InitGeneratorSchema) {
     generateCmakeConfigFiles(tree, updatedOptions);
     generateGlobalIncludeDir(tree, updatedOptions);
     generateRootConfig(tree, updatedOptions);
-    generateClangFormatPreset(tree, updatedOptions);
+    generateClangPreset(tree, updatedOptions);
     skipFormat || (await formatFiles(tree));
 }
 

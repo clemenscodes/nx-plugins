@@ -5,6 +5,6 @@ export interface InitGeneratorSchema {
     libsDir: WorkspaceLayout['libsDir'];
     projectNameAndRootFormat: WorkspaceLayout['projectNameAndRootFormat'];
     cmakeConfigDir: string;
-    addClangFormatPreset: boolean;
+    addClangPreset: boolean;
     skipFormat: boolean;
 }

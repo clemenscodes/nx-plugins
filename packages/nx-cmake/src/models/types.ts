@@ -5,6 +5,7 @@ export type BaseOptions = {
     language: C;
     skipFormat: boolean;
     constantName?: string;
+    snakeCaseName?: string;
     relativeRootPath?: string;
     languageExtension?: string;
     cmakeC?: CMakeC;

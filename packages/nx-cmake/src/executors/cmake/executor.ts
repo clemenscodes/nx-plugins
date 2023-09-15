@@ -1,6 +1,6 @@
-import { runCommand } from '../../utils/commandUtils/runCommand/runCommand';
-import { CmakeExecutorSchema } from './schema';
-import { ExecutorContext } from '@nx/devkit';
+import type { ExecutorContext } from '@nx/devkit';
+import type { CmakeExecutorSchema } from './schema';
+import { configureProjectWithCMake } from './utils/configureProjectWithCMake/configureProjectWithCMake';
 
 export default async function* runExecutor(
     options: CmakeExecutorSchema,
@@ -8,17 +8,12 @@ export default async function* runExecutor(
 ): AsyncGenerator<{ success: boolean }> {
     const { root: workspaceRoot, projectName, projectsConfigurations } = ctx;
     const { projects } = projectsConfigurations;
-    const { root } = projects[projectName];
-    const { release, args } = options;
-
-    const { success } = runCommand(
-        'cmake',
-        '-S',
-        `${workspaceRoot}/${root}`,
-        `${workspaceRoot}/dist/${root}`,
-        `-DCMAKE_BUILD_TYPE=${release ? 'Release' : 'Debug'}`,
-        ...args
+    const project = projects[projectName];
+    const { root: projectRoot } = project;
+    const success = configureProjectWithCMake(
+        workspaceRoot,
+        projectRoot,
+        options
     );
-
     yield { success };
 }

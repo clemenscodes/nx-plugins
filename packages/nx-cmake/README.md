@@ -12,13 +12,15 @@ NOTE: Windows is not natively supported. Using WSL2 and installing the dependenc
 
 The following tools need to be installed for this plugin to work correctly:
 
+- nx 16.7+
 - node
 - gcc
 - cmake
 - make
-- clang-format (optional for formatting)
-- clang-tidy (optional for linting)
-- gdb (optional for debugging)
+- ctest
+- clang-format
+- clang-tidy
+- gdb
 
 ### Installation
 
