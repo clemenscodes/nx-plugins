@@ -11,6 +11,7 @@ export const resolveOptions = <T extends BaseOptions, K extends Required<T>>(
     const { language } = options;
     const resolvedName = names(options.name);
     const { name, constantName } = resolvedName;
+    const snakeCaseName = constantName.toLowerCase();
     const projectRoot = getProjectRoot(name, CProjectType.Lib);
     const relativeRootPath = offsetFromRoot(projectRoot);
     const languageExtension = getLanguageExtension(language);
@@ -20,6 +21,7 @@ export const resolveOptions = <T extends BaseOptions, K extends Required<T>>(
         ...options,
         name,
         constantName,
+        snakeCaseName,
         languageExtension,
         relativeRootPath,
         cmakeC,

@@ -1,6 +1,5 @@
 import type { ExecuteExecutorSchema } from '../../schema';
 import { runCommand } from '../../../../utils/commandUtils/runCommand/runCommand';
-import { checkCommandExists } from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
 
 export const executeBinary = (
     workspaceRoot: string,
@@ -9,8 +8,7 @@ export const executeBinary = (
     options: ExecuteExecutorSchema
 ): boolean => {
     const bin = `${workspaceRoot}/dist/${projectRoot}/${projectName}`;
-    const binCommand = checkCommandExists(bin);
     const { args } = options;
-    const { success } = runCommand(binCommand, ...args);
+    const { success } = runCommand(bin, ...args);
     return success;
 };

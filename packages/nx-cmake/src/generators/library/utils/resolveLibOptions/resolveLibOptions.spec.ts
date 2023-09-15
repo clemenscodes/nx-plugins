@@ -13,6 +13,7 @@ describe('resolveLibOptions', () => {
         const expected = {
             ...baseOptions,
             constantName: 'BASE',
+            snakeCaseName: 'base',
             languageExtension: 'c',
             relativeRootPath: '../../',
             cmakeC: 'C',
@@ -40,6 +41,7 @@ describe('resolveLibOptions', () => {
         const expected = {
             ...baseOptions,
             constantName: 'BASE',
+            snakeCaseName: 'base',
             languageExtension: 'c',
             relativeRootPath: '../../',
             cmakeC: 'C',
@@ -88,6 +90,7 @@ describe('resolveLibOptions', () => {
         const expected = {
             ...baseOptions,
             constantName: 'BASE',
+            snakeCaseName: 'base',
             languageExtension: 'cpp',
             relativeRootPath: '../../',
             cmakeC: 'CXX',
@@ -118,6 +121,7 @@ describe('resolveLibOptions', () => {
             skipFormat: false,
             generateTests: true,
             constantName: 'BASE',
+            snakeCaseName: 'base',
             languageExtension: 'cpp',
             relativeRootPath: '../../',
             cmakeC: 'CXX',

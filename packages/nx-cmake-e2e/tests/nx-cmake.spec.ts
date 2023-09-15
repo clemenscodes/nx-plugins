@@ -11,8 +11,81 @@ type Graph = {
 };
 
 describe('nx-cmake', () => {
+    const generateGraph = (): Graph => {
+        const cmd = `nx graph --file=${projectDirectory}/graph.json`;
+        execSync(cmd, {
+            cwd: projectDirectory,
+            stdio: 'inherit',
+            env: { ...process.env, NX_DAEMON: 'false' },
+        });
+        const file: Graph = readJsonFile(`${projectDirectory}/graph.json`);
+        return file;
+    };
+
+    const testExecutor = (executorName: string) => {
+        describe(`nx-cmake:${executorName}`, () => {
+            let projectName: string;
+            let cmd: string;
+
+            beforeEach(() => {
+                projectName = 'nx-cmake-test-c';
+                cmd = `nx ${executorName} ${projectName} --output-style=stream --parallel=1 --skip-nx-cache`;
+            });
+
+            it(`should run ${executorName} executor successfully`, () => {
+                execSync(cmd, {
+                    cwd: projectDirectory,
+                    stdio: 'inherit',
+                    env: process.env,
+                });
+                cmd = `nx ${executorName} lib${projectName} --output-style=stream --parallel=1 --skip-nx-cache`;
+                execSync(cmd, {
+                    cwd: projectDirectory,
+                    stdio: 'inherit',
+                    env: process.env,
+                });
+                cmd = `nx ${executorName} lib${projectName}-lib --output-style=stream --parallel=1 --skip-nx-cache`;
+                execSync(cmd, {
+                    cwd: projectDirectory,
+                    stdio: 'inherit',
+                    env: process.env,
+                });
+                cmd = `nx ${executorName} test${projectName} --output-style=stream --parallel=1 --skip-nx-cache`;
+                execSync(cmd, {
+                    cwd: projectDirectory,
+                    stdio: 'inherit',
+                    env: process.env,
+                });
+                projectName = 'nx-cmake-test-cpp';
+                cmd = `nx ${executorName} ${projectName} --output-style=stream --parallel=1 --skip-nx-cache`;
+                execSync(cmd, {
+                    cwd: projectDirectory,
+                    stdio: 'inherit',
+                    env: process.env,
+                });
+                cmd = `nx ${executorName} lib${projectName} --output-style=stream --parallel=1 --skip-nx-cache`;
+                execSync(cmd, {
+                    cwd: projectDirectory,
+                    stdio: 'inherit',
+                    env: process.env,
+                });
+                cmd = `nx ${executorName} lib${projectName}-lib --output-style=stream --parallel=1 --skip-nx-cache`;
+                execSync(cmd, {
+                    cwd: projectDirectory,
+                    stdio: 'inherit',
+                    env: process.env,
+                });
+                cmd = `nx ${executorName} test${projectName} --output-style=stream --parallel=1 --skip-nx-cache`;
+                execSync(cmd, {
+                    cwd: projectDirectory,
+                    stdio: 'inherit',
+                    env: process.env,
+                });
+            });
+        });
+    };
+
     let projectDirectory: string;
-    const projectName = 'nx-cmake-test';
 
     beforeAll(() => {
         projectDirectory = createTestProject();
@@ -45,52 +118,300 @@ describe('nx-cmake', () => {
         });
     });
 
-    it('should initialize', async () => {
-        const cmd = 'nx g nx-cmake:init --no-interactive';
-        execSync(cmd, {
-            cwd: projectDirectory,
-            stdio: 'inherit',
-            env: process.env,
+    describe('generators', () => {
+        describe('nx-cmake:init', () => {
+            it('should initialize', async () => {
+                const cmd = 'nx g nx-cmake:init --no-interactive';
+                execSync(cmd, {
+                    cwd: projectDirectory,
+                    stdio: 'inherit',
+                    env: process.env,
+                });
+            });
+        });
+
+        describe('C generators', () => {
+            let projectName: string;
+
+            beforeEach(() => {
+                projectName = 'nx-cmake-test-c';
+            });
+
+            describe('nx-cmake:bin', () => {
+                it('should generate C binary', async () => {
+                    const cmd = `nx g nx-cmake:bin --name=${projectName} --language=C --no-interactive`;
+                    execSync(cmd, {
+                        cwd: projectDirectory,
+                        stdio: 'inherit',
+                        env: process.env,
+                    });
+                });
+            });
+
+            describe('nx-cmake:lib', () => {
+                it('should generate C library', async () => {
+                    projectName += '-lib';
+                    const cmd = `nx g nx-cmake:lib --name=${projectName} --language=C --no-interactive`;
+                    execSync(cmd, {
+                        cwd: projectDirectory,
+                        stdio: 'inherit',
+                        env: process.env,
+                    });
+                });
+            });
+
+            it('should process C dependencies correctly', () => {
+                const { graph } = generateGraph();
+                expect(graph).toBeDefined();
+                const { dependencies } = graph;
+                expect(dependencies).toBeDefined();
+                const projectLibName = `lib${projectName}`;
+                const projectTestName = `test${projectName}`;
+                const projectBinaryDeps = dependencies[projectName];
+                const projectTestDeps = dependencies[projectTestName];
+                expect(projectBinaryDeps).toStrictEqual([
+                    {
+                        source: projectName,
+                        target: projectLibName,
+                        type: 'static',
+                    },
+                ]);
+                expect(projectTestDeps).toStrictEqual([
+                    {
+                        source: projectTestName,
+                        target: projectLibName,
+                        type: 'static',
+                    },
+                ]);
+            });
+
+            describe('nx-cmake:link', () => {
+                it('should link C library', async () => {
+                    const cmd = `nx g nx-cmake:link --source=lib${projectName} --target=lib${projectName}-lib --no-interactive`;
+                    execSync(cmd, {
+                        cwd: projectDirectory,
+                        stdio: 'inherit',
+                        env: process.env,
+                    });
+                });
+            });
+
+            it('should process C dependencies correctly', () => {
+                const { graph } = generateGraph();
+                expect(graph).toBeDefined();
+                const { dependencies } = graph;
+                expect(dependencies).toBeDefined();
+                const projectLibName = `lib${projectName}`;
+                const projectTestName = `test${projectName}`;
+                const projectBinaryDeps = dependencies[projectName];
+                const projectTestDeps = dependencies[projectTestName];
+                expect(projectBinaryDeps).toStrictEqual([
+                    {
+                        source: projectName,
+                        target: projectLibName,
+                        type: 'static',
+                    },
+                    {
+                        source: projectName,
+                        target: projectLibName + '-lib',
+                        type: 'static',
+                    },
+                ]);
+                expect(projectTestDeps).toStrictEqual([
+                    {
+                        source: projectTestName,
+                        target: projectLibName,
+                        type: 'static',
+                    },
+                    {
+                        source: projectTestName,
+                        target: projectLibName + '-lib',
+                        type: 'static',
+                    },
+                ]);
+            });
+        });
+
+        describe('C++ generators', () => {
+            let projectName: string;
+
+            beforeEach(() => {
+                projectName = 'nx-cmake-test-cpp';
+            });
+
+            describe('nx-cmake:bin', () => {
+                it('should generate C++ binary', async () => {
+                    const cmd = `nx g nx-cmake:bin --name=${projectName} --language=C++ --no-interactive`;
+                    execSync(cmd, {
+                        cwd: projectDirectory,
+                        stdio: 'inherit',
+                        env: process.env,
+                    });
+                });
+            });
+
+            describe('nx-cmake:lib', () => {
+                it('should generate C++ library', async () => {
+                    projectName += '-lib';
+                    const cmd = `nx g nx-cmake:lib --name=${projectName} --language=C++ --no-interactive`;
+                    execSync(cmd, {
+                        cwd: projectDirectory,
+                        stdio: 'inherit',
+                        env: process.env,
+                    });
+                });
+            });
+
+            it('should process C++ dependencies correctly', () => {
+                const { graph } = generateGraph();
+                expect(graph).toBeDefined();
+                const { dependencies } = graph;
+                expect(dependencies).toBeDefined();
+                const projectLibName = `lib${projectName}`;
+                const projectTestName = `test${projectName}`;
+                const projectBinaryDeps = dependencies[projectName];
+                const projectTestDeps = dependencies[projectTestName];
+                expect(projectBinaryDeps).toStrictEqual([
+                    {
+                        source: projectName,
+                        target: projectLibName,
+                        type: 'static',
+                    },
+                ]);
+                expect(projectTestDeps).toStrictEqual([
+                    {
+                        source: projectTestName,
+                        target: projectLibName,
+                        type: 'static',
+                    },
+                ]);
+            });
+
+            describe('nx-cmake:link', () => {
+                it('should link C++ library', async () => {
+                    const cmd = `nx g nx-cmake:link --source=lib${projectName} --target=lib${projectName}-lib --no-interactive`;
+                    execSync(cmd, {
+                        cwd: projectDirectory,
+                        stdio: 'inherit',
+                        env: process.env,
+                    });
+                });
+            });
+
+            it('should process C++ dependencies correctly', () => {
+                const { graph } = generateGraph();
+                expect(graph).toBeDefined();
+                const { dependencies } = graph;
+                expect(dependencies).toBeDefined();
+                const projectLibName = `lib${projectName}`;
+                const projectTestName = `test${projectName}`;
+                const projectBinaryDeps = dependencies[projectName];
+                const projectTestDeps = dependencies[projectTestName];
+                expect(projectBinaryDeps).toStrictEqual([
+                    {
+                        source: projectName,
+                        target: projectLibName,
+                        type: 'static',
+                    },
+                    {
+                        source: projectName,
+                        target: projectLibName + '-lib',
+                        type: 'static',
+                    },
+                ]);
+                expect(projectTestDeps).toStrictEqual([
+                    {
+                        source: projectTestName,
+                        target: projectLibName,
+                        type: 'static',
+                    },
+                    {
+                        source: projectTestName,
+                        target: projectLibName + '-lib',
+                        type: 'static',
+                    },
+                ]);
+            });
         });
     });
 
-    it('should generate binary', async () => {
-        const cmd = `nx g nx-cmake:bin --name=${projectName} --language=C --no-interactive`;
-        execSync(cmd, {
-            cwd: projectDirectory,
-            stdio: 'inherit',
-            env: process.env,
-        });
-    });
+    describe('executors', () => {
+        testExecutor('cmake');
+        testExecutor('fmt');
+        testExecutor('lint');
+        testExecutor('build');
 
-    it('should process dependencies correctly', () => {
-        const cmd = `nx graph --file=${projectDirectory}/graph.json`;
-        execSync(cmd, {
-            cwd: projectDirectory,
-            stdio: 'inherit',
-            env: { ...process.env, NX_DAEMON: 'false' },
+        describe('nx-cmake:execute', () => {
+            let projectName: string;
+            let cmd: string;
+
+            beforeEach(() => {
+                projectName = 'nx-cmake-test-c';
+                cmd = `nx execute ${projectName} --output-style=stream --parallel=1 --skip-nx-cache`;
+            });
+
+            it('should run nx-cmake:execute successfully', () => {
+                execSync(cmd, {
+                    cwd: projectDirectory,
+                    stdio: 'inherit',
+                    env: process.env,
+                });
+                projectName = 'nx-cmake-test-cpp';
+                execSync(cmd, {
+                    cwd: projectDirectory,
+                    stdio: 'inherit',
+                    env: process.env,
+                });
+            });
         });
-        const file: Graph = readJsonFile(`${projectDirectory}/graph.json`);
-        const { graph } = file;
-        expect(graph).toBeDefined();
-        const projectLibName = `lib${projectName}`;
-        const projectTestName = `test${projectName}`;
-        const projectBinaryDeps = graph.dependencies[projectName];
-        const projectTestDeps = graph.dependencies[projectTestName];
-        expect(projectBinaryDeps).toStrictEqual([
-            {
-                source: projectName,
-                target: projectLibName,
-                type: 'static',
-            },
-        ]);
-        expect(projectTestDeps).toStrictEqual([
-            {
-                source: projectTestName,
-                target: projectLibName,
-                type: 'static',
-            },
-        ]);
+
+        describe('nx-cmake:test', () => {
+            let projectName: string;
+            let cmd: string;
+
+            beforeEach(() => {
+                projectName = 'testnx-cmake-test-c';
+                cmd = `nx test ${projectName} --output-style=stream --parallel=1 --skip-nx-cache`;
+            });
+
+            it('should run nx-cmake:test successfully', () => {
+                execSync(cmd, {
+                    cwd: projectDirectory,
+                    stdio: 'inherit',
+                    env: process.env,
+                });
+                projectName = 'testnx-cmake-test-cpp';
+                execSync(cmd, {
+                    cwd: projectDirectory,
+                    stdio: 'inherit',
+                    env: process.env,
+                });
+            });
+        });
+
+        describe('nx-cmake:debug', () => {
+            let projectName: string;
+            let cmd: string;
+
+            beforeEach(() => {
+                projectName = 'nx-cmake-test-c';
+                cmd = `nx debug ${projectName} --output-style=stream --parallel=1 --skip-nx-cache --args=-ex=r,-ex=q`;
+            });
+
+            it('should run nx-cmake:debug successfully', () => {
+                execSync(cmd, {
+                    cwd: projectDirectory,
+                    stdio: 'inherit',
+                    env: process.env,
+                });
+                projectName = 'nx-cmake-test-cpp';
+                execSync(cmd, {
+                    cwd: projectDirectory,
+                    stdio: 'inherit',
+                    env: process.env,
+                });
+            });
+        });
     });
 });
 

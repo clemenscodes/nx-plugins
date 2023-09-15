@@ -8,14 +8,18 @@ describe('generateClangPreset', () => {
     let tree: Tree;
     const clangFormatFile = '.clang-format';
     const clangTidyFile = '.clang-tidy';
-    const expectedClangTidyFileContent = '';
+    const expectedClangTidyFileContent =
+        "Checks:          'clang-diagnostic-*,clang-analyzer-*'\n" +
+        "WarningsAsErrors: ''\n" +
+        "HeaderFilterRegex: ''\n" +
+        'AnalyzeTemporaryDtors: false\n' +
+        'FormatStyle:     none\n';
     const expectedClangFormatFileContent =
         'BasedOnStyle: LLVM\n' +
         'Language: Cpp\n' +
         'IndentWidth: 4\n' +
         'TabWidth: 4\n' +
         'UseTab: Never\n' +
-        'InsertBraces: true\n' +
         'ColumnLimit: 80\n' +
         'IndentCaseLabels: true\n' +
         'SortIncludes: false\n' +
