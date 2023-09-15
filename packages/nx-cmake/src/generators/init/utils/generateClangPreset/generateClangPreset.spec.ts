@@ -15,7 +15,6 @@ describe('generateClangPreset', () => {
         'IndentWidth: 4\n' +
         'TabWidth: 4\n' +
         'UseTab: Never\n' +
-        'InsertBraces: true\n' +
         'ColumnLimit: 80\n' +
         'IndentCaseLabels: true\n' +
         'SortIncludes: false\n' +

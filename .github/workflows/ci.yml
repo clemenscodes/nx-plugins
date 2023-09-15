@@ -132,6 +132,9 @@ jobs:
                   version: latest
                   run_install: false
 
+            - name: Install gdb
+              run: apt install gdb
+
             - name: Get pnpm store directory
               id: pnpm-cache
               shell: bash
@@ -187,6 +190,9 @@ jobs:
               with:
                   version: latest
                   run_install: false
+
+            - name: Install gdb
+              run: apt install gdb
 
             - name: Get pnpm store directory
               id: pnpm-cache
