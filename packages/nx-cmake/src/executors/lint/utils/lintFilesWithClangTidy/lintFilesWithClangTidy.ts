@@ -1,24 +1,20 @@
-import type { FormatExecutorSchema } from '../../schema';
-import { getFormatArguments } from '../getFormatArguments/getFormatArguments';
+import type { LintExecutorSchema } from '../../schema';
 import { getProjectFiles } from '../../../../utils/fileUtils/getProjectFiles/getProjectFiles';
 import { filterSourceFiles } from '../../../../utils/fileUtils/filterSourceFiles/filterSourceFiles';
 import { CProjectType } from '../../../../models/types';
 import { checkCommandExists } from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
 import { executeCommandForFiles } from '../../../../utils/commandUtils/executeCommandForFiles/executeCommandForFiles';
+import { getLintArguments } from '../getLintArguments/getLintArguments';
 
-export const formatFilesWithClangFormat = async (
+export const lintFilesWithClangTidy = async (
     workspaceRoot: string,
     projectRoot: string,
-    options: FormatExecutorSchema,
+    options: LintExecutorSchema,
     projectType: CProjectType
 ): Promise<boolean> => {
     const { args } = options;
-    const formatCommand = checkCommandExists('clang-format');
-    const formatArgs = await getFormatArguments(
-        workspaceRoot,
-        projectRoot,
-        args
-    );
+    const lintCommand = checkCommandExists('clang-tidy');
+    const lintArgs = await getLintArguments(workspaceRoot, projectRoot, args);
     const files = getProjectFiles(workspaceRoot, projectRoot);
     const sourceFiles = filterSourceFiles(
         workspaceRoot,
@@ -26,10 +22,6 @@ export const formatFilesWithClangFormat = async (
         projectType,
         files
     );
-    const success = executeCommandForFiles(
-        formatCommand,
-        formatArgs,
-        sourceFiles
-    );
+    const success = executeCommandForFiles(lintCommand, lintArgs, sourceFiles);
     return success;
 };

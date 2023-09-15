@@ -1,11 +1,12 @@
-import { getClangFormatFile } from '../getClangFormatFile/getClangFormatFile';
+import { getConfigFile } from '../../../../utils/fileUtils/getConfigFile/getConfigFile';
 
 export const getFormatArguments = async (
     workspaceRoot: string,
     projectRoot: string,
     args: string[]
 ): Promise<string[]> => {
-    const clangFormatFile = await getClangFormatFile(
+    const clangFormatFile = await getConfigFile(
+        '.clang-format',
         workspaceRoot,
         projectRoot
     );
