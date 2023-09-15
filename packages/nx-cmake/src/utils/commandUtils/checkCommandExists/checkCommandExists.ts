@@ -5,7 +5,7 @@ export const checkCommandExists = (command: string): string => {
 
     if (!checkedCommandExists) {
         throw new Error(
-            `${checkedCommandExists} is not installed but required for this executor to run`
+            `${checkedCommandExists} is not installed but required for this executor to run.`
         );
     }
 

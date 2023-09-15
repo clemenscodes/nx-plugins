@@ -1,6 +1,6 @@
-import { runCommand } from '../../utils/commandUtils/runCommand/runCommand';
-import { BuildExecutorSchema } from './schema';
-import { ExecutorContext } from '@nx/devkit';
+import type { BuildExecutorSchema } from './schema';
+import type { ExecutorContext } from '@nx/devkit';
+import { buildProjectWithMake } from './utils/buildProjectWithMake/buildProjectWithMake';
 
 export default async function* runExecutor(
     options: BuildExecutorSchema,
@@ -8,15 +8,10 @@ export default async function* runExecutor(
 ): AsyncGenerator<{ success: boolean }> {
     const { root: workspaceRoot, projectName, projectsConfigurations } = ctx;
     const { projects } = projectsConfigurations;
-    const { root } = projects[projectName];
-    const { args } = options;
+    const project = projects[projectName];
+    const { root: projectRoot } = project;
 
-    const { success } = runCommand(
-        'make',
-        '-C',
-        `${workspaceRoot}/dist/${root}`,
-        ...args
-    );
+    const success = buildProjectWithMake(workspaceRoot, projectRoot, options);
 
     yield {
         success,

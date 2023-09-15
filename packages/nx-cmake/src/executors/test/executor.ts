@@ -1,6 +1,6 @@
-import { runCommand } from '../../utils/commandUtils/runCommand/runCommand';
-import { TestExecutorSchema } from './schema';
-import { ExecutorContext } from '@nx/devkit';
+import type { TestExecutorSchema } from './schema';
+import type { ExecutorContext } from '@nx/devkit';
+import { testBinaryWithCTest } from './utils/testBinaryWithCTest/testBinaryWithCTest';
 
 export default async function* runExecutor(
     options: TestExecutorSchema,
@@ -8,11 +8,10 @@ export default async function* runExecutor(
 ): AsyncGenerator<{ success: boolean }> {
     const { root: workspaceRoot, projectName, projectsConfigurations } = ctx;
     const { projects } = projectsConfigurations;
-    const { root } = projects[projectName];
-    const { args } = options;
+    const project = projects[projectName];
+    const { root: projectRoot } = project;
 
-    const testBin = `${workspaceRoot}/dist/${root}`;
-    const { success } = runCommand('ctest', '--test-dir', testBin, ...args);
+    const success = testBinaryWithCTest(workspaceRoot, projectRoot, options);
 
     yield {
         success,

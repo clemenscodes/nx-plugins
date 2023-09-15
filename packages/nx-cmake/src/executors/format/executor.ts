@@ -1,5 +1,5 @@
-import { FormatExecutorSchema } from './schema';
-import { ExecutorContext } from '@nx/devkit';
+import type { FormatExecutorSchema } from './schema';
+import type { ExecutorContext } from '@nx/devkit';
 import { formatFilesWithClangFormat } from './utils/formatFilesWithClangFormat/formatFilesWithClangFormat';
 import { getProjectTypeFromConfig } from '../../utils/generatorUtils/getProjectTypeFromConfig/getProjectTypeFromConfig';
 
