@@ -46,6 +46,9 @@ export const getDependenciesOfProject = (
         if (project === projectName) {
             continue;
         }
+        if (project === null) {
+            continue;
+        }
         for (const projectFile of projectFiles) {
             const dep = getProjectGraphDependencyWithFile(
                 projectName,
