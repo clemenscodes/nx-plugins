@@ -46,6 +46,3 @@ Thumbs.db
 /.clang-format
 /.clang-tidy
 /CMakeLists.txt
-/bin
-!packages/nx-cmake/**
-!packages/nx-cmake-e2e/**

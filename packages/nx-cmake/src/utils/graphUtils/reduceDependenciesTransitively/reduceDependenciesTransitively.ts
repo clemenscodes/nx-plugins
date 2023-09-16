@@ -163,7 +163,7 @@ export const reduceDependenciesTransitively = (
         });
         return deps;
     }
-    const reducedGraph = transitiveReductionToGraph(deps);
-    const reducedDependencies = reduceDependencies(reducedGraph, deps);
+    const graph = transitiveReductionToGraph(deps);
+    const reducedDependencies = reduceDependencies(graph, deps);
     return reducedDependencies;
 };
