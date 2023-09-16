@@ -144,6 +144,9 @@ export const reduceDependencies = (
 
     for (const dep of deps) {
         const { source, target } = dep;
+        if (source === target) {
+            continue;
+        }
         const graphDeps = graph[source];
 
         if (graphDeps.has(target)) {

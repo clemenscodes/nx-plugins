@@ -26,7 +26,13 @@
     },
     "targetDefaults": {
         "cmake": {
-            "dependsOn": ["^cmake"],
+            "dependsOn": [
+                {
+                    "dependencies": true,
+                    "params": "forward",
+                    "target": "^cmake"
+                }
+            ],
             "inputs": ["cmake"]
         },
         "build": {

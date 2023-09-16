@@ -33,10 +33,6 @@ export const getExternalFiles = (
     tag: CTag
 ): string[] => {
     return files.flatMap((file) => {
-        if (file.startsWith(root)) {
-            return [];
-        }
-
         if (file.startsWith('include') || file.startsWith('dist')) {
             return [file];
         }
