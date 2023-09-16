@@ -40,3 +40,5 @@ export type FilteredProject = {
 };
 
 export type WorkspaceLayout = NxJsonConfiguration['workspaceLayout'];
+
+export type Graph = Record<string, Set<string>>;

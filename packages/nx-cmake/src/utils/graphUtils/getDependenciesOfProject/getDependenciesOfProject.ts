@@ -1,27 +1,9 @@
-import {
-    CreateDependenciesContext,
-    ProjectGraphDependencyWithFile,
-    DependencyType,
-    FileData,
-} from '@nx/devkit';
+import { ProjectGraphDependencyWithFile, DependencyType } from '@nx/devkit';
 import type { FilteredProject } from '../../../models/types';
 import { getProjectFromFile } from '../../generatorUtils/getProjectFromFile/getProjectFromFile';
 
 export const shouldIgnoreExternalFile = (externalFile: string): boolean => {
     return externalFile.startsWith('include');
-};
-
-export const findDependencyFile = (
-    project: string,
-    externalFile: string,
-    ctx: CreateDependenciesContext
-): FileData | undefined => {
-    const projectFiles = ctx.fileMap[project];
-    if (!projectFiles) {
-        return undefined;
-    }
-    const depFile = projectFiles.find((f) => f.file === externalFile);
-    return depFile;
 };
 
 export const getProjectGraphDependencyWithFile = (
@@ -37,10 +19,10 @@ export const getProjectGraphDependencyWithFile = (
 export const getDependenciesOfProject = (
     projectName: string,
     externalFiles: string[],
-    ctx: CreateDependenciesContext,
     projects: FilteredProject[]
 ): ProjectGraphDependencyWithFile[] => {
     const deps: ProjectGraphDependencyWithFile[] = [];
+    const projectFiles = [];
     for (const externalFile of externalFiles) {
         if (shouldIgnoreExternalFile(externalFile)) {
             continue;
@@ -48,25 +30,33 @@ export const getDependenciesOfProject = (
 
         const project = getProjectFromFile(externalFile, projects);
 
+        if (project === projectName) {
+            projectFiles.push(externalFile);
+            continue;
+        }
+
         if (project === null) {
             continue;
         }
+    }
 
-        const depFile = findDependencyFile(project, externalFile, ctx);
+    for (const externalFile of externalFiles) {
+        const project = getProjectFromFile(externalFile, projects);
 
-        if (!depFile) {
+        if (project === projectName) {
             continue;
         }
-
-        ctx.fileMap[projectName].push(depFile);
-
-        const dep = getProjectGraphDependencyWithFile(
-            projectName,
-            project,
-            externalFile
-        );
-
-        deps.push(dep);
+        if (project === null) {
+            continue;
+        }
+        for (const projectFile of projectFiles) {
+            const dep = getProjectGraphDependencyWithFile(
+                projectName,
+                project,
+                projectFile
+            );
+            deps.push(dep);
+        }
     }
     return deps;
 };

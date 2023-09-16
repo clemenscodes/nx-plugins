@@ -1,10 +1,11 @@
-import type {
-    CreateDependencies,
-    CreateDependenciesContext,
-    ProjectGraphDependencyWithFile,
+import {
+    type CreateDependencies,
+    type CreateDependenciesContext,
+    type ProjectGraphDependencyWithFile,
 } from '@nx/devkit';
 import { filterProjects } from '../utils/graphUtils/filterProjects/filterProjects';
 import { getDependencies } from '../utils/graphUtils/getDependencies/getDependencies';
+import { reduceDependenciesTransitively } from '../utils/graphUtils/reduceDependenciesTransitively/reduceDependenciesTransitively';
 
 export const createDependencies: CreateDependencies = (
     context: CreateDependenciesContext
@@ -13,6 +14,7 @@ export const createDependencies: CreateDependencies = (
     const { workspaceLayout } = nxJsonConfiguration;
     const { nodes } = graph;
     const filteredProjects = filterProjects(nodes);
-    const deps = getDependencies(workspaceLayout, context, filteredProjects);
-    return deps;
+    const deps = getDependencies(workspaceLayout, filteredProjects);
+    const reducedDeps = reduceDependenciesTransitively(deps);
+    return reducedDeps;
 };

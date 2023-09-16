@@ -1,5 +1,4 @@
 import {
-    CreateDependenciesContext,
     NxJsonConfiguration,
     ProjectGraphDependencyWithFile,
     workspaceRoot,
@@ -117,7 +116,6 @@ export const getGccDependencies = (
 export const filterDependenciesOfProject = (
     project: FilteredProject,
     workspaceLayout: NxJsonConfiguration['workspaceLayout'],
-    ctx: CreateDependenciesContext,
     projects: FilteredProject[]
 ): ProjectGraphDependencyWithFile[] => {
     const { name, root, tag } = project;
@@ -129,7 +127,6 @@ export const filterDependenciesOfProject = (
     const dependencies = getDependenciesOfProject(
         name,
         externalFiles,
-        ctx,
         projects
     );
     return dependencies;

@@ -52,6 +52,8 @@ describe('getExternalFiles', () => {
         const root = 'src';
         const tag = 'cpp';
         const expectedOutput = [
+            'src/file1.h',
+            'src/file1.cpp',
             'include/file2.h',
             'dist/file3.cpp',
             'external/file4.cpp',
@@ -73,7 +75,11 @@ describe('getExternalFiles', () => {
         const inputFiles = ['src/file1.h', 'src/file2.cpp', 'src/file3.c'];
         const root = 'src';
         const tag = 'cpp';
-        const expectedOutput: string[] = [];
+        const expectedOutput = [
+            'src/file1.h',
+            'src/file1.cpp',
+            'src/file2.cpp',
+        ];
         const result = getExternalFiles(inputFiles, root, tag);
         expect(result).toEqual(expectedOutput);
     });
