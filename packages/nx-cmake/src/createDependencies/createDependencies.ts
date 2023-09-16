@@ -5,6 +5,7 @@ import type {
 } from '@nx/devkit';
 import { filterProjects } from '../utils/graphUtils/filterProjects/filterProjects';
 import { getDependencies } from '../utils/graphUtils/getDependencies/getDependencies';
+import { reduceDependenciesTransitively } from '../utils/graphUtils/reduceDependenciesTransitively/reduceDependenciesTransitively';
 
 export const createDependencies: CreateDependencies = (
     context: CreateDependenciesContext
@@ -14,5 +15,6 @@ export const createDependencies: CreateDependencies = (
     const { nodes } = graph;
     const filteredProjects = filterProjects(nodes);
     const deps = getDependencies(workspaceLayout, context, filteredProjects);
-    return deps;
+    const reducedDeps = reduceDependenciesTransitively(deps);
+    return reducedDeps;
 };

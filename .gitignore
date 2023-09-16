@@ -43,7 +43,9 @@ Thumbs.db
 # nx-cmake plugin
 /cmake
 /include
-tools/format.sh
 /.clang-format
 /.clang-tidy
 /CMakeLists.txt
+/bin
+!packages/nx-cmake/**
+!packages/nx-cmake-e2e/**
