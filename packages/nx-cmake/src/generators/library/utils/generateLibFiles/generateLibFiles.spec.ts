@@ -24,7 +24,12 @@ describe('generateLibFiles', () => {
         const libraryListsFile = `packages/test/CMakeLists.txt`;
         const librarySourceFile = `packages/test/src/libtest.cpp`;
         const libraryIncludeFile = `packages/test/include/libtest.h`;
-        expect(libraryRoot).toStrictEqual(['CMakeLists.txt', 'include', 'src']);
+        expect(libraryRoot).toStrictEqual([
+            'CMakeLists.txt',
+            'README.md',
+            'include',
+            'src',
+        ]);
         expect(tree.exists(librarySourceFile));
         expect(tree.exists(libraryIncludeFile));
         const readIncludeFile = tree.read(libraryIncludeFile, 'utf8');
@@ -67,7 +72,12 @@ describe('generateLibFiles', () => {
         const libraryListsFile = `packages/test/CMakeLists.txt`;
         const librarySourceFile = `packages/test/src/libtest.c`;
         const libraryIncludeFile = `packages/test/include/libtest.h`;
-        expect(libraryRoot).toStrictEqual(['CMakeLists.txt', 'include', 'src']);
+        expect(libraryRoot).toStrictEqual([
+            'CMakeLists.txt',
+            'README.md',
+            'include',
+            'src',
+        ]);
         expect(tree.exists(librarySourceFile));
         expect(tree.exists(libraryIncludeFile));
         const readIncludeFile = tree.read(libraryIncludeFile, 'utf8');

@@ -12,7 +12,7 @@ NOTE: Windows is not natively supported. Using WSL2 and installing the dependenc
 
 The following tools need to be installed for this plugin to work correctly:
 
-- nx 16.7+
+- nx 16.7+ (this plugin uses the latest Nx v2 plugin API)
 - node
 - gcc
 - cmake
@@ -84,8 +84,7 @@ Use Nx Console to see the full list of options for each generator.
 
 All the executors support these additional properties:
 
-- args (Optional arguments which will be forwarded) [array]
-- release [boolean]
+- args (Optional arguments which will be forwarded to the underlying command) [array]
 
 ### `nx-cmake:build`
 
