@@ -1,4 +1,8 @@
-import type { FilteredProject, WorkspaceLayout } from './../../../models/types';
+import {
+    CProjectType,
+    type FilteredProject,
+    type WorkspaceLayout,
+} from '../../../models/types';
 import { DependencyType, ProjectGraphDependencyWithFile } from '@nx/devkit';
 import { getDependencies } from './getDependencies';
 import * as filterDependenciesOfProjectModule from '../filterDependenciesOfProject/filterDependenciesOfProject';
@@ -8,19 +12,22 @@ describe('getDependencies', () => {
         {
             name: 'testnx-cmake-test',
             root: 'packages/nx-cmake-test/test',
-            type: 'app',
+            sourceRoot: 'packages/nx-cmake-test/test/src',
+            type: CProjectType.App,
             tag: 'c',
         },
         {
             name: 'libnx-cmake-test',
             root: 'packages/nx-cmake-test',
-            type: 'lib',
+            sourceRoot: 'packages/nx-cmake-test/src',
+            type: CProjectType.Lib,
             tag: 'c',
         },
         {
             name: 'nx-cmake-test',
             root: 'nx-cmake-test',
-            type: 'app',
+            sourceRoot: 'nx-cmake-test/src',
+            type: CProjectType.App,
             tag: 'c',
         },
     ];

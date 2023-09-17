@@ -103,13 +103,15 @@ describe('filterProjects', () => {
             {
                 name: 'project1',
                 root: 'path/to/project1',
-                type: 'app',
+                sourceRoot: 'path/to/project1/src',
+                type: CProjectType.App,
                 tag: 'c',
             },
             {
                 name: 'libproject2',
                 root: 'path/to/project2',
-                type: 'lib',
+                sourceRoot: 'path/to/project2/src',
+                type: CProjectType.Lib,
                 tag: 'cpp',
             },
         ];
@@ -138,13 +140,15 @@ describe('filterProjects', () => {
             {
                 name: 'project1',
                 root: 'path/to/project1',
-                type: 'app',
+                sourceRoot: 'path/to/project1/src',
+                type: CProjectType.App,
                 tag: 'c',
             },
             {
                 name: 'libproject2',
                 root: 'path/to/project2',
-                type: 'lib',
+                sourceRoot: 'path/to/project2/src',
+                type: CProjectType.Lib,
                 tag: 'cpp',
             },
         ];
@@ -183,13 +187,15 @@ describe('filterProjects', () => {
             {
                 name: 'project1',
                 root: 'path/to/project1',
-                type: 'app',
+                sourceRoot: 'path/to/project1/src',
+                type: CProjectType.App,
                 tag: 'c',
             },
             {
                 name: 'libproject2',
                 root: 'path/to/project2',
-                type: 'lib',
+                sourceRoot: 'path/to/project2/src',
+                type: CProjectType.Lib,
                 tag: 'cpp',
             },
         ];
