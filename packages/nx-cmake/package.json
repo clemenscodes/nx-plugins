@@ -1,6 +1,6 @@
 {
     "name": "nx-cmake",
-    "description": "An Nx plugin to add CMake, C and C++ support.",
+    "description": "An Nx plugin to add CMake, C and C++ support for Nx workspaces",
     "version": "0.1.2",
     "license": "MIT",
     "type": "commonjs",
