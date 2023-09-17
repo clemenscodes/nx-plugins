@@ -30,7 +30,8 @@
             "factory": "./src/generators/preset/generator",
             "schema": "./src/generators/preset/schema.json",
             "description": "Generate an Nx workspace using nx-cmake for CMake, C and C++ support.",
-            "x-use-standalone-layout": true
+            "x-use-standalone-layout": true,
+            "hidden": true
         }
     }
 }
