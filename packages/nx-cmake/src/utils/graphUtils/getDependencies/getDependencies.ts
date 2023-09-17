@@ -1,5 +1,4 @@
 import type {
-    CreateDependenciesContext,
     NxJsonConfiguration,
     ProjectGraphDependencyWithFile,
 } from '@nx/devkit';
@@ -8,7 +7,6 @@ import { filterDependenciesOfProject } from '../filterDependenciesOfProject/filt
 
 export const getDependencies = (
     workspaceLayout: NxJsonConfiguration['workspaceLayout'],
-    ctx: CreateDependenciesContext,
     projects: FilteredProject[]
 ): ProjectGraphDependencyWithFile[] => {
     const deps: ProjectGraphDependencyWithFile[] = [];
@@ -16,7 +14,6 @@ export const getDependencies = (
         const dependencies = filterDependenciesOfProject(
             project,
             workspaceLayout,
-            ctx,
             projects
         );
         deps.push(...dependencies);

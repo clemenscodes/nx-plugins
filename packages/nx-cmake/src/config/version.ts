@@ -1,0 +1,2 @@
+export const REQUIRED_MAJOR_NX_VERSION = 16;
+export const REQUIRED_MINOR_NX_VERSION = 7;

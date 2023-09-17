@@ -1,16 +1,4 @@
-import { FilteredProject } from '../../../models/types';
-
-export const getProjectRootOfFile = (file: string): string | null => {
-    let projectRoot: string | null = null;
-
-    if (file.includes('/include/')) {
-        projectRoot = file.split('/include')[0];
-    } else if (file.includes('/src/')) {
-        projectRoot = file.split('/src')[0];
-    }
-
-    return projectRoot || null;
-};
+import type { FilteredProject } from '../../../models/types';
 
 export const getProjectFromFile = (
     file: string,
@@ -19,22 +7,24 @@ export const getProjectFromFile = (
     if (projects.length === 0) {
         return null;
     }
-    const fileProjectRoot = getProjectRootOfFile(file);
-    if (fileProjectRoot === null) {
+
+    const project = projects.find(({ root, sourceRoot }) => {
+        const isInSourceRoot = file.startsWith(sourceRoot);
+        const isInProjectRoot = file.startsWith(root);
+        if (isInSourceRoot) {
+            return true;
+        }
+        if (isInProjectRoot) {
+            return true;
+        }
+        return false;
+    });
+
+    if (!project) {
         return null;
     }
 
-    const project = projects
-        .filter((project) => {
-            const { root } = project;
-            const includesRoot = fileProjectRoot === root;
-            return includesRoot;
-        })
-        .map((project) => {
-            const { name } = project;
-            return name;
-        })
-        .pop();
+    const { name } = project;
 
-    return project;
+    return name;
 };

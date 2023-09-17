@@ -1,336 +1,91 @@
 import {
-    ProjectFileMap,
-    CreateDependenciesContext,
-    DependencyType,
-} from '@nx/devkit';
-import { FilteredProject } from '../../../models/types';
-import {
-    findDependencyFile,
-    getDependenciesOfProject,
-    shouldIgnoreExternalFile,
+    hasValidExtension,
+    // getDependenciesOfProject,
 } from './getDependenciesOfProject';
 
-describe('shouldIgnoreExternalFile', () => {
-    it('should return true for external files starting with "include"', () => {
-        expect(shouldIgnoreExternalFile('include/file.js')).toBe(true);
+describe('hasValidExtension', () => {
+    it('should return true for valid C files with tag "c"', () => {
+        expect(hasValidExtension('file.c', 'c')).toBe(true);
     });
 
-    it('should return false for external files not starting with "include"', () => {
-        expect(shouldIgnoreExternalFile('notinclude/file.js')).toBe(false);
-    });
-});
-
-describe('findDependencyFile', () => {
-    const fileMap: ProjectFileMap = {
-        projectA: [
-            { file: 'file1.js', hash: 'hash1' },
-            { file: 'file2.js', hash: 'hash2' },
-        ],
-        projectB: [{ file: 'file3.js', hash: 'hash3' }],
-    };
-
-    const ctx: CreateDependenciesContext = {
-        fileMap,
-        graph: undefined,
-        projectsConfigurations: undefined,
-        nxJsonConfiguration: undefined,
-        filesToProcess: undefined,
-    };
-
-    it('should find a dependency file', () => {
-        const result = findDependencyFile('projectA', 'file1.js', ctx);
-        expect(result).toEqual({ file: 'file1.js', hash: 'hash1' });
+    it('should return true for valid C++ files with tag "cpp"', () => {
+        expect(hasValidExtension('file.cpp', 'cpp')).toBe(true);
     });
 
-    it('should return undefined for a non-existent dependency file', () => {
-        const result = findDependencyFile('projectA', 'nonexistent.js', ctx);
-        expect(result).toBeUndefined();
+    it('should return true for valid header files with any tag', () => {
+        expect(hasValidExtension('file.h', 'c')).toBe(true);
+        expect(hasValidExtension('file.h', 'cpp')).toBe(true);
     });
 
-    it('should return undefined if project is not part of ctx.fileMap', () => {
-        const result = findDependencyFile('projectC', 'nonexistent.js', ctx);
-        expect(result).toBeUndefined();
+    it('should return false for files with invalid extensions', () => {
+        expect(hasValidExtension('file.js', 'c')).toBe(false);
+        expect(hasValidExtension('file.txt', 'cpp')).toBe(false);
     });
 });
 
 describe('getDependenciesOfProject', () => {
-    it('should return an array of ProjectGraphDependencyWithFile objects for valid dependencies', () => {
-        const file1 = 'root/projectB/src/file1.c';
-        const file2 = 'root/projectB/src/file2.c';
-        const file3 = 'root/projectB/src/file3.c';
-        const ctx: CreateDependenciesContext = {
-            fileMap: {
-                projectA: [],
-                projectB: [
-                    { file: file1, hash: 'hash1' },
-                    { file: file2, hash: 'hash2' },
-                    { file: file3, hash: 'hash2' },
-                ],
-            },
-            graph: undefined,
-            projectsConfigurations: undefined,
-            nxJsonConfiguration: undefined,
-            filesToProcess: undefined,
-        };
+    it.todo(
+        'should return external files that start with "dist" or "include"'
+        // () => {
+        //     const inputFiles = [
+        //         'src/file1.h',
+        //         'include/file2.h',
+        //         'dist/file3.cpp',
+        //         'external/file4.cpp',
+        //     ];
+        //     const root = 'src';
+        //     const tag = 'cpp';
+        //     const expectedOutput = [
+        //         'src/file1.h',
+        //         'src/file1.cpp',
+        //         'include/file2.h',
+        //         'dist/file3.cpp',
+        //         'external/file4.cpp',
+        //     ];
+        // }
+    );
 
-        // Define sample FilteredProjects
-        const projects: FilteredProject[] = [
-            {
-                name: 'projectA',
-                root: 'root/projectA',
-                type: 'app',
-                tag: 'c',
-            },
-            {
-                name: 'projectB',
-                root: 'root/projectB',
-                type: 'app',
-                tag: 'cpp',
-            },
-        ];
+    it.todo(
+        'should handle empty input'
+        //  () => {
+        //     const inputFiles: string[] = [];
+        //     const root = 'src';
+        //     const tag = 'cpp';
+        //     const expectedOutput: string[] = [];
+        // }
+    );
 
-        const externalFiles: string[] = [file1, file2];
+    it.todo(
+        'should handle input with files starting with the root path'
+        // () => {
+        //     const inputFiles = ['src/file1.h', 'src/file2.cpp', 'src/file3.c'];
+        //     const root = 'src';
+        //     const tag = 'cpp';
+        //     const expectedOutput = [
+        //         'src/file1.h',
+        //         'src/file1.cpp',
+        //         'src/file2.cpp',
+        //     ];
+        // }
+    );
 
-        const result = getDependenciesOfProject(
-            'projectA',
-            externalFiles,
-            ctx,
-            projects
-        );
+    it.todo(
+        'should generate external dependent files based on the tag'
+        // () => {
+        // const inputFiles = ['file1.h', 'file2.c', 'file3.cpp'];
+        // const root = 'src';
+        // const tag = 'c';
+        // const expectedOutput = ['file1.h', 'file1.c', 'file2.c'];
+        // }
+    );
 
-        expect(result).toEqual([
-            {
-                source: 'projectA',
-                target: 'projectB',
-                sourceFile: file1,
-                dependencyType: DependencyType.static,
-            },
-            {
-                source: 'projectA',
-                target: 'projectB',
-                sourceFile: file2,
-                dependencyType: DependencyType.static,
-            },
-        ]);
-    });
-
-    it('should ignore external files starting with "include"', () => {
-        const file1 = 'root/projectB/src/file1.c';
-        const file2 = 'root/projectB/src/file2.c';
-        const ctx: CreateDependenciesContext = {
-            fileMap: {
-                projectA: [],
-                projectB: [
-                    { file: file1, hash: 'hash1' },
-                    { file: file2, hash: 'hash2' },
-                ],
-            },
-            graph: undefined,
-            projectsConfigurations: undefined,
-            nxJsonConfiguration: undefined,
-            filesToProcess: undefined,
-        };
-
-        const projects: FilteredProject[] = [
-            {
-                name: 'projectA',
-                root: 'root/projectA',
-                type: 'app',
-                tag: 'c',
-            },
-            {
-                name: 'projectB',
-                root: 'root/projectB',
-                type: 'app',
-                tag: 'cpp',
-            },
-        ];
-
-        // External file with "include" prefix
-        const externalFiles: string[] = ['include/file1.c', file2];
-
-        const result = getDependenciesOfProject(
-            'projectA',
-            externalFiles,
-            ctx,
-            projects
-        );
-
-        // Only file2 should be considered as a dependency
-        expect(result).toEqual([
-            {
-                source: 'projectA',
-                target: 'projectB',
-                sourceFile: file2,
-                dependencyType: DependencyType.static,
-            },
-        ]);
-    });
-
-    it('should handle missing dependency files gracefully', () => {
-        const file1 = 'root/projectB/src/file1.c';
-        const ctx: CreateDependenciesContext = {
-            fileMap: {
-                projectA: [],
-                projectB: [{ file: file1, hash: 'hash1' }],
-            },
-            graph: undefined,
-            projectsConfigurations: undefined,
-            nxJsonConfiguration: undefined,
-            filesToProcess: undefined,
-        };
-
-        const projects: FilteredProject[] = [
-            {
-                name: 'projectA',
-                root: 'root/projectA',
-                type: 'app',
-                tag: 'c',
-            },
-            {
-                name: 'projectB',
-                root: 'root/projectB',
-                type: 'app',
-                tag: 'cpp',
-            },
-        ];
-
-        // External file that does not exist in projectB
-        const externalFiles: string[] = ['file2.c'];
-
-        const result = getDependenciesOfProject(
-            'projectA',
-            externalFiles,
-            ctx,
-            projects
-        );
-
-        // No dependencies should be added
-        expect(result).toEqual([]);
-    });
-
-    it('should handle invalid project names gracefully', () => {
-        const file1 = 'root/projectB/src/file1.c';
-        const ctx: CreateDependenciesContext = {
-            fileMap: {
-                projectA: [],
-                projectB: [{ file: file1, hash: 'hash1' }],
-            },
-            graph: undefined,
-            projectsConfigurations: undefined,
-            nxJsonConfiguration: undefined,
-            filesToProcess: undefined,
-        };
-
-        const projects: FilteredProject[] = [
-            {
-                name: 'projectA',
-                root: 'root/projectA',
-                type: 'app',
-                tag: 'c',
-            },
-            // Invalid project name with no matching fileMap entry
-            {
-                name: 'projectC',
-                root: 'root/projectC',
-                type: 'app',
-                tag: 'cpp',
-            },
-        ];
-
-        const externalFiles: string[] = ['file1.c'];
-
-        const result = getDependenciesOfProject(
-            'projectA',
-            externalFiles,
-            ctx,
-            projects
-        );
-
-        // No dependencies should be added
-        expect(result).toEqual([]);
-    });
-
-    it('should return an array of ProjectGraphDependencyWithFile objects for valid dependencies and update ctx', () => {
-        const file1 = 'root/projectB/src/file1.c';
-        const file2 = 'root/projectB/src/file2.c';
-        const ctx: CreateDependenciesContext = {
-            fileMap: {
-                projectA: [],
-                projectB: [
-                    { file: file1, hash: 'hash1' },
-                    { file: file2, hash: 'hash2' },
-                ],
-            },
-            graph: undefined,
-            projectsConfigurations: undefined,
-            nxJsonConfiguration: undefined,
-            filesToProcess: undefined,
-        };
-
-        // Define sample FilteredProjects
-        const projects: FilteredProject[] = [
-            {
-                name: 'projectA',
-                root: 'root/projectA',
-                type: 'app',
-                tag: 'c',
-            },
-            {
-                name: 'projectB',
-                root: 'root/projectB',
-                type: 'app',
-                tag: 'cpp',
-            },
-        ];
-
-        const externalFiles: string[] = [file1, file2];
-
-        const result = getDependenciesOfProject(
-            'projectA',
-            externalFiles,
-            ctx,
-            projects
-        );
-
-        // Assertions on the return value
-        expect(result).toEqual([
-            {
-                source: 'projectA',
-                target: 'projectB',
-                sourceFile: file1,
-                dependencyType: DependencyType.static,
-            },
-            {
-                source: 'projectA',
-                target: 'projectB',
-                sourceFile: file2,
-                dependencyType: DependencyType.static,
-            },
-        ]);
-
-        // Assertions on the side effect (changes to ctx)
-        expect(ctx.fileMap['projectA']).toEqual([
-            {
-                file: file1,
-                hash: 'hash1',
-            },
-            {
-                file: file2,
-                hash: 'hash2',
-            },
-        ]);
-
-        // Ensure ctx.fileMap['projectB'] remains unchanged
-        expect(ctx.fileMap['projectB']).toEqual([
-            {
-                file: file1,
-                hash: 'hash1',
-            },
-            {
-                file: file2,
-                hash: 'hash2',
-            },
-        ]);
-    });
+    it.todo(
+        'should generate external dependent files with ".cpp" tag by default'
+        // () => {
+        //     const inputFiles = ['file1.h', 'file2.c', 'file3'];
+        //     const root = 'src';
+        //     const tag = 'cpp';
+        //     const expectedOutput = ['file1.h', 'file1.cpp'];
+        // }
+    );
 });

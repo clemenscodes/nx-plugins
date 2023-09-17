@@ -25,7 +25,7 @@
                 "$source": "argv",
                 "index": 1
             },
-            "x-prompt": "Into which project do you want to link the library?",
+            "x-prompt": "Which library do you want to link into the project?",
             "x-dropdown": "projects",
             "x-priority": "important"
         },

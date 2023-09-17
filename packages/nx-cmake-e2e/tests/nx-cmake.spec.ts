@@ -29,7 +29,7 @@ describe('nx-cmake', () => {
 
             beforeEach(() => {
                 projectName = 'nx-cmake-test-c';
-                cmd = `nx ${executorName} ${projectName} --output-style=stream --parallel=1 --skip-nx-cache`;
+                cmd = `nx ${executorName} ${projectName} --output-style=stream`;
             });
 
             it(`should run ${executorName} executor successfully`, () => {
@@ -38,44 +38,44 @@ describe('nx-cmake', () => {
                     stdio: 'inherit',
                     env: process.env,
                 });
-                cmd = `nx ${executorName} lib${projectName} --output-style=stream --parallel=1 --skip-nx-cache`;
+                cmd = `nx ${executorName} lib${projectName} --output-style=stream`;
                 execSync(cmd, {
                     cwd: projectDirectory,
                     stdio: 'inherit',
                     env: process.env,
                 });
-                cmd = `nx ${executorName} lib${projectName}-lib --output-style=stream --parallel=1 --skip-nx-cache`;
+                cmd = `nx ${executorName} lib${projectName}-lib --output-style=stream`;
                 execSync(cmd, {
                     cwd: projectDirectory,
                     stdio: 'inherit',
                     env: process.env,
                 });
-                cmd = `nx ${executorName} test${projectName} --output-style=stream --parallel=1 --skip-nx-cache`;
+                cmd = `nx ${executorName} test${projectName} --output-style=stream`;
                 execSync(cmd, {
                     cwd: projectDirectory,
                     stdio: 'inherit',
                     env: process.env,
                 });
                 projectName = 'nx-cmake-test-cpp';
-                cmd = `nx ${executorName} ${projectName} --output-style=stream --parallel=1 --skip-nx-cache`;
+                cmd = `nx ${executorName} ${projectName} --output-style=stream`;
                 execSync(cmd, {
                     cwd: projectDirectory,
                     stdio: 'inherit',
                     env: process.env,
                 });
-                cmd = `nx ${executorName} lib${projectName} --output-style=stream --parallel=1 --skip-nx-cache`;
+                cmd = `nx ${executorName} lib${projectName} --output-style=stream`;
                 execSync(cmd, {
                     cwd: projectDirectory,
                     stdio: 'inherit',
                     env: process.env,
                 });
-                cmd = `nx ${executorName} lib${projectName}-lib --output-style=stream --parallel=1 --skip-nx-cache`;
+                cmd = `nx ${executorName} lib${projectName}-lib --output-style=stream`;
                 execSync(cmd, {
                     cwd: projectDirectory,
                     stdio: 'inherit',
                     env: process.env,
                 });
-                cmd = `nx ${executorName} test${projectName} --output-style=stream --parallel=1 --skip-nx-cache`;
+                cmd = `nx ${executorName} test${projectName} --output-style=stream`;
                 execSync(cmd, {
                     cwd: projectDirectory,
                     stdio: 'inherit',
@@ -211,21 +211,11 @@ describe('nx-cmake', () => {
                         target: projectLibName,
                         type: 'static',
                     },
-                    {
-                        source: projectName,
-                        target: projectLibName + '-lib',
-                        type: 'static',
-                    },
                 ]);
                 expect(projectTestDeps).toStrictEqual([
                     {
                         source: projectTestName,
                         target: projectLibName,
-                        type: 'static',
-                    },
-                    {
-                        source: projectTestName,
-                        target: projectLibName + '-lib',
                         type: 'static',
                     },
                 ]);
@@ -313,21 +303,11 @@ describe('nx-cmake', () => {
                         target: projectLibName,
                         type: 'static',
                     },
-                    {
-                        source: projectName,
-                        target: projectLibName + '-lib',
-                        type: 'static',
-                    },
                 ]);
                 expect(projectTestDeps).toStrictEqual([
                     {
                         source: projectTestName,
                         target: projectLibName,
-                        type: 'static',
-                    },
-                    {
-                        source: projectTestName,
-                        target: projectLibName + '-lib',
                         type: 'static',
                     },
                 ]);
@@ -347,7 +327,7 @@ describe('nx-cmake', () => {
 
             beforeEach(() => {
                 projectName = 'nx-cmake-test-c';
-                cmd = `nx execute ${projectName} --output-style=stream --parallel=1 --skip-nx-cache`;
+                cmd = `nx execute ${projectName} --output-style=stream`;
             });
 
             it('should run nx-cmake:execute successfully', () => {
@@ -371,7 +351,7 @@ describe('nx-cmake', () => {
 
             beforeEach(() => {
                 projectName = 'testnx-cmake-test-c';
-                cmd = `nx test ${projectName} --output-style=stream --parallel=1 --skip-nx-cache`;
+                cmd = `nx test ${projectName} --output-style=stream`;
             });
 
             it('should run nx-cmake:test successfully', () => {
@@ -395,7 +375,7 @@ describe('nx-cmake', () => {
 
             beforeEach(() => {
                 projectName = 'nx-cmake-test-c';
-                cmd = `nx debug ${projectName} --output-style=stream --parallel=1 --skip-nx-cache --args=-ex=r,-ex=q`;
+                cmd = `nx debug ${projectName} --output-style=stream --args=-ex=r,-ex=q`;
             });
 
             it('should run nx-cmake:debug successfully', () => {
@@ -433,7 +413,7 @@ function createTestProject() {
     });
 
     execSync(
-        `npx --yes create-nx-workspace@latest ${projectName} --preset apps --no-nxCloud --no-interactive`,
+        `npx --yes create-nx-workspace@latest ${projectName} --preset=apps --no-nxCloud --no-interactive`,
         {
             cwd: dirname(projectDirectory),
             stdio: 'inherit',

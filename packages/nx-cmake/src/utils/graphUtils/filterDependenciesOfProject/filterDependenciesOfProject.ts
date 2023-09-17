@@ -1,5 +1,4 @@
 import {
-    CreateDependenciesContext,
     NxJsonConfiguration,
     ProjectGraphDependencyWithFile,
     workspaceRoot,
@@ -10,10 +9,9 @@ import type {
     WorkspaceLayout,
 } from '../../../models/types';
 import { filterGccDependencyOutput } from '../filterGccDependencyOutput/filterGccDependencyOutput';
-import { getDependenciesOfProject } from '../getDependenciesOfProject/getDependenciesOfProject';
-import { getExternalFiles } from '../getExternalFiles/getExternalFiles';
 import { runCommand } from '../../commandUtils/runCommand/runCommand';
 import { executeCommand } from '../../commandUtils/executeCommand/executeCommand';
+import { getDependenciesOfProject } from '../getDependenciesOfProject/getDependenciesOfProject';
 
 export const getWorkspaceIncludeDir = () => 'include';
 
@@ -117,7 +115,6 @@ export const getGccDependencies = (
 export const filterDependenciesOfProject = (
     project: FilteredProject,
     workspaceLayout: NxJsonConfiguration['workspaceLayout'],
-    ctx: CreateDependenciesContext,
     projects: FilteredProject[]
 ): ProjectGraphDependencyWithFile[] => {
     const { name, root, tag } = project;
@@ -125,11 +122,10 @@ export const filterDependenciesOfProject = (
     const cmd = getGccDependenciesCommand(fileName, root, workspaceLayout);
     const stdout = getGccDependencies(cmd, root, workspaceRoot);
     const files = filterGccDependencyOutput(stdout);
-    const externalFiles = getExternalFiles(files, root, tag);
     const dependencies = getDependenciesOfProject(
-        name,
-        externalFiles,
-        ctx,
+        project,
+        files,
+        tag,
         projects
     );
     return dependencies;

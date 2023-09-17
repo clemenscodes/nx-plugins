@@ -1,4 +1,4 @@
-import type { NxJsonConfiguration, ProjectGraphProjectNode } from '@nx/devkit';
+import type { NxJsonConfiguration } from '@nx/devkit';
 
 export type BaseOptions = {
     name: string;
@@ -35,8 +35,11 @@ export type Deps = {
 export type FilteredProject = {
     name: string;
     root: string;
-    type: ProjectGraphProjectNode['type'];
+    sourceRoot: string;
+    type: CProjectType;
     tag: CTag;
 };
 
 export type WorkspaceLayout = NxJsonConfiguration['workspaceLayout'];
+
+export type Graph = Record<string, Set<string>>;

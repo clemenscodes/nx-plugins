@@ -1,5 +1,6 @@
 import type { ProjectGraph } from '@nx/devkit';
 import type { CTag, FilteredProject } from '../../../models/types';
+import { getProjectTypeFromConfig } from '../../generatorUtils/getProjectTypeFromConfig/getProjectTypeFromConfig';
 
 export const isC = (s: string) => s === 'c' || s === 'cpp';
 export const filterTags = (tags: string[]) => tags.filter(isC);
@@ -9,16 +10,19 @@ export const filterProjects = (
     nodes: ProjectGraph['nodes']
 ): FilteredProject[] => {
     const filteredProjects = Object.values(nodes)
-        .filter(({ data }) => {
+        .filter((node) => {
+            const { data } = node;
             if (data.tags === undefined) {
                 return false;
             }
             return data.tags.some(isC);
         })
-        .map(({ data, type }) => {
-            const { name, root, tags } = data;
+        .map((node) => {
+            const { data } = node;
+            const { name, root, tags, sourceRoot } = data;
             const tag = getTag(tags);
-            return { name, root, type, tag };
+            const type = getProjectTypeFromConfig(data);
+            return { name, root, type, tag, sourceRoot };
         });
     return filteredProjects;
 };
