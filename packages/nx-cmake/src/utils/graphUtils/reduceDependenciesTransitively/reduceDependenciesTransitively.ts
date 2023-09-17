@@ -43,7 +43,7 @@ export const hasCyclicDependencies = (
                     if (!node.startsWith('test')) {
                         output.addNewline();
                         logger.error(
-                            `nx-cmake: detected circular dependecy ${node}`
+                            `nx-cmake: Detected circular dependency ${node}`
                         );
                     }
                     return true;
@@ -51,7 +51,7 @@ export const hasCyclicDependencies = (
                     if (!node.startsWith('test')) {
                         output.addNewline();
                         logger.error(
-                            `nx-cmake: detected circular dependecy ${node}`
+                            `nx-cmake: Detected circular dependency ${node}`
                         );
                     }
                     return true;

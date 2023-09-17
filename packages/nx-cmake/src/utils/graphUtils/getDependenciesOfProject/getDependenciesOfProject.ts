@@ -1,62 +1,87 @@
-import { ProjectGraphDependencyWithFile, DependencyType } from '@nx/devkit';
-import type { FilteredProject } from '../../../models/types';
+import {
+    DependencyType,
+    type ProjectGraphDependencyWithFile,
+} from '@nx/devkit';
+import {
+    CProjectType,
+    type CTag,
+    type FilteredProject,
+} from '../../../models/types';
+import { getFilesOfDirectoryRecursively } from '../../fileUtils/getFilesOfDirectoryRecursively/getFilesOfDirectoryRecursively';
 import { getProjectFromFile } from '../../generatorUtils/getProjectFromFile/getProjectFromFile';
+import { getAbsolutePath } from '../../fileUtils/getAbsolutePath/getAbsolutePath';
 
-export const shouldIgnoreExternalFile = (externalFile: string): boolean => {
-    return externalFile.startsWith('include');
+export const hasValidExtension = (file: string, tag: CTag): boolean => {
+    const isCFile = file.endsWith('.c');
+    const isCppFile =
+        file.endsWith('.cpp') || file.endsWith('.cxx') || file.endsWith('.cc');
+    const isHFile = file.endsWith('.h');
+    const isHppFile =
+        isHFile ||
+        file.endsWith('.hpp') ||
+        file.endsWith('.hxx') ||
+        file.endsWith('.hh');
+    if (tag === 'c') {
+        return isHFile || isCFile;
+    } else if (tag === 'cpp') {
+        return isHppFile || isCppFile;
+    }
+    return false;
 };
 
-export const getProjectGraphDependencyWithFile = (
-    source: string,
-    target: string,
-    sourceFile: string
-): ProjectGraphDependencyWithFile => {
-    const dependencyType = DependencyType.static;
-    const dependency = { source, target, sourceFile, dependencyType };
-    return dependency;
+export const isValidProjectFile = (file: string, tag: CTag) => {
+    return (
+        !file.startsWith('dist') &&
+        !file.startsWith('include') &&
+        hasValidExtension(file, tag)
+    );
+};
+
+export const getProjectFiles = (
+    projectRoot: string,
+    tag: CTag,
+    projectType: CProjectType
+): string[] => {
+    const projectFiles = getFilesOfDirectoryRecursively(projectRoot)
+        .filter((file) => isValidProjectFile(file, tag))
+        .filter((file) => {
+            const testRoot = getAbsolutePath(projectRoot, 'test');
+            const isTestFile = file.startsWith(testRoot);
+            return !(projectType !== CProjectType.Test && isTestFile);
+        });
+    return projectFiles;
 };
 
 export const getDependenciesOfProject = (
-    projectName: string,
-    externalFiles: string[],
+    mainProject: FilteredProject,
+    files: string[],
+    tag: CTag,
     projects: FilteredProject[]
 ): ProjectGraphDependencyWithFile[] => {
-    const deps: ProjectGraphDependencyWithFile[] = [];
-    const projectFiles = [];
-    for (const externalFile of externalFiles) {
-        if (shouldIgnoreExternalFile(externalFile)) {
-            continue;
-        }
+    const { root: mainRoot, type, name } = mainProject;
+    const projectSet: Set<string> = new Set();
+    const dependencies: ProjectGraphDependencyWithFile[] = [];
+    const mainProjectFiles = getProjectFiles(mainRoot, tag, type);
+    const projectFiles = files.filter((file) => isValidProjectFile(file, tag));
 
-        const project = getProjectFromFile(externalFile, projects);
+    for (const file of projectFiles) {
+        const project = getProjectFromFile(file, projects);
 
-        if (project === projectName) {
-            projectFiles.push(externalFile);
-            continue;
-        }
-
-        if (project === null) {
-            continue;
+        if (name !== project && !projectSet.has(project)) {
+            projectSet.add(project);
         }
     }
 
-    for (const externalFile of externalFiles) {
-        const project = getProjectFromFile(externalFile, projects);
-
-        if (project === projectName) {
-            continue;
-        }
-        if (project === null) {
-            continue;
-        }
-        for (const projectFile of projectFiles) {
-            const dep = getProjectGraphDependencyWithFile(
-                projectName,
-                project,
-                projectFile
-            );
-            deps.push(dep);
+    for (const project of projectSet) {
+        for (const mainFile of mainProjectFiles) {
+            dependencies.push({
+                source: name,
+                target: project,
+                sourceFile: mainFile,
+                dependencyType: DependencyType.static,
+            });
         }
     }
-    return deps;
+
+    return dependencies;
 };

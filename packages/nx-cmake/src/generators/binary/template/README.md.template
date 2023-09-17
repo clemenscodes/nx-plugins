@@ -1,0 +1,39 @@
+# <%= name %>
+
+This <%= language %> binary was generated using [nx-cmake](https://www.npmjs.com/package/nx-cmake).
+
+## Executing the binary
+
+```shell
+nx execute <%= name %> --output-style=stream
+```
+
+## Configuring the binary using [CMake](https://cmake.org/cmake/help/latest/index.html)
+
+```shell
+nx cmake <%= name %> --output-style=stream
+```
+
+## Building the binary using [Make](https://www.gnu.org/software/make/manual/make.html) and [GCC](https://gcc.gnu.org/onlinedocs/)
+
+```shell
+nx build <%= name %> --output-style=stream
+```
+
+## Linting the binary using [clang-tidy](https://clang.llvm.org/extra/clang-tidy/)
+
+```shell
+nx lint <%= name %> --output-style=stream
+```
+
+## Formatting the binary using [clang-format](https://clang.llvm.org/docs/ClangFormat.html)
+
+```shell
+nx fmt <%= name %> --output-style=stream
+```
+
+## Debugging the binary using [GDB](https://sourceware.org/gdb/documentation/)
+
+```shell
+nx debug <%= name %> --output-style=stream
+```

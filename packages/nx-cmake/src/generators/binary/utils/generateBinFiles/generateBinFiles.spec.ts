@@ -19,7 +19,12 @@ describe('generateBinFiles', () => {
         const binaryIncludeFile = `${projectRoot}/include/${name}.h`;
         generateBinFiles(tree, resolvedOptions);
         const binaryRoot = tree.children(projectRoot);
-        expect(binaryRoot).toStrictEqual(['CMakeLists.txt', 'include', 'src']);
+        expect(binaryRoot).toStrictEqual([
+            'CMakeLists.txt',
+            'README.md',
+            'include',
+            'src',
+        ]);
         expect(tree.exists(binarySourceFile)).toBe(true);
         expect(tree.exists(binaryListsFile)).toBe(true);
         expect(tree.exists(binaryIncludeFile)).toBe(true);
