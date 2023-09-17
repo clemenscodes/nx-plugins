@@ -1,0 +1,8 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "$id": "Preset",
+    "title": "Generate a preset to use nx-cmake",
+    "type": "object",
+    "properties": {},
+    "required": []
+}
