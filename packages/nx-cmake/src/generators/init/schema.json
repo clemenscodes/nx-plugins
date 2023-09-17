@@ -20,7 +20,7 @@
         "libsDir": {
             "type": "string",
             "description": "Where the libraries will be generated (nx.json has higher precedence)",
-            "default": "packages",
+            "default": "libs",
             "aliases": ["libs", "l"],
             "$default": {
                 "$source": "argv",
@@ -32,7 +32,7 @@
         "projectNameAndRootFormat": {
             "type": "string",
             "description": "Whether to derive the project location or take it as provided (nx.json has higher precendence)",
-            "default": "as-provided",
+            "default": "derived",
             "aliases": ["p"],
             "enum": ["as-provided", "derived"],
             "$default": {
