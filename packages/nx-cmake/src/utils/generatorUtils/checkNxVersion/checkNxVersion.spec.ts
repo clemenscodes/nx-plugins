@@ -15,7 +15,7 @@ describe('checkNxVersion', () => {
 
     it('should return false when major version is equal but minor version is less', () => {
         expect(checkNxVersion('16.6.0')).toBe(false);
-        expect(checkNxVersion('16.6.0')).toBe(false);
+        expect(checkNxVersion('16.0.10')).toBe(false);
     });
 
     it('should return false when version is not in the correct format', () => {

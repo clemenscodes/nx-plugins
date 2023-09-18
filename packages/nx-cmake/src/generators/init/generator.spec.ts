@@ -4,8 +4,8 @@ import { output } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import initGenerator from './generator';
 import * as devkit from '@nx/devkit';
-import * as checkNxVersionModule from './utils/checkNxVersion/checkNxVersion';
-import * as checkOsModule from './utils/checkOs/checkOs';
+import * as checkNxVersionModule from '../../utils/generatorUtils/checkNxVersion/checkNxVersion';
+import * as checkOsModule from '../../utils/generatorUtils/checkOs/checkOs';
 
 describe('init generator', () => {
     let tree: Tree;

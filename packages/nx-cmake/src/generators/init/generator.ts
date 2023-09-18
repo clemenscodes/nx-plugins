@@ -5,9 +5,9 @@ import { generateCmakeConfigFiles } from './utils/generateCmakeConfigFiles/gener
 import { generateRootConfig } from './utils/generateRootConfig/generateRootConfig';
 import { generateClangPreset } from './utils/generateClangPreset/generateClangPreset';
 import { generateGlobalIncludeDir } from './utils/generateGlobalIncludeDir/generateGlobalIncludeDir';
-import { checkNxVersion } from './utils/checkNxVersion/checkNxVersion';
-import { checkOs } from './utils/checkOs/checkOs';
-import { getRequiredVersionOfNx } from './utils/getRequiredVersionOfNx/getRequiredVersionOfNx';
+import { checkNxVersion } from '../../utils/generatorUtils/checkNxVersion/checkNxVersion';
+import { checkOs } from '../../utils/generatorUtils/checkOs/checkOs';
+import { getRequiredVersionOfNx } from '../../utils/generatorUtils/getRequiredVersionOfNx/getRequiredVersionOfNx';
 import {
     formatFiles,
     readNxJson,
