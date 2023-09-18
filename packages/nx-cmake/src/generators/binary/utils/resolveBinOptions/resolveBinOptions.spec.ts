@@ -1,5 +1,5 @@
+import type { BinGeneratorSchema, BinSchema } from '../../schema';
 import { resolveBinOptions } from './resolveBinOptions';
-import { BinGeneratorSchema, BinSchema } from '../../schema';
 
 describe('resolveBinOptions ', () => {
     let options: BinGeneratorSchema;

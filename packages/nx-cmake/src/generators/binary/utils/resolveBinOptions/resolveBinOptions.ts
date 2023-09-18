@@ -1,8 +1,8 @@
-import { BinGeneratorSchema, BinSchema } from '../../schema';
+import type { BinGeneratorSchema, BinSchema } from '../../schema';
+import type { LinkGeneratorSchema } from '../../../link/schema';
 import { resolveOptions } from '../../../../utils/generatorUtils/resolveOptions/resolveOptions';
 import { getProjectRoot } from '../../../../utils/generatorUtils/getProjectRoot/getProjectRoot';
 import { CProjectType } from '../../../../models/types';
-import { LinkGeneratorSchema } from '../../../link/schema';
 import { getLibName } from '../../../library/utils/getLibName/getLibName';
 import { offsetFromRoot } from '@nx/devkit';
 

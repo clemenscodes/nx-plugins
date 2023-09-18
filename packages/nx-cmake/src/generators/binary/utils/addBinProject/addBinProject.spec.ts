@@ -1,12 +1,9 @@
-import {
-    ProjectConfiguration,
-    readProjectConfiguration,
-    type Tree,
-} from '@nx/devkit';
+import type { ProjectConfiguration, Tree } from '@nx/devkit';
+import type { BinGeneratorSchema } from '../../schema';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { addBinProject } from './addBinProject';
 import { resolveBinOptions } from '../resolveBinOptions/resolveBinOptions';
-import type { BinGeneratorSchema } from '../../schema';
+import { readProjectConfiguration } from '@nx/devkit';
 
 describe('addBinProject', () => {
     let tree: Tree;

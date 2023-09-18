@@ -1,6 +1,6 @@
+import type { Tree } from '@nx/devkit';
+import type { LibGeneratorSchema } from '../../schema';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import { Tree } from '@nx/devkit';
-import { LibGeneratorSchema } from '../../schema';
 import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
 import { generateLibFiles } from './generateLibFiles';
 import { readFileWithTree } from '../../../../utils/generatorUtils/readFileWithTree/readFileWithTree';

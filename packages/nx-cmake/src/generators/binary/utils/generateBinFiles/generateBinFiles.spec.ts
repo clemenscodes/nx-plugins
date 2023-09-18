@@ -1,6 +1,6 @@
-import { readFileWithTree } from './../../../../utils/generatorUtils/readFileWithTree/readFileWithTree';
 import type { Tree } from '@nx/devkit';
 import type { BinGeneratorSchema } from '../../schema';
+import { readFileWithTree } from './../../../../utils/generatorUtils/readFileWithTree/readFileWithTree';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { generateBinFiles } from './generateBinFiles';
 import { resolveBinOptions } from '../resolveBinOptions/resolveBinOptions';
