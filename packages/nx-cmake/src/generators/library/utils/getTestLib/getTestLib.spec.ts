@@ -1,5 +1,5 @@
+import type { C } from '../../../../models/types';
 import { getTestLib } from './getTestLib';
-import { C } from '../../../../models/types';
 
 describe('getTestLib', () => {
     it('should return "gtest" when the language is "C++"', () => {

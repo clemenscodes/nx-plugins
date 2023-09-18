@@ -1,15 +1,15 @@
+import type { Tree } from '@nx/devkit';
+import type { LinkSchema } from '../../schema';
+import type { LibGeneratorSchema } from '../../../library/schema';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
+import { readFileWithTree } from '../../../../utils/generatorUtils/readFileWithTree/readFileWithTree';
+import libGenerator from '../../../library/generator';
 import {
     getCmakeLink,
     getSourceCmakeFile,
     getUpdatedCmakeFileContent,
     updateCmakeFile,
 } from './updateCmakeFile';
-import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import type { Tree } from '@nx/devkit';
-import type { LinkSchema } from '../../schema';
-import type { LibGeneratorSchema } from '../../../library/schema';
-import libGenerator from '../../../library/generator';
-import { readFileWithTree } from '../../../../utils/generatorUtils/readFileWithTree/readFileWithTree';
 
 describe('updateCmakeFile', () => {
     let tree: Tree;

@@ -1,5 +1,6 @@
-import { formatFiles, type Tree } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
 import type { LinkGeneratorSchema } from './schema';
+import { formatFiles } from '@nx/devkit';
 import { resolveLinkOptions } from './utils/resolveLinkOptions/resolveLinkOptions';
 import { updateCmakeFile } from './utils/updateCmakeFile/updateCmakeFile';
 import { updateIncludeFile } from './utils/updateIncludeFile/updateIncludeFile';
