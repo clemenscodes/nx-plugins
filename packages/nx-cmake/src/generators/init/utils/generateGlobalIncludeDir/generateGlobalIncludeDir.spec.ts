@@ -1,34 +1,21 @@
-import { generateGlobalIncludeDir } from './generateGlobalIncludeDir';
 import type { Tree } from '@nx/devkit';
+import type { InitGeneratorSchema } from '../../schema';
+import { generateGlobalIncludeDir } from './generateGlobalIncludeDir';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import { InitGeneratorSchema } from '../../schema';
 
 describe('generateGlobalIncludeDir', () => {
     let tree: Tree;
-    const commonFile = 'include/common.h';
-    const libcmockaFile = 'include/libcmocka.h';
-    const libgtestFile = 'include/libgtest.h';
-    const expectedCommonFile = '#ifndef _COMMON\n#define _COMMON\n\n#endif\n';
-    const expectedLibcmockaFile =
-        '#ifndef _CMOCKA_H\n' +
-        '#define _CMOCKA_H\n' +
-        '\n' +
-        '#include <stdint.h>\n' +
-        '#include <stdarg.h>\n' +
-        '#include <stddef.h>\n' +
-        '#include <setjmp.h>\n' +
-        '#include <cmocka.h>\n' +
-        '\n' +
-        '#endif\n';
-    const expectedLibgtestFile =
-        '#ifndef _GTEST\n#define _GTEST\n\n#include <gtest/gtest.h>\n\n#endif\n';
+    let options: InitGeneratorSchema;
+    let commonFile: string;
+    let libcmockaFile: string;
+    let libgtestFile: string;
+    let expectedCommonFile: string;
+    let expectedLibcmockaFile: string;
+    let expectedLibgtestFile: string;
 
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
-    });
-
-    it('should generate global include dir', async () => {
-        const options: InitGeneratorSchema = {
+        options = {
             appsDir: 'bin',
             libsDir: 'packages',
             projectNameAndRootFormat: 'derived',
@@ -36,6 +23,26 @@ describe('generateGlobalIncludeDir', () => {
             addClangPreset: false,
             skipFormat: false,
         };
+        commonFile = 'include/common.h';
+        libcmockaFile = 'include/libcmocka.h';
+        libgtestFile = 'include/libgtest.h';
+        expectedCommonFile = '#ifndef _COMMON\n#define _COMMON\n\n#endif\n';
+        expectedLibcmockaFile =
+            '#ifndef _CMOCKA_H\n' +
+            '#define _CMOCKA_H\n' +
+            '\n' +
+            '#include <stdint.h>\n' +
+            '#include <stdarg.h>\n' +
+            '#include <stddef.h>\n' +
+            '#include <setjmp.h>\n' +
+            '#include <cmocka.h>\n' +
+            '\n' +
+            '#endif\n';
+        expectedLibgtestFile =
+            '#ifndef _GTEST\n#define _GTEST\n\n#include <gtest/gtest.h>\n\n#endif\n';
+    });
+
+    it('should generate global include dir', async () => {
         generateGlobalIncludeDir(tree, options);
         const globalIncludeFiles = tree.children('include');
         const expectedGlobalIncludeFiles = [
@@ -47,14 +54,6 @@ describe('generateGlobalIncludeDir', () => {
     });
 
     it('should generate global include dir correctly', async () => {
-        const options: InitGeneratorSchema = {
-            appsDir: 'bin',
-            libsDir: 'packages',
-            projectNameAndRootFormat: 'derived',
-            cmakeConfigDir: 'cmake',
-            addClangPreset: false,
-            skipFormat: false,
-        };
         generateGlobalIncludeDir(tree, options);
         const readCommonFile = tree.read(commonFile, 'utf-8');
         const readLibcmockaFile = tree.read(libcmockaFile, 'utf-8');

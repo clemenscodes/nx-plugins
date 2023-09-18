@@ -1,6 +1,7 @@
-import { type Tree, generateFiles } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
 import type { InitGeneratorSchema } from '../../schema';
 import { join } from 'path';
+import { generateFiles } from '@nx/devkit';
 
 export const generateRootConfig = (
     tree: Tree,

@@ -1,5 +1,6 @@
-import { type Tree, generateFiles } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
 import type { InitGeneratorSchema } from '../../schema';
+import { generateFiles } from '@nx/devkit';
 import { join } from 'path';
 
 export const generateClangPreset = (

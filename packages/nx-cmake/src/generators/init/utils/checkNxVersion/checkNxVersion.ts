@@ -4,9 +4,11 @@ import {
 } from '../../../../config/version';
 
 export const checkNxVersion = (version: string): boolean => {
-    const [major, minor] = version.split('.').map((chunk) => parseInt(chunk));
+    const [major, minor, patch] = version
+        .split('.')
+        .map((chunk) => parseInt(chunk));
 
-    if (major === undefined || minor === undefined) {
+    if (major === undefined || minor === undefined || patch === undefined) {
         return false;
     }
 

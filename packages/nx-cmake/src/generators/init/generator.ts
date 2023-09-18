@@ -1,12 +1,5 @@
 import type { InitGeneratorSchema } from './schema';
-import {
-    type Tree,
-    formatFiles,
-    readNxJson,
-    updateNxJson,
-    NX_VERSION,
-    output,
-} from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
 import { getUpdatedNxJson } from './utils/getUpdatedNxJson/getUpdatedNxJson';
 import { generateCmakeConfigFiles } from './utils/generateCmakeConfigFiles/generateCmakeConfigFiles';
 import { generateRootConfig } from './utils/generateRootConfig/generateRootConfig';
@@ -14,6 +7,13 @@ import { generateClangPreset } from './utils/generateClangPreset/generateClangPr
 import { generateGlobalIncludeDir } from './utils/generateGlobalIncludeDir/generateGlobalIncludeDir';
 import { checkNxVersion } from './utils/checkNxVersion/checkNxVersion';
 import { getRequiredVersionOfNx } from './utils/getRequiredVersionOfNx/getRequiredVersionOfNx';
+import {
+    formatFiles,
+    readNxJson,
+    updateNxJson,
+    NX_VERSION,
+    output,
+} from '@nx/devkit';
 
 export async function initGenerator(tree: Tree, options: InitGeneratorSchema) {
     if (!checkNxVersion(NX_VERSION)) {

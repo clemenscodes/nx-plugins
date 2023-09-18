@@ -1,4 +1,4 @@
-import { NxJsonConfiguration } from '@nx/devkit';
+import type { NxJsonConfiguration } from '@nx/devkit';
 import { addTargetDefaults } from './addTargetDefaults';
 
 describe('addTargetDefaults', () => {
