@@ -64,21 +64,21 @@ describe('addTargetDefaults', () => {
             },
         };
     });
-    it('should add target defaults when targetDefaults is missing', () => {
-        const updatedNxJson = {};
-        const result = addTargetDefaults(updatedNxJson);
 
+    it('should add target defaults when targetDefaults is missing', () => {
+        updatedNxJson = {};
+        const result = addTargetDefaults(updatedNxJson);
         expect(result).toEqual(expectedNxJson);
     });
 
     it('should add target defaults for missing targets', () => {
-        const updatedNxJson = {
+        updatedNxJson = {
             targetDefaults: {
                 cmake: {},
             },
         };
-        const result = addTargetDefaults(updatedNxJson);
 
+        const result = addTargetDefaults(updatedNxJson);
         expect(result).toEqual(expectedNxJson);
     });
 

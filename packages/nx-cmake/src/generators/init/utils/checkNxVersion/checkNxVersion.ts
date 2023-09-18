@@ -6,15 +6,22 @@ import {
 export const checkNxVersion = (version: string): boolean => {
     const [major, minor] = version.split('.').map((chunk) => parseInt(chunk));
 
+    if (major === undefined || minor === undefined) {
+        return false;
+    }
+
     if (major < REQUIRED_MAJOR_NX_VERSION) {
         return false;
     }
+
     if (major > REQUIRED_MAJOR_NX_VERSION) {
         return true;
     }
+
     if (minor >= REQUIRED_MINOR_NX_VERSION) {
         return true;
     }
+
     if (minor < REQUIRED_MINOR_NX_VERSION) {
         return false;
     }
