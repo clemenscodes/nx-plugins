@@ -1,4 +1,4 @@
-import { NxJsonConfiguration } from '@nx/devkit';
+import type { NxJsonConfiguration } from '@nx/devkit';
 import { mkdtempSync, writeFileSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';

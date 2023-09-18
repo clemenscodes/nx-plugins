@@ -228,8 +228,8 @@ jobs:
                   needs.agents.result != 'skipped'
               uses: jameshenry/parallel-bash-commands@v1
               with:
-                  cmd1: $NX_EXEC lint
-                  cmd2: $NX_EXEC build --configuration=production
+                  cmd1: $NX_EXEC build
+                  cmd2: $NX_EXEC lint --configuration=ci
                   cmd3: $NX_EXEC test --configuration=ci
                   cmd4: $NX_EXEC e2e --configuration=ci
 

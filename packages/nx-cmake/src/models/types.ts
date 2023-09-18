@@ -1,5 +1,11 @@
 import type { NxJsonConfiguration } from '@nx/devkit';
 
+export enum CProjectType {
+    App,
+    Lib,
+    Test,
+}
+
 export type BaseOptions = {
     name: string;
     language: C;
@@ -14,12 +20,6 @@ export type BaseOptions = {
 export type ExecutorBaseOptions = {
     args: string[];
 };
-
-export enum CProjectType {
-    App,
-    Lib,
-    Test,
-}
 
 export type C = 'C' | 'C++';
 export type CMakeC = 'C' | 'CXX';

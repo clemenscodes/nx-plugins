@@ -42,6 +42,7 @@ describe('getUpdatedNxJson', () => {
                     runner: 'nx-cloud',
                     options: {
                         cacheableOperations: [
+                            'cmake',
                             'build',
                             'debug',
                             'test',

@@ -1,16 +1,16 @@
-import type { FormatExecutorSchema } from '../../schema';
+import type { LintExecutorSchema } from '../../schema';
 import { CProjectType } from '../../../../models/types';
 import * as getProjectFilesModule from '../../../../utils/fileUtils/getProjectFiles/getProjectFiles';
 import * as checkCommandExistsModule from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
-import * as executeCommandForFilesModule from '../../../../utils/commandUtils/executeCommandForFiles/executeCommandForFiles';
+import * as runCommandModule from '../../../../utils/commandUtils/runCommand/runCommand';
 import * as getConfigFileModule from '../../../../utils/fileUtils/getConfigFile/getConfigFile';
 
-describe('formatFilesWithClangFormat', () => {
+describe('lintFilesWithClangTidy', () => {
     let getConfigFileMock: jest.SpyInstance;
     let getProjectFilesMock: jest.SpyInstance;
     let checkCommandExistsMock: jest.SpyInstance;
-    let executeCommandForFilesMock: jest.SpyInstance;
-    let options: FormatExecutorSchema;
+    let runCommandMock: jest.SpyInstance;
+    let options: LintExecutorSchema;
     let workspaceRoot: string;
     let projectRoot: string;
     let projectType: CProjectType;
@@ -25,14 +25,9 @@ describe('formatFilesWithClangFormat', () => {
             checkCommandExistsModule,
             'checkCommandExists'
         );
-        executeCommandForFilesMock = jest.spyOn(
-            executeCommandForFilesModule,
-            'executeCommandForFiles'
-        );
+        runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
         options = {
             args: [],
-            verbose: true,
-            editFilesInPlace: true,
         };
         workspaceRoot = '/workspaceRoot';
         projectRoot = '/projectRoot';
@@ -43,7 +38,7 @@ describe('formatFilesWithClangFormat', () => {
         jest.restoreAllMocks();
     });
 
-    it.todo('should pass executor arguments to clang-format');
-    it.todo('should return true if all files were successfully formatted');
-    it.todo('should return false if not all files were successfully formatted');
+    it.todo('should pass executor arguments to clang-tidy');
+    it.todo('should return true if all files were successfully linted');
+    it.todo('should return false if not all files were successfully linted');
 });

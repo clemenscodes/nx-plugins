@@ -20,7 +20,6 @@ describe('filterTags', () => {
         const tags = ['c', 'cpp', 'java', 'python'];
         const filteredTags = filterTags(tags);
         const expectedFilteredTags = ['c', 'cpp'];
-
         expect(filteredTags).toEqual(expectedFilteredTags);
     });
 
@@ -28,7 +27,6 @@ describe('filterTags', () => {
         const tags: string[] = [];
         const filteredTags = filterTags(tags);
         const expectedFilteredTags: string[] = [];
-
         expect(filteredTags).toEqual(expectedFilteredTags);
     });
 
@@ -36,7 +34,6 @@ describe('filterTags', () => {
         const tags = ['java', 'python'];
         const filteredTags = filterTags(tags);
         const expectedFilteredTags: string[] = [];
-
         expect(filteredTags).toEqual(expectedFilteredTags);
     });
 });
@@ -45,21 +42,18 @@ describe('getTag', () => {
     it('should return the first "c" or "cpp" tag', () => {
         const tags = ['java', 'c', 'python', 'cpp', 'rust'];
         const tag = getTag(tags);
-
         expect(tag).toBe('c');
     });
 
     it('should return undefined if no "c" or "cpp" tag is found', () => {
         const tags = ['java', 'python', 'rust'];
         const tag = getTag(tags);
-
         expect(tag).toBeUndefined();
     });
 
     it('should handle an empty input array', () => {
         const tags: string[] = [];
         const tag = getTag(tags);
-
         expect(tag).toBeUndefined();
     });
 });
@@ -95,10 +89,7 @@ describe('filterProjects', () => {
     };
 
     it('should filter projects based on tags', () => {
-        // Invoke the filterProjects function
         const filteredProjects = filterProjects(mockNodes);
-
-        // Expected result based on filtering for 'c' and 'cpp' tags
         const expectedProjects = [
             {
                 name: 'project1',
@@ -115,12 +106,10 @@ describe('filterProjects', () => {
                 tag: 'cpp',
             },
         ];
-
         expect(filteredProjects).toEqual(expectedProjects);
     });
 
     it('should handle projects with no "c" or "cpp" tags', () => {
-        // Modify the mockNodes to have a project with no "c" or "cpp" tag
         const project3 = getProjectConfiguration(
             'path/to/project3',
             CProjectType.Lib
@@ -131,11 +120,7 @@ describe('filterProjects', () => {
             name: 'project3',
             data: project3,
         };
-
-        // Invoke the filterProjects function
         const filteredProjects = filterProjects(mockNodes);
-
-        // Expected result is only project1 and project2
         const expectedProjects = [
             {
                 name: 'project1',
@@ -152,17 +137,14 @@ describe('filterProjects', () => {
                 tag: 'cpp',
             },
         ];
-
         expect(filteredProjects).toEqual(expectedProjects);
     });
 
     it('should handle projects with other tags', () => {
-        // Modify the mockNodes to have a project with other tags
         const project4 = getProjectConfiguration(
             'path/to/project4',
             CProjectType.Lib
         )['libproject4'];
-
         mockNodes['project4'] = {
             type: 'lib',
             name: 'project4',
@@ -178,11 +160,7 @@ describe('filterProjects', () => {
                 ],
             },
         };
-
-        // Invoke the filterProjects function
         const filteredProjects = filterProjects(mockNodes);
-
-        // Expected result is only project1 and project2
         const expectedProjects = [
             {
                 name: 'project1',
@@ -199,7 +177,7 @@ describe('filterProjects', () => {
                 tag: 'cpp',
             },
         ];
-
         expect(filteredProjects).toEqual(expectedProjects);
     });
+    it.todo('refactor these tests above');
 });

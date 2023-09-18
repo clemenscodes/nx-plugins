@@ -1,17 +1,17 @@
-import {
+import { workspaceRoot } from '@nx/devkit';
+import { filterGccDependencyOutput } from '../filterGccDependencyOutput/filterGccDependencyOutput';
+import { runCommand } from '../../commandUtils/runCommand/runCommand';
+import { executeCommand } from '../../commandUtils/executeCommand/executeCommand';
+import { getDependenciesOfProject } from '../getDependenciesOfProject/getDependenciesOfProject';
+import type {
     NxJsonConfiguration,
     ProjectGraphDependencyWithFile,
-    workspaceRoot,
 } from '@nx/devkit';
 import type {
     CTag,
     FilteredProject,
     WorkspaceLayout,
 } from '../../../models/types';
-import { filterGccDependencyOutput } from '../filterGccDependencyOutput/filterGccDependencyOutput';
-import { runCommand } from '../../commandUtils/runCommand/runCommand';
-import { executeCommand } from '../../commandUtils/executeCommand/executeCommand';
-import { getDependenciesOfProject } from '../getDependenciesOfProject/getDependenciesOfProject';
 
 export const getWorkspaceIncludeDir = () => 'include';
 

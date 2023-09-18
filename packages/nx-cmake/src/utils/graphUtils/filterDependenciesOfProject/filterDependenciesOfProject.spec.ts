@@ -204,3 +204,7 @@ describe('getGccDependencies', () => {
         );
     });
 });
+
+describe('filterDependenciesOfProject', () => {
+    it.todo('refactor this entire module');
+});

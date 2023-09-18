@@ -13,18 +13,14 @@ describe('filterGccDependencyOutput', () => {
             /usr/lib/libexample.a
         `;
         const expectedOutput = ['src/file1.h', 'src/file2.c', 'src/file3.cpp'];
-
         const result = filterGccDependencyOutput(inputOutput);
-
         expect(result).toEqual(expectedOutput);
     });
 
     it('should handle empty input', () => {
         const inputOutput = '';
         const expectedOutput: string[] = [];
-
         const result = filterGccDependencyOutput(inputOutput);
-
         expect(result).toEqual(expectedOutput);
     });
 
@@ -34,9 +30,7 @@ describe('filterGccDependencyOutput', () => {
             /usr/lib/libexample.a
         `;
         const expectedOutput: string[] = [];
-
         const result = filterGccDependencyOutput(inputOutput);
-
         expect(result).toEqual(expectedOutput);
     });
 
@@ -47,9 +41,7 @@ describe('filterGccDependencyOutput', () => {
             src/file3.cpp
         `;
         const expectedOutput = ['src/file1.h', 'src/file2.c', 'src/file3.cpp'];
-
         const result = filterGccDependencyOutput(inputOutput);
-
         expect(result).toEqual(expectedOutput);
     });
 });

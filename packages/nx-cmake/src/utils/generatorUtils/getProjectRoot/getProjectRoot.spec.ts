@@ -1,16 +1,22 @@
 import { getProjectRoot } from './getProjectRoot';
-import * as workspaceLayoutModule from '../getWorkspaceLayout/getWorkspaceLayout';
 import { CProjectType } from '../../../models/types';
+import * as workspaceLayoutModule from '../getWorkspaceLayout/getWorkspaceLayout';
 
 describe('getProjectRoot', () => {
+    let workspaceLayoutMock: jest.SpyInstance;
+
     beforeEach(() => {
-        jest.spyOn(workspaceLayoutModule, 'getWorkspaceLayout').mockReturnValue(
-            {
+        workspaceLayoutMock = jest
+            .spyOn(workspaceLayoutModule, 'getWorkspaceLayout')
+            .mockReturnValue({
                 appsDir: 'apps',
                 libsDir: 'libs',
                 projectNameAndRootFormat: 'as-provided',
-            }
-        );
+            });
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
     });
 
     it('should return the provided project root for CProjectType.App', () => {
@@ -21,14 +27,11 @@ describe('getProjectRoot', () => {
     });
 
     it('should return the derived project root for CProjectType.App', () => {
-        jest.spyOn(workspaceLayoutModule, 'getWorkspaceLayout').mockReturnValue(
-            {
-                appsDir: 'apps',
-                libsDir: 'libs',
-                projectNameAndRootFormat: 'derived',
-            }
-        );
-
+        workspaceLayoutMock.mockReturnValue({
+            appsDir: 'apps',
+            libsDir: 'libs',
+            projectNameAndRootFormat: 'derived',
+        });
         const projectName = 'appProject';
         const projectType = CProjectType.App;
         const result = getProjectRoot(projectName, projectType);
@@ -43,14 +46,11 @@ describe('getProjectRoot', () => {
     });
 
     it('should return the provided project root for CProjectType.Lib', () => {
-        jest.spyOn(workspaceLayoutModule, 'getWorkspaceLayout').mockReturnValue(
-            {
-                appsDir: 'apps',
-                libsDir: 'libs',
-                projectNameAndRootFormat: 'derived',
-            }
-        );
-
+        workspaceLayoutMock.mockReturnValue({
+            appsDir: 'apps',
+            libsDir: 'libs',
+            projectNameAndRootFormat: 'derived',
+        });
         const projectName = 'libProject';
         const projectType = CProjectType.Lib;
         const result = getProjectRoot(projectName, projectType);
@@ -65,14 +65,11 @@ describe('getProjectRoot', () => {
     });
 
     it('should return the derived project root for CProjectType.Test', () => {
-        jest.spyOn(workspaceLayoutModule, 'getWorkspaceLayout').mockReturnValue(
-            {
-                appsDir: 'apps',
-                libsDir: 'libs',
-                projectNameAndRootFormat: 'derived',
-            }
-        );
-
+        workspaceLayoutMock.mockReturnValue({
+            appsDir: 'apps',
+            libsDir: 'libs',
+            projectNameAndRootFormat: 'derived',
+        });
         const projectName = 'testProject';
         const projectType = CProjectType.Test;
         const result = getProjectRoot(projectName, projectType);
