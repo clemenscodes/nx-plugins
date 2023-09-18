@@ -1,5 +1,6 @@
-import { Tree, addProjectConfiguration } from '@nx/devkit';
-import { LibOptions } from '../../schema';
+import type { Tree } from '@nx/devkit';
+import type { LibOptions } from '../../schema';
+import { addProjectConfiguration } from '@nx/devkit';
 import { getProjectTargets } from '../../../../utils/generatorUtils/getProjectTargets/getProjectTargets';
 import { CProjectType } from '../../../../models/types';
 

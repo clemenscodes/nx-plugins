@@ -1,6 +1,3 @@
-export const checkOs = (platform: typeof process.platform) => {
-    if (platform === 'win32') {
-        return false;
-    }
-    return true;
+export const checkOs = (platform: typeof process.platform): boolean => {
+    return platform !== 'win32';
 };
