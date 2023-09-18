@@ -110,7 +110,9 @@ describe('createNodesFunction', () => {
         const result = createNodesFunction(projectConfigurationFile, context);
 
         expect(result).toEqual({ projects: getProjectConfigurationReturnMock });
-        expect(mockGetProjectType).toHaveBeenCalledWith(root);
+        expect(mockGetProjectType).toHaveBeenCalledWith(
+            projectConfigurationFile
+        );
         expect(mockGetProjectConfiguration).toHaveBeenCalledWith(
             root,
             getProjectTypeReturnMock
