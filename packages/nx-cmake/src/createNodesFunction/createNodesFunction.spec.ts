@@ -1,8 +1,8 @@
 import type { CreateNodesContext } from '@nx/devkit';
 import { createNodesFunction } from './createNodesFunction'; // Import your module
+import { CProjectType } from '../models/types';
 import * as getProjectTypeModule from '../utils/generatorUtils/getProjectType/getProjectType';
 import * as getProjectConfiguration from './../utils/generatorUtils/getProjectConfiguration/getProjectConfiguration';
-import { CProjectType } from '../models/types';
 
 describe('createNodesFunction', () => {
     it('should return nodes based on the provided project configuration file', () => {

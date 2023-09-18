@@ -24,6 +24,16 @@
             "analyzeSourceFiles": true
         }
     },
+    "generators": {
+        "nx-cmake": {
+            "library": {
+                "language": "C"
+            },
+            "binary": {
+                "language": "C"
+            }
+        }
+    },
     "targetDefaults": {
         "cmake": {
             "dependsOn": ["^cmake"],
