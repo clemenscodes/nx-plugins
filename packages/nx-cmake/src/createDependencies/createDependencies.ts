@@ -1,7 +1,7 @@
-import {
-    type CreateDependencies,
-    type CreateDependenciesContext,
-    type ProjectGraphDependencyWithFile,
+import type {
+    CreateDependencies,
+    CreateDependenciesContext,
+    ProjectGraphDependencyWithFile,
 } from '@nx/devkit';
 import { filterProjects } from '../utils/graphUtils/filterProjects/filterProjects';
 import { getDependencies } from '../utils/graphUtils/getDependencies/getDependencies';
