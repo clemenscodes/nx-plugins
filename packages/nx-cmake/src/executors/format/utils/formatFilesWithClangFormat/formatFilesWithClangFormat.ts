@@ -12,12 +12,11 @@ export const formatFilesWithClangFormat = async (
     options: FormatExecutorSchema,
     projectType: CProjectType
 ): Promise<boolean> => {
-    const { args } = options;
     const formatCommand = checkCommandExists('clang-format');
     const formatArgs = await getFormatArguments(
         workspaceRoot,
         projectRoot,
-        args
+        options
     );
     const files = getProjectFiles(workspaceRoot, projectRoot);
     const sourceFiles = filterSourceFiles(

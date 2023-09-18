@@ -47,6 +47,11 @@
                     "packages/nx-cmake/generators.json",
                     "packages/nx-cmake/executors.json"
                 ]
+            },
+            "configurations": {
+                "ci": {
+                    "maxWarnings": 0
+                }
             }
         },
         "test": {

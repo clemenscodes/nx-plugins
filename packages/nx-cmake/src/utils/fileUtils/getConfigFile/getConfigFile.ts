@@ -4,7 +4,7 @@ export const getConfigFile = async (
     configFile: string,
     workspaceRoot: string,
     projectRoot: string
-) => {
+): Promise<string> => {
     const projectConfigFile = `${workspaceRoot}/${projectRoot}/${configFile}`;
     const workspaceConfigFile = `${workspaceRoot}/${configFile}`;
 

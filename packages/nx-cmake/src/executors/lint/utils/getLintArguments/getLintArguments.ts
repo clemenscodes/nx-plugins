@@ -1,3 +1,4 @@
+import type { LintExecutorSchema } from '../../schema';
 import { getConfigFile } from '../../../../utils/fileUtils/getConfigFile/getConfigFile';
 
 export const getBuildPath = (
@@ -33,8 +34,9 @@ export const getClangTidyConfigArgument = async (
 export const getLintArguments = async (
     workspaceRoot: string,
     projectRoot: string,
-    args: string[]
+    options: LintExecutorSchema
 ): Promise<string[]> => {
+    const { args } = options;
     const configArgument = await getClangTidyConfigArgument(
         workspaceRoot,
         projectRoot
