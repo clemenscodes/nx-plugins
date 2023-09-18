@@ -13,6 +13,7 @@ describe('addCacheableTargets', () => {
                     runner: 'nx/tasks-runners/default',
                     options: {
                         cacheableOperations: [
+                            'cmake',
                             'build',
                             'debug',
                             'test',
@@ -74,7 +75,7 @@ describe('addCacheableTargets', () => {
         };
         expectedNxJson.tasksRunnerOptions.default.runner = 'custom-runner';
         expectedNxJson.tasksRunnerOptions.default.options.cacheableOperations =
-            ['custom-op', 'test', 'build', 'debug', 'lint', 'fmt'];
+            ['custom-op', 'test', 'cmake', 'build', 'debug', 'lint', 'fmt'];
         const result = addCacheableTargets(updatedNxJson);
         expect(result).toEqual(expectedNxJson);
     });

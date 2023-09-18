@@ -12,7 +12,8 @@
                     "test",
                     "e2e",
                     "lint",
-                    "fmt"
+                    "fmt",
+                    "cmake"
                 ],
                 "accessToken": "ZTBkM2I2MjYtNTc4Mi00YjUxLTkzNDAtZWFlYjg1OGY0Y2UxfHJlYWQtd3JpdGU=",
                 "useDaemonProcess": false
