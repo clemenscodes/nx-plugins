@@ -6,6 +6,7 @@ import { generateRootConfig } from './utils/generateRootConfig/generateRootConfi
 import { generateClangPreset } from './utils/generateClangPreset/generateClangPreset';
 import { generateGlobalIncludeDir } from './utils/generateGlobalIncludeDir/generateGlobalIncludeDir';
 import { checkNxVersion } from './utils/checkNxVersion/checkNxVersion';
+import { checkOs } from './utils/checkOs/checkOs';
 import { getRequiredVersionOfNx } from './utils/getRequiredVersionOfNx/getRequiredVersionOfNx';
 import {
     formatFiles,
@@ -16,6 +17,13 @@ import {
 } from '@nx/devkit';
 
 export async function initGenerator(tree: Tree, options: InitGeneratorSchema) {
+    if (!checkOs(process.platform)) {
+        output.error({
+            title: `Unsupported platform: Windows`,
+            bodyLines: [`Currently this plugin does not support windows.`],
+        });
+        throw new Error('Windows is not supported');
+    }
     if (!checkNxVersion(NX_VERSION)) {
         output.warn({
             title: `Unsupported version of Nx`,
