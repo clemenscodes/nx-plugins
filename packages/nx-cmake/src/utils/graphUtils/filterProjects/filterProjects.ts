@@ -10,15 +10,11 @@ export const filterProjects = (
     nodes: ProjectGraph['nodes']
 ): FilteredProject[] => {
     const filteredProjects = Object.values(nodes)
-        .filter((node) => {
-            const { data } = node;
-            if (data.tags === undefined) {
-                return false;
-            }
-            return data.tags.some(isC);
+        .filter(({ data }) => {
+            const { tags } = data;
+            return tags.some(isC);
         })
-        .map((node) => {
-            const { data } = node;
+        .map(({ data }) => {
             const { name, root, tags, sourceRoot } = data;
             const tag = getTag(tags);
             const type = getProjectTypeFromConfig(data);

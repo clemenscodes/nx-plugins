@@ -1,4 +1,4 @@
-import { ProjectConfiguration } from '@nx/devkit';
+import type { ProjectConfiguration } from '@nx/devkit';
 import { CProjectType } from '../../../models/types';
 
 export const getProjectTypeFromConfig = (

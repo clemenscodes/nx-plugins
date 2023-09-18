@@ -1,25 +1,18 @@
 import type { Graph } from '../../../models/types';
-import {
-    type ProjectGraphDependencyWithFile,
-    output,
-    logger,
-} from '@nx/devkit';
+import type { ProjectGraphDependencyWithFile } from '@nx/devkit';
+import { output, logger } from '@nx/devkit';
 
 export const buildAdjacencyList = (
     dependencies: ProjectGraphDependencyWithFile[]
 ): Record<string, string[]> => {
     const adjacencyList: Record<string, string[]> = {};
-
     for (const dependency of dependencies) {
         const { source, target } = dependency;
-
         if (!adjacencyList[source]) {
             adjacencyList[source] = [];
         }
-
         adjacencyList[source].push(target);
     }
-
     return adjacencyList;
 };
 
@@ -27,17 +20,13 @@ export const hasCyclicDependencies = (
     dependencies: ProjectGraphDependencyWithFile[]
 ): boolean => {
     const adjacencyList = buildAdjacencyList(dependencies);
-
     const visited: Record<string, boolean> = {};
     const recStack: Record<string, boolean> = {};
-
     const isCyclic = (node: string): boolean => {
         if (!visited[node]) {
             visited[node] = true;
             recStack[node] = true;
-
             const neighbors = adjacencyList[node] || [];
-
             for (const neighbor of neighbors) {
                 if (!visited[neighbor] && isCyclic(neighbor)) {
                     if (!node.startsWith('test')) {
@@ -58,18 +47,15 @@ export const hasCyclicDependencies = (
                 }
             }
         }
-
         recStack[node] = false;
         return false;
     };
-
     const nodes = Object.keys(adjacencyList);
     for (const node of nodes) {
         if (isCyclic(node)) {
             return true;
         }
     }
-
     return false;
 };
 
@@ -99,12 +85,9 @@ export const getTransitiveDependencies = (
 ): Set<string> => {
     const dependencies = graph[node] || new Set<string>();
     const transitiveDependencies = new Set<string>();
-
     for (const dependency of dependencies) {
         transitiveDependencies.add(dependency);
-
         const subDependencies = getTransitiveDependencies(graph, dependency);
-
         for (const subDep of subDependencies) {
             if (dependencies.has(subDep)) {
                 dependencies.delete(subDep);
@@ -113,18 +96,15 @@ export const getTransitiveDependencies = (
             transitiveDependencies.add(subDep);
         }
     }
-
     return transitiveDependencies;
 };
 
 export const reduceGraph = (graph: Graph): Graph => {
     const result: Graph = {};
-
     for (const node in graph) {
         const dependencies = getTransitiveDependencies(graph, node);
         result[node] = dependencies;
     }
-
     return result;
 };
 
@@ -141,7 +121,6 @@ export const reduceDependencies = (
     deps: ProjectGraphDependencyWithFile[]
 ): ProjectGraphDependencyWithFile[] => {
     const reducedDeps = [];
-
     for (const dep of deps) {
         const { source, target } = dep;
         if (source === target) {
@@ -153,7 +132,6 @@ export const reduceDependencies = (
             reducedDeps.push(dep);
         }
     }
-
     return reducedDeps;
 };
 

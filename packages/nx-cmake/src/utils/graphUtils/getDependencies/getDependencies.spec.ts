@@ -1,9 +1,7 @@
-import {
-    CProjectType,
-    type FilteredProject,
-    type WorkspaceLayout,
-} from '../../../models/types';
-import { DependencyType, ProjectGraphDependencyWithFile } from '@nx/devkit';
+import type { FilteredProject, WorkspaceLayout } from '../../../models/types';
+import type { ProjectGraphDependencyWithFile } from '@nx/devkit';
+import { DependencyType } from '@nx/devkit';
+import { CProjectType } from '../../../models/types';
 import { getDependencies } from './getDependencies';
 import * as filterDependenciesOfProjectModule from '../filterDependenciesOfProject/filterDependenciesOfProject';
 
@@ -50,7 +48,6 @@ describe('getDependencies', () => {
             filterDependenciesOfProjectModule,
             'filterDependenciesOfProject'
         ).mockReturnValue([dummyDependency]);
-
         const result = getDependencies(workspaceLayout, projects);
         const expected: ProjectGraphDependencyWithFile[] = [
             dummyDependency,
@@ -59,4 +56,6 @@ describe('getDependencies', () => {
         ];
         expect(result).toStrictEqual(expected);
     });
+
+    it.todo('refactor these tests above');
 });

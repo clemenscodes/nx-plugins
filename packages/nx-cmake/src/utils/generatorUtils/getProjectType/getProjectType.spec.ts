@@ -7,6 +7,16 @@ import {
 import * as fs from 'fs';
 
 describe('getProjectTypeFromConfigFileContent', () => {
+    let readFileSyncMock: jest.SpyInstance;
+
+    beforeEach(() => {
+        readFileSyncMock = jest.spyOn(fs, 'readFileSync');
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
+
     it('should return Test for content with enable_testing()', () => {
         const content = 'enable_testing()';
         expect(getProjectTypeFromConfigFileContent(content)).toBe(
@@ -34,41 +44,44 @@ describe('getProjectTypeFromConfigFileContent', () => {
             'Failed to determine project type'
         );
     });
-});
 
-describe('readProjectFile', () => {
-    it('should read and return file content', () => {
-        const projectFile = 'some-directory/CMakeLists.txt';
-        const fileContent = 'This is the file content';
-        jest.spyOn(fs, 'readFileSync').mockReturnValue(fileContent);
-        expect(readProjectFile(projectFile)).toBe(fileContent);
-    });
+    describe('readProjectFile', () => {
+        it('should read and return file content', () => {
+            const projectFile = 'some-directory/CMakeLists.txt';
+            const fileContent = 'This is the file content';
+            readFileSyncMock.mockReturnValue(fileContent);
+            expect(readProjectFile(projectFile)).toBe(fileContent);
+        });
 
-    it('should throw an error for an invalid project file', () => {
-        const projectFile = 'invalid_project_file.txt';
+        it('should throw an error for an invalid project file', () => {
+            const projectFile = 'invalid_project_file.txt';
 
-        expect(() => readProjectFile(projectFile)).toThrowError(
-            'Invalid project file'
-        );
-    });
-});
+            expect(() => readProjectFile(projectFile)).toThrowError(
+                'Invalid project file'
+            );
+        });
 
-describe('getProjectType', () => {
-    it('should return the project type for a valid project configuration file', () => {
-        const projectConfigurationFile = 'some-directory/CMakeLists.txt';
-        const configFileContent = 'enable_testing()';
-        jest.spyOn(fs, 'readFileSync').mockReturnValue(configFileContent);
+        describe('getProjectType', () => {
+            it('should return the project type for a valid project configuration file', () => {
+                const projectConfigurationFile =
+                    'some-directory/CMakeLists.txt';
+                const configFileContent = 'enable_testing()';
+                readFileSyncMock.mockReturnValue(configFileContent);
 
-        expect(getProjectType(projectConfigurationFile)).toBe(
-            CProjectType.Test
-        );
-    });
+                expect(getProjectType(projectConfigurationFile)).toBe(
+                    CProjectType.Test
+                );
+            });
 
-    it('should throw an error for an invalid project configuration file', () => {
-        const projectConfigurationFile = 'invalid_project_config.txt';
+            it('should throw an error for an invalid project configuration file', () => {
+                const projectConfigurationFile = 'invalid_project_config.txt';
 
-        expect(() => getProjectType(projectConfigurationFile)).toThrowError(
-            `Failed to determine project type for the configuration file ${projectConfigurationFile}`
-        );
+                expect(() =>
+                    getProjectType(projectConfigurationFile)
+                ).toThrowError(
+                    `Failed to determine project type for the configuration file ${projectConfigurationFile}`
+                );
+            });
+        });
     });
 });

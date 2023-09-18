@@ -1,12 +1,7 @@
-import {
-    DependencyType,
-    type ProjectGraphDependencyWithFile,
-} from '@nx/devkit';
-import {
-    CProjectType,
-    type CTag,
-    type FilteredProject,
-} from '../../../models/types';
+import type { ProjectGraphDependencyWithFile } from '@nx/devkit';
+import type { CTag, FilteredProject } from '../../../models/types';
+import { DependencyType } from '@nx/devkit';
+import { CProjectType } from '../../../models/types';
 import { getFilesOfDirectoryRecursively } from '../../fileUtils/getFilesOfDirectoryRecursively/getFilesOfDirectoryRecursively';
 import { getProjectFromFile } from '../../generatorUtils/getProjectFromFile/getProjectFromFile';
 import { getAbsolutePath } from '../../fileUtils/getAbsolutePath/getAbsolutePath';

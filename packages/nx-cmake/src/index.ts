@@ -1,4 +1,4 @@
-import { CreateNodes, type NxPluginV2 } from '@nx/devkit';
+import type { CreateNodes, NxPluginV2 } from '@nx/devkit';
 import { PLUGIN_NAME } from './config/pluginName';
 import { PROJECT_FILE_PATTERN } from './config/projectFilePattern';
 import { createNodesFunction } from './createNodesFunction/createNodesFunction';

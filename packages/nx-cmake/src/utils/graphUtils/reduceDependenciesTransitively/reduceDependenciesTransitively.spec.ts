@@ -1,5 +1,6 @@
-import { DependencyType, ProjectGraphDependencyWithFile } from '@nx/devkit';
+import type { ProjectGraphDependencyWithFile } from '@nx/devkit';
 import type { Graph } from '../../../models/types';
+import { DependencyType } from '@nx/devkit';
 import {
     reduceDependencies,
     reduceDependenciesTransitively,
@@ -216,4 +217,6 @@ describe('reduceDependenciesTransitively', () => {
             );
         });
     });
+
+    it.todo('refactor the module, split it into units, properly test units');
 });
