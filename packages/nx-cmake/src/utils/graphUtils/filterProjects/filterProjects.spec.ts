@@ -1,4 +1,4 @@
-import type { ProjectGraphProjectNode } from '@nx/devkit';
+import type { ProjectConfiguration, ProjectGraphProjectNode } from '@nx/devkit';
 import { filterProjects, filterTags, getTag, isC } from './filterProjects';
 import { CProjectType } from '../../../models/types';
 import { getProjectConfiguration } from '../../generatorUtils/getProjectConfiguration/getProjectConfiguration';
@@ -59,37 +59,52 @@ describe('getTag', () => {
 });
 
 describe('filterProjects', () => {
-    const project1 = getProjectConfiguration(
-        'path/to/project1',
-        CProjectType.App
-    )['project1'];
+    let nodes: Record<string, ProjectGraphProjectNode>;
+    let project1: ProjectConfiguration;
+    let project2: ProjectConfiguration;
+    let project3: ProjectConfiguration;
+    let project4: ProjectConfiguration;
 
-    const project2 = getProjectConfiguration(
-        'path/to/project2',
-        CProjectType.Lib
-    )['libproject2'];
+    beforeEach(() => {
+        project1 = getProjectConfiguration(
+            'path/to/project1',
+            CProjectType.App
+        )['project1'];
+        project2 = getProjectConfiguration(
+            'path/to/project2',
+            CProjectType.Lib
+        )['libproject2'];
 
-    const mockNodes: Record<string, ProjectGraphProjectNode> = {
-        project1: {
-            type: 'app',
-            name: 'project1',
-            data: {
-                ...project1,
-                tags: ['c'],
+        project3 = getProjectConfiguration(
+            'path/to/project3',
+            CProjectType.Lib
+        )['libproject3'];
+        project4 = getProjectConfiguration(
+            'path/to/project4',
+            CProjectType.Lib
+        )['libproject4'];
+        nodes = {
+            project1: {
+                type: 'app',
+                name: 'project1',
+                data: {
+                    ...project1,
+                    tags: ['c'],
+                },
             },
-        },
-        libproject2: {
-            type: 'lib',
-            name: 'libproject2',
-            data: {
-                ...project2,
-                tags: ['cpp'],
+            libproject2: {
+                type: 'lib',
+                name: 'libproject2',
+                data: {
+                    ...project2,
+                    tags: ['cpp'],
+                },
             },
-        },
-    };
+        };
+    });
 
     it('should filter projects based on tags', () => {
-        const filteredProjects = filterProjects(mockNodes);
+        const filteredProjects = filterProjects(nodes);
         const expectedProjects = [
             {
                 name: 'project1',
@@ -110,17 +125,12 @@ describe('filterProjects', () => {
     });
 
     it('should handle projects with no "c" or "cpp" tags', () => {
-        const project3 = getProjectConfiguration(
-            'path/to/project3',
-            CProjectType.Lib
-        )['libproject3'];
-
-        mockNodes['project3'] = {
+        nodes['project3'] = {
             type: 'lib',
             name: 'project3',
             data: project3,
         };
-        const filteredProjects = filterProjects(mockNodes);
+        const filteredProjects = filterProjects(nodes);
         const expectedProjects = [
             {
                 name: 'project1',
@@ -141,11 +151,7 @@ describe('filterProjects', () => {
     });
 
     it('should handle projects with other tags', () => {
-        const project4 = getProjectConfiguration(
-            'path/to/project4',
-            CProjectType.Lib
-        )['libproject4'];
-        mockNodes['project4'] = {
+        nodes['project4'] = {
             type: 'lib',
             name: 'project4',
             data: {
@@ -160,7 +166,7 @@ describe('filterProjects', () => {
                 ],
             },
         };
-        const filteredProjects = filterProjects(mockNodes);
+        const filteredProjects = filterProjects(nodes);
         const expectedProjects = [
             {
                 name: 'project1',
@@ -179,5 +185,4 @@ describe('filterProjects', () => {
         ];
         expect(filteredProjects).toEqual(expectedProjects);
     });
-    it.todo('refactor these tests above');
 });
