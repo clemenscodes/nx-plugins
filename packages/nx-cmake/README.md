@@ -4,6 +4,38 @@
 
 An [Nx](https://nx.dev) plugin that adds support for CMake, C and C++ in an Nx monorepo.
 
+## What This Plugin Does
+
+### CMake, C and C++ Support for a Monorepo
+
+This plugin installs some CMake utility functions alongside with a `CMakeLists.txt` file in the root of the workspace.
+This sets up initial support for using `CMake` in a monorepo setup.
+The workspace is then analyzed for further `CMakeLists.txt` files.
+An include directory in the root of the workspace is generated which can be included in all projects.
+Optionally an opinionated set of formatting and linting rules can be generated to be used by `clang-format` and `clang-tidy`.
+The `nx.json` file in the root of the workspace will be automatically updated for optimal caching behaviors, target pipelines and plugin initialisation.
+
+### Project Inference
+
+Each `CMakeLists.txt` file tells this plugin to register another project and add it to the project graph managed by the Nx daemon.
+A project configuration will be automatically inferred for each `CMakeLists.txt` file and the according project type.
+The generators of this plugin will also generate a `project.json` file that is the equivalent of what this has plugin inferred for the `CMakeLists.txt`.
+If no changes are made to the `project.json` file, it can also be deleted and this plugin will keep telling Nx how to deal with these C or C++ projects.
+Changes made to the `project.json` file will override the inferred settings for the project so it is recommended to keep these files.
+
+### Project Graph Processing
+
+After adding the inferred projects to the project graph, the projects will be analyzed for dependencies between each other.
+Including code from another library will automatically update the project graph and add a dependency between the dependent projects.
+This utilizes the caching mechanisms of the Nx daemon to only analyze sources which have been updated by changes to avoid recalculating the dependency graph, which would otherwise get slow for bigger projects.
+Detecting dependencies between projects works by utilizing `gcc -MM` under the hood, which tracks the dependencies of a source file.
+The plugin then further processes the graph by performing a transitive reduction, making sure the graph contains as little edges as possible, to keep the graph clean and to ensure that dependencies for a project will be resolved in the correct order.
+This allows for efficient caching mechanisms and parallelization of tasks.
+
+### Motivation
+
+This plugin was created to provide a better developer experience when developing using C or C++. By taking away the heavy lifting when setting up CMake, generating all the necessary boilerplate and setting up dependency management and caching strategies, spinning up a new C or C++ project becomes quick and easy, as it should be.
+
 ## Getting Started
 
 ### Prerequisites
@@ -104,7 +136,7 @@ In general, settings in nx.json have higher precedence.
 > --skipFormat (Skip formatting files) [boolean]
 >
 > ```shell
-> nx g nx-cmake:library
+> nx g nx-cmake:library [name] [options,...]
 > ```
 
 ### `nx-cmake:link`
@@ -117,12 +149,12 @@ In general, settings in nx.json have higher precedence.
 >
 > --target (The target library to link into the source project) [string]
 >
-> --link (Whether to link statically or dynamically)[string] [choices: "shared", "static"] [default: "shared"]
+> --link (Whether to link statically or dynamically) [string] [choices: "shared", "static"] [default: "shared"]
 >
 > --skipFormat (Skip formatting files) [boolean]
 >
 > ```shell
-> nx g nx-cmake:link
+> nx g nx-cmake:link [source] [options,...]
 > ```
 
 ## Executors
