@@ -1,5 +1,5 @@
-import * as runCommandModule from '../runCommand/runCommand';
 import { executeCommandForFiles } from './executeCommandForFiles';
+import * as runCommandModule from '../runCommand/runCommand';
 
 describe('executeCommandForFiles', () => {
     let runCommandMock: jest.SpyInstance;
@@ -21,7 +21,6 @@ describe('executeCommandForFiles', () => {
     it('should execute the command for all files and return true if all commands succeeded', () => {
         runCommandMock.mockReturnValue({ success: true });
         const result = executeCommandForFiles(command, args, files);
-
         expect(result).toBe(true);
         expect(runCommandMock).toHaveBeenCalledTimes(files.length);
         expect(runCommandMock).toHaveBeenCalledWith(

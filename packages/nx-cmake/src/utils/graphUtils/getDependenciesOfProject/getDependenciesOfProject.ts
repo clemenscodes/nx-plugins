@@ -1,10 +1,10 @@
-import type { ProjectGraphDependencyWithFile } from '@nx/devkit';
+import type {
+    ProjectFileMap,
+    ProjectGraphDependencyWithFile,
+} from '@nx/devkit';
 import type { CTag, FilteredProject } from '../../../models/types';
 import { DependencyType } from '@nx/devkit';
-import { CProjectType } from '../../../models/types';
-import { getFilesOfDirectoryRecursively } from '../../fileUtils/getFilesOfDirectoryRecursively/getFilesOfDirectoryRecursively';
 import { getProjectFromFile } from '../../generatorUtils/getProjectFromFile/getProjectFromFile';
-import { getAbsolutePath } from '../../fileUtils/getAbsolutePath/getAbsolutePath';
 
 export const hasValidExtension = (file: string, tag: CTag): boolean => {
     const isCFile = file.endsWith('.c');
@@ -33,30 +33,27 @@ export const isValidProjectFile = (file: string, tag: CTag) => {
 };
 
 export const getProjectFiles = (
-    projectRoot: string,
+    projectName: string,
     tag: CTag,
-    projectType: CProjectType
+    fileMap: ProjectFileMap
 ): string[] => {
-    const projectFiles = getFilesOfDirectoryRecursively(projectRoot)
-        .filter((file) => isValidProjectFile(file, tag))
-        .filter((file) => {
-            const testRoot = getAbsolutePath(projectRoot, 'test');
-            const isTestFile = file.startsWith(testRoot);
-            return !(projectType !== CProjectType.Test && isTestFile);
-        });
+    const files = fileMap[projectName];
+    const projectFiles = files
+        .map(({ file }) => file)
+        .filter((file) => isValidProjectFile(file, tag));
     return projectFiles;
 };
 
 export const getDependenciesOfProject = (
     mainProject: FilteredProject,
     files: string[],
-    tag: CTag,
-    projects: FilteredProject[]
+    projects: FilteredProject[],
+    fileMap: ProjectFileMap
 ): ProjectGraphDependencyWithFile[] => {
-    const { root: mainRoot, type, name } = mainProject;
+    const { name, tag } = mainProject;
     const projectSet: Set<string> = new Set();
     const dependencies: ProjectGraphDependencyWithFile[] = [];
-    const mainProjectFiles = getProjectFiles(mainRoot, tag, type);
+    const mainProjectFiles = getProjectFiles(name, tag, fileMap);
     const projectFiles = files.filter((file) => isValidProjectFile(file, tag));
 
     for (const file of projectFiles) {

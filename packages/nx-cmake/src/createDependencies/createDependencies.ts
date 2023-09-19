@@ -10,11 +10,11 @@ import { reduceDependenciesTransitively } from '../utils/graphUtils/reduceDepend
 export const createDependencies: CreateDependencies = (
     context: CreateDependenciesContext
 ): ProjectGraphDependencyWithFile[] => {
-    const { graph, nxJsonConfiguration } = context;
+    const { graph, nxJsonConfiguration, fileMap } = context;
     const { workspaceLayout } = nxJsonConfiguration;
     const { nodes } = graph;
     const filteredProjects = filterProjects(nodes);
-    const deps = getDependencies(workspaceLayout, filteredProjects);
+    const deps = getDependencies(workspaceLayout, filteredProjects, fileMap);
     const reducedDeps = reduceDependenciesTransitively(deps);
     return reducedDeps;
 };

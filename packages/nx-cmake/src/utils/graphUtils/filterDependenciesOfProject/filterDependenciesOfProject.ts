@@ -5,6 +5,7 @@ import { executeCommand } from '../../commandUtils/executeCommand/executeCommand
 import { getDependenciesOfProject } from '../getDependenciesOfProject/getDependenciesOfProject';
 import type {
     NxJsonConfiguration,
+    ProjectFileMap,
     ProjectGraphDependencyWithFile,
 } from '@nx/devkit';
 import type {
@@ -115,7 +116,8 @@ export const getGccDependencies = (
 export const filterDependenciesOfProject = (
     project: FilteredProject,
     workspaceLayout: NxJsonConfiguration['workspaceLayout'],
-    projects: FilteredProject[]
+    projects: FilteredProject[],
+    fileMap: ProjectFileMap
 ): ProjectGraphDependencyWithFile[] => {
     const { name, root, tag } = project;
     const fileName = getFileName(root, name, tag);
@@ -125,8 +127,8 @@ export const filterDependenciesOfProject = (
     const dependencies = getDependenciesOfProject(
         project,
         files,
-        tag,
-        projects
+        projects,
+        fileMap
     );
     return dependencies;
 };

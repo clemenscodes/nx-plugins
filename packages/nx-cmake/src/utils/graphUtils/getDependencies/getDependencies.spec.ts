@@ -1,61 +1,184 @@
 import type { FilteredProject, WorkspaceLayout } from '../../../models/types';
-import type { ProjectGraphDependencyWithFile } from '@nx/devkit';
+import type {
+    ProjectFileMap,
+    ProjectGraphDependencyWithFile,
+} from '@nx/devkit';
 import { DependencyType } from '@nx/devkit';
 import { CProjectType } from '../../../models/types';
 import { getDependencies } from './getDependencies';
 import * as filterDependenciesOfProjectModule from '../filterDependenciesOfProject/filterDependenciesOfProject';
 
 describe('getDependencies', () => {
-    const projects: FilteredProject[] = [
-        {
-            name: 'testnx-cmake-test',
-            root: 'packages/nx-cmake-test/test',
-            sourceRoot: 'packages/nx-cmake-test/test/src',
-            type: CProjectType.App,
-            tag: 'c',
-        },
-        {
-            name: 'libnx-cmake-test',
-            root: 'packages/nx-cmake-test',
-            sourceRoot: 'packages/nx-cmake-test/src',
-            type: CProjectType.Lib,
-            tag: 'c',
-        },
-        {
-            name: 'nx-cmake-test',
-            root: 'nx-cmake-test',
-            sourceRoot: 'nx-cmake-test/src',
-            type: CProjectType.App,
-            tag: 'c',
-        },
-    ];
+    let fileMap: ProjectFileMap;
+    let projects: FilteredProject[];
+    let workspaceLayout: WorkspaceLayout;
+    let expectedDependencies: ProjectGraphDependencyWithFile[];
+    let filterDependenciesOfProjectMock: jest.SpyInstance;
 
-    const workspaceLayout: WorkspaceLayout = {
-        appsDir: 'bin',
-        libsDir: 'packages',
-        projectNameAndRootFormat: 'as-provided',
-    };
-
-    it('should get dependencies', () => {
-        const dummyDependency = {
-            source: 'testnx-cmake-test',
-            target: 'libnx-cmake-test',
-            sourceFile: 'packages/nx-cmake-test/include/libnx-cmake-test.h',
-            dependencyType: DependencyType.static,
+    beforeEach(() => {
+        workspaceLayout = {
+            appsDir: 'bin',
+            libsDir: 'packages',
+            projectNameAndRootFormat: 'as-provided',
         };
-
-        jest.spyOn(
+        projects = [
+            {
+                name: 'testparser',
+                root: 'packages/parser/test',
+                type: CProjectType.Test,
+                tag: 'c',
+                sourceRoot: 'packages/parser/test/src',
+            },
+            {
+                name: 'libparser',
+                root: 'packages/parser',
+                type: CProjectType.Lib,
+                tag: 'c',
+                sourceRoot: 'packages/parser/src',
+            },
+            {
+                name: 'parser',
+                root: 'bin/parser',
+                type: CProjectType.App,
+                tag: 'c',
+                sourceRoot: 'bin/parser/src',
+            },
+        ];
+        expectedDependencies = [
+            {
+                source: 'testparser',
+                target: 'libparser',
+                sourceFile: 'packages/parser/test/include/testparser.h',
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'testparser',
+                target: 'libparser',
+                sourceFile: 'packages/parser/test/src/testparser.c',
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'parser',
+                target: 'libparser',
+                sourceFile: 'bin/parser/include/parser.h',
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'parser',
+                target: 'libparser',
+                sourceFile: 'bin/parser/src/parser.c',
+                dependencyType: DependencyType.static,
+            },
+        ];
+        fileMap = {
+            parser: [
+                {
+                    file: 'bin/parser/CMakeLists.txt',
+                    hash: '17299240877484337829',
+                },
+                { file: 'bin/parser/README.md', hash: '7643242783975375151' },
+                {
+                    file: 'bin/parser/include/parser.h',
+                    hash: '11018423326186667389',
+                },
+                {
+                    file: 'bin/parser/project.json',
+                    hash: '2184246761215036098',
+                },
+                {
+                    file: 'bin/parser/src/parser.c',
+                    hash: '3553739439408751796',
+                },
+            ],
+            libparser: [
+                {
+                    file: 'packages/parser/CMakeLists.txt',
+                    hash: '4187171820888433546',
+                },
+                {
+                    file: 'packages/parser/README.md',
+                    hash: '519973881722473310',
+                },
+                {
+                    file: 'packages/parser/include/libparser.h',
+                    hash: '9050508492991185026',
+                },
+                {
+                    file: 'packages/parser/project.json',
+                    hash: '3459988573673696231',
+                },
+                {
+                    file: 'packages/parser/src/libparser.c',
+                    hash: '5782631378711784791',
+                },
+            ],
+            testparser: [
+                {
+                    file: 'packages/parser/test/CMakeLists.txt',
+                    hash: '9995994963779964934',
+                },
+                {
+                    file: 'packages/parser/test/README.md',
+                    hash: '13416536286541011897',
+                },
+                {
+                    file: 'packages/parser/test/include/testparser.h',
+                    hash: '9147925740844481238',
+                },
+                {
+                    file: 'packages/parser/test/project.json',
+                    hash: '3367775946370084247',
+                },
+                {
+                    file: 'packages/parser/test/src/testparser.c',
+                    hash: '2754802812570811200',
+                },
+            ],
+        };
+        filterDependenciesOfProjectMock = jest.spyOn(
             filterDependenciesOfProjectModule,
             'filterDependenciesOfProject'
-        ).mockReturnValue([dummyDependency]);
-        const result = getDependencies(workspaceLayout, projects);
-        const expected: ProjectGraphDependencyWithFile[] = [
-            dummyDependency,
-            dummyDependency,
-            dummyDependency,
-        ];
-        expect(result).toStrictEqual(expected);
+        );
+        filterDependenciesOfProjectMock.mockReturnValueOnce([
+            {
+                source: 'testparser',
+                target: 'libparser',
+                sourceFile: 'packages/parser/test/include/testparser.h',
+                dependencyType: 'static',
+            },
+            {
+                source: 'testparser',
+                target: 'libparser',
+                sourceFile: 'packages/parser/test/src/testparser.c',
+                dependencyType: 'static',
+            },
+        ]);
+        filterDependenciesOfProjectMock.mockReturnValueOnce([]);
+        filterDependenciesOfProjectMock.mockReturnValueOnce([
+            {
+                source: 'parser',
+                target: 'libparser',
+                sourceFile: 'bin/parser/include/parser.h',
+                dependencyType: 'static',
+            },
+            {
+                source: 'parser',
+                target: 'libparser',
+                sourceFile: 'bin/parser/src/parser.c',
+                dependencyType: 'static',
+            },
+        ]);
     });
 
-    it.todo('refactor these tests above');
+    afterEach(() => {
+        jest.resetAllMocks();
+    });
+
+    it('should get dependencies', () => {
+        const result = getDependencies(workspaceLayout, projects, fileMap);
+        expect(filterDependenciesOfProjectMock).toBeCalledTimes(
+            projects.length
+        );
+        expect(result).toStrictEqual(expectedDependencies);
+    });
 });
