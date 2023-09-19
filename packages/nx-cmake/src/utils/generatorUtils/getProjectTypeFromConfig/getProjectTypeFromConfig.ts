@@ -8,7 +8,7 @@ export const getProjectTypeFromConfig = (
     if (projectType === 'library') {
         return CProjectType.Lib;
     }
-    if (tags.includes('test')) {
+    if (tags && tags.includes('test')) {
         return CProjectType.Test;
     }
     return CProjectType.App;
