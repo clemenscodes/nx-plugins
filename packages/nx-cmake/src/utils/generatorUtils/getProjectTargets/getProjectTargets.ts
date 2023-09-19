@@ -56,7 +56,19 @@ export const lintTarget = {
 
 export const fmtTarget = {
     executor: `${PLUGIN_NAME}:format`,
-    ...defaultConfiguration,
+    defaultConfiguration: 'development',
+    configurations: {
+        development: {
+            args: [],
+            verbose: true,
+            editFilesInPlace: true,
+        },
+        production: {
+            args: [],
+            verbose: true,
+            editFilesInPlace: true,
+        },
+    },
 };
 
 export const defaultTargets = {

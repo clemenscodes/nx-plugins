@@ -54,8 +54,16 @@ describe('addBinProject', () => {
                     executor: 'nx-cmake:format',
                     defaultConfiguration: 'development',
                     configurations: {
-                        development: { args: [] },
-                        production: { args: [] },
+                        development: {
+                            args: [],
+                            verbose: true,
+                            editFilesInPlace: true,
+                        },
+                        production: {
+                            args: [],
+                            verbose: true,
+                            editFilesInPlace: true,
+                        },
                     },
                 },
                 debug: {
