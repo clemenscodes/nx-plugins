@@ -1,5 +1,4 @@
 import type {
-    FileData,
     ProjectFileMap,
     ProjectGraphDependencyWithFile,
 } from '@nx/devkit';
@@ -48,18 +47,16 @@ export const getProjectFiles = (
 
 export const getDependenciesOfFile = (
     mainProject: FilteredProject,
-    file: FileData,
-    files: FileData[],
+    file: string,
+    files: string[],
     projects: FilteredProject[]
 ): ProjectGraphDependencyWithFile[] => {
     const { name } = mainProject;
     const projectSet: Set<string> = new Set();
     const dependencies: ProjectGraphDependencyWithFile[] = [];
 
-    for (const fileData of files) {
-        const { file } = fileData;
+    for (const file of files) {
         const project = getProjectFromFile(file, projects);
-
         if (name !== project && !projectSet.has(project)) {
             projectSet.add(project);
         }
@@ -69,7 +66,7 @@ export const getDependenciesOfFile = (
         dependencies.push({
             source: name,
             target: project,
-            sourceFile: file.file,
+            sourceFile: file,
             dependencyType: DependencyType.static,
         });
     }

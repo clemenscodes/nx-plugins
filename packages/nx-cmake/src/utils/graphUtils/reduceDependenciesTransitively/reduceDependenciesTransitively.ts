@@ -30,17 +30,15 @@ export const hasCyclicDependencies = (
             for (const neighbor of neighbors) {
                 if (!visited[neighbor] && isCyclic(neighbor)) {
                     if (!node.startsWith('test')) {
-                        output.addNewline();
                         logger.error(
-                            `nx-cmake: Detected circular dependency ${node}`
+                            `nx-cmake detected circular dependency: ${node}`
                         );
                     }
                     return true;
                 } else if (recStack[neighbor]) {
                     if (!node.startsWith('test')) {
-                        output.addNewline();
                         logger.error(
-                            `nx-cmake: Detected circular dependency ${node}`
+                            `nx-cmake detected circular dependency: ${node}`
                         );
                     }
                     return true;
@@ -141,6 +139,9 @@ export const reduceDependenciesTransitively = (
     if (hasCyclicDependencies(deps)) {
         output.error({
             title: `Failed to optimize project graph`,
+            bodyLines: [
+                `You should resolve this circular dependency and then reset the project graph using 'nx reset'`,
+            ],
         });
         return deps;
     }

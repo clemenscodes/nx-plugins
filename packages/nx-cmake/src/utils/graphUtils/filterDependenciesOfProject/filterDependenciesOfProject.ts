@@ -6,18 +6,12 @@ import {
     getDependenciesOfFile,
     isValidProjectFile,
 } from '../getDependenciesOfFile/getDependenciesOfFile';
-import type {
-    FileData,
-    NxJsonConfiguration,
-    ProjectFileMap,
-    ProjectGraphDependencyWithFile,
-} from '@nx/devkit';
+import type { FileData, ProjectGraphDependencyWithFile } from '@nx/devkit';
 import type {
     CTag,
     FilteredProject,
     WorkspaceLayout,
 } from '../../../models/types';
-import { getProjectFromFile } from '../../generatorUtils/getProjectFromFile/getProjectFromFile';
 
 export const getWorkspaceIncludeDir = () => 'include';
 
@@ -118,22 +112,10 @@ export const getGccDependencies = (
     }
 };
 
-export const getFileDataOfFile = (
-    file: string,
-    projects: FilteredProject[],
-    fileMap: ProjectFileMap
-): FileData => {
-    const project = getProjectFromFile(file, projects);
-    const projectFiles = fileMap[project];
-    const fileData = projectFiles.find((f) => f.file === file);
-    return fileData;
-};
-
 export const filterDependenciesOfProject = (
     project: FilteredProject,
-    workspaceLayout: NxJsonConfiguration['workspaceLayout'],
+    workspaceLayout: WorkspaceLayout,
     projects: FilteredProject[],
-    fileMap: ProjectFileMap,
     filesToProcess: FileData[]
 ): ProjectGraphDependencyWithFile[] => {
     const { root, tag } = project;
@@ -149,18 +131,12 @@ export const filterDependenciesOfProject = (
         const cmd = getGccDependenciesCommand(file, root, workspaceLayout);
         const stdout = getGccDependencies(cmd, root, workspaceRoot);
         const files = filterGccDependencyOutput(stdout, file);
-        const filesWithData: FileData[] = [];
-        for (const file of files) {
-            const fileWithData = getFileDataOfFile(file, projects, fileMap);
-            filesWithData.push(fileWithData);
-        }
         const fileDependencies = getDependenciesOfFile(
             project,
-            fileData,
-            filesWithData,
+            file,
+            files,
             projects
         );
-        console.log({ fileDependencies });
         projectDependencies.push(...fileDependencies);
     }
 
