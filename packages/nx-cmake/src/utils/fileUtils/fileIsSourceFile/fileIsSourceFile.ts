@@ -13,6 +13,9 @@ export const fileIsSourceFile = (
     if (projectType !== CProjectType.Test && isTestFile) {
         return false;
     }
+    if (projectType === CProjectType.Test && !isTestFile) {
+        return false;
+    }
     const isCFile = file.endsWith('.c');
     const isCppFile = file.endsWith('.cpp');
     const isHFile = file.endsWith('.h');
