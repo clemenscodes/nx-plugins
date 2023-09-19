@@ -91,7 +91,7 @@ describe('getGccDependenciesCommand', () => {
             projectRoot,
             workspaceLayout
         );
-        const expectedCmd = `gcc -M ${fileName} -I projectA/include -I libs -I include -I dist/libs/gtest/googletest-src/googletest/include -I dist/libs/cmocka/cmocka-src/include`;
+        const expectedCmd = `gcc -MM ${fileName} -I projectA/include -I libs -I include -I dist/libs/gtest/googletest-src/googletest/include -I dist/libs/cmocka/cmocka-src/include`;
         expect(result).toBe(expectedCmd);
     });
 });

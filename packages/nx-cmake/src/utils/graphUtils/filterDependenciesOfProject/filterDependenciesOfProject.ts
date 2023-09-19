@@ -2,10 +2,13 @@ import { workspaceRoot } from '@nx/devkit';
 import { filterGccDependencyOutput } from '../filterGccDependencyOutput/filterGccDependencyOutput';
 import { runCommand } from '../../commandUtils/runCommand/runCommand';
 import { executeCommand } from '../../commandUtils/executeCommand/executeCommand';
-import { getDependenciesOfProject } from '../getDependenciesOfProject/getDependenciesOfProject';
+import {
+    getDependenciesOfFile,
+    isValidProjectFile,
+} from '../getDependenciesOfFile/getDependenciesOfFile';
 import type {
+    FileData,
     NxJsonConfiguration,
-    ProjectFileMap,
     ProjectGraphDependencyWithFile,
 } from '@nx/devkit';
 import type {
@@ -38,7 +41,7 @@ export const getGccDependenciesCommand = (
     const gtestInclude = getGtestInclude(workspaceLayout);
     const cmockaInclude = getCmockaInclude(workspaceLayout);
     const cmd =
-        `gcc -M ${fileName}` +
+        `gcc -MM ${fileName}` +
         ` -I ${projectRoot}/include` +
         ` -I ${libsDir}` +
         ` -I ${includeDir}` +
@@ -117,18 +120,31 @@ export const filterDependenciesOfProject = (
     project: FilteredProject,
     workspaceLayout: NxJsonConfiguration['workspaceLayout'],
     projects: FilteredProject[],
-    fileMap: ProjectFileMap
+    filesToProcess: FileData[]
 ): ProjectGraphDependencyWithFile[] => {
-    const { name, root, tag } = project;
-    const fileName = getFileName(root, name, tag);
-    const cmd = getGccDependenciesCommand(fileName, root, workspaceLayout);
-    const stdout = getGccDependencies(cmd, root, workspaceRoot);
-    const files = filterGccDependencyOutput(stdout);
-    const dependencies = getDependenciesOfProject(
-        project,
-        files,
-        projects,
-        fileMap
-    );
-    return dependencies;
+    const { root, tag } = project;
+    const projectDependencies: ProjectGraphDependencyWithFile[] = [];
+    const filteredFilesToProcess = filesToProcess.filter((fileData) => {
+        const { file } = fileData;
+        const isSourceFile = isValidProjectFile(file, tag);
+        return isSourceFile;
+    });
+
+    for (const fileData of filteredFilesToProcess) {
+        const { file } = fileData;
+        const cmd = getGccDependenciesCommand(file, root, workspaceLayout);
+        const stdout = getGccDependencies(cmd, root, workspaceRoot);
+        const files = filterGccDependencyOutput(stdout, file);
+        console.log({ file, files });
+        const fileDependencies = getDependenciesOfFile(
+            project,
+            file,
+            files,
+            projects
+        );
+        console.log({ fileDependencies });
+        projectDependencies.push(...fileDependencies);
+    }
+
+    return projectDependencies;
 };

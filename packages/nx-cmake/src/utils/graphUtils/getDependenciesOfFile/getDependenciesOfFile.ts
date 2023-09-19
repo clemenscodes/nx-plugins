@@ -41,22 +41,21 @@ export const getProjectFiles = (
     const projectFiles = files
         .map(({ file }) => file)
         .filter((file) => isValidProjectFile(file, tag));
+
     return projectFiles;
 };
 
-export const getDependenciesOfProject = (
+export const getDependenciesOfFile = (
     mainProject: FilteredProject,
+    file: string,
     files: string[],
-    projects: FilteredProject[],
-    fileMap: ProjectFileMap
+    projects: FilteredProject[]
 ): ProjectGraphDependencyWithFile[] => {
-    const { name, tag } = mainProject;
+    const { name } = mainProject;
     const projectSet: Set<string> = new Set();
     const dependencies: ProjectGraphDependencyWithFile[] = [];
-    const mainProjectFiles = getProjectFiles(name, tag, fileMap);
-    const projectFiles = files.filter((file) => isValidProjectFile(file, tag));
 
-    for (const file of projectFiles) {
+    for (const file of files) {
         const project = getProjectFromFile(file, projects);
 
         if (name !== project && !projectSet.has(project)) {
@@ -65,14 +64,12 @@ export const getDependenciesOfProject = (
     }
 
     for (const project of projectSet) {
-        for (const mainFile of mainProjectFiles) {
-            dependencies.push({
-                source: name,
-                target: project,
-                sourceFile: mainFile,
-                dependencyType: DependencyType.static,
-            });
-        }
+        dependencies.push({
+            source: name,
+            target: project,
+            sourceFile: file,
+            dependencyType: DependencyType.static,
+        });
     }
 
     return dependencies;

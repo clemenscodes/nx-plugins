@@ -1,7 +1,7 @@
 import {
     hasValidExtension,
-    getDependenciesOfProject,
-} from './getDependenciesOfProject';
+    getDependenciesOfFile,
+} from './getDependenciesOfFile';
 
 describe('hasValidExtension', () => {
     it('should return true for valid C files with tag "c"', () => {

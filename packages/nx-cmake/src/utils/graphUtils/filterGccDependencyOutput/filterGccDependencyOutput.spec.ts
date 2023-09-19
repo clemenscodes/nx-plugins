@@ -12,15 +12,18 @@ describe('filterGccDependencyOutput', () => {
             dist/file5.o
             /usr/lib/libexample.a
         `;
-        const expectedOutput = ['src/file1.h', 'src/file2.c', 'src/file3.cpp'];
-        const result = filterGccDependencyOutput(inputOutput);
+        const expectedOutput = ['src/file2.c', 'src/file3.cpp'];
+        const result = filterGccDependencyOutput(inputOutput, 'src/file1.h');
         expect(result).toEqual(expectedOutput);
     });
 
     it('should handle empty input', () => {
         const inputOutput = '';
         const expectedOutput: string[] = [];
-        const result = filterGccDependencyOutput(inputOutput);
+        const result = filterGccDependencyOutput(
+            inputOutput,
+            'original/file1.c'
+        );
         expect(result).toEqual(expectedOutput);
     });
 
@@ -30,7 +33,10 @@ describe('filterGccDependencyOutput', () => {
             /usr/lib/libexample.a
         `;
         const expectedOutput: string[] = [];
-        const result = filterGccDependencyOutput(inputOutput);
+        const result = filterGccDependencyOutput(
+            inputOutput,
+            'original/file.h'
+        );
         expect(result).toEqual(expectedOutput);
     });
 
@@ -40,8 +46,8 @@ describe('filterGccDependencyOutput', () => {
             src/file2.c
             src/file3.cpp
         `;
-        const expectedOutput = ['src/file1.h', 'src/file2.c', 'src/file3.cpp'];
-        const result = filterGccDependencyOutput(inputOutput);
+        const expectedOutput = ['src/file2.c', 'src/file3.cpp'];
+        const result = filterGccDependencyOutput(inputOutput, 'src/file1.h');
         expect(result).toEqual(expectedOutput);
     });
 });

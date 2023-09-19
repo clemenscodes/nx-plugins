@@ -9,15 +9,17 @@ import { filterDependenciesOfProject } from '../filterDependenciesOfProject/filt
 export const getDependencies = (
     workspaceLayout: NxJsonConfiguration['workspaceLayout'],
     projects: FilteredProject[],
-    fileMap: ProjectFileMap
+    filesToProcess: ProjectFileMap
 ): ProjectGraphDependencyWithFile[] => {
     const deps: ProjectGraphDependencyWithFile[] = [];
-    for (const project of projects) {
+    for (const project of Object.keys(filesToProcess)) {
+        const projectFiles = filesToProcess[project];
+        const filteredProject = projects.find(({ name }) => name === project);
         const dependencies = filterDependenciesOfProject(
-            project,
+            filteredProject,
             workspaceLayout,
             projects,
-            fileMap
+            projectFiles
         );
         deps.push(...dependencies);
     }

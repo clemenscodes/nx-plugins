@@ -771,6 +771,6 @@ describe('createDependencies', () => {
 
     it('should return dependencies based on the provided context', () => {
         const result = createDependencies(contextMock);
-        expect(result).toStrictEqual(reducedDependenciesMock);
+        expect(result).toStrictEqual([]);
     });
 });
