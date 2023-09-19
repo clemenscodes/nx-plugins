@@ -1,13 +1,14 @@
 import { fileExists } from '../fileExists/fileExists';
+import { getAbsolutePath } from '../getAbsolutePath/getAbsolutePath';
 
 export const getConfigFile = async (
     configFile: string,
     workspaceRoot: string,
     projectRoot: string
 ): Promise<string> => {
-    const projectConfigFile = `${workspaceRoot}/${projectRoot}/${configFile}`;
-    const workspaceConfigFile = `${workspaceRoot}/${configFile}`;
-
+    const joinedProjectRoot = getAbsolutePath(workspaceRoot, projectRoot);
+    const projectConfigFile = getAbsolutePath(joinedProjectRoot, configFile);
+    const workspaceConfigFile = getAbsolutePath(workspaceRoot, configFile);
     const projectConfigFileExists = await fileExists(projectConfigFile);
     const workspaceConfigFileExists = await fileExists(workspaceConfigFile);
 
