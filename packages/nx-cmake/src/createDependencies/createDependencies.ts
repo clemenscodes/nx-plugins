@@ -25,7 +25,7 @@ export const filterFilesToProcess = (
 export const createDependencies: CreateDependencies = (
     context: CreateDependenciesContext
 ): ProjectGraphDependencyWithFile[] => {
-    const { graph, nxJsonConfiguration, filesToProcess } = context;
+    const { graph, nxJsonConfiguration, fileMap, filesToProcess } = context;
     if (Object.keys(filesToProcess).length === 0) {
         return [];
     }
@@ -42,6 +42,7 @@ export const createDependencies: CreateDependencies = (
     const deps = getDependencies(
         workspaceLayout,
         filteredProjects,
+        fileMap,
         filteredFilesToProcess
     );
     if (deps.length === 0) {
