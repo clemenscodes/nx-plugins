@@ -180,7 +180,7 @@ All the executors support these additional properties:
 > Build a C or C++ library with Make
 >
 > ```shell
-> nx build <target>
+> nx build <project>
 > ```
 
 ### `nx-cmake:fmt`
@@ -203,20 +203,20 @@ All the executors support these additional properties:
 > nx lint <project>
 > ```
 
-### `nx-cmake:execute`
-
-> Execute a C or C++ binary
->
-> ```shell
-> nx execute <binaryproject>
-> ```
-
 ### `nx-cmake:test`
 
 > Test a C library using CMocka or C++ library using googletest
 >
 > ```shell
 > nx test <testproject>
+> ```
+
+### `nx-cmake:execute`
+
+> Execute a C or C++ binary
+>
+> ```shell
+> nx execute <binaryproject>
 > ```
 
 ### `nx-cmake:debug`
