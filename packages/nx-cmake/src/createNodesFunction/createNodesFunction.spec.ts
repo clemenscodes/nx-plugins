@@ -1,24 +1,28 @@
 import type { CreateNodesContext } from '@nx/devkit';
-import { createNodesFunction } from './createNodesFunction'; // Import your module
+import { createNodesFunction } from './createNodesFunction';
 import { CProjectType } from '../models/types';
+import { getProjectConfiguration } from './../utils/generatorUtils/getProjectConfiguration/getProjectConfiguration';
 import * as getProjectTypeModule from '../utils/generatorUtils/getProjectType/getProjectType';
-import * as getProjectConfiguration from './../utils/generatorUtils/getProjectConfiguration/getProjectConfiguration';
+import * as getProjectConfigurationModule from './../utils/generatorUtils/getProjectConfiguration/getProjectConfiguration';
 
 describe('createNodesFunction', () => {
-    it('should return nodes based on the provided project configuration file', () => {
-        const mockGetProjectType = jest.spyOn(
-            getProjectTypeModule,
-            'getProjectType'
-        );
+    let mockGetProjectType: jest.SpyInstance;
+    let mockGetProjectConfiguration: jest.SpyInstance;
+    let getProjectConfigurationReturnMock: ReturnType<
+        typeof getProjectConfiguration
+    >;
+    let getProjectTypeReturnMock: CProjectType;
+    let root: string;
+    let projectConfigurationFile: string;
+    let context: CreateNodesContext;
 
-        const mockGetProjectConfiguration = jest.spyOn(
-            getProjectConfiguration,
+    beforeEach(() => {
+        mockGetProjectType = jest.spyOn(getProjectTypeModule, 'getProjectType');
+        mockGetProjectConfiguration = jest.spyOn(
+            getProjectConfigurationModule,
             'getProjectConfiguration'
         );
-
-        const getProjectConfigurationReturnMock: ReturnType<
-            typeof getProjectConfiguration.getProjectConfiguration
-        > = {
+        getProjectConfigurationReturnMock = {
             'nx-cmake-test': {
                 name: 'nx-cmake-test',
                 root: 'nx-cmake-test',
@@ -95,20 +99,22 @@ describe('createNodesFunction', () => {
                 implicitDependencies: [],
             },
         };
-
-        const getProjectTypeReturnMock = CProjectType.App;
-
-        const root = 'packages';
-        const projectConfigurationFile = `${root}/CMakeLists.txt`;
-        const context: CreateNodesContext = {} as unknown as CreateNodesContext;
-
+        getProjectTypeReturnMock = CProjectType.App;
+        root = 'packages';
+        projectConfigurationFile = `${root}/CMakeLists.txt`;
+        context = {} as unknown as CreateNodesContext;
         mockGetProjectType.mockReturnValue(getProjectTypeReturnMock);
         mockGetProjectConfiguration.mockReturnValue(
             getProjectConfigurationReturnMock
         );
+    });
 
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
+
+    it('should return nodes based on the provided project configuration file', () => {
         const result = createNodesFunction(projectConfigurationFile, context);
-
         expect(result).toEqual({ projects: getProjectConfigurationReturnMock });
         expect(mockGetProjectType).toHaveBeenCalledWith(
             projectConfigurationFile
@@ -117,8 +123,5 @@ describe('createNodesFunction', () => {
             root,
             getProjectTypeReturnMock
         );
-
-        mockGetProjectType.mockRestore();
-        mockGetProjectConfiguration.mockRestore();
     });
 });

@@ -8,7 +8,6 @@ describe('createDependencies', () => {
     let mockFilterProjects: jest.SpyInstance;
     let mockGetDependencies: jest.SpyInstance;
     let mockReduceDependenciesTransitively: jest.SpyInstance;
-
     let filteredProjectsReturnMock: FilteredProject[];
     let getDependenciesReturnMock: ProjectGraphDependencyWithFile[];
     let reducedDependenciesMock: ProjectGraphDependencyWithFile[];
