@@ -1,62 +1,7 @@
 import type { ProjectConfiguration, ProjectGraphProjectNode } from '@nx/devkit';
-import { filterProjects, filterTags, getTag, isC } from './filterProjects';
+import { filterProjects } from './filterProjects';
 import { CProjectType } from '../../../models/types';
 import { getProjectConfiguration } from '../../generatorUtils/getProjectConfiguration/getProjectConfiguration';
-
-describe('isC', () => {
-    it('should return true for "c" or "cpp"', () => {
-        expect(isC('c')).toBe(true);
-        expect(isC('cpp')).toBe(true);
-    });
-
-    it('should return false for other strings', () => {
-        expect(isC('java')).toBe(false);
-        expect(isC('python')).toBe(false);
-    });
-});
-
-describe('filterTags', () => {
-    it('should filter "c" and "cpp" tags', () => {
-        const tags = ['c', 'cpp', 'java', 'python'];
-        const filteredTags = filterTags(tags);
-        const expectedFilteredTags = ['c', 'cpp'];
-        expect(filteredTags).toEqual(expectedFilteredTags);
-    });
-
-    it('should handle an empty input array', () => {
-        const tags: string[] = [];
-        const filteredTags = filterTags(tags);
-        const expectedFilteredTags: string[] = [];
-        expect(filteredTags).toEqual(expectedFilteredTags);
-    });
-
-    it('should handle an array with no "c" or "cpp" tags', () => {
-        const tags = ['java', 'python'];
-        const filteredTags = filterTags(tags);
-        const expectedFilteredTags: string[] = [];
-        expect(filteredTags).toEqual(expectedFilteredTags);
-    });
-});
-
-describe('getTag', () => {
-    it('should return the first "c" or "cpp" tag', () => {
-        const tags = ['java', 'c', 'python', 'cpp', 'rust'];
-        const tag = getTag(tags);
-        expect(tag).toBe('c');
-    });
-
-    it('should return undefined if no "c" or "cpp" tag is found', () => {
-        const tags = ['java', 'python', 'rust'];
-        const tag = getTag(tags);
-        expect(tag).toBeUndefined();
-    });
-
-    it('should handle an empty input array', () => {
-        const tags: string[] = [];
-        const tag = getTag(tags);
-        expect(tag).toBeUndefined();
-    });
-});
 
 describe('filterProjects', () => {
     let nodes: Record<string, ProjectGraphProjectNode>;

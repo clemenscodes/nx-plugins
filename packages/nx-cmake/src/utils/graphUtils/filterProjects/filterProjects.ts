@@ -1,10 +1,8 @@
 import type { ProjectGraph } from '@nx/devkit';
-import type { CTag, FilteredProject } from '../../../models/types';
+import type { FilteredProject } from '../../../models/types';
 import { getProjectTypeFromConfig } from '../../generatorUtils/getProjectTypeFromConfig/getProjectTypeFromConfig';
-
-export const isC = (s: string) => s === 'c' || s === 'cpp';
-export const filterTags = (tags: string[]) => tags.filter(isC);
-export const getTag = (tags: string[]) => tags.find(isC) as CTag;
+import { getTag } from './getTag/getTag';
+import { isC } from './isC/isC';
 
 export const filterProjects = (
     nodes: ProjectGraph['nodes']
