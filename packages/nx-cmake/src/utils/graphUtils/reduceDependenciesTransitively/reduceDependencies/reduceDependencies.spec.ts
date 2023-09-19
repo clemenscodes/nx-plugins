@@ -1,12 +1,22 @@
 import type { ProjectGraphDependencyWithFile } from '@nx/devkit';
+import type { Graph } from '../../../../models/types';
 import { DependencyType } from '@nx/devkit';
-import { reduceDependenciesTransitively } from './reduceDependenciesTransitively';
+import { reduceDependencies } from './reduceDependencies';
 
-describe('reduceDependenciesTransitively', () => {
+describe('reduceDependencies', () => {
+    let graph: Graph;
     let dependencies: ProjectGraphDependencyWithFile[];
     let expectedReducedDependencies: ProjectGraphDependencyWithFile[];
 
     beforeEach(() => {
+        graph = {
+            testcc: new Set<string>().add('libcc'),
+            libcc: new Set<string>(),
+            testbb: new Set<string>().add('libbb'),
+            libbb: new Set<string>().add('libcc'),
+            cc: new Set<string>().add('libcc'),
+            bb: new Set<string>().add('libbb'),
+        };
         dependencies = [
             {
                 source: 'testbb',
@@ -157,8 +167,8 @@ describe('reduceDependenciesTransitively', () => {
         ];
     });
 
-    it('should reduce dependencies transitively', () => {
-        const deps = reduceDependenciesTransitively(dependencies);
-        expect(deps).toStrictEqual(expectedReducedDependencies);
+    it('should reduce depdencies', () => {
+        const reducedDependencies = reduceDependencies(graph, dependencies);
+        expect(reducedDependencies).toStrictEqual(expectedReducedDependencies);
     });
 });
