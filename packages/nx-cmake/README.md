@@ -13,12 +13,14 @@ This sets up initial support for using `CMake` in a monorepo setup.
 The workspace is then analyzed for further `CMakeLists.txt` files.
 An include directory in the root of the workspace is generated which can be included in all projects.
 Optionally an opinionated set of formatting and linting rules can be generated to be used by `clang-format` and `clang-tidy`.
+
 The `nx.json` file in the root of the workspace will be automatically updated for optimal caching behaviors, target pipelines and plugin initialisation.
 
 ### Project Inference
 
 Each `CMakeLists.txt` file tells this plugin to register another project and add it to the project graph managed by the Nx daemon.
 A project configuration will be automatically inferred for each `CMakeLists.txt` file and the according project type.
+
 The generators of this plugin will also generate a `project.json` file that is the equivalent of what this has plugin inferred for the `CMakeLists.txt`.
 If no changes are made to the `project.json` file, it can also be deleted and this plugin will keep telling Nx how to deal with these C or C++ projects.
 Changes made to the `project.json` file will override the inferred settings for the project so it is recommended to keep these files.
@@ -27,8 +29,10 @@ Changes made to the `project.json` file will override the inferred settings for 
 
 After adding the inferred projects to the project graph, the projects will be analyzed for dependencies between each other.
 Including code from another library will automatically update the project graph and add a dependency between the dependent projects.
+
 This utilizes the caching mechanisms of the Nx daemon to only analyze sources which have been updated by changes to avoid recalculating the dependency graph, which would otherwise get slow for bigger projects.
 Detecting dependencies between projects works by utilizing `gcc -MM` under the hood, which tracks the dependencies of a source file.
+
 The plugin then further processes the graph by performing a transitive reduction, making sure the graph contains as little edges as possible, to keep the graph clean and to ensure that dependencies for a project will be resolved in the correct order.
 This allows for efficient caching mechanisms and parallelization of tasks.
 
@@ -163,20 +167,20 @@ All the executors support these additional properties:
 
 - args (Optional arguments which will be forwarded to the underlying command) [array]
 
+### `nx-cmake:cmake`
+
+> Configure a C or C++ library with CMake
+>
+> ```shell
+> nx cmake <project>
+> ```
+
 ### `nx-cmake:build`
 
 > Build a C or C++ library with Make
 >
 > ```shell
 > nx build <target>
-> ```
-
-### `nx-cmake:cmake`
-
-> Build a C or C++ library with CMake
->
-> ```shell
-> nx cmake <target>
 > ```
 
 ### `nx-cmake:fmt`
@@ -188,7 +192,7 @@ All the executors support these additional properties:
 > --editFilesInPlace (Whether to format files in place) default: true
 >
 > ```shell
-> nx fmt <target>
+> nx fmt <project>
 > ```
 
 ### `nx-cmake:lint`
@@ -196,7 +200,7 @@ All the executors support these additional properties:
 > Lint a C or C++ project with clang-tidy
 >
 > ```shell
-> nx lint <target>
+> nx lint <project>
 > ```
 
 ### `nx-cmake:execute`
@@ -204,7 +208,7 @@ All the executors support these additional properties:
 > Execute a C or C++ binary
 >
 > ```shell
-> nx execute <binarytarget>
+> nx execute <binaryproject>
 > ```
 
 ### `nx-cmake:test`
@@ -212,7 +216,7 @@ All the executors support these additional properties:
 > Test a C library using CMocka or C++ library using googletest
 >
 > ```shell
-> nx test <testtarget>
+> nx test <testproject>
 > ```
 
 ### `nx-cmake:debug`
@@ -220,5 +224,5 @@ All the executors support these additional properties:
 > Debug a C or C++ project using gdb
 >
 > ```shell
-> nx debug <binarytarget>
+> nx debug <binaryproject>
 > ```
