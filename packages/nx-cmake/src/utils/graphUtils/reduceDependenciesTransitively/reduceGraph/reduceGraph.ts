@@ -1,13 +1,18 @@
 import type { Graph } from '../../../../models/types';
-import { getTransitiveDependencies } from '../getTransitiveDependencies/getTransitiveDependencies';
 
 export const reduceGraph = (graph: Graph): Graph => {
-    console.log({ graph });
     const result: Graph = {};
     for (const node in graph) {
-        const dependencies = getTransitiveDependencies(graph, node);
-        console.log({ graph, node, dependencies });
-        result[node] = dependencies;
+        result[node] = new Set<string>(graph[node]);
+        const dependencies = graph[node];
+        for (const dependency of dependencies) {
+            const neighbors = graph[dependency];
+            for (const neighbor of neighbors) {
+                if (graph[node].has(neighbor)) {
+                    result[node].delete(neighbor);
+                }
+            }
+        }
     }
     return result;
 };

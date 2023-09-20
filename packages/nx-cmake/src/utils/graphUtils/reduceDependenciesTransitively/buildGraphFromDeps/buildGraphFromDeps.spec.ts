@@ -156,7 +156,7 @@ describe('buildGraphFromDeps', () => {
         ];
         expectedGraph = {
             crap: new Set<string>().add('libcrap').add('libshit'),
-            libcrap: new Set<string>().add('libshit').add('libshit'),
+            libcrap: new Set<string>().add('libshit'),
             libshit: new Set<string>(),
             libtrash: new Set<string>().add('libcrap').add('libshit'),
             shit: new Set<string>().add('libshit'),

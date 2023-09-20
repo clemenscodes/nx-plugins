@@ -1,8 +1,6 @@
 import type { Graph } from '../../../../models/types';
 import type { ProjectGraphDependencyWithFile } from '@nx/devkit';
 import { DependencyType } from '@nx/devkit';
-import { buildGraphFromDeps } from '../buildGraphFromDeps/buildGraphFromDeps';
-import { reduceGraph } from '../reduceGraph/reduceGraph';
 import { transitiveReductionToGraph } from './transitiveReductionToGraph';
 
 describe('transitiveReductionToGraph', () => {
@@ -168,9 +166,8 @@ describe('transitiveReductionToGraph', () => {
         };
     });
 
-    it.todo('fix this');
-    // it('should perform transitive reduction to graph', () => {
-    //     const graph = transitiveReductionToGraph(dependencies);
-    //     expect(graph).toStrictEqual(expectedGraph);
-    // });
+    it('should perform transitive reduction to graph', () => {
+        const graph = transitiveReductionToGraph(dependencies);
+        expect(graph).toStrictEqual(expectedGraph);
+    });
 });

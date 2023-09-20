@@ -8,7 +8,7 @@ describe('reduceGraph', () => {
     beforeEach(() => {
         graph = {
             crap: new Set<string>().add('libcrap').add('libshit'),
-            libcrap: new Set<string>().add('libshit').add('libshit'),
+            libcrap: new Set<string>().add('libshit'),
             libshit: new Set<string>(),
             libtrash: new Set<string>().add('libcrap').add('libshit'),
             shit: new Set<string>().add('libshit'),
@@ -31,9 +31,8 @@ describe('reduceGraph', () => {
         };
     });
 
-    it.todo('fix this');
-    // it('should reduce graph', () => {
-    //     const reducedGraph = reduceGraph(graph);
-    //     expect(reducedGraph).toStrictEqual(expectedReducedGraph);
-    // });
+    it('should reduce graph', () => {
+        const reducedGraph = reduceGraph(graph);
+        expect(reducedGraph).toStrictEqual(expectedReducedGraph);
+    });
 });
