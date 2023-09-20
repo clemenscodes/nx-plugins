@@ -1,10 +1,10 @@
-# nx-cmake
+# nx-cmake  ![GitHub](https://img.shields.io/github/license/clemenscodes/nx-plugins) [![codecov](https://codecov.io/github/clemenscodes/nx-plugins/graph/badge.svg?token=5053DT3DIF)](https://codecov.io/github/clemenscodes/nx-plugins) ![GitHub package.json version (subfolder of monorepo)](https://img.shields.io/github/package-json/v/clemenscodes/nx-plugins?filename=packages%2Fnx-cmake%2Fpackage.json)
 
-![GitHub package.json version (subfolder of monorepo)](https://img.shields.io/github/package-json/v/clemenscodes/nx-plugins?filename=packages%2Fnx-cmake%2Fpackage.json)
+## Motivation
 
-An [Nx](https://nx.dev) plugin that adds support for CMake, C and C++ in an Nx monorepo.
+This [Nx](https://nx.dev) plugin was created to provide a better developer experience when developing using C or C++. By taking away the heavy lifting when setting up CMake, generating all the necessary boilerplate and setting up dependency management and caching strategies, spinning up a new C or C++ project becomes quick and easy, as it should be.
 
-## What This Plugin Does
+## Features
 
 ### CMake, C and C++ Support for a Monorepo
 
@@ -15,6 +15,12 @@ An include directory in the root of the workspace is generated which can be incl
 Optionally an opinionated set of formatting and linting rules can be generated to be used by `clang-format` and `clang-tidy`.
 
 The `nx.json` file in the root of the workspace will be automatically updated for optimal caching behaviors, target pipelines and plugin initialisation.
+
+After initializing the plugin, the generators for creating a binary can be used.
+
+If not configured otherwise via `nx.json`, by default binaries (applications) will be placed  in `bin` and libraries will be placed in `libs`.
+
+When a library was created, it can be included from any other library or binary using `#include </dirNameOfLibrary/pathInLibrary/fileNameOfLibrary.h>`.
 
 ### Project Inference
 
@@ -35,10 +41,6 @@ Detecting dependencies between projects works by utilizing `gcc -MM` under the h
 
 The plugin then further processes the graph by performing a transitive reduction, making sure the graph contains as little edges as possible, to keep the graph clean and to ensure that dependencies for a project will be resolved in the correct order.
 This allows for efficient caching mechanisms and parallelization of tasks.
-
-### Motivation
-
-This plugin was created to provide a better developer experience when developing using C or C++. By taking away the heavy lifting when setting up CMake, generating all the necessary boilerplate and setting up dependency management and caching strategies, spinning up a new C or C++ project becomes quick and easy, as it should be.
 
 ## Getting Started
 
@@ -226,3 +228,15 @@ All the executors support these additional properties:
 > ```shell
 > nx debug <binaryproject>
 > ```
+
+## Contributing
+
+All contributions are welcome.
+
+## Acknowledgements
+
+This project was inspired by [monodon](https://github.com/cammisuli/monodon).
+
+## Social
+
+[![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/clemenscodes)](https://twitter.com/intent/follow?screen_name=clemenscodes)
