@@ -241,7 +241,7 @@ describe('reduceDependenciesTransitively', () => {
         ];
     });
 
-    it.todo('fix this')
+    it.todo('fix this');
     // it('should reduce dependencies transitively', () => {
     //     const deps = reduceDependenciesTransitively(dependencies);
     //     expect(deps).toStrictEqual(expectedReducedDependencies);

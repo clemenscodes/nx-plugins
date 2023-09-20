@@ -6,9 +6,7 @@ import { reduceGraph } from '../reduceGraph/reduceGraph';
 export const transitiveReductionToGraph = (
     dependencies: ProjectGraphDependencyWithFile[]
 ): Graph => {
-    console.log({ dependencies });
     const graph = buildGraphFromDeps(dependencies);
-    console.log({ graph });
     const reducedGraph = reduceGraph(graph);
     return reducedGraph;
 };

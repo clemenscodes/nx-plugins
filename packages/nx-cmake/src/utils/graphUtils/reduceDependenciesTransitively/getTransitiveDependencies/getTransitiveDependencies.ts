@@ -4,7 +4,8 @@ export const getTransitiveDependencies = (
     graph: Graph,
     node: string
 ): Set<string> => {
-    const dependencies = graph[node] || new Set<string>();
+    console.log({ node, graph }, graph[node]);
+    const dependencies = new Set<string>(graph[node]);
     const transitiveDependencies = new Set<string>();
     for (const dependency of dependencies) {
         transitiveDependencies.add(dependency);
