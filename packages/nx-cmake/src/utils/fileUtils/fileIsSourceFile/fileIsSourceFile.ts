@@ -8,7 +8,9 @@ export const fileIsSourceFile = (
     file: string
 ): boolean => {
     const root = getAbsolutePath(workspaceRoot, projectRoot);
-    const testRoot = getAbsolutePath(root, 'test');
+    const testRoot = root.endsWith('/test')
+        ? root
+        : getAbsolutePath(root, 'test');
     const isTestFile = file.startsWith(testRoot);
     if (projectType !== CProjectType.Test && isTestFile) {
         return false;

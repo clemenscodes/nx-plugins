@@ -23,7 +23,7 @@ export const filterDependenciesOfProject = (
 
     for (const fileData of filteredFilesToProcess) {
         const { file } = fileData;
-        const cmd = getGccDependenciesCommand(file, root, workspaceLayout);
+        const cmd = getGccDependenciesCommand(file, root, workspaceLayout, tag);
         const stdout = getGccDependencies(cmd, root, workspaceRoot);
         const files = filterGccDependencyOutput(stdout, file);
         const fileDependencies = getDependenciesOfFile(

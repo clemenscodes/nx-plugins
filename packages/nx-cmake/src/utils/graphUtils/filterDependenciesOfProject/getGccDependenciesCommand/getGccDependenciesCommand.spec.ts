@@ -1,17 +1,39 @@
+import type { CTag, WorkspaceLayout } from '../../../../models/types';
 import { getGccDependenciesCommand } from './getGccDependenciesCommand';
-import { WorkspaceLayout } from '../../../../models/types';
 
 describe('getGccDependenciesCommand', () => {
-    it('should generate the correct gcc dependency command', () => {
-        const fileName = 'testfile.c';
-        const projectRoot = 'projectA';
-        const workspaceLayout: WorkspaceLayout = { libsDir: 'libs' };
+    let fileName: string;
+    let projectRoot: string;
+    let tag: CTag;
+    let workspaceLayout: WorkspaceLayout;
+
+    beforeEach(() => {
+        fileName = 'testfile.c';
+        projectRoot = 'projectA';
+        tag = 'c';
+        workspaceLayout = { libsDir: 'libs' };
+    });
+
+    it('should generate the correct gcc c dependency command', () => {
         const result = getGccDependenciesCommand(
             fileName,
             projectRoot,
-            workspaceLayout
+            workspaceLayout,
+            tag
         );
-        const expectedCmd = `gcc -MM ${fileName} -I projectA/include -I libs -I include -I dist/libs/gtest/googletest-src/googletest/include -I dist/libs/cmocka/cmocka-src/include`;
+        const expectedCmd = `gcc -x c -MM ${fileName} -I projectA/include -I libs -I include -I dist/libs/gtest/googletest-src/googletest/include -I dist/libs/cmocka/cmocka-src/include`;
+        expect(result).toBe(expectedCmd);
+    });
+
+    it('should generate the correct gcc c++ dependency command', () => {
+        tag = 'cpp';
+        const result = getGccDependenciesCommand(
+            fileName,
+            projectRoot,
+            workspaceLayout,
+            tag
+        );
+        const expectedCmd = `gcc -x c++ -MM ${fileName} -I projectA/include -I libs -I include -I dist/libs/gtest/googletest-src/googletest/include -I dist/libs/cmocka/cmocka-src/include`;
         expect(result).toBe(expectedCmd);
     });
 });
