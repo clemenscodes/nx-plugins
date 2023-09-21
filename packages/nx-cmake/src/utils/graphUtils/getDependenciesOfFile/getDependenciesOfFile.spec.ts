@@ -1,53 +1,91 @@
 import { getDependenciesOfFile } from './getDependenciesOfFile';
+import { FilteredProject } from '../../../models/types';
+import { DependencyType, ProjectGraphDependencyWithFile } from '@nx/devkit';
 
 describe('getDependenciesOfFile', () => {
-    it('should return external files that start with "dist" or "include"', () => {
-        const inputFiles = [
-            'src/file1.h',
-            'include/file2.h',
-            'dist/file3.cpp',
-            'external/file4.cpp',
+    let mainProject: FilteredProject;
+    let file: string;
+    let files: string[];
+    let projects: FilteredProject[];
+
+    let expectedDependencies: ProjectGraphDependencyWithFile[];
+    beforeEach(() => {
+        mainProject = {
+            name: 'testa',
+            root: 'packages/a/test',
+            type: 2,
+            tag: 'c',
+            sourceRoot: 'packages/a/test/src',
+        };
+        file = 'packages/a/test/include/testa.h';
+        files = ['packages/a/include/liba.h', 'packages/b/include/libb.h'];
+        projects = [
+            {
+                name: 'testa',
+                root: 'packages/a/test',
+                type: 2,
+                tag: 'c',
+                sourceRoot: 'packages/a/test/src',
+            },
+            {
+                name: 'testb',
+                root: 'packages/b/test',
+                type: 2,
+                tag: 'c',
+                sourceRoot: 'packages/b/test/src',
+            },
+            {
+                name: 'libb',
+                root: 'packages/b',
+                type: 1,
+                tag: 'c',
+                sourceRoot: 'packages/b/src',
+            },
+            {
+                name: 'liba',
+                root: 'packages/a',
+                type: 1,
+                tag: 'c',
+                sourceRoot: 'packages/a/src',
+            },
+            {
+                name: 'b',
+                root: 'bin/b',
+                type: 0,
+                tag: 'c',
+                sourceRoot: 'bin/b/src',
+            },
+            {
+                name: 'a',
+                root: 'bin/a',
+                type: 0,
+                tag: 'c',
+                sourceRoot: 'bin/a/src',
+            },
         ];
-        const root = 'src';
-        const tag = 'cpp';
-        const expectedOutput = [
-            'src/file1.h',
-            'src/file1.cpp',
-            'include/file2.h',
-            'dist/file3.cpp',
-            'external/file4.cpp',
+        expectedDependencies = [
+            {
+                source: 'testa',
+                target: 'liba',
+                sourceFile: 'packages/a/test/include/testa.h',
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'testa',
+                target: 'libb',
+                sourceFile: 'packages/a/test/include/testa.h',
+                dependencyType: DependencyType.static,
+            },
         ];
     });
 
-    it('should handle empty input', () => {
-        const inputFiles: string[] = [];
-        const root = 'src';
-        const tag = 'cpp';
-        const expectedOutput: string[] = [];
-    });
-
-    it('should handle input with files starting with the root path', () => {
-        const inputFiles = ['src/file1.h', 'src/file2.cpp', 'src/file3.c'];
-        const root = 'src';
-        const tag = 'cpp';
-        const expectedOutput = [
-            'src/file1.h',
-            'src/file1.cpp',
-            'src/file2.cpp',
-        ];
-    });
-
-    it('should generate external dependent files based on the tag', () => {
-        const inputFiles = ['file1.h', 'file2.c', 'file3.cpp'];
-        const root = 'src';
-        const tag = 'c';
-        const expectedOutput = ['file1.h', 'file1.c', 'file2.c'];
-    });
-
-    it('should generate external dependent files with ".cpp" tag by default', () => {
-        const inputFiles = ['file1.h', 'file2.c', 'file3'];
-        const root = 'src';
-        const tag = 'cpp';
-        const expectedOutput = ['file1.h', 'file1.cpp'];
+    it('should get dependencies of file', () => {
+        const result = getDependenciesOfFile(
+            mainProject,
+            file,
+            files,
+            projects
+        );
+        expect(result).toStrictEqual(expectedDependencies);
     });
 });

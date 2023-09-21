@@ -1,8 +1,8 @@
-import type { FilteredProject, WorkspaceLayout } from '../../../models/types';
 import type {
     ProjectFileMap,
     ProjectGraphDependencyWithFile,
 } from '@nx/devkit';
+import type { FilteredProject, WorkspaceLayout } from '../../../models/types';
 import { DependencyType } from '@nx/devkit';
 import { CProjectType } from '../../../models/types';
 import { getDependencies } from './getDependencies';
@@ -46,18 +46,6 @@ describe('getDependencies', () => {
         ];
         expectedDependencies = [
             {
-                source: 'testparser',
-                target: 'libparser',
-                sourceFile: 'packages/parser/test/include/testparser.h',
-                dependencyType: DependencyType.static,
-            },
-            {
-                source: 'testparser',
-                target: 'libparser',
-                sourceFile: 'packages/parser/test/src/testparser.c',
-                dependencyType: DependencyType.static,
-            },
-            {
                 source: 'parser',
                 target: 'libparser',
                 sourceFile: 'bin/parser/include/parser.h',
@@ -70,26 +58,22 @@ describe('getDependencies', () => {
                 dependencyType: DependencyType.static,
             },
         ];
-        filesToProcess = {};
+        filesToProcess = {
+            parser: [
+                {
+                    file: 'bin/parser/include/parser.h',
+                    hash: '11279262444086169535',
+                },
+                {
+                    file: 'bin/parser/src/parser.c',
+                    hash: '12936305865606923809',
+                },
+            ],
+        };
         filterDependenciesOfProjectMock = jest.spyOn(
             filterDependenciesOfProjectModule,
             'filterDependenciesOfProject'
         );
-        filterDependenciesOfProjectMock.mockReturnValueOnce([
-            {
-                source: 'testparser',
-                target: 'libparser',
-                sourceFile: 'packages/parser/test/include/testparser.h',
-                dependencyType: 'static',
-            },
-            {
-                source: 'testparser',
-                target: 'libparser',
-                sourceFile: 'packages/parser/test/src/testparser.c',
-                dependencyType: 'static',
-            },
-        ]);
-        filterDependenciesOfProjectMock.mockReturnValueOnce([]);
         filterDependenciesOfProjectMock.mockReturnValueOnce([
             {
                 source: 'parser',
@@ -111,6 +95,7 @@ describe('getDependencies', () => {
     });
 
     it('should not get dependencies if no files to process', () => {
+        filesToProcess = {};
         const result = getDependencies(
             workspaceLayout,
             projects,
@@ -120,16 +105,15 @@ describe('getDependencies', () => {
         expect(result).toStrictEqual([]);
     });
 
-    it.todo('implement this here');
-    // it('should get dependencies', () => {
-    //     const result = getDependencies(
-    //         workspaceLayout,
-    //         projects,
-    //         filesToProcess
-    //     );
-    //     expect(filterDependenciesOfProjectMock).toBeCalledTimes(
-    //         projects.length
-    //     );
-    //     expect(result).toStrictEqual(expectedDependencies);
-    // });
+    it('should get dependencies', () => {
+        const result = getDependencies(
+            workspaceLayout,
+            projects,
+            filesToProcess
+        );
+        expect(filterDependenciesOfProjectMock).toBeCalledTimes(
+            Object.keys(filesToProcess).length
+        );
+        expect(result).toStrictEqual(expectedDependencies);
+    });
 });
