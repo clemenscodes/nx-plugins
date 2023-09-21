@@ -120,19 +120,16 @@ describe('getDependencies', () => {
         expect(result).toStrictEqual([]);
     });
 
-    it.todo(
-        'should get dependencies'
-        // () => {
-        //     const result = getDependencies(
-        //         workspaceLayout,
-        //         projects,
-        //         fileMap,
-        //         filesToProcess
-        //     );
-        //     expect(filterDependenciesOfProjectMock).toBeCalledTimes(
-        //         projects.length
-        //     );
-        //     expect(result).toStrictEqual(expectedDependencies);
-        // }
-    );
+    it.todo('implement this here');
+    // it('should get dependencies', () => {
+    //     const result = getDependencies(
+    //         workspaceLayout,
+    //         projects,
+    //         filesToProcess
+    //     );
+    //     expect(filterDependenciesOfProjectMock).toBeCalledTimes(
+    //         projects.length
+    //     );
+    //     expect(result).toStrictEqual(expectedDependencies);
+    // });
 });
