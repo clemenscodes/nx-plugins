@@ -3,7 +3,7 @@ import { runCommand } from '../../../../utils/commandUtils/runCommand/runCommand
 import { trimLib } from '../../../../utils/generatorUtils/trimLib/trimLib';
 import { checkCommandExists } from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
 
-export const debugBinaryWithGDB = (
+export const debugBinaryWithGdb = (
     workspaceRoot: string,
     projectRoot: string,
     projectName: string,
