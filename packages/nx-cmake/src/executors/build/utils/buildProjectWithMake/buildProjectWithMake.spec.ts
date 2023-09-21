@@ -4,11 +4,15 @@ import * as runCommandModule from '../../../../utils/commandUtils/runCommand/run
 import * as checkCommandExistsModule from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
 
 describe('buildProjectWithMake', () => {
+    let workspaceRoot: string;
+    let projectRoot: string;
+    let options: BuildExecutorSchema;
     let runCommandMock: jest.SpyInstance;
     let checkCommandExistsMock: jest.SpyInstance;
-    let options: BuildExecutorSchema;
 
     beforeEach(() => {
+        workspaceRoot = 'workspaceRoot';
+        projectRoot = 'projectRoot';
         options = {
             args: [],
         };
@@ -25,7 +29,7 @@ describe('buildProjectWithMake', () => {
 
     it('should call checkCommandExists with "make"', () => {
         runCommandMock.mockReturnValue({ success: true });
-        buildProjectWithMake('workspaceRoot', 'projectRoot', options);
+        buildProjectWithMake(workspaceRoot, projectRoot, options);
         expect(checkCommandExistsMock).toHaveBeenCalledWith('make');
     });
 
@@ -34,7 +38,7 @@ describe('buildProjectWithMake', () => {
             throw new Error();
         });
         expect(() =>
-            buildProjectWithMake('workspaceRoot', 'projectRoot', options)
+            buildProjectWithMake(workspaceRoot, projectRoot, options)
         ).toThrowError();
         expect(checkCommandExistsMock).toHaveBeenCalledWith('make');
         expect(runCommandMock).not.toHaveBeenCalled();
@@ -42,11 +46,11 @@ describe('buildProjectWithMake', () => {
 
     it('should call runCommand with the correct arguments', () => {
         runCommandMock.mockReturnValue({ success: true });
-        buildProjectWithMake('workspaceRoot', 'projectRoot', options);
+        buildProjectWithMake(workspaceRoot, projectRoot, options);
         expect(runCommandMock).toHaveBeenCalledWith(
             'make',
             '-C',
-            'workspaceRoot/dist/projectRoot',
+            `${workspaceRoot}/dist/${projectRoot}`,
             ...options.args
         );
     });
@@ -54,8 +58,8 @@ describe('buildProjectWithMake', () => {
     it('should return true if runCommand succeeds', () => {
         runCommandMock.mockReturnValue({ success: true });
         const result = buildProjectWithMake(
-            'workspaceRoot',
-            'projectRoot',
+            workspaceRoot,
+            projectRoot,
             options
         );
         expect(result).toBe(true);
@@ -64,8 +68,8 @@ describe('buildProjectWithMake', () => {
     it('should return false if runCommand fails', () => {
         runCommandMock.mockReturnValue({ success: false });
         const result = buildProjectWithMake(
-            'workspaceRoot',
-            'projectRoot',
+            workspaceRoot,
+            projectRoot,
             options
         );
         expect(result).toBe(false);

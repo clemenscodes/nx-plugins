@@ -4,11 +4,17 @@ import * as runCommandModule from '../../../../utils/commandUtils/runCommand/run
 import * as checkCommandExistsModule from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
 
 describe('debugBinaryWithGdb', () => {
+    let workspaceRoot: string;
+    let projectRoot: string;
+    let projectName: string;
+    let options: DebugExecutorSchema;
     let runCommandMock: jest.SpyInstance;
     let checkCommandExistsMock: jest.SpyInstance;
-    let options: DebugExecutorSchema;
 
     beforeEach(() => {
+        workspaceRoot = '/workspace';
+        projectRoot = 'projectRoot';
+        projectName = 'myProject';
         options = {
             args: [],
         };
@@ -28,15 +34,15 @@ describe('debugBinaryWithGdb', () => {
         checkCommandExistsMock.mockReturnValue('gdb');
         runCommandMock.mockReturnValue({ success: true });
         const result = debugBinaryWithGdb(
-            '/workspace',
-            'projectRoot',
-            'myProject',
+            workspaceRoot,
+            projectRoot,
+            projectName,
             options
         );
         expect(checkCommandExistsMock).toHaveBeenCalledWith('gdb');
         expect(runCommandMock).toHaveBeenCalledWith(
             'gdb',
-            '/workspace/dist/projectRoot/myProject',
+            `${workspaceRoot}/dist/${projectRoot}/${projectName}`,
             ...options.args
         );
         expect(result).toBe(true);
@@ -47,12 +53,7 @@ describe('debugBinaryWithGdb', () => {
             throw new Error();
         });
         expect(() =>
-            debugBinaryWithGdb(
-                '/workspace',
-                'projectRoot',
-                'myProject',
-                options
-            )
+            debugBinaryWithGdb(workspaceRoot, projectRoot, projectName, options)
         ).toThrowError();
         expect(checkCommandExistsMock).toHaveBeenCalledWith('gdb');
         expect(runCommandMock).not.toHaveBeenCalled();
@@ -63,15 +64,15 @@ describe('debugBinaryWithGdb', () => {
         runCommandMock.mockReturnValue({ success: true });
         options.args = ['-ex', 'run', '--arg1', 'value1'];
         const result = debugBinaryWithGdb(
-            '/workspace',
-            'projectRoot',
-            'myProject',
+            workspaceRoot,
+            projectRoot,
+            projectName,
             options
         );
         expect(checkCommandExistsMock).toHaveBeenCalledWith('gdb');
         expect(runCommandMock).toHaveBeenCalledWith(
             'gdb',
-            '/workspace/dist/projectRoot/myProject',
+            `${workspaceRoot}/dist/${projectRoot}/${projectName}`,
             '-ex',
             'run',
             '--arg1',
@@ -84,15 +85,15 @@ describe('debugBinaryWithGdb', () => {
         checkCommandExistsMock.mockReturnValue('gdb');
         runCommandMock.mockReturnValue({ success: false });
         const result = debugBinaryWithGdb(
-            '/workspace',
-            'projectRoot',
-            'myProject',
+            workspaceRoot,
+            projectRoot,
+            projectName,
             options
         );
         expect(checkCommandExistsMock).toHaveBeenCalledWith('gdb');
         expect(runCommandMock).toHaveBeenCalledWith(
             'gdb',
-            '/workspace/dist/projectRoot/myProject',
+            `${workspaceRoot}/dist/${projectRoot}/${projectName}`,
             ...options.args
         );
         expect(result).toBe(false);
