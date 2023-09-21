@@ -35,5 +35,12 @@ export const filterDependenciesOfProject = (
         projectDependencies.push(...fileDependencies);
     }
 
+    // console.log({
+    //     project,
+    //     workspaceLayout,
+    //     projects,
+    //     filesToProcess: JSON.stringify(filesToProcess),
+    //     projectDependencies,
+    // });
     return projectDependencies;
 };
