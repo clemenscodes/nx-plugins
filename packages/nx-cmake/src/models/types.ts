@@ -1,4 +1,4 @@
-import type { NxJsonConfiguration } from '@nx/devkit';
+import type { NxJsonConfiguration, ProjectGraph } from '@nx/devkit';
 
 export enum CProjectType {
     App,
@@ -43,3 +43,10 @@ export type FilteredProject = {
 export type WorkspaceLayout = NxJsonConfiguration['workspaceLayout'];
 
 export type Graph = Record<string, Set<string>>;
+
+export type GraphFile = {
+    graph: {
+        nodes: ProjectGraph['nodes'];
+        dependencies: ProjectGraph['dependencies'];
+    };
+};

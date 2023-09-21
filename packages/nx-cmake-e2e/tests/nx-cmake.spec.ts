@@ -4,7 +4,7 @@ import { join, dirname } from 'path';
 import { mkdirSync, rmSync } from 'fs';
 import { readJsonFile } from '@nx/devkit';
 
-type Graph = {
+export type Graph = {
     graph: {
         nodes: ProjectGraph['nodes'];
         dependencies: ProjectGraph['dependencies'];
@@ -14,46 +14,19 @@ type Graph = {
 describe('nx-cmake', () => {
     let projectDirectory: string;
 
-    beforeAll(() => {
-        projectDirectory = createTestProject();
-
-        // The plugin has been built and published to a local registry in the jest globalSetup
-        // Install the plugin built with the latest source code into the test repo
-        execSync(`npm install nx-cmake@e2e`, {
-            cwd: projectDirectory,
-            stdio: 'inherit',
-            env: {
-                ...process.env,
-                NX_DAEMON: 'false',
-            },
-        });
-    });
-
-    afterAll(() => {
-        // Cleanup the test project
-        // rmSync(projectDirectory, {
-        //     recursive: true,
-        //     force: true,
-        // });
-    });
-
-    const generateGraph = (): Graph => {
-        const cmd = `nx graph --file=${projectDirectory}/graph.json`;
-        execSync(cmd, {
-            cwd: projectDirectory,
-            stdio: 'inherit',
-            env: { ...process.env, NX_DAEMON: 'false' },
-        });
-        const file: Graph = readJsonFile(`${projectDirectory}/graph.json`);
-        return file;
-    };
-
     const execCmd = (cmd: string) => {
         execSync(cmd, {
             cwd: projectDirectory,
             stdio: 'inherit',
             env: process.env,
         });
+    };
+
+    const generateGraph = (): Graph => {
+        const cmd = `nx graph --file=${projectDirectory}/graph.json`;
+        execCmd(cmd);
+        const file: Graph = readJsonFile(`${projectDirectory}/graph.json`);
+        return file;
     };
 
     const testExecutor = (executorName: string) => {
@@ -82,41 +55,29 @@ describe('nx-cmake', () => {
         });
     };
 
+    beforeAll(() => {
+        projectDirectory = createTestProject();
+
+        // The plugin has been built and published to a local registry in the jest globalSetup
+        // Install the plugin built with the latest source code into the test repo
+        execCmd('npm install nx-cmake@e2e');
+    });
+
+    afterAll(() => {
+        // Cleanup the test project
+        rmSync(projectDirectory, {
+            recursive: true,
+            force: true,
+        });
+    });
+
     it('should be installed', () => {
         // npm ls will fail if the package is not installed properly
-        execSync('npm ls nx-cmake', {
-            cwd: projectDirectory,
-            stdio: 'inherit',
-        });
+        execCmd('npm ls nx-cmake');
     });
 
     describe('generators', () => {
         let projectName: string;
-
-        const checkGraph = () => {
-            const { graph } = generateGraph();
-            expect(graph).toBeDefined();
-            const { dependencies } = graph;
-            expect(dependencies).toBeDefined();
-            const projectLibName = `lib${projectName}`;
-            const projectTestName = `test${projectName}`;
-            const projectBinaryDeps = dependencies[projectName];
-            const projectTestDeps = dependencies[projectTestName];
-            expect(projectBinaryDeps).toStrictEqual([
-                {
-                    source: projectName,
-                    target: projectLibName,
-                    type: 'static',
-                },
-            ]);
-            expect(projectTestDeps).toStrictEqual([
-                {
-                    source: projectTestName,
-                    target: projectLibName,
-                    type: 'static',
-                },
-            ]);
-        };
 
         describe('nx-cmake:init', () => {
             it('should initialize', async () => {
@@ -145,7 +106,30 @@ describe('nx-cmake', () => {
                 });
             });
 
-            it('should process C dependencies correctly', checkGraph);
+            it('should process C dependencies correctly', () => {
+                const { graph } = generateGraph();
+                expect(graph).toBeDefined();
+                const { dependencies } = graph;
+                expect(dependencies).toBeDefined();
+                const projectLibName = `lib${projectName}`;
+                const projectTestName = `test${projectName}`;
+                const projectBinaryDeps = dependencies[projectName];
+                const projectTestDeps = dependencies[projectTestName];
+                expect(projectBinaryDeps).toStrictEqual([
+                    {
+                        source: projectName,
+                        target: projectLibName,
+                        type: 'static',
+                    },
+                ]);
+                expect(projectTestDeps).toStrictEqual([
+                    {
+                        source: projectTestName,
+                        target: projectLibName,
+                        type: 'static',
+                    },
+                ]);
+            });
 
             describe('nx-cmake:link', () => {
                 it('should link C library', async () => {
@@ -154,7 +138,51 @@ describe('nx-cmake', () => {
                 });
             });
 
-            it('should process C dependencies correctly', checkGraph);
+            it('should process C dependencies correctly', () => {
+                const { graph } = generateGraph();
+                expect(graph).toBeDefined();
+                const { dependencies } = graph;
+                expect(dependencies).toBeDefined();
+                const projectLibName = `lib${projectName}`;
+                const projectTargetLibName = `lib${projectName}-lib`;
+                const projectTestName = `test${projectName}`;
+                const projectTargetTestName = `test${projectName}-lib`;
+                const projectBinaryDeps = dependencies[projectName];
+                const projectLibDeps = dependencies[projectLibName];
+                const projectTargetLibDeps = dependencies[projectTargetLibName];
+                const projectTestDeps = dependencies[projectTestName];
+                const projectTargetTestDeps =
+                    dependencies[projectTargetTestName];
+                expect(projectBinaryDeps).toStrictEqual([
+                    {
+                        source: projectName,
+                        target: projectLibName,
+                        type: 'static',
+                    },
+                ]);
+                expect(projectTestDeps).toStrictEqual([
+                    {
+                        source: projectTestName,
+                        target: projectLibName,
+                        type: 'static',
+                    },
+                ]);
+                expect(projectLibDeps).toStrictEqual([
+                    {
+                        source: projectLibName,
+                        target: projectTargetLibName,
+                        type: 'static',
+                    },
+                ]);
+                expect(projectTargetLibDeps).toStrictEqual([]);
+                expect(projectTargetTestDeps).toStrictEqual([
+                    {
+                        source: projectTargetTestName,
+                        target: projectTargetLibName,
+                        type: 'static',
+                    },
+                ]);
+            });
         });
 
         describe('C++ generators', () => {
@@ -177,7 +205,30 @@ describe('nx-cmake', () => {
                 });
             });
 
-            it('should process C++ dependencies correctly', checkGraph);
+            it('should process C++ dependencies correctly', () => {
+                const { graph } = generateGraph();
+                expect(graph).toBeDefined();
+                const { dependencies } = graph;
+                expect(dependencies).toBeDefined();
+                const projectLibName = `lib${projectName}`;
+                const projectTestName = `test${projectName}`;
+                const projectBinaryDeps = dependencies[projectName];
+                const projectTestDeps = dependencies[projectTestName];
+                expect(projectBinaryDeps).toStrictEqual([
+                    {
+                        source: projectName,
+                        target: projectLibName,
+                        type: 'static',
+                    },
+                ]);
+                expect(projectTestDeps).toStrictEqual([
+                    {
+                        source: projectTestName,
+                        target: projectLibName,
+                        type: 'static',
+                    },
+                ]);
+            });
 
             describe('nx-cmake:link', () => {
                 it('should link C++ library', async () => {
@@ -186,7 +237,51 @@ describe('nx-cmake', () => {
                 });
             });
 
-            it('should process C++ dependencies correctly', checkGraph);
+            it('should process C++ dependencies correctly', () => {
+                const { graph } = generateGraph();
+                expect(graph).toBeDefined();
+                const { dependencies } = graph;
+                expect(dependencies).toBeDefined();
+                const projectLibName = `lib${projectName}`;
+                const projectTargetLibName = `lib${projectName}-lib`;
+                const projectTestName = `test${projectName}`;
+                const projectTargetTestName = `test${projectName}-lib`;
+                const projectBinaryDeps = dependencies[projectName];
+                const projectLibDeps = dependencies[projectLibName];
+                const projectTargetLibDeps = dependencies[projectTargetLibName];
+                const projectTestDeps = dependencies[projectTestName];
+                const projectTargetTestDeps =
+                    dependencies[projectTargetTestName];
+                expect(projectBinaryDeps).toStrictEqual([
+                    {
+                        source: projectName,
+                        target: projectLibName,
+                        type: 'static',
+                    },
+                ]);
+                expect(projectTestDeps).toStrictEqual([
+                    {
+                        source: projectTestName,
+                        target: projectLibName,
+                        type: 'static',
+                    },
+                ]);
+                expect(projectLibDeps).toStrictEqual([
+                    {
+                        source: projectLibName,
+                        target: projectTargetLibName,
+                        type: 'static',
+                    },
+                ]);
+                expect(projectTargetLibDeps).toStrictEqual([]);
+                expect(projectTargetTestDeps).toStrictEqual([
+                    {
+                        source: projectTargetTestName,
+                        target: projectTargetLibName,
+                        type: 'static',
+                    },
+                ]);
+            });
         });
     });
 
