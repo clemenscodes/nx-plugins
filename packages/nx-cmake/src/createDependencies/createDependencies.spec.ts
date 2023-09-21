@@ -5,13 +5,11 @@ import type {
 import { DependencyType } from '@nx/devkit';
 import { createDependencies } from './createDependencies';
 import * as getDependenciesModule from '../utils/graphUtils/getDependencies/getDependencies';
-import * as reduceDependenciesTransitivelyModule from '../utils/graphUtils/reduceDependenciesTransitively/reduceDependenciesTransitively';
 
 describe('createDependencies', () => {
     let mockGetDependencies: jest.SpyInstance;
-    let mockReduceDependenciesTransitively: jest.SpyInstance;
     let getDependenciesReturnMock: ProjectGraphDependencyWithFile[];
-    let reducedDependenciesMock: ProjectGraphDependencyWithFile[];
+    let expectedDependencies: ProjectGraphDependencyWithFile[];
     let contextMock: CreateDependenciesContext;
 
     beforeEach(() => {
@@ -19,11 +17,32 @@ describe('createDependencies', () => {
             getDependenciesModule,
             'getDependencies'
         );
-        mockReduceDependenciesTransitively = jest.spyOn(
-            reduceDependenciesTransitivelyModule,
-            'reduceDependenciesTransitively'
-        );
+
         getDependenciesReturnMock = [
+            {
+                source: 'testa',
+                target: 'liba',
+                sourceFile: 'packages/a/test/include/testa.h',
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'testa',
+                target: 'libb',
+                sourceFile: 'packages/a/test/include/testa.h',
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'testa',
+                target: 'liba',
+                sourceFile: 'packages/a/test/src/testa.c',
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'testa',
+                target: 'libb',
+                sourceFile: 'packages/a/test/src/testa.c',
+                dependencyType: DependencyType.static,
+            },
             {
                 source: 'testb',
                 target: 'libb',
@@ -34,30 +53,6 @@ describe('createDependencies', () => {
                 source: 'testb',
                 target: 'libb',
                 sourceFile: 'packages/b/test/src/testb.c',
-                dependencyType: DependencyType.static,
-            },
-            {
-                source: 'testa',
-                target: 'liba',
-                sourceFile: 'packages/a/test/include/testa.h',
-                dependencyType: DependencyType.static,
-            },
-            {
-                source: 'testa',
-                target: 'liba',
-                sourceFile: 'packages/a/test/src/testa.c',
-                dependencyType: DependencyType.static,
-            },
-            {
-                source: 'testa',
-                target: 'libb',
-                sourceFile: 'packages/a/test/include/testa.h',
-                dependencyType: DependencyType.static,
-            },
-            {
-                source: 'testa',
-                target: 'libb',
-                sourceFile: 'packages/a/test/src/testa.c',
                 dependencyType: DependencyType.static,
             },
             {
@@ -92,14 +87,14 @@ describe('createDependencies', () => {
             },
             {
                 source: 'a',
-                target: 'liba',
-                sourceFile: 'bin/a/src/a.c',
+                target: 'libb',
+                sourceFile: 'bin/a/include/a.h',
                 dependencyType: DependencyType.static,
             },
             {
                 source: 'a',
-                target: 'libb',
-                sourceFile: 'bin/a/include/a.h',
+                target: 'liba',
+                sourceFile: 'bin/a/src/a.c',
                 dependencyType: DependencyType.static,
             },
             {
@@ -109,19 +104,7 @@ describe('createDependencies', () => {
                 dependencyType: DependencyType.static,
             },
         ];
-        reducedDependenciesMock = [
-            {
-                source: 'testb',
-                target: 'libb',
-                sourceFile: 'packages/b/test/include/testb.h',
-                dependencyType: DependencyType.static,
-            },
-            {
-                source: 'testb',
-                target: 'libb',
-                sourceFile: 'packages/b/test/src/testb.c',
-                dependencyType: DependencyType.static,
-            },
+        expectedDependencies = [
             {
                 source: 'testa',
                 target: 'liba',
@@ -132,6 +115,18 @@ describe('createDependencies', () => {
                 source: 'testa',
                 target: 'liba',
                 sourceFile: 'packages/a/test/src/testa.c',
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'testb',
+                target: 'libb',
+                sourceFile: 'packages/b/test/include/testb.h',
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'testb',
+                target: 'libb',
+                sourceFile: 'packages/b/test/src/testb.c',
                 dependencyType: DependencyType.static,
             },
             {
@@ -713,7 +708,122 @@ describe('createDependencies', () => {
                     },
                 ],
             },
-            filesToProcess: {},
+            filesToProcess: {
+                testb: [
+                    {
+                        file: 'packages/b/test/CMakeLists.txt',
+                        hash: '16048227411190777847',
+                    },
+                    {
+                        file: 'packages/b/test/README.md',
+                        hash: '2870123589895563032',
+                    },
+                    {
+                        file: 'packages/b/test/include/testb.h',
+                        hash: '16909779487121674705',
+                    },
+                    {
+                        file: 'packages/b/test/project.json',
+                        hash: '13671336406555829957',
+                    },
+                    {
+                        file: 'packages/b/test/src/testb.c',
+                        hash: '5473380971657595275',
+                    },
+                ],
+                testa: [
+                    {
+                        file: 'packages/a/test/CMakeLists.txt',
+                        hash: '9385086644011761389',
+                    },
+                    {
+                        file: 'packages/a/test/README.md',
+                        hash: '15235861178647932845',
+                    },
+                    {
+                        file: 'packages/a/test/include/testa.h',
+                        hash: '17257690104214933380',
+                    },
+                    {
+                        file: 'packages/a/test/project.json',
+                        hash: '17878242666158404072',
+                    },
+                    {
+                        file: 'packages/a/test/src/testa.c',
+                        hash: '1495985023809063338',
+                    },
+                ],
+                liba: [
+                    {
+                        file: 'packages/a/CMakeLists.txt',
+                        hash: '4083624665328764431',
+                    },
+                    {
+                        file: 'packages/a/README.md',
+                        hash: '5422747201678680226',
+                    },
+                    {
+                        file: 'packages/a/include/liba.h',
+                        hash: '7287129596721732577',
+                    },
+                    {
+                        file: 'packages/a/project.json',
+                        hash: '14142598126282942392',
+                    },
+                    {
+                        file: 'packages/a/src/liba.c',
+                        hash: '8811379305788001024',
+                    },
+                ],
+                libb: [
+                    {
+                        file: 'packages/b/CMakeLists.txt',
+                        hash: '10511542091814494138',
+                    },
+                    {
+                        file: 'packages/b/README.md',
+                        hash: '3291435535669935444',
+                    },
+                    {
+                        file: 'packages/b/include/libb.h',
+                        hash: '17132771858623101600',
+                    },
+                    {
+                        file: 'packages/b/project.json',
+                        hash: '14475440475738848143',
+                    },
+                    {
+                        file: 'packages/b/src/libb.c',
+                        hash: '12987999627353370998',
+                    },
+                ],
+                b: [
+                    {
+                        file: 'bin/b/CMakeLists.txt',
+                        hash: '3609578026509014322',
+                    },
+                    { file: 'bin/b/README.md', hash: '6270437596575845475' },
+                    { file: 'bin/b/include/b.h', hash: '10468610324498506898' },
+                    {
+                        file: 'bin/b/project.json',
+                        hash: '16586497158741074059',
+                    },
+                    { file: 'bin/b/src/b.c', hash: '5593835610142892356' },
+                ],
+                a: [
+                    {
+                        file: 'bin/a/CMakeLists.txt',
+                        hash: '16339308070239190717',
+                    },
+                    { file: 'bin/a/README.md', hash: '7201959146225012909' },
+                    { file: 'bin/a/include/a.h', hash: '16201899969231751559' },
+                    {
+                        file: 'bin/a/project.json',
+                        hash: '12059839721009230919',
+                    },
+                    { file: 'bin/a/src/a.c', hash: '7529403647042148566' },
+                ],
+            },
             projectsConfigurations: {
                 version: 6,
                 projects: {},
@@ -760,9 +870,6 @@ describe('createDependencies', () => {
             },
         };
         mockGetDependencies.mockReturnValue(getDependenciesReturnMock);
-        mockReduceDependenciesTransitively.mockReturnValue(
-            reducedDependenciesMock
-        );
     });
 
     afterEach(() => {
@@ -771,6 +878,6 @@ describe('createDependencies', () => {
 
     it('should return dependencies based on the provided context', () => {
         const result = createDependencies(contextMock);
-        expect(result).toStrictEqual([]);
+        expect(result).toStrictEqual(expectedDependencies);
     });
 });
