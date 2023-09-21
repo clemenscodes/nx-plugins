@@ -7,6 +7,7 @@
             "runner": "nx-cloud",
             "options": {
                 "cacheableOperations": [
+                    "cmake",
                     "build",
                     "debug",
                     "test",
@@ -14,8 +15,7 @@
                     "lint",
                     "fmt"
                 ],
-                "accessToken": "ZTBkM2I2MjYtNTc4Mi00YjUxLTkzNDAtZWFlYjg1OGY0Y2UxfHJlYWQtd3JpdGU=",
-                "useDaemonProcess": false
+                "accessToken": "ZTBkM2I2MjYtNTc4Mi00YjUxLTkzNDAtZWFlYjg1OGY0Y2UxfHJlYWQtd3JpdGU="
             }
         }
     },
