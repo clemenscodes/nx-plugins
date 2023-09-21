@@ -1,6 +1,6 @@
 import type { TestExecutorSchema } from './schema';
 import type { ExecutorContext } from '@nx/devkit';
-import { testBinaryWithCTest } from './utils/testBinaryWithCTest/testBinaryWithCTest';
+import { testBinaryWithCtest } from './utils/testBinaryWithCtest/testBinaryWithCtest';
 
 export default async function* runExecutor(
     options: TestExecutorSchema,
@@ -11,7 +11,7 @@ export default async function* runExecutor(
     const project = projects[projectName];
     const { root: projectRoot } = project;
 
-    const success = testBinaryWithCTest(workspaceRoot, projectRoot, options);
+    const success = testBinaryWithCtest(workspaceRoot, projectRoot, options);
 
     yield {
         success,

@@ -1,5 +1,5 @@
 import type { DebugExecutorSchema } from '../../schema';
-import { debugBinaryWithGdb } from '../debugBinaryWithGdb/debugBinaryWithGdb';
+import { debugBinaryWithGdb } from './debugBinaryWithGdb';
 import * as runCommandModule from '../../../../utils/commandUtils/runCommand/runCommand';
 import * as checkCommandExistsModule from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
 
