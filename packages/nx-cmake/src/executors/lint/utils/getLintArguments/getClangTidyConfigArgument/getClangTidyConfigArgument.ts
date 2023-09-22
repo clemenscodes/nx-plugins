@@ -1,15 +1,14 @@
 import { getConfigFile } from '../../../../../utils/fileUtils/getConfigFile/getConfigFile';
 
-export const getStyleArgument = async (
+export const getClangTidyConfigArgument = async (
     workspaceRoot: string,
-    projectRoot: string,
-    clangFormatFile: string
+    projectRoot: string
 ): Promise<string> => {
     const configFile = await getConfigFile(
         workspaceRoot,
         projectRoot,
-        clangFormatFile
+        '.clang-tidy'
     );
-    const styleArgument = `--style=file:${configFile}`;
-    return styleArgument;
+    const configArgument = `--config-file=${configFile}`;
+    return configArgument;
 };

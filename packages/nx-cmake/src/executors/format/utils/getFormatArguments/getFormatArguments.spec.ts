@@ -1,12 +1,12 @@
 import type { FormatExecutorSchema } from '../../schema';
 import { getFormatArguments } from './getFormatArguments';
-import * as getConfigFileModule from '../../../../utils/fileUtils/getConfigFile/getConfigFile';
+import * as getStyleArgumentModule from './getStyleArgument/getStyleArgument';
 
 describe('getFormatArguments', () => {
-    let getConfigFileMock: jest.SpyInstance;
     let workspaceRoot: string;
     let projectRoot: string;
     let options: FormatExecutorSchema;
+    let getStyleArgumentMock: jest.SpyInstance;
 
     beforeEach(() => {
         workspaceRoot = '/workspaceRoot';
@@ -16,10 +16,10 @@ describe('getFormatArguments', () => {
             verbose: true,
             editFilesInPlace: true,
         };
-        getConfigFileMock = jest
-            .spyOn(getConfigFileModule, 'getConfigFile')
-            .mockImplementation(async (workspaceRoot, projectRoot) => {
-                return `${workspaceRoot}/${projectRoot}/.clang-format`;
+        getStyleArgumentMock = jest
+            .spyOn(getStyleArgumentModule, 'getStyleArgument')
+            .mockImplementation(async () => {
+                return `--style=file:${workspaceRoot}/${projectRoot}/.clang-format`;
             });
     });
 
@@ -34,7 +34,7 @@ describe('getFormatArguments', () => {
             options
         );
 
-        expect(getConfigFileMock).toHaveBeenCalledWith(
+        expect(getStyleArgumentMock).toHaveBeenCalledWith(
             workspaceRoot,
             projectRoot,
             '.clang-format'
@@ -58,7 +58,7 @@ describe('getFormatArguments', () => {
             options
         );
 
-        expect(getConfigFileMock).toHaveBeenCalledWith(
+        expect(getStyleArgumentMock).toHaveBeenCalledWith(
             workspaceRoot,
             projectRoot,
             '.clang-format'
@@ -73,7 +73,7 @@ describe('getFormatArguments', () => {
     });
 
     it('should error if config file does not exist', async () => {
-        getConfigFileMock.mockImplementation(() => {
+        getStyleArgumentMock.mockImplementation(() => {
             throw new Error();
         });
         await expect(

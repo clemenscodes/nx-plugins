@@ -4,7 +4,7 @@ import { getAbsolutePath } from '../getAbsolutePath/getAbsolutePath';
 export const getConfigFile = async (
     workspaceRoot: string,
     projectRoot: string,
-    configFile: string,
+    configFile: string
 ): Promise<string> => {
     const joinedProjectRoot = getAbsolutePath(workspaceRoot, projectRoot);
     const projectConfigFile = getAbsolutePath(joinedProjectRoot, configFile);

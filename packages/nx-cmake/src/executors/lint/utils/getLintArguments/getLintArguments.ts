@@ -1,35 +1,6 @@
 import type { LintExecutorSchema } from '../../schema';
-import { getConfigFile } from '../../../../utils/fileUtils/getConfigFile/getConfigFile';
-
-export const getBuildPath = (
-    workspaceRoot: string,
-    projectRoot: string
-): string => {
-    const buildPath = `${workspaceRoot}/dist/${projectRoot}/compile_commands.json`;
-    return buildPath;
-};
-
-export const getClangTidyBuildPathArgument = (
-    workspaceRoot: string,
-    projectRoot: string
-): string => {
-    const buildPath = getBuildPath(workspaceRoot, projectRoot);
-    const buildArgument = `-p=${buildPath}`;
-    return buildArgument;
-};
-
-export const getClangTidyConfigArgument = async (
-    workspaceRoot: string,
-    projectRoot: string
-): Promise<string> => {
-    const configFile = await getConfigFile(
-        workspaceRoot,
-        projectRoot,
-        '.clang-tidy'
-    );
-    const configArgument = `--config-file=${configFile}`;
-    return configArgument;
-};
+import { getClangTidyBuildPathArgument } from './getClangTidyBuildPathArgument/getClangTidyBuildPathArgument';
+import { getClangTidyConfigArgument } from './getClangTidyConfigArgument/getClangTidyConfigArgument';
 
 export const getLintArguments = async (
     workspaceRoot: string,
