@@ -7,7 +7,7 @@ export const getClangTidyConfigArgument = async (
     const configFile = await getConfigFile(
         workspaceRoot,
         projectRoot,
-        '.clang-tidy',
+        '.clang-tidy.yml',
     );
     const configArgument = `--config-file=${configFile}`;
     return configArgument;

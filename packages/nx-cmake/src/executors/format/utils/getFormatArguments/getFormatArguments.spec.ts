@@ -19,7 +19,7 @@ describe('getFormatArguments', () => {
         getStyleArgumentMock = jest
             .spyOn(getStyleArgumentModule, 'getStyleArgument')
             .mockImplementation(async () => {
-                return `--style=file:${workspaceRoot}/${projectRoot}/.clang-format`;
+                return `--style=file:${workspaceRoot}/${projectRoot}/.clang-format.yml`;
             });
     });
 
@@ -37,11 +37,11 @@ describe('getFormatArguments', () => {
         expect(getStyleArgumentMock).toHaveBeenCalledWith(
             workspaceRoot,
             projectRoot,
-            '.clang-format',
+            '.clang-format.yml',
         );
 
         expect(result).toEqual([
-            `--style=file:${workspaceRoot}/${projectRoot}/.clang-format`,
+            `--style=file:${workspaceRoot}/${projectRoot}/.clang-format.yml`,
             '--verbose',
             '-i',
             '--arg1',
@@ -61,11 +61,11 @@ describe('getFormatArguments', () => {
         expect(getStyleArgumentMock).toHaveBeenCalledWith(
             workspaceRoot,
             projectRoot,
-            '.clang-format',
+            '.clang-format.yml',
         );
 
         expect(result).toEqual([
-            `--style=file:${workspaceRoot}/${projectRoot}/.clang-format`,
+            `--style=file:${workspaceRoot}/${projectRoot}/.clang-format.yml`,
             '--verbose',
             '--arg1',
             '--arg2',

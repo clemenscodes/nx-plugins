@@ -11,7 +11,7 @@ describe('getClangTidyConfigArgument', () => {
     beforeEach(() => {
         workspaceRoot = '/workspaceRoot';
         projectRoot = '/projectRoot';
-        expectedConfigFile = `${workspaceRoot}/${projectRoot}/.clang-tidy`;
+        expectedConfigFile = `${workspaceRoot}/${projectRoot}/.clang-tidy.yml`;
         expectedArgument = `--config-file=${expectedConfigFile}`;
         getConfigFileMock = jest
             .spyOn(getConfigFileModule, 'getConfigFile')
@@ -35,7 +35,7 @@ describe('getClangTidyConfigArgument', () => {
         expect(getConfigFileMock).toHaveBeenCalledWith(
             workspaceRoot,
             projectRoot,
-            '.clang-tidy',
+            '.clang-tidy.yml',
         );
     });
 });

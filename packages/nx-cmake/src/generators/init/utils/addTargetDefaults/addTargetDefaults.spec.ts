@@ -16,9 +16,13 @@ describe('addTargetDefaults', () => {
                     dependsOn: ['^cmake', '^build', 'cmake'],
                     inputs: ['default'],
                 },
+                fmt: {
+                    dependsOn: [],
+                    inputs: ['clangFormat'],
+                },
                 lint: {
                     dependsOn: ['cmake'],
-                    inputs: ['default'],
+                    inputs: ['clangTidy'],
                 },
                 test: {
                     dependsOn: ['build'],
@@ -45,9 +49,13 @@ describe('addTargetDefaults', () => {
                     dependsOn: ['^cmake', '^build', 'cmake'],
                     inputs: ['default'],
                 },
+                fmt: {
+                    dependsOn: [],
+                    inputs: ['clangFormat'],
+                },
                 lint: {
                     dependsOn: ['cmake'],
-                    inputs: ['default'],
+                    inputs: ['clangTidy'],
                 },
                 test: {
                     dependsOn: ['build'],

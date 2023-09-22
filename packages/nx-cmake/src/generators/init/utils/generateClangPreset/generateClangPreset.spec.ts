@@ -21,8 +21,8 @@ describe('generateClangPreset', () => {
             cmakeConfigDir: 'cmake',
             addClangPreset: false,
         };
-        clangFormatFile = '.clang-format';
-        clangTidyFile = '.clang-tidy';
+        clangFormatFile = '.clang-format.yml';
+        clangTidyFile = '.clang-tidy.yml';
         expectedClangTidyFileContent =
             "Checks: 'clang-diagnostic-*,clang-analyzer-*'\n" +
             "WarningsAsErrors: ''\n" +
@@ -39,6 +39,12 @@ describe('generateClangPreset', () => {
             'IndentCaseLabels: true\n' +
             'SortIncludes: false\n' +
             'BreakStringLiterals: false\n' +
+            'BinPackArguments: false\n' +
+            'BinPackParameters: false\n' +
+            'ExperimentalAutoDetectBinPacking: false\n' +
+            'AllowAllParametersOfDeclarationOnNextLine: false\n' +
+            'AllowAllArgumentsOnNextLine: false\n' +
+            'AlignAfterOpenBracket: BlockIndent\n' +
             'MaxEmptyLinesToKeep: 1\n' +
             'AllowShortIfStatementsOnASingleLine: false\n' +
             'AllowShortFunctionsOnASingleLine: Empty\n' +
@@ -75,15 +81,15 @@ describe('generateClangPreset', () => {
 
     it('should not generate clang preset when addClangPreset is false', async () => {
         generateClangPreset(tree, options);
-        expect(tree.exists('.clang-format')).toBe(false);
-        expect(tree.exists('.clang-tidy')).toBe(false);
+        expect(tree.exists('.clang-format.yml')).toBe(false);
+        expect(tree.exists('.clang-tidy.yml')).toBe(false);
     });
 
     it('should generate clang preset when addClangFormatPreset is true', async () => {
         options.addClangPreset = true;
         generateClangPreset(tree, options);
-        expect(tree.exists('.clang-format')).toBe(true);
-        expect(tree.exists('.clang-tidy')).toBe(true);
+        expect(tree.exists('.clang-format.yml')).toBe(true);
+        expect(tree.exists('.clang-tidy.yml')).toBe(true);
     });
 
     it('should generate clang preset correctly', async () => {
