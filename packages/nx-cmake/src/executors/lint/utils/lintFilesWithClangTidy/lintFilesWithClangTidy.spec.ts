@@ -1,22 +1,35 @@
 import type { LintExecutorSchema } from '../../schema';
+import { lintFilesWithClangTidy } from './lintFilesWithClangTidy';
 import { CProjectType } from '../../../../models/types';
 import * as getProjectFilesModule from '../../../../utils/fileUtils/getProjectFiles/getProjectFiles';
 import * as checkCommandExistsModule from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
 import * as runCommandModule from '../../../../utils/commandUtils/runCommand/runCommand';
-import * as getConfigFileModule from '../../../../utils/fileUtils/getConfigFile/getConfigFile';
+import * as getLintArgumentsModule from '../getLintArguments/getLintArguments';
 
 describe('lintFilesWithClangTidy', () => {
-    let getConfigFileMock: jest.SpyInstance;
-    let getProjectFilesMock: jest.SpyInstance;
-    let checkCommandExistsMock: jest.SpyInstance;
-    let runCommandMock: jest.SpyInstance;
-    let options: LintExecutorSchema;
     let workspaceRoot: string;
     let projectRoot: string;
     let projectType: CProjectType;
+    let options: LintExecutorSchema;
+    let getLintArgumentsMock: jest.SpyInstance;
+    let getProjectFilesMock: jest.SpyInstance;
+    let checkCommandExistsMock: jest.SpyInstance;
+    let runCommandMock: jest.SpyInstance;
+    let lintCommandMock: string;
+    let lintArgsMock: string[];
+    let sourceFilesMock: string[];
 
     beforeEach(() => {
-        getConfigFileMock = jest.spyOn(getConfigFileModule, 'getConfigFile');
+        workspaceRoot = '/workspaceRoot';
+        projectRoot = '/projectRoot';
+        projectType = CProjectType.Lib;
+        options = {
+            args: [],
+        };
+        getLintArgumentsMock = jest.spyOn(
+            getLintArgumentsModule,
+            'getLintArguments'
+        );
         getProjectFilesMock = jest.spyOn(
             getProjectFilesModule,
             'getProjectFiles'
@@ -26,19 +39,68 @@ describe('lintFilesWithClangTidy', () => {
             'checkCommandExists'
         );
         runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
-        options = {
-            args: [],
-        };
-        workspaceRoot = '/workspaceRoot';
-        projectRoot = '/projectRoot';
-        projectType = CProjectType.Lib;
+        lintCommandMock = 'clang-tidy';
+        lintArgsMock = ['--config-file=your_config_file', '-p=your_build_path'];
+        sourceFilesMock = ['/path/to/file1.cpp', '/path/to/file2.cpp'];
     });
 
     afterEach(() => {
         jest.restoreAllMocks();
     });
 
-    it.todo('should pass executor arguments to clang-tidy');
-    it.todo('should return true if all files were successfully linted');
-    it.todo('should return false if not all files were successfully linted');
+    it('should pass executor arguments to clang-tidy', async () => {
+        getLintArgumentsMock.mockResolvedValue(lintArgsMock);
+        getProjectFilesMock.mockReturnValue(sourceFilesMock);
+        checkCommandExistsMock.mockReturnValue(lintCommandMock);
+        runCommandMock.mockReturnValueOnce({ success: true });
+
+        await lintFilesWithClangTidy(
+            workspaceRoot,
+            projectRoot,
+            options,
+            projectType
+        );
+
+        expect(getLintArgumentsMock).toHaveBeenCalledWith(
+            workspaceRoot,
+            projectRoot,
+            options
+        );
+        expect(getProjectFilesMock).toHaveBeenCalledWith(
+            workspaceRoot,
+            projectRoot
+        );
+        expect(checkCommandExistsMock).toHaveBeenCalledWith('clang-tidy');
+        expect(runCommandMock).toHaveBeenCalledWith(
+            lintCommandMock,
+            ...lintArgsMock,
+            ...sourceFilesMock
+        );
+    });
+
+    it('should return true if all files were successfully linted', async () => {
+        getLintArgumentsMock.mockResolvedValue(lintArgsMock);
+        getProjectFilesMock.mockReturnValue(sourceFilesMock);
+        runCommandMock.mockReturnValue({ success: true });
+        const result = await lintFilesWithClangTidy(
+            workspaceRoot,
+            projectRoot,
+            options,
+            projectType
+        );
+        expect(result).toBe(true);
+    });
+
+    it('should return false if not all files were successfully linted', async () => {
+        getLintArgumentsMock.mockResolvedValue(lintArgsMock);
+        getProjectFilesMock.mockReturnValue(sourceFilesMock);
+        runCommandMock.mockReturnValue({ success: false });
+        const result = await lintFilesWithClangTidy(
+            workspaceRoot,
+            projectRoot,
+            options,
+            projectType
+        );
+        expect(result).toBe(false);
+    });
 });
