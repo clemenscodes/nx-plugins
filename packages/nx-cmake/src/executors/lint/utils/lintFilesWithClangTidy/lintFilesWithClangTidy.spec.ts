@@ -1,6 +1,5 @@
 import type { LintExecutorSchema } from '../../schema';
 import { lintFilesWithClangTidy } from './lintFilesWithClangTidy';
-import { CProjectType } from '../../../../models/types';
 import * as getProjectFilesModule from '../../../../utils/fileUtils/getProjectFiles/getProjectFiles';
 import * as checkCommandExistsModule from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
 import * as runCommandModule from '../../../../utils/commandUtils/runCommand/runCommand';
@@ -9,7 +8,6 @@ import * as getLintArgumentsModule from '../getLintArguments/getLintArguments';
 describe('lintFilesWithClangTidy', () => {
     let workspaceRoot: string;
     let projectRoot: string;
-    let projectType: CProjectType;
     let options: LintExecutorSchema;
     let getLintArgumentsMock: jest.SpyInstance;
     let getProjectFilesMock: jest.SpyInstance;
@@ -22,7 +20,6 @@ describe('lintFilesWithClangTidy', () => {
     beforeEach(() => {
         workspaceRoot = '/workspaceRoot';
         projectRoot = '/projectRoot';
-        projectType = CProjectType.Lib;
         options = {
             args: [],
         };
@@ -53,14 +50,7 @@ describe('lintFilesWithClangTidy', () => {
         getProjectFilesMock.mockReturnValue(sourceFilesMock);
         checkCommandExistsMock.mockReturnValue(lintCommandMock);
         runCommandMock.mockReturnValueOnce({ success: true });
-
-        await lintFilesWithClangTidy(
-            workspaceRoot,
-            projectRoot,
-            options,
-            projectType,
-        );
-
+        await lintFilesWithClangTidy(workspaceRoot, projectRoot, options);
         expect(getLintArgumentsMock).toHaveBeenCalledWith(
             workspaceRoot,
             projectRoot,
@@ -86,7 +76,6 @@ describe('lintFilesWithClangTidy', () => {
             workspaceRoot,
             projectRoot,
             options,
-            projectType,
         );
         expect(result).toBe(true);
     });
@@ -99,7 +88,6 @@ describe('lintFilesWithClangTidy', () => {
             workspaceRoot,
             projectRoot,
             options,
-            projectType,
         );
         expect(result).toBe(false);
     });

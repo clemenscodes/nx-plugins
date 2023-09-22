@@ -1,7 +1,7 @@
-include("../<%= relativeRootPath %>CMakeLists.txt")
+include("<%= relativeRootPath %>CMakeLists.txt")
 
 cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})
-project(test<%= name %> <%= cmakeC %>)
+project(<%= testName %> <%= cmakeC %>)
 set_binary_settings(${CMAKE_PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})
 link_static_library(${CMAKE_PROJECT_NAME} <%= name %>)
 enable_testing()
