@@ -86,7 +86,7 @@ describe('filterDependenciesOfProject', () => {
         ];
         getGccDependenciesMock = jest.spyOn(
             getGccDependenciesModule,
-            'getGccDependencies'
+            'getGccDependencies',
         );
     });
 
@@ -98,19 +98,19 @@ describe('filterDependenciesOfProject', () => {
         getGccDependenciesMock.mockReturnValueOnce(
             'testparser.o: packages/parser/test/include/testparser.h \\\n' +
                 ' include/libcmocka.h dist/packages/cmocka/cmocka-src/include/cmocka.h \\\n' +
-                ' packages/parser/include/libparser.h\n'
+                ' packages/parser/include/libparser.h\n',
         );
         getGccDependenciesMock.mockReturnValueOnce(
             'testparser.o: packages/parser/test/src/testparser.c \\\n' +
                 ' packages/parser/test/include/testparser.h include/libcmocka.h \\\n' +
                 ' dist/packages/cmocka/cmocka-src/include/cmocka.h \\\n' +
-                ' packages/parser/include/libparser.h\n'
+                ' packages/parser/include/libparser.h\n',
         );
         const result = filterDependenciesOfProject(
             project,
             workspaceLayout,
             projects,
-            filesToProcess
+            filesToProcess,
         );
         expect(result).toStrictEqual(expectedProjectDependencies);
     });

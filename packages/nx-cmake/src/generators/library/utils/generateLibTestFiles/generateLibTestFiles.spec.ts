@@ -42,7 +42,6 @@ describe('generateLibTestFiles', () => {
         options = {
             name: 'test',
             language: 'C',
-            skipFormat: false,
             generateTests: true,
         };
         resolvedOptions = resolveLibOptions(options);
@@ -144,7 +143,7 @@ describe('generateLibTestFiles', () => {
         options.generateTests = false;
         generateLibTestFiles(tree, resolvedOptions);
         expect(() =>
-            readProjectConfiguration(tree, resolvedOptions.testName)
+            readProjectConfiguration(tree, resolvedOptions.testName),
         ).toThrow("Cannot find configuration for 'testtest'");
     });
 

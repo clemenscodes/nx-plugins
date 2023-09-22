@@ -28,15 +28,15 @@ describe('lintFilesWithClangTidy', () => {
         };
         getLintArgumentsMock = jest.spyOn(
             getLintArgumentsModule,
-            'getLintArguments'
+            'getLintArguments',
         );
         getProjectFilesMock = jest.spyOn(
             getProjectFilesModule,
-            'getProjectFiles'
+            'getProjectFiles',
         );
         checkCommandExistsMock = jest.spyOn(
             checkCommandExistsModule,
-            'checkCommandExists'
+            'checkCommandExists',
         );
         runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
         lintCommandMock = 'clang-tidy';
@@ -58,23 +58,23 @@ describe('lintFilesWithClangTidy', () => {
             workspaceRoot,
             projectRoot,
             options,
-            projectType
+            projectType,
         );
 
         expect(getLintArgumentsMock).toHaveBeenCalledWith(
             workspaceRoot,
             projectRoot,
-            options
+            options,
         );
         expect(getProjectFilesMock).toHaveBeenCalledWith(
             workspaceRoot,
-            projectRoot
+            projectRoot,
         );
         expect(checkCommandExistsMock).toHaveBeenCalledWith('clang-tidy');
         expect(runCommandMock).toHaveBeenCalledWith(
             lintCommandMock,
             ...lintArgsMock,
-            ...sourceFilesMock
+            ...sourceFilesMock,
         );
     });
 
@@ -86,7 +86,7 @@ describe('lintFilesWithClangTidy', () => {
             workspaceRoot,
             projectRoot,
             options,
-            projectType
+            projectType,
         );
         expect(result).toBe(true);
     });
@@ -99,7 +99,7 @@ describe('lintFilesWithClangTidy', () => {
             workspaceRoot,
             projectRoot,
             options,
-            projectType
+            projectType,
         );
         expect(result).toBe(false);
     });

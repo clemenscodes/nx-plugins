@@ -22,7 +22,7 @@ describe('debugBinaryWithGdb', () => {
         runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
         checkCommandExistsMock = jest.spyOn(
             checkCommandExistsModule,
-            'checkCommandExists'
+            'checkCommandExists',
         );
     });
 
@@ -37,13 +37,13 @@ describe('debugBinaryWithGdb', () => {
             workspaceRoot,
             projectRoot,
             projectName,
-            options
+            options,
         );
         expect(checkCommandExistsMock).toHaveBeenCalledWith('gdb');
         expect(runCommandMock).toHaveBeenCalledWith(
             'gdb',
             `${workspaceRoot}/dist/${projectRoot}/${projectName}`,
-            ...options.args
+            ...options.args,
         );
         expect(result).toBe(true);
     });
@@ -53,7 +53,12 @@ describe('debugBinaryWithGdb', () => {
             throw new Error();
         });
         expect(() =>
-            debugBinaryWithGdb(workspaceRoot, projectRoot, projectName, options)
+            debugBinaryWithGdb(
+                workspaceRoot,
+                projectRoot,
+                projectName,
+                options,
+            ),
         ).toThrowError();
         expect(checkCommandExistsMock).toHaveBeenCalledWith('gdb');
         expect(runCommandMock).not.toHaveBeenCalled();
@@ -67,7 +72,7 @@ describe('debugBinaryWithGdb', () => {
             workspaceRoot,
             projectRoot,
             projectName,
-            options
+            options,
         );
         expect(checkCommandExistsMock).toHaveBeenCalledWith('gdb');
         expect(runCommandMock).toHaveBeenCalledWith(
@@ -76,7 +81,7 @@ describe('debugBinaryWithGdb', () => {
             '-ex',
             'run',
             '--arg1',
-            'value1'
+            'value1',
         );
         expect(result).toBe(true);
     });
@@ -88,13 +93,13 @@ describe('debugBinaryWithGdb', () => {
             workspaceRoot,
             projectRoot,
             projectName,
-            options
+            options,
         );
         expect(checkCommandExistsMock).toHaveBeenCalledWith('gdb');
         expect(runCommandMock).toHaveBeenCalledWith(
             'gdb',
             `${workspaceRoot}/dist/${projectRoot}/${projectName}`,
-            ...options.args
+            ...options.args,
         );
         expect(result).toBe(false);
     });

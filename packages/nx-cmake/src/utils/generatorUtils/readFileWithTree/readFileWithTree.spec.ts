@@ -15,7 +15,6 @@ describe('writeFileWithTree', () => {
         libOptions = {
             name: 'link',
             language: 'C++',
-            skipFormat: false,
             generateTests: true,
         };
         await libGenerator(tree, libOptions);

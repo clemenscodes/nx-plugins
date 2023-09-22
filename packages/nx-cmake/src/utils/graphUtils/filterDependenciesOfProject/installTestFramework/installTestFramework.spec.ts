@@ -28,7 +28,7 @@ describe('installTestFramework', () => {
             'cmake',
             '-S',
             '/workspace/root/project-root',
-            '/workspace/root/dist/project-root'
+            '/workspace/root/dist/project-root',
         );
         expect(executeCommandSpy).toHaveBeenCalledWith(cmd);
     });
@@ -40,7 +40,7 @@ describe('installTestFramework', () => {
         runCommandSpy.mockReturnValue('');
         executeCommandSpy.mockReturnValue('');
         expect(() =>
-            installTestFramework(workspaceRoot, projectRoot, cmd)
+            installTestFramework(workspaceRoot, projectRoot, cmd),
         ).toThrowError('Failed process dependencies');
     });
 });

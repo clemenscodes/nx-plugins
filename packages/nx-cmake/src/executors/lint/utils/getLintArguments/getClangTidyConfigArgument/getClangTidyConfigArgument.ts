@@ -2,12 +2,12 @@ import { getConfigFile } from '../../../../../utils/fileUtils/getConfigFile/getC
 
 export const getClangTidyConfigArgument = async (
     workspaceRoot: string,
-    projectRoot: string
+    projectRoot: string,
 ): Promise<string> => {
     const configFile = await getConfigFile(
         workspaceRoot,
         projectRoot,
-        '.clang-tidy'
+        '.clang-tidy',
     );
     const configArgument = `--config-file=${configFile}`;
     return configArgument;

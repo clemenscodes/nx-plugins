@@ -5,7 +5,7 @@ import { join } from 'path';
 
 export const generateClangPreset = (
     tree: Tree,
-    options: InitGeneratorSchema
+    options: InitGeneratorSchema,
 ) => {
     const { addClangPreset } = options;
     if (!addClangPreset) {
@@ -15,6 +15,6 @@ export const generateClangPreset = (
         tree,
         join(__dirname, '../../', 'template', 'style'),
         '.',
-        options
+        options,
     );
 };

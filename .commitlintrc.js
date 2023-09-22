@@ -12,7 +12,7 @@ module.exports = {
             [
                 ...(await getProjects(
                     ctx,
-                    ({ name }) => !name.includes('e2e') && !name.includes('sb')
+                    ({ name }) => !name.includes('e2e') && !name.includes('sb'),
                 )),
             ],
         ],

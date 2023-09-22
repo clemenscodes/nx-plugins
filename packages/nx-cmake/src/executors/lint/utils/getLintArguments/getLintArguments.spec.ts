@@ -22,7 +22,7 @@ describe('getLintArguments', () => {
         getClangTidyConfigArgumentMock = jest
             .spyOn(
                 getClangTidyConfigArgumentModule,
-                'getClangTidyConfigArgument'
+                'getClangTidyConfigArgument',
             )
             .mockImplementation(async (workspaceRoot, projectRoot) => {
                 return `--config-file=${workspaceRoot}/${projectRoot}/.clang-format`;
@@ -37,7 +37,7 @@ describe('getLintArguments', () => {
         const result = await getLintArguments(
             workspaceRoot,
             projectRoot,
-            options
+            options,
         );
         expect(result).toStrictEqual(expectedArguments);
     });
@@ -49,7 +49,7 @@ describe('getLintArguments', () => {
         const result = await getLintArguments(
             workspaceRoot,
             projectRoot,
-            options
+            options,
         );
         expect(result).toStrictEqual(expectedArguments);
     });
@@ -60,7 +60,7 @@ describe('getLintArguments', () => {
         });
         await expect(
             async () =>
-                await getLintArguments(workspaceRoot, projectRoot, options)
+                await getLintArguments(workspaceRoot, projectRoot, options),
         ).rejects.toThrowError();
     });
 });

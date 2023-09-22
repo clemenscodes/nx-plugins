@@ -2,7 +2,7 @@ import type { Graph } from '../../../../models/types';
 import type { ProjectGraphDependencyWithFile } from '@nx/devkit';
 
 export const buildGraphFromDeps = (
-    deps: ProjectGraphDependencyWithFile[]
+    deps: ProjectGraphDependencyWithFile[],
 ): Graph => {
     const graph: Graph = {};
     for (const dependency of deps) {

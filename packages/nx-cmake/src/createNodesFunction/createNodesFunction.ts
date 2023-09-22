@@ -4,7 +4,7 @@ import { getProjectType } from '../utils/generatorUtils/getProjectType/getProjec
 import { getProjectConfiguration } from '../utils/generatorUtils/getProjectConfiguration/getProjectConfiguration';
 
 export const createNodesFunction: CreateNodesFunction = (
-    projectConfigurationFile: string
+    projectConfigurationFile: string,
 ) => {
     const [root] = projectConfigurationFile.split(`/${PROJECT_FILE}`);
     const type = getProjectType(projectConfigurationFile);

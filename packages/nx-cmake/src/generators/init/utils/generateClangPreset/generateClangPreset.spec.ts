@@ -20,7 +20,6 @@ describe('generateClangPreset', () => {
             projectNameAndRootFormat: 'derived',
             cmakeConfigDir: 'cmake',
             addClangPreset: false,
-            skipFormat: false,
         };
         clangFormatFile = '.clang-format';
         clangTidyFile = '.clang-tidy';

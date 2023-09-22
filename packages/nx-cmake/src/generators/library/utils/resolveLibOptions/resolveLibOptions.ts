@@ -12,7 +12,7 @@ import { CProjectType } from '../../../../models/types';
 
 export const resolveLibOptions = (options: LibGeneratorSchema): LibOptions => {
     const resolvedOptions = resolveOptions<LibGeneratorSchema, LibOptions>(
-        options
+        options,
     );
     const { name, generateTests, language } = resolvedOptions;
     const projectRoot = getProjectRoot(name, CProjectType.Lib);

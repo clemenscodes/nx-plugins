@@ -6,13 +6,13 @@ import { getVerboseArgument } from './getVerboseArgument/getVerboseArgument';
 export const getFormatArguments = async (
     workspaceRoot: string,
     projectRoot: string,
-    options: FormatExecutorSchema
+    options: FormatExecutorSchema,
 ): Promise<string[]> => {
     const { args, verbose, editFilesInPlace } = options;
     const style = await getStyleArgument(
         workspaceRoot,
         projectRoot,
-        '.clang-format'
+        '.clang-format',
     );
     const isVerbose = getVerboseArgument(verbose);
     const inPlace = getEditFileInPlaceArgument(editFilesInPlace);

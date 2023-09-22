@@ -6,7 +6,7 @@ describe('getGtestInclude', () => {
         const workspaceLayout: WorkspaceLayout = { libsDir: 'libs' };
         const result = getGtestInclude(workspaceLayout);
         expect(result).toBe(
-            'dist/libs/gtest/googletest-src/googletest/include'
+            'dist/libs/gtest/googletest-src/googletest/include',
         );
     });
 });

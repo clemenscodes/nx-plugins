@@ -5,7 +5,7 @@ import { getTag } from './getTag/getTag';
 import { isC } from './isC/isC';
 
 export const filterProjects = (
-    nodes: ProjectGraph['nodes']
+    nodes: ProjectGraph['nodes'],
 ): FilteredProject[] => {
     const filteredProjects = Object.values(nodes)
         .filter(({ data }) => {

@@ -27,7 +27,7 @@ describe('filterSourceFiles', () => {
             workspaceRoot,
             projectRoot,
             projectType,
-            files
+            files,
         );
         expect(result).toStrictEqual([
             `${workspaceRoot}/${projectRoot}/include/libparser.h`,
@@ -41,7 +41,7 @@ describe('filterSourceFiles', () => {
             workspaceRoot,
             projectRoot,
             projectType,
-            files
+            files,
         );
         expect(result).toStrictEqual([
             `${workspaceRoot}/${projectRoot}/test/src/testparser.c`,

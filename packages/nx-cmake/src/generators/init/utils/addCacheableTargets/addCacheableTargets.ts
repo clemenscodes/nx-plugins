@@ -1,7 +1,7 @@
 import type { NxJsonConfiguration } from '@nx/devkit';
 
 export const addCacheableTargets = (
-    updatedNxJson: NxJsonConfiguration
+    updatedNxJson: NxJsonConfiguration,
 ): NxJsonConfiguration => {
     const { tasksRunnerOptions } = updatedNxJson;
     const defaultTasksRunnerOptions = {

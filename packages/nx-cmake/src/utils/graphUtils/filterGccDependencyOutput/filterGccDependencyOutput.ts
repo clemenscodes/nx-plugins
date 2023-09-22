@@ -2,7 +2,7 @@ import { isValidGccOutput } from './isValidGccOutput/isValidGccOutput';
 
 export const filterGccDependencyOutput = (
     output: string,
-    originalFile: string
+    originalFile: string,
 ): string[] => {
     const filteredOutput = output
         .split(' ')

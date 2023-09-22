@@ -9,7 +9,6 @@ export async function presetGenerator(tree: Tree) {
         projectNameAndRootFormat: 'derived',
         cmakeConfigDir: 'cmake',
         addClangPreset: true,
-        skipFormat: false,
     };
     await initGenerator(tree, initOptions);
 }

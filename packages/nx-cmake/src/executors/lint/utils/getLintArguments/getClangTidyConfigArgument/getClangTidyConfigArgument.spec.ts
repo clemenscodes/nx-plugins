@@ -18,7 +18,7 @@ describe('getClangTidyConfigArgument', () => {
             .mockImplementation(
                 async (workspaceRoot, projectRoot, filename) => {
                     return `${workspaceRoot}/${projectRoot}/${filename}`;
-                }
+                },
             );
     });
 
@@ -29,13 +29,13 @@ describe('getClangTidyConfigArgument', () => {
     it('should return the correct clang-tidy config argument', async () => {
         const result = await getClangTidyConfigArgument(
             workspaceRoot,
-            projectRoot
+            projectRoot,
         );
         expect(result).toBe(expectedArgument);
         expect(getConfigFileMock).toHaveBeenCalledWith(
             workspaceRoot,
             projectRoot,
-            '.clang-tidy'
+            '.clang-tidy',
         );
     });
 });

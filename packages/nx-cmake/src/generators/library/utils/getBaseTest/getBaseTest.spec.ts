@@ -10,7 +10,7 @@ describe('getBaseTest', () => {
             generateTests,
             language,
             libName,
-            projectName
+            projectName,
         );
         expect(result).toBe('');
     });
@@ -26,7 +26,7 @@ describe('getBaseTest', () => {
             generateTests,
             language,
             libName,
-            projectName
+            projectName,
         );
         expect(result).toBe(expected);
     });
@@ -62,7 +62,7 @@ describe('getBaseTest', () => {
             generateTests,
             language,
             libName,
-            projectName
+            projectName,
         );
         expect(result).toBe(expected);
     });

@@ -5,7 +5,7 @@ import { debugBinaryWithGdb } from './utils/debugBinaryWithGdb/debugBinaryWithGd
 
 export default async function* runExecutor(
     options: DebugExecutorSchema,
-    ctx: ExecutorContext
+    ctx: ExecutorContext,
 ): AsyncGenerator<{ success: boolean }> {
     const { root: workspaceRoot, projectName, projectsConfigurations } = ctx;
     const { projects } = projectsConfigurations;
@@ -17,7 +17,7 @@ export default async function* runExecutor(
         workspaceRoot,
         projectRoot,
         name,
-        options
+        options,
     );
 
     yield {

@@ -13,7 +13,7 @@ export const getIncludeDirective = (project: string): string => {
 
 export const getIncludeFile = (
     project: string,
-    sourceProjectRoot: string
+    sourceProjectRoot: string,
 ): string => {
     const includeFile = `${sourceProjectRoot}/include/${project}.h`;
     return includeFile;
@@ -32,7 +32,7 @@ export const getUpdatedIncludeFileContent = (
     tree: Tree,
     includeFile: string,
     macroDefinition: string,
-    includeDirective: string
+    includeDirective: string,
 ): string => {
     const includeFileContent = readFileWithTree(tree, includeFile);
     if (includeFileContent.includes(includeDirective)) {
@@ -57,7 +57,7 @@ export const updateIncludeFile = (tree: Tree, options: LinkSchema): string => {
         tree,
         includeFile,
         macroDefinition,
-        includeDirective
+        includeDirective,
     );
     return writeFileWithTree(tree, includeFile, updatedIncludeFileContent);
 };

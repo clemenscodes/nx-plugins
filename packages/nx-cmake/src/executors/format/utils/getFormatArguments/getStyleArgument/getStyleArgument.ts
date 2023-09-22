@@ -3,12 +3,12 @@ import { getConfigFile } from '../../../../../utils/fileUtils/getConfigFile/getC
 export const getStyleArgument = async (
     workspaceRoot: string,
     projectRoot: string,
-    clangFormatFile: string
+    clangFormatFile: string,
 ): Promise<string> => {
     const configFile = await getConfigFile(
         workspaceRoot,
         projectRoot,
-        clangFormatFile
+        clangFormatFile,
     );
     const styleArgument = `--style=file:${configFile}`;
     return styleArgument;

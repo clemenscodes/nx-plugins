@@ -47,7 +47,6 @@ describe('generateBinFiles', () => {
         options = {
             name: 'test',
             language: 'C++',
-            skipFormat: false,
             generateTests: false,
         };
         expectedSourceFile =

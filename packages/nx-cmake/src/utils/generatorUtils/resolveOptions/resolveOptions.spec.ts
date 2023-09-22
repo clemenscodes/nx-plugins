@@ -9,7 +9,6 @@ describe('resolveOptions', () => {
         options = {
             name: 'exampleName',
             language: 'C++',
-            skipFormat: false,
         };
         expected = {
             ...options,

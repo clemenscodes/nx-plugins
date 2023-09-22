@@ -19,7 +19,7 @@ describe('buildProjectWithMake', () => {
         runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
         checkCommandExistsMock = jest.spyOn(
             checkCommandExistsModule,
-            'checkCommandExists'
+            'checkCommandExists',
         );
     });
 
@@ -38,7 +38,7 @@ describe('buildProjectWithMake', () => {
             throw new Error();
         });
         expect(() =>
-            buildProjectWithMake(workspaceRoot, projectRoot, options)
+            buildProjectWithMake(workspaceRoot, projectRoot, options),
         ).toThrowError();
         expect(checkCommandExistsMock).toHaveBeenCalledWith('make');
         expect(runCommandMock).not.toHaveBeenCalled();
@@ -51,7 +51,7 @@ describe('buildProjectWithMake', () => {
             'make',
             '-C',
             `${workspaceRoot}/dist/${projectRoot}`,
-            ...options.args
+            ...options.args,
         );
     });
 
@@ -60,7 +60,7 @@ describe('buildProjectWithMake', () => {
         const result = buildProjectWithMake(
             workspaceRoot,
             projectRoot,
-            options
+            options,
         );
         expect(result).toBe(true);
     });
@@ -70,7 +70,7 @@ describe('buildProjectWithMake', () => {
         const result = buildProjectWithMake(
             workspaceRoot,
             projectRoot,
-            options
+            options,
         );
         expect(result).toBe(false);
     });

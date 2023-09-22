@@ -16,7 +16,6 @@ describe('addTestProjectConfig', () => {
         options = {
             name: 'test',
             language: 'C',
-            skipFormat: false,
             generateTests: true,
         };
         resolvedOptions = resolveLibOptions(options);
@@ -105,7 +104,7 @@ describe('addTestProjectConfig', () => {
         resolvedOptions = resolveLibOptions(options);
         addTestProjectConfig(tree, resolvedOptions);
         expect(() =>
-            readProjectConfiguration(tree, resolvedOptions.testName)
+            readProjectConfiguration(tree, resolvedOptions.testName),
         ).toThrow("Cannot find configuration for 'testtest'");
     });
 });

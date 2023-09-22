@@ -10,25 +10,25 @@ export const formatFilesWithClangFormat = async (
     workspaceRoot: string,
     projectRoot: string,
     options: FormatExecutorSchema,
-    projectType: CProjectType
+    projectType: CProjectType,
 ): Promise<boolean> => {
     const formatCommand = checkCommandExists('clang-format');
     const formatArgs = await getFormatArguments(
         workspaceRoot,
         projectRoot,
-        options
+        options,
     );
     const files = getProjectFiles(workspaceRoot, projectRoot);
     const sourceFiles = filterSourceFiles(
         workspaceRoot,
         projectRoot,
         projectType,
-        files
+        files,
     );
     const success = executeCommandForFiles(
         formatCommand,
         formatArgs,
-        sourceFiles
+        sourceFiles,
     );
     return success;
 };

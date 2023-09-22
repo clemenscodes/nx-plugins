@@ -7,7 +7,7 @@ export const getDependenciesOfFile = (
     mainProject: FilteredProject,
     file: string,
     files: string[],
-    projects: FilteredProject[]
+    projects: FilteredProject[],
 ): ProjectGraphDependencyWithFile[] => {
     const { name } = mainProject;
     const projectSet: Set<string> = new Set();

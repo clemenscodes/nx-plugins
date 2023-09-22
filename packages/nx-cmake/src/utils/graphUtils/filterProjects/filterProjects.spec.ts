@@ -13,20 +13,20 @@ describe('filterProjects', () => {
     beforeEach(() => {
         project1 = getProjectConfiguration(
             'path/to/project1',
-            CProjectType.App
+            CProjectType.App,
         )['project1'];
         project2 = getProjectConfiguration(
             'path/to/project2',
-            CProjectType.Lib
+            CProjectType.Lib,
         )['libproject2'];
 
         project3 = getProjectConfiguration(
             'path/to/project3',
-            CProjectType.Lib
+            CProjectType.Lib,
         )['libproject3'];
         project4 = getProjectConfiguration(
             'path/to/project4',
-            CProjectType.Lib
+            CProjectType.Lib,
         )['libproject4'];
         nodes = {
             project1: {

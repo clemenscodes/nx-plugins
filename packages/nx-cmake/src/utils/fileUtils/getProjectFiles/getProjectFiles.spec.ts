@@ -9,11 +9,11 @@ describe('getProjectFiles', () => {
     beforeEach(() => {
         getAbsolutePathMock = jest.spyOn(
             getAbsolutePathModule,
-            'getAbsolutePath'
+            'getAbsolutePath',
         );
         getFilesOfDirectoryRecursivelyMock = jest.spyOn(
             getFilesOfDirectoryRecursivelyModule,
-            'getFilesOfDirectoryRecursively'
+            'getFilesOfDirectoryRecursively',
         );
     });
 
@@ -46,10 +46,10 @@ describe('getProjectFiles', () => {
         expect(result).toEqual(projectFiles);
         expect(getAbsolutePathMock).toHaveBeenCalledWith(
             workspaceRoot,
-            projectRoot
+            projectRoot,
         );
         expect(getFilesOfDirectoryRecursivelyMock).toHaveBeenCalledWith(
-            fullProjectRoot
+            fullProjectRoot,
         );
     });
 });

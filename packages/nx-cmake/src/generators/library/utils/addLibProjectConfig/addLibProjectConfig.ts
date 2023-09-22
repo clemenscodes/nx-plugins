@@ -6,7 +6,7 @@ import { CProjectType } from '../../../../models/types';
 
 export const addLibProjectConfig = (
     tree: Tree,
-    resolvedLibOptions: LibOptions
+    resolvedLibOptions: LibOptions,
 ) => {
     const { projectRoot, libName, languageExtension } = resolvedLibOptions;
     const targets = getProjectTargets(CProjectType.Lib);

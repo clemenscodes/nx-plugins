@@ -5,12 +5,12 @@ import { join } from 'path';
 
 export const generateCmakeConfigFiles = (
     tree: Tree,
-    options: InitGeneratorSchema
+    options: InitGeneratorSchema,
 ) => {
     generateFiles(
         tree,
         join(__dirname, '../../', 'template', 'cmake'),
         options.cmakeConfigDir,
-        options
+        options,
     );
 };

@@ -4,13 +4,13 @@ import { executeCommand } from '../../../commandUtils/executeCommand/executeComm
 export const installTestFramework = (
     workspaceRoot: string,
     projectRoot: string,
-    cmd: string
+    cmd: string,
 ) => {
     runCommand(
         'cmake',
         '-S',
         `${workspaceRoot}/${projectRoot}`,
-        `${workspaceRoot}/dist/${projectRoot}`
+        `${workspaceRoot}/dist/${projectRoot}`,
     );
 
     const stdout = executeCommand(cmd);

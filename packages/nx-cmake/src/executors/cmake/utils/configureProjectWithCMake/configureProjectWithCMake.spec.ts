@@ -21,7 +21,7 @@ describe('buildProjectWithMake', () => {
         runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
         checkCommandExistsMock = jest.spyOn(
             checkCommandExistsModule,
-            'checkCommandExists'
+            'checkCommandExists',
         );
     });
 
@@ -34,7 +34,7 @@ describe('buildProjectWithMake', () => {
         const result = configureProjectWithCMake(
             workspaceRoot,
             projectRoot,
-            options
+            options,
         );
         expect(checkCommandExistsMock).toHaveBeenCalledWith('cmake');
         expect(runCommandMock).toHaveBeenCalledWith(
@@ -43,7 +43,7 @@ describe('buildProjectWithMake', () => {
             `${workspaceRoot}/${projectRoot}`,
             `${workspaceRoot}/dist/${projectRoot}`,
             '-DCMAKE_BUILD_TYPE=Debug',
-            ...options.args
+            ...options.args,
         );
         expect(result).toBe(true);
     });
@@ -53,7 +53,7 @@ describe('buildProjectWithMake', () => {
             throw new Error();
         });
         expect(() =>
-            configureProjectWithCMake(workspaceRoot, projectRoot, options)
+            configureProjectWithCMake(workspaceRoot, projectRoot, options),
         ).toThrowError();
         expect(checkCommandExistsMock).toHaveBeenCalledWith('cmake');
         expect(runCommandMock).not.toHaveBeenCalled();
@@ -65,7 +65,7 @@ describe('buildProjectWithMake', () => {
         const result = configureProjectWithCMake(
             workspaceRoot,
             projectRoot,
-            options
+            options,
         );
         expect(checkCommandExistsMock).toHaveBeenCalledWith('cmake');
         expect(runCommandMock).toHaveBeenCalledWith(
@@ -75,7 +75,7 @@ describe('buildProjectWithMake', () => {
             `${workspaceRoot}/dist/${projectRoot}`,
             '-DCMAKE_BUILD_TYPE=Debug',
             '--arg1',
-            '--arg2'
+            '--arg2',
         );
         expect(result).toBe(true);
     });
@@ -85,7 +85,7 @@ describe('buildProjectWithMake', () => {
         const result = configureProjectWithCMake(
             workspaceRoot,
             projectRoot,
-            options
+            options,
         );
         expect(checkCommandExistsMock).toHaveBeenCalledWith('cmake');
         expect(runCommandMock).toHaveBeenCalledWith(
@@ -94,7 +94,7 @@ describe('buildProjectWithMake', () => {
             `${workspaceRoot}/${projectRoot}`,
             `${workspaceRoot}/dist/${projectRoot}`,
             '-DCMAKE_BUILD_TYPE=Debug',
-            ...options.args
+            ...options.args,
         );
         expect(result).toBe(false);
     });

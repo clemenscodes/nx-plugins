@@ -30,7 +30,6 @@ describe('getUpdatedNxJson', () => {
             libsDir: 'packages',
             cmakeConfigDir: 'cmake',
             addClangPreset: true,
-            skipFormat: false,
         };
 
         mockUpdatedNxJson = {
@@ -87,7 +86,7 @@ describe('getUpdatedNxJson', () => {
     it('should get updated nx.json', async () => {
         const [resultNxJson, resultOptions] = getUpdatedNxJson(
             mockNxJson,
-            mockOptions
+            mockOptions,
         );
         expect(resultNxJson).toStrictEqual(mockUpdatedNxJson);
         expect(resultOptions).toStrictEqual(mockOptions);

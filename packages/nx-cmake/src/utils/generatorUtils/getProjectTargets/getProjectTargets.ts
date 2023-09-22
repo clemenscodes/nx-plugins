@@ -90,7 +90,7 @@ export const testTargets = {
 };
 
 export const getProjectTargets = (
-    projectType: CProjectType
+    projectType: CProjectType,
 ): ProjectConfiguration['targets'] => {
     const targets: ProjectConfiguration['targets'] = {
         ...defaultTargets,

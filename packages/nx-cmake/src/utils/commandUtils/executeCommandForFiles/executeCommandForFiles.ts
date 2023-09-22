@@ -3,7 +3,7 @@ import { runCommand } from '../runCommand/runCommand';
 export const executeCommandForFiles = (
     command: string,
     args: string[],
-    files: string[]
+    files: string[],
 ): boolean => {
     let success = true;
 

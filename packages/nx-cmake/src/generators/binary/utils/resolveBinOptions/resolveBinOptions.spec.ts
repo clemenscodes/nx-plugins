@@ -9,7 +9,6 @@ describe('resolveBinOptions ', () => {
         options = {
             name: 'base',
             language: 'C++',
-            skipFormat: false,
             generateTests: false,
         };
 
@@ -25,7 +24,6 @@ describe('resolveBinOptions ', () => {
                 source: 'base',
                 target: 'libbase',
                 link: 'shared',
-                skipFormat: false,
             },
         };
     });

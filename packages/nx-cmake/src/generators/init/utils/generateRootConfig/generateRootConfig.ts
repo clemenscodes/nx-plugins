@@ -5,12 +5,12 @@ import { generateFiles } from '@nx/devkit';
 
 export const generateRootConfig = (
     tree: Tree,
-    options: InitGeneratorSchema
+    options: InitGeneratorSchema,
 ) => {
     generateFiles(
         tree,
         join(__dirname, '../../', 'template', 'config'),
         '.',
-        options
+        options,
     );
 };

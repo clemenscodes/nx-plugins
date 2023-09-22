@@ -23,7 +23,7 @@ describe('getConfigFile', () => {
         const result = await getConfigFile(
             workspaceRoot,
             projectRoot,
-            configFile
+            configFile,
         );
         expect(result).toBe('/workspace/project/.clang-format');
     });
@@ -34,7 +34,7 @@ describe('getConfigFile', () => {
         const result = await getConfigFile(
             workspaceRoot,
             projectRoot,
-            configFile
+            configFile,
         );
         expect(result).toBe('/workspace/.clang-format');
     });
@@ -43,9 +43,9 @@ describe('getConfigFile', () => {
         fileExistsMock.mockResolvedValueOnce(false);
         fileExistsMock.mockResolvedValueOnce(false);
         await expect(
-            getConfigFile(workspaceRoot, projectRoot, configFile)
+            getConfigFile(workspaceRoot, projectRoot, configFile),
         ).rejects.toThrowError(
-            `Could not find .clang-format. Please generate a preset using nx-cmake:init or provide your own.`
+            `Could not find .clang-format. Please generate a preset using nx-cmake:init or provide your own.`,
         );
     });
 });

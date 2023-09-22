@@ -6,12 +6,12 @@ export const executeBinary = (
     workspaceRoot: string,
     projectRoot: string,
     projectName: string,
-    options: ExecuteExecutorSchema
+    options: ExecuteExecutorSchema,
 ): boolean => {
     const bin = `${workspaceRoot}/dist/${projectRoot}/${projectName}`;
     if (!fileExists(bin)) {
         throw new Error(
-            `The binary of ${projectName} was not found and cound not be executed.`
+            `The binary of ${projectName} was not found and cound not be executed.`,
         );
     }
     const { args } = options;

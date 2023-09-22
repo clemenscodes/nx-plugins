@@ -3,14 +3,14 @@ import { getProjectTypeFromConfigFileContent } from './getProjectTypeFromConfigF
 import { readProjectFile } from './readProjectFile/readProjectFile';
 
 export const getProjectType = (
-    projectConfigurationFile: string
+    projectConfigurationFile: string,
 ): CProjectType => {
     try {
         const configFileContent = readProjectFile(projectConfigurationFile);
         return getProjectTypeFromConfigFileContent(configFileContent);
     } catch (e) {
         throw new Error(
-            `Failed to determine project type for the configuration file ${projectConfigurationFile}`
+            `Failed to determine project type for the configuration file ${projectConfigurationFile}`,
         );
     }
 };

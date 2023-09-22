@@ -5,12 +5,12 @@ import { join } from 'path';
 
 export const generateGlobalIncludeDir = (
     tree: Tree,
-    options: InitGeneratorSchema
+    options: InitGeneratorSchema,
 ) => {
     generateFiles(
         tree,
         join(__dirname, '../../', 'template', 'include'),
         'include',
-        options
+        options,
     );
 };

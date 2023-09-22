@@ -19,25 +19,22 @@ describe('resolveLinkOptions', () => {
             source: 'liblink',
             target: 'libtarget',
             link: 'shared',
-            skipFormat: false,
         };
         binOptions = {
             name: 'binary',
             language: 'C++',
-            skipFormat: false,
             generateTests: false,
         };
         libOptions = {
             name: 'link',
             language: 'C++',
-            skipFormat: false,
             generateTests: true,
         };
     });
 
     it('should throw when source project does not exist', () => {
         expect(() => resolveLinkOptions(tree, options)).toThrow(
-            "Cannot find configuration for 'libtarget'"
+            "Cannot find configuration for 'libtarget'",
         );
     });
 
@@ -50,7 +47,6 @@ describe('resolveLinkOptions', () => {
             source: 'liblink',
             target: 'libtarget',
             link: 'shared',
-            skipFormat: false,
             sourceProjectRoot: 'packages/link',
         };
         expect(resolvedOptions).toStrictEqual(expectedResolvedOptions);
@@ -61,7 +57,7 @@ describe('resolveLinkOptions', () => {
         options.target = 'binary';
         await binGenerator(tree, binOptions);
         expect(() => resolveLinkOptions(tree, options)).toThrow(
-            'Project binary is not a library and not linkable'
+            'Project binary is not a library and not linkable',
         );
     });
 });

@@ -16,7 +16,6 @@ describe('addLibProjectConfig', () => {
         options = {
             name: 'test',
             language: 'C++',
-            skipFormat: false,
             generateTests: false,
         };
         resolvedOptions = resolveLibOptions(options);

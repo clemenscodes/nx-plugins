@@ -22,7 +22,7 @@ describe('filterGccDependencyOutput', () => {
         const expectedOutput: string[] = [];
         const result = filterGccDependencyOutput(
             inputOutput,
-            'original/file1.c'
+            'original/file1.c',
         );
         expect(result).toEqual(expectedOutput);
     });
@@ -35,7 +35,7 @@ describe('filterGccDependencyOutput', () => {
         const expectedOutput: string[] = [];
         const result = filterGccDependencyOutput(
             inputOutput,
-            'original/file.h'
+            'original/file.h',
         );
         expect(result).toEqual(expectedOutput);
     });

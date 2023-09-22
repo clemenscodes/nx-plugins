@@ -9,6 +9,6 @@ export const generateBinFiles = (tree: Tree, options: BinSchema) => {
         tree,
         join(__dirname, '../../', 'template'),
         projectRoot,
-        options
+        options,
     );
 };

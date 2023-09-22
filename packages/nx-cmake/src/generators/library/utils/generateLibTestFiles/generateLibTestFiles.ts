@@ -4,7 +4,7 @@ import { LibOptions } from '../../schema';
 
 export const generateLibTestFiles = (
     tree: Tree,
-    resolvedLibOptions: LibOptions
+    resolvedLibOptions: LibOptions,
 ): void => {
     if (!resolvedLibOptions.generateTests) {
         return;
@@ -14,6 +14,6 @@ export const generateLibTestFiles = (
         tree,
         join(__dirname, '../../', 'template', 'test'),
         `${projectRoot}/test`,
-        resolvedLibOptions
+        resolvedLibOptions,
     );
 };

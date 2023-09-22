@@ -31,13 +31,13 @@ describe('getFormatArguments', () => {
         const result = await getFormatArguments(
             workspaceRoot,
             projectRoot,
-            options
+            options,
         );
 
         expect(getStyleArgumentMock).toHaveBeenCalledWith(
             workspaceRoot,
             projectRoot,
-            '.clang-format'
+            '.clang-format',
         );
 
         expect(result).toEqual([
@@ -55,13 +55,13 @@ describe('getFormatArguments', () => {
         const result = await getFormatArguments(
             workspaceRoot,
             projectRoot,
-            options
+            options,
         );
 
         expect(getStyleArgumentMock).toHaveBeenCalledWith(
             workspaceRoot,
             projectRoot,
-            '.clang-format'
+            '.clang-format',
         );
 
         expect(result).toEqual([
@@ -78,7 +78,7 @@ describe('getFormatArguments', () => {
         });
         await expect(
             async () =>
-                await getFormatArguments(workspaceRoot, projectRoot, options)
+                await getFormatArguments(workspaceRoot, projectRoot, options),
         ).rejects.toThrowError();
     });
 });

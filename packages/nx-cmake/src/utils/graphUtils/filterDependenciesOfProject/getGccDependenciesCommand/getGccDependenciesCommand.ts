@@ -7,7 +7,7 @@ export const getGccDependenciesCommand = (
     fileName: string,
     projectRoot: string,
     workspaceLayout: WorkspaceLayout,
-    tag: CTag
+    tag: CTag,
 ): string => {
     const { libsDir } = workspaceLayout;
     const includeDir = getWorkspaceIncludeDir();

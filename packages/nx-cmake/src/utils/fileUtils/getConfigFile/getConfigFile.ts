@@ -4,7 +4,7 @@ import { getAbsolutePath } from '../getAbsolutePath/getAbsolutePath';
 export const getConfigFile = async (
     workspaceRoot: string,
     projectRoot: string,
-    configFile: string
+    configFile: string,
 ): Promise<string> => {
     const joinedProjectRoot = getAbsolutePath(workspaceRoot, projectRoot);
     const projectConfigFile = getAbsolutePath(joinedProjectRoot, configFile);
@@ -21,6 +21,6 @@ export const getConfigFile = async (
     }
 
     throw new Error(
-        `Could not find ${configFile}. Please generate a preset using nx-cmake:init or provide your own.`
+        `Could not find ${configFile}. Please generate a preset using nx-cmake:init or provide your own.`,
     );
 };

@@ -20,7 +20,7 @@ describe('buildProjectWithMake', () => {
         runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
         checkCommandExistsMock = jest.spyOn(
             checkCommandExistsModule,
-            'checkCommandExists'
+            'checkCommandExists',
         );
     });
 
@@ -37,7 +37,7 @@ describe('buildProjectWithMake', () => {
             'ctest',
             '--test-dir',
             `${workspaceRoot}/dist/${projectRoot}`,
-            ...options.args
+            ...options.args,
         );
         expect(result).toBe(true);
     });
@@ -47,7 +47,7 @@ describe('buildProjectWithMake', () => {
             throw new Error();
         });
         expect(() =>
-            testBinaryWithCtest(workspaceRoot, projectRoot, options)
+            testBinaryWithCtest(workspaceRoot, projectRoot, options),
         ).toThrowError();
         expect(checkCommandExistsMock).toHaveBeenCalledWith('ctest');
         expect(runCommandMock).not.toHaveBeenCalled();
@@ -66,7 +66,7 @@ describe('buildProjectWithMake', () => {
             '-ex',
             'run',
             '--arg1',
-            'value1'
+            'value1',
         );
         expect(result).toBe(true);
     });
@@ -80,7 +80,7 @@ describe('buildProjectWithMake', () => {
             'ctest',
             '--test-dir',
             `${workspaceRoot}/dist/${projectRoot}`,
-            ...options.args
+            ...options.args,
         );
         expect(result).toBe(false);
     });

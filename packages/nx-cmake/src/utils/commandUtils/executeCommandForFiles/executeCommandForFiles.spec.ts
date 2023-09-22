@@ -27,19 +27,19 @@ describe('executeCommandForFiles', () => {
             command,
             'arg1',
             'arg2',
-            'file1'
+            'file1',
         );
         expect(runCommandMock).toHaveBeenCalledWith(
             command,
             'arg1',
             'arg2',
-            'file2'
+            'file2',
         );
         expect(runCommandMock).toHaveBeenCalledWith(
             command,
             'arg1',
             'arg2',
-            'file3'
+            'file3',
         );
     });
 

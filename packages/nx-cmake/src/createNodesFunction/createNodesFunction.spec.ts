@@ -17,7 +17,7 @@ describe('createNodesFunction', () => {
         mockGetProjectType = jest.spyOn(getProjectTypeModule, 'getProjectType');
         mockGetProjectConfiguration = jest.spyOn(
             getProjectConfigurationModule,
-            'getProjectConfiguration'
+            'getProjectConfiguration',
         );
         getProjectConfigurationReturnMock = {
             'nx-cmake-test': {
@@ -102,7 +102,7 @@ describe('createNodesFunction', () => {
         context = {} as unknown as CreateNodesContext;
         mockGetProjectType.mockReturnValue(getProjectTypeReturnMock);
         mockGetProjectConfiguration.mockReturnValue(
-            getProjectConfigurationReturnMock
+            getProjectConfigurationReturnMock,
         );
     });
 
@@ -114,11 +114,11 @@ describe('createNodesFunction', () => {
         const result = createNodesFunction(projectConfigurationFile, context);
         expect(result).toEqual({ projects: getProjectConfigurationReturnMock });
         expect(mockGetProjectType).toHaveBeenCalledWith(
-            projectConfigurationFile
+            projectConfigurationFile,
         );
         expect(mockGetProjectConfiguration).toHaveBeenCalledWith(
             root,
-            getProjectTypeReturnMock
+            getProjectTypeReturnMock,
         );
     });
 });

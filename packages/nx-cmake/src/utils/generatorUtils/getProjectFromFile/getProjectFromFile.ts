@@ -2,7 +2,7 @@ import type { FilteredProject } from '../../../models/types';
 
 export const getProjectFromFile = (
     file: string,
-    projects: FilteredProject[]
+    projects: FilteredProject[],
 ): string | null => {
     if (projects.length === 0) {
         return null;

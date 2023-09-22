@@ -19,7 +19,7 @@ describe('fileIsSourceFile', () => {
             workspaceRoot,
             projectRoot,
             projectType,
-            file
+            file,
         );
         expect(result).toBe(true);
     });
@@ -30,7 +30,7 @@ describe('fileIsSourceFile', () => {
             workspaceRoot,
             projectRoot,
             projectType,
-            file
+            file,
         );
         expect(result).toBe(true);
         file = `${workspaceRoot}/${projectRoot}/sourceFile.h`;
@@ -38,7 +38,7 @@ describe('fileIsSourceFile', () => {
             workspaceRoot,
             projectRoot,
             projectType,
-            file
+            file,
         );
         expect(result).toBe(true);
     });
@@ -49,7 +49,7 @@ describe('fileIsSourceFile', () => {
             workspaceRoot,
             projectRoot,
             projectType,
-            file
+            file,
         );
         expect(result).toBe(false);
     });
@@ -60,7 +60,7 @@ describe('fileIsSourceFile', () => {
             workspaceRoot,
             projectRoot,
             projectType,
-            file
+            file,
         );
         expect(result).toBe(false);
     });
@@ -72,7 +72,7 @@ describe('fileIsSourceFile', () => {
             workspaceRoot,
             projectRoot,
             projectType,
-            file
+            file,
         );
         expect(result).toBe(true);
     });

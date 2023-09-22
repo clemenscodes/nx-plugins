@@ -84,7 +84,7 @@ describe('getDependenciesOfFile', () => {
             mainProject,
             file,
             files,
-            projects
+            projects,
         );
         expect(result).toStrictEqual(expectedDependencies);
     });

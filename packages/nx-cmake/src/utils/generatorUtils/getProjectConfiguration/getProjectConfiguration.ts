@@ -7,7 +7,7 @@ import { getProjectTags } from '../getProjectTags/getProjectTags';
 
 export const getProjectConfiguration = (
     root: string,
-    type: CProjectType
+    type: CProjectType,
 ): Record<string, ProjectConfiguration> => {
     const sourceRoot = `${root}/src`;
     const name = getProjectName(type, root);

@@ -9,7 +9,6 @@ describe('resolveLibOptions', () => {
         options = {
             name: 'base',
             language: 'C',
-            skipFormat: false,
             generateTests: false,
         };
         expectedOptions = {

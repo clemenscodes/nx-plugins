@@ -30,19 +30,19 @@ describe('formatFilesWithClangFormat', () => {
         };
         getFormatArgumentsMock = jest.spyOn(
             getFormatArgumentsModule,
-            'getFormatArguments'
+            'getFormatArguments',
         );
         getProjectFilesMock = jest.spyOn(
             getProjectFilesModule,
-            'getProjectFiles'
+            'getProjectFiles',
         );
         checkCommandExistsMock = jest.spyOn(
             checkCommandExistsModule,
-            'checkCommandExists'
+            'checkCommandExists',
         );
         executeCommandForFilesMock = jest.spyOn(
             executeCommandForFilesModule,
-            'executeCommandForFiles'
+            'executeCommandForFiles',
         );
         formatCommand = 'clang-format';
         formatArgs = ['--style=file:/path/to/.clang-format', '--verbose', '-i'];
@@ -62,22 +62,22 @@ describe('formatFilesWithClangFormat', () => {
             workspaceRoot,
             projectRoot,
             options,
-            projectType
+            projectType,
         );
         expect(getFormatArgumentsMock).toHaveBeenCalledWith(
             workspaceRoot,
             projectRoot,
-            options
+            options,
         );
         expect(getProjectFilesMock).toHaveBeenCalledWith(
             workspaceRoot,
-            projectRoot
+            projectRoot,
         );
         expect(checkCommandExistsMock).toHaveBeenCalledWith('clang-format');
         expect(executeCommandForFilesMock).toHaveBeenCalledWith(
             formatCommand,
             formatArgs,
-            sourceFiles
+            sourceFiles,
         );
     });
 
@@ -90,7 +90,7 @@ describe('formatFilesWithClangFormat', () => {
             workspaceRoot,
             projectRoot,
             options,
-            projectType
+            projectType,
         );
         expect(result).toBe(true);
     });
@@ -104,7 +104,7 @@ describe('formatFilesWithClangFormat', () => {
             workspaceRoot,
             projectRoot,
             options,
-            projectType
+            projectType,
         );
         expect(result).toBe(false);
     });

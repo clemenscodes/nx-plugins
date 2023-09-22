@@ -24,7 +24,6 @@ describe('generateLibFiles', () => {
         options = {
             name: 'test',
             language: 'C++',
-            skipFormat: false,
             generateTests: false,
         };
         libraryRoot = `packages/test`;

@@ -4,7 +4,7 @@ import { buildGraphFromDeps } from '../buildGraphFromDeps/buildGraphFromDeps';
 import { reduceGraph } from '../reduceGraph/reduceGraph';
 
 export const transitiveReductionToGraph = (
-    dependencies: ProjectGraphDependencyWithFile[]
+    dependencies: ProjectGraphDependencyWithFile[],
 ): Graph => {
     const graph = buildGraphFromDeps(dependencies);
     const reducedGraph = reduceGraph(graph);

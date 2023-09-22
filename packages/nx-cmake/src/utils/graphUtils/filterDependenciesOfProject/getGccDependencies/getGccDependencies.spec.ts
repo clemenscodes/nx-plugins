@@ -12,11 +12,11 @@ describe('getGccDependencies', () => {
         executeCommandSpy = jest.spyOn(executeCommandModule, 'executeCommand');
         detectTestFrameworkSpy = jest.spyOn(
             detectTestFrameworkModule,
-            'detectTestFramework'
+            'detectTestFramework',
         );
         installTestFrameworkSpy = jest.spyOn(
             installTestFrameworkModule,
-            'installTestFramework'
+            'installTestFramework',
         );
     });
 
@@ -52,7 +52,7 @@ describe('getGccDependencies', () => {
         expect(installTestFrameworkSpy).toHaveBeenCalledWith(
             workspaceRoot,
             projectRoot,
-            cmd
+            cmd,
         );
     });
 });

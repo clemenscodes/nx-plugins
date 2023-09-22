@@ -16,7 +16,6 @@ describe('setWorkspaceLayout', () => {
         baseOptions = {
             cmakeConfigDir: 'cmake',
             addClangPreset: false,
-            skipFormat: false,
         };
 
         workspaceLayoutOptions = {
@@ -35,7 +34,7 @@ describe('setWorkspaceLayout', () => {
         const [resultNxJson, resultOptions] = setWorkspaceLayout(
             nxJson,
             updatedNxJson,
-            options
+            options,
         );
 
         expect(resultNxJson.workspaceLayout).toEqual(workspaceLayoutOptions);
@@ -54,11 +53,11 @@ describe('setWorkspaceLayout', () => {
         const [resultNxJson, resultOptions] = setWorkspaceLayout(
             nxJson,
             updatedNxJson,
-            options
+            options,
         );
 
         expect(resultNxJson.workspaceLayout.appsDir).toEqual(
-            workspaceLayoutOptions.appsDir
+            workspaceLayoutOptions.appsDir,
         );
         expect(resultOptions).toEqual(options);
     });
@@ -75,11 +74,11 @@ describe('setWorkspaceLayout', () => {
         const [resultNxJson, resultOptions] = setWorkspaceLayout(
             nxJson,
             updatedNxJson,
-            options
+            options,
         );
 
         expect(resultNxJson.workspaceLayout.appsDir).toEqual(
-            workspaceLayoutOptions.appsDir
+            workspaceLayoutOptions.appsDir,
         );
         expect(resultOptions).toEqual(options);
     });
@@ -96,11 +95,11 @@ describe('setWorkspaceLayout', () => {
         const [resultNxJson, resultOptions] = setWorkspaceLayout(
             nxJson,
             updatedNxJson,
-            options
+            options,
         );
 
         expect(resultNxJson.workspaceLayout.appsDir).toEqual(
-            workspaceLayoutOptions.appsDir
+            workspaceLayoutOptions.appsDir,
         );
         expect(resultOptions).toEqual(options);
     });
@@ -117,14 +116,14 @@ describe('setWorkspaceLayout', () => {
         const [resultNxJson, resultOptions] = setWorkspaceLayout(
             nxJson,
             updatedNxJson,
-            options
+            options,
         );
 
         expect(resultNxJson.workspaceLayout).toEqual(nxJson.workspaceLayout);
         expect(resultOptions.appsDir).toEqual(nxJson.workspaceLayout.appsDir);
         expect(resultOptions.libsDir).toEqual(nxJson.workspaceLayout.libsDir);
         expect(resultOptions.projectNameAndRootFormat).toEqual(
-            nxJson.workspaceLayout.projectNameAndRootFormat
+            nxJson.workspaceLayout.projectNameAndRootFormat,
         );
     });
 });

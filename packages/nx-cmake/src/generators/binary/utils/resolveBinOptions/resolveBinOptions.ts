@@ -8,14 +8,13 @@ import { offsetFromRoot } from '@nx/devkit';
 
 export const resolveBinOptions = (options: BinGeneratorSchema): BinSchema => {
     const resolvedOptions = resolveOptions<BinGeneratorSchema, BinSchema>(
-        options
+        options,
     );
-    const { name, skipFormat } = resolvedOptions;
+    const { name } = resolvedOptions;
     const linkOptions: LinkGeneratorSchema = {
         source: name,
         target: getLibName(name),
         link: 'shared',
-        skipFormat,
     };
     const projectRoot = getProjectRoot(name, CProjectType.App);
     resolvedOptions.projectRoot = projectRoot;

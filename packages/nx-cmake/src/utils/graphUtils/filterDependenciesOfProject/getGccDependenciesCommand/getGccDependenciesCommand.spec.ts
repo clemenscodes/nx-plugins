@@ -19,7 +19,7 @@ describe('getGccDependenciesCommand', () => {
             fileName,
             projectRoot,
             workspaceLayout,
-            tag
+            tag,
         );
         const expectedCmd = `gcc -x c -MM ${fileName} -I projectA/include -I libs -I include -I dist/libs/gtest/googletest-src/googletest/include -I dist/libs/cmocka/cmocka-src/include`;
         expect(result).toBe(expectedCmd);
@@ -31,7 +31,7 @@ describe('getGccDependenciesCommand', () => {
             fileName,
             projectRoot,
             workspaceLayout,
-            tag
+            tag,
         );
         const expectedCmd = `gcc -x c++ -MM ${fileName} -I projectA/include -I libs -I include -I dist/libs/gtest/googletest-src/googletest/include -I dist/libs/cmocka/cmocka-src/include`;
         expect(result).toBe(expectedCmd);

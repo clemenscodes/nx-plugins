@@ -2,7 +2,7 @@ import type { ProjectConfiguration } from '@nx/devkit';
 import { CProjectType } from '../../../models/types';
 
 export const getProjectTypeFromConfig = (
-    projectConfig: ProjectConfiguration
+    projectConfig: ProjectConfiguration,
 ): CProjectType => {
     const { tags, projectType } = projectConfig;
     if (projectType === 'library') {

@@ -1,7 +1,7 @@
 import { CProjectType } from '../../../../models/types';
 
 export const getProjectTypeFromConfigFileContent = (
-    content: string
+    content: string,
 ): CProjectType => {
     if (content.includes('enable_testing()')) {
         return CProjectType.Test;

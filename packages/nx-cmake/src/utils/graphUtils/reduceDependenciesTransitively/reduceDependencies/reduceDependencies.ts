@@ -3,7 +3,7 @@ import type { Graph } from '../../../../models/types';
 
 export const reduceDependencies = (
     graph: Graph,
-    deps: ProjectGraphDependencyWithFile[]
+    deps: ProjectGraphDependencyWithFile[],
 ): ProjectGraphDependencyWithFile[] => {
     const reducedDeps = [];
     for (const dep of deps) {

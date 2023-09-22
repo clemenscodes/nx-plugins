@@ -34,11 +34,11 @@ describe('executeBinary', () => {
             workspaceRoot,
             projectRoot,
             projectName,
-            options
+            options,
         );
         expect(runCommandMock).toHaveBeenCalledWith(
             `${workspaceRoot}/dist/${projectRoot}/${projectName}`,
-            ...options.args
+            ...options.args,
         );
         expect(result).toBe(true);
     });
@@ -46,12 +46,12 @@ describe('executeBinary', () => {
     it('should error if binary does not exist', () => {
         fileExistsMock.mockReturnValue(false);
         expect(() =>
-            executeBinary(workspaceRoot, projectRoot, projectName, options)
+            executeBinary(workspaceRoot, projectRoot, projectName, options),
         ).toThrowError(
-            `The binary of ${projectName} was not found and cound not be executed.`
+            `The binary of ${projectName} was not found and cound not be executed.`,
         );
         expect(fileExistsMock).toHaveBeenCalledWith(
-            `${workspaceRoot}/dist/${projectRoot}/${projectName}`
+            `${workspaceRoot}/dist/${projectRoot}/${projectName}`,
         );
         expect(runCommandMock).not.toHaveBeenCalled();
     });
@@ -64,14 +64,14 @@ describe('executeBinary', () => {
             workspaceRoot,
             projectRoot,
             projectName,
-            options
+            options,
         );
         expect(runCommandMock).toHaveBeenCalledWith(
             `${workspaceRoot}/dist/${projectRoot}/${projectName}`,
             '-ex',
             'run',
             '--arg1',
-            'value1'
+            'value1',
         );
         expect(result).toBe(true);
     });
@@ -83,11 +83,11 @@ describe('executeBinary', () => {
             workspaceRoot,
             projectRoot,
             projectName,
-            options
+            options,
         );
         expect(runCommandMock).toHaveBeenCalledWith(
             `${workspaceRoot}/dist/${projectRoot}/${projectName}`,
-            ...options.args
+            ...options.args,
         );
         expect(result).toBe(false);
     });

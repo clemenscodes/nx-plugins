@@ -5,13 +5,13 @@ import { join } from 'path';
 
 export const generateLibFiles = (
     tree: Tree,
-    resolvedLibOptions: LibOptions
+    resolvedLibOptions: LibOptions,
 ): void => {
     const { projectRoot } = resolvedLibOptions;
     generateFiles(
         tree,
         join(__dirname, '../../', 'template', 'config'),
         projectRoot,
-        resolvedLibOptions
+        resolvedLibOptions,
     );
 };

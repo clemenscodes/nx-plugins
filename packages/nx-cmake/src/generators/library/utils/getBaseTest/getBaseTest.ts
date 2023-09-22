@@ -6,7 +6,7 @@ export const getBaseTest = (
     generateTests: boolean,
     language: C,
     libName: string,
-    projectName: string
+    projectName: string,
 ) => {
     const baseGtest = getBaseGoogleTest(libName, projectName);
     const baseCmocka = getBaseCmockaTest(projectName);

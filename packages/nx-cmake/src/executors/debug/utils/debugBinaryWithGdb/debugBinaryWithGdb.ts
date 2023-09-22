@@ -7,7 +7,7 @@ export const debugBinaryWithGdb = (
     workspaceRoot: string,
     projectRoot: string,
     projectName: string,
-    options: DebugExecutorSchema
+    options: DebugExecutorSchema,
 ): boolean => {
     const gdbCommand = checkCommandExists('gdb');
     const { args } = options;

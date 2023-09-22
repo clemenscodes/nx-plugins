@@ -5,7 +5,7 @@ import { checkCommandExists } from '../../../../utils/commandUtils/checkCommandE
 export const buildProjectWithMake = (
     workspaceRoot: string,
     projectRoot: string,
-    options: BuildExecutorSchema
+    options: BuildExecutorSchema,
 ): boolean => {
     const buildCommand = checkCommandExists('make');
     const { args } = options;
@@ -13,7 +13,7 @@ export const buildProjectWithMake = (
         buildCommand,
         '-C',
         `${workspaceRoot}/dist/${projectRoot}`,
-        ...args
+        ...args,
     );
     return success;
 };

@@ -6,7 +6,7 @@ import { CProjectType } from '../../../../models/types';
 
 export const addTestProjectConfig = (
     tree: Tree,
-    resolvedLibOptions: LibOptions
+    resolvedLibOptions: LibOptions,
 ): void => {
     if (!resolvedLibOptions.generateTests) {
         return;

@@ -20,7 +20,6 @@ describe('updateIncludeFile', () => {
         libOptions = {
             name: 'link',
             language: 'C++',
-            skipFormat: false,
             generateTests: true,
         };
         await libGenerator(tree, libOptions);
@@ -39,7 +38,6 @@ describe('updateIncludeFile', () => {
             source: 'liblink',
             target: 'libtarget',
             link: 'shared',
-            skipFormat: false,
             sourceProjectRoot: 'packages/link',
         };
     });
@@ -50,10 +48,10 @@ describe('updateIncludeFile', () => {
         updateIncludeFile(tree, linkOptions);
         const updatedIncludeFileContent = readFileWithTree(
             tree,
-            expectedIncludeFile
+            expectedIncludeFile,
         );
         expect(updatedIncludeFileContent).toBe(
-            expectedUpdatedIncludeFileContent
+            expectedUpdatedIncludeFileContent,
         );
     });
 });

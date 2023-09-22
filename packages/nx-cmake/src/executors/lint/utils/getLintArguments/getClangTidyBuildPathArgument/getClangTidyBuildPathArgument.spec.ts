@@ -14,7 +14,7 @@ describe('getClangTidyBuildPathArgument', () => {
     it('should return the correct clang-tidy build path argument', () => {
         const result = getClangTidyBuildPathArgument(
             workspaceRoot,
-            projectRoot
+            projectRoot,
         );
         expect(result).toBe(expectedArgument);
     });

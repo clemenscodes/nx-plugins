@@ -17,7 +17,6 @@ describe('generateRootConfig', () => {
             projectNameAndRootFormat: 'derived',
             cmakeConfigDir: 'cmake',
             addClangPreset: false,
-            skipFormat: false,
         };
         rootConfig = 'CMakeLists.txt';
     });

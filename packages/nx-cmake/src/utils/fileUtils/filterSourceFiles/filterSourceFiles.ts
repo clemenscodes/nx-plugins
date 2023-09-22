@@ -5,10 +5,10 @@ export const filterSourceFiles = (
     workspaceRoot: string,
     projectRoot: string,
     projectType: CProjectType,
-    files: string[]
+    files: string[],
 ) => {
     const sourceFiles = files.filter((file) =>
-        fileIsSourceFile(workspaceRoot, projectRoot, projectType, file)
+        fileIsSourceFile(workspaceRoot, projectRoot, projectType, file),
     );
     return sourceFiles;
 };

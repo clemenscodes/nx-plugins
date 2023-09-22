@@ -4,7 +4,7 @@ import { testBinaryWithCtest } from './utils/testBinaryWithCtest/testBinaryWithC
 
 export default async function* runExecutor(
     options: TestExecutorSchema,
-    ctx: ExecutorContext
+    ctx: ExecutorContext,
 ): AsyncGenerator<{ success: boolean }> {
     const { root: workspaceRoot, projectName, projectsConfigurations } = ctx;
     const { projects } = projectsConfigurations;

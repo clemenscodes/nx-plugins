@@ -5,7 +5,7 @@ export const fileIsSourceFile = (
     workspaceRoot: string,
     projectRoot: string,
     projectType: CProjectType,
-    file: string
+    file: string,
 ): boolean => {
     const root = getAbsolutePath(workspaceRoot, projectRoot);
     const testRoot = root.endsWith('/test')

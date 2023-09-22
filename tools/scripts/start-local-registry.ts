@@ -20,6 +20,6 @@ export default async () => {
     execFileSync(
         nx,
         ['run-many', '--targets', 'publish', '--ver', '1.0.0', '--tag', 'e2e'],
-        { env: process.env, stdio: 'inherit' }
+        { env: process.env, stdio: 'inherit' },
     );
 };

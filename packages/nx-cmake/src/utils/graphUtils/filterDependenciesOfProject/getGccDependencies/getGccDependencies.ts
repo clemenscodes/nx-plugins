@@ -5,7 +5,7 @@ import { installTestFramework } from '../installTestFramework/installTestFramewo
 export const getGccDependencies = (
     cmd: string,
     projectRoot: string,
-    workspaceRoot: string
+    workspaceRoot: string,
 ): string => {
     try {
         return executeCommand(cmd);

@@ -18,7 +18,6 @@ describe('link generator', () => {
         libOptions = {
             name: 'link',
             language: 'C++',
-            skipFormat: false,
             generateTests: true,
         };
         await libGenerator(tree, libOptions);
@@ -42,7 +41,6 @@ describe('link generator', () => {
             source: 'liblink',
             target: 'libtarget',
             link: 'shared',
-            skipFormat: false,
         };
     });
 

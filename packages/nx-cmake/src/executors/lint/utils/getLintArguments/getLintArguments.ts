@@ -5,16 +5,16 @@ import { getClangTidyConfigArgument } from './getClangTidyConfigArgument/getClan
 export const getLintArguments = async (
     workspaceRoot: string,
     projectRoot: string,
-    options: LintExecutorSchema
+    options: LintExecutorSchema,
 ): Promise<string[]> => {
     const { args } = options;
     const configArgument = await getClangTidyConfigArgument(
         workspaceRoot,
-        projectRoot
+        projectRoot,
     );
     const buildArgument = getClangTidyBuildPathArgument(
         workspaceRoot,
-        projectRoot
+        projectRoot,
     );
     const lintCommandArguments = [configArgument, buildArgument, ...args];
     return lintCommandArguments;

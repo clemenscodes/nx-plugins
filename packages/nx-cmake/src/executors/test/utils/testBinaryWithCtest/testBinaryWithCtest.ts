@@ -5,7 +5,7 @@ import { checkCommandExists } from '../../../../utils/commandUtils/checkCommandE
 export const testBinaryWithCtest = (
     workspaceRoot: string,
     projectRoot: string,
-    options: TestExecutorSchema
+    options: TestExecutorSchema,
 ): boolean => {
     const testCommand = checkCommandExists('ctest');
     const testBin = `${workspaceRoot}/dist/${projectRoot}`;

@@ -5,7 +5,7 @@ import { getProjectTypeFromConfig } from '../getProjectTypeFromConfig/getProject
 
 export const getProjectTypeWithTree = (
     tree: Tree,
-    projectName: string
+    projectName: string,
 ): CProjectType => {
     const projectConfig = readProjectConfiguration(tree, projectName);
     const projectType = getProjectTypeFromConfig(projectConfig);

@@ -22,10 +22,10 @@ describe('getStyleArgument', () => {
         const result = await getStyleArgument(
             workspaceRoot,
             projectRoot,
-            clangFormatFile
+            clangFormatFile,
         );
         expect(result).toBe(
-            `--style=file:${workspaceRoot}/${projectRoot}/.clang-format`
+            `--style=file:${workspaceRoot}/${projectRoot}/.clang-format`,
         );
     });
 
@@ -33,10 +33,10 @@ describe('getStyleArgument', () => {
         const result = await getStyleArgument(
             workspaceRoot,
             projectRoot,
-            clangFormatFile
+            clangFormatFile,
         );
         expect(result).toBe(
-            `--style=file:${workspaceRoot}/${projectRoot}/.clang-format`
+            `--style=file:${workspaceRoot}/${projectRoot}/.clang-format`,
         );
     });
 
@@ -49,8 +49,8 @@ describe('getStyleArgument', () => {
                 await getStyleArgument(
                     workspaceRoot,
                     projectRoot,
-                    '.clang-format'
-                )
+                    '.clang-format',
+                ),
         ).rejects.toThrowError();
     });
 });

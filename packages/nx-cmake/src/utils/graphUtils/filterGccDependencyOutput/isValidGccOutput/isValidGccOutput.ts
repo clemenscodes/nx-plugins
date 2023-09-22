@@ -1,6 +1,6 @@
 export const isValidGccOutput = (
     chunk: string,
-    originalFile: string
+    originalFile: string,
 ): boolean => {
     return (
         /\.(h|c|cpp)/.test(chunk) &&

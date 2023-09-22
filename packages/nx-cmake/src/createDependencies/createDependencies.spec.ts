@@ -15,7 +15,7 @@ describe('createDependencies', () => {
     beforeEach(() => {
         mockGetDependencies = jest.spyOn(
             getDependenciesModule,
-            'getDependencies'
+            'getDependencies',
         );
 
         getDependenciesReturnMock = [

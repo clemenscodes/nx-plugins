@@ -11,7 +11,7 @@ export const filterDependenciesOfProject = (
     project: FilteredProject,
     workspaceLayout: WorkspaceLayout,
     projects: FilteredProject[],
-    filesToProcess: FileData[]
+    filesToProcess: FileData[],
 ): ProjectGraphDependencyWithFile[] => {
     const { root, tag } = project;
     const projectDependencies: ProjectGraphDependencyWithFile[] = [];
@@ -30,7 +30,7 @@ export const filterDependenciesOfProject = (
             project,
             file,
             files,
-            projects
+            projects,
         );
         projectDependencies.push(...fileDependencies);
     }

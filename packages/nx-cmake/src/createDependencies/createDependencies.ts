@@ -9,7 +9,7 @@ import { reduceDependenciesTransitively } from '../utils/graphUtils/reduceDepend
 import { filterFilesToProcess } from '../utils/graphUtils/filterFilesToProcess/filterFilesToProcess';
 
 export const createDependencies: CreateDependencies = (
-    context: CreateDependenciesContext
+    context: CreateDependenciesContext,
 ): ProjectGraphDependencyWithFile[] => {
     const { graph, nxJsonConfiguration, filesToProcess } = context;
     const { workspaceLayout } = nxJsonConfiguration;
@@ -20,7 +20,7 @@ export const createDependencies: CreateDependencies = (
     const filteredProjects = filterProjects(nodes);
     const filteredFilesToProcess = filterFilesToProcess(
         filesToProcess,
-        filteredProjects
+        filteredProjects,
     );
     if (Object.keys(filteredFilesToProcess).length === 0) {
         return [];
@@ -28,7 +28,7 @@ export const createDependencies: CreateDependencies = (
     const deps = getDependencies(
         workspaceLayout,
         filteredProjects,
-        filteredFilesToProcess
+        filteredFilesToProcess,
     );
     if (deps.length === 0) {
         return [];

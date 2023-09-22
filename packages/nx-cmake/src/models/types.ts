@@ -9,7 +9,6 @@ export enum CProjectType {
 export type BaseOptions = {
     name: string;
     language: C;
-    skipFormat: boolean;
     constantName?: string;
     snakeCaseName?: string;
     relativeRootPath?: string;

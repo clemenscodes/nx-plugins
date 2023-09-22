@@ -1,5 +1,5 @@
 export const getEditFileInPlaceArgument = (
-    editFilesInPlace: boolean
+    editFilesInPlace: boolean,
 ): string[] => {
     return editFilesInPlace ? ['-i'] : [];
 };

@@ -10,7 +10,7 @@ describe('getBaseCmockaTest', () => {
     it('should generate test code with the project name', () => {
         const result = getBaseCmockaTest(projectName);
         expect(result).toContain(
-            `static void test_nx_cmake_test_c(void **state)`
+            `static void test_nx_cmake_test_c(void **state)`,
         );
         expect(result).toContain(`nx_cmake_test_c();`);
     });
@@ -25,7 +25,7 @@ describe('getBaseCmockaTest', () => {
         const result = getBaseCmockaTest(projectName);
         expect(result).toContain(`cmocka_unit_test(test_nx_cmake_test_c)`);
         expect(result).toContain(
-            `cmocka_run_group_tests(nx_cmake_test_c_tests, setup, teardown)`
+            `cmocka_run_group_tests(nx_cmake_test_c_tests, setup, teardown)`,
         );
     });
 

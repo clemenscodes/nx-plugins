@@ -21,7 +21,6 @@ describe('generateGlobalIncludeDir', () => {
             projectNameAndRootFormat: 'derived',
             cmakeConfigDir: 'cmake',
             addClangPreset: false,
-            skipFormat: false,
         };
         commonFile = 'include/common.h';
         libcmockaFile = 'include/libcmocka.h';

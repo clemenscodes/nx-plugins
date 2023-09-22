@@ -6,7 +6,7 @@ import { CProjectType } from '../../../models/types';
 import { names, offsetFromRoot } from '@nx/devkit';
 
 export const resolveOptions = <T extends BaseOptions, K extends Required<T>>(
-    options: T
+    options: T,
 ): K => {
     const { language } = options;
     const resolvedName = names(options.name);

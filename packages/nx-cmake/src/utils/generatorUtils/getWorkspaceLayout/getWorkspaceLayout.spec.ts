@@ -14,11 +14,11 @@ describe('getWorkspaceLayout', () => {
     beforeEach(() => {
         getNxJsonConfigurationSpy = jest.spyOn(
             getNxJsonConfigurationModule,
-            'getNxJsonConfiguration'
+            'getNxJsonConfiguration',
         );
         workspaceLayoutSpy = jest.spyOn(
             workspaceLayoutModule,
-            'workspaceLayout'
+            'workspaceLayout',
         );
         mockNxJson = {
             workspaceLayout: {

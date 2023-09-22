@@ -6,5 +6,4 @@ export type InitGeneratorSchema = {
     projectNameAndRootFormat: WorkspaceLayout['projectNameAndRootFormat'];
     cmakeConfigDir: string;
     addClangPreset: boolean;
-    skipFormat: boolean;
 };

@@ -6,7 +6,7 @@ import { CProjectType } from '../../../../models/types';
 
 export const resolveLinkOptions = (
     tree: Tree,
-    options: LinkGeneratorSchema
+    options: LinkGeneratorSchema,
 ): LinkSchema => {
     const { source, target } = options;
     const targetProjectType = getProjectTypeWithTree(tree, target);

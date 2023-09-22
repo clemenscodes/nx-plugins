@@ -14,7 +14,6 @@ describe('getProjectTypeWithTree', () => {
         binOptions = {
             name: 'link',
             language: 'C++',
-            skipFormat: false,
             generateTests: true,
         };
         await binGenerator(tree, binOptions);

@@ -23,7 +23,7 @@ describe('readProjectFile', () => {
         const projectFile = 'invalid_project_file.txt';
 
         expect(() => readProjectFile(projectFile)).toThrowError(
-            'Invalid project file'
+            'Invalid project file',
         );
     });
 });

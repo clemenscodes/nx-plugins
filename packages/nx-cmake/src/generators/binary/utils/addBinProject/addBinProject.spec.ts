@@ -15,7 +15,6 @@ describe('addBinProject', () => {
         options = {
             name: 'test',
             language: 'C++',
-            skipFormat: false,
             generateTests: false,
         };
         expected = {

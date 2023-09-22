@@ -3,7 +3,7 @@ import { getFilesOfDirectoryRecursively } from '../getFilesOfDirectoryRecursivel
 
 export const getProjectFiles = (
     workspaceRoot: string,
-    projectRoot: string
+    projectRoot: string,
 ): string[] => {
     if (!(workspaceRoot && projectRoot)) {
         return [];

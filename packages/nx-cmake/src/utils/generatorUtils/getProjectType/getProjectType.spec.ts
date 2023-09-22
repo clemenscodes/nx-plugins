@@ -19,7 +19,7 @@ describe('getProjectType', () => {
         readFileSyncMock.mockReturnValue(configFileContent);
 
         expect(getProjectType(projectConfigurationFile)).toBe(
-            CProjectType.Test
+            CProjectType.Test,
         );
     });
 
@@ -27,7 +27,7 @@ describe('getProjectType', () => {
         const projectConfigurationFile = 'invalid_project_config.txt';
 
         expect(() => getProjectType(projectConfigurationFile)).toThrowError(
-            `Failed to determine project type for the configuration file ${projectConfigurationFile}`
+            `Failed to determine project type for the configuration file ${projectConfigurationFile}`,
         );
     });
 });

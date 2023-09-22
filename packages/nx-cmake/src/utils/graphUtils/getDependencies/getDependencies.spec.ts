@@ -72,7 +72,7 @@ describe('getDependencies', () => {
         };
         filterDependenciesOfProjectMock = jest.spyOn(
             filterDependenciesOfProjectModule,
-            'filterDependenciesOfProject'
+            'filterDependenciesOfProject',
         );
         filterDependenciesOfProjectMock.mockReturnValueOnce([
             {
@@ -99,7 +99,7 @@ describe('getDependencies', () => {
         const result = getDependencies(
             workspaceLayout,
             projects,
-            filesToProcess
+            filesToProcess,
         );
         expect(filterDependenciesOfProjectMock).toBeCalledTimes(0);
         expect(result).toStrictEqual([]);
@@ -109,10 +109,10 @@ describe('getDependencies', () => {
         const result = getDependencies(
             workspaceLayout,
             projects,
-            filesToProcess
+            filesToProcess,
         );
         expect(filterDependenciesOfProjectMock).toBeCalledTimes(
-            Object.keys(filesToProcess).length
+            Object.keys(filesToProcess).length,
         );
         expect(result).toStrictEqual(expectedDependencies);
     });

@@ -103,8 +103,6 @@ In general, settings in nx.json have higher precedence.
 >
 > --addClangPreset (Generate a clang preset) [boolean] [default: true]
 >
-> --skipFormat (Skip formatting files) [boolean]
->
 > ```shell
 > nx g nx-cmake:init [appsDir] [options,...]
 > ```
@@ -120,8 +118,6 @@ In general, settings in nx.json have higher precedence.
 > --language (Whether to use C or C++) [choices: "C", "C++"] [default: "C++"]
 >
 > --generateTests (Whether to generate tests using googletest for C++ or cmocka for C) [boolean] [default: true]
->
-> --skipFormat (Skip formatting files) [boolean]
 >
 > ```shell
 > nx g nx-cmake:binary [name] [options,...]
@@ -139,8 +135,6 @@ In general, settings in nx.json have higher precedence.
 >
 > --generateTests (Whether to generate tests using googletest for C++ or cmocka for C) [boolean] [default: true]
 >
-> --skipFormat (Skip formatting files) [boolean]
->
 > ```shell
 > nx g nx-cmake:library [name] [options,...]
 > ```
@@ -156,8 +150,6 @@ In general, settings in nx.json have higher precedence.
 > --target (The target library to link into the source project) [string]
 >
 > --link (Whether to link statically or dynamically) [string] [choices: "shared", "static"] [default: "shared"]
->
-> --skipFormat (Skip formatting files) [boolean]
 >
 > ```shell
 > nx g nx-cmake:link [source] [options,...]

@@ -3,7 +3,7 @@ import { getNestedFiles } from '../getNestedFiles/getNestedFiles';
 
 export const getFilesFromDirectoryFiles = (
     directory: string,
-    directoryFiles: string[]
+    directoryFiles: string[],
 ): string[] => {
     const files = [];
     for (const file of directoryFiles) {

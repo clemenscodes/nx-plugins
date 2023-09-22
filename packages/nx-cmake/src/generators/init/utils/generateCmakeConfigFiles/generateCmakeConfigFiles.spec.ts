@@ -17,7 +17,6 @@ describe('generateCmakeConfigFiles', () => {
             projectNameAndRootFormat: 'derived',
             cmakeConfigDir: 'cmake',
             addClangPreset: false,
-            skipFormat: false,
         };
         expectedCmakeSettingsFiles = [
             'set_binary_settings.cmake',

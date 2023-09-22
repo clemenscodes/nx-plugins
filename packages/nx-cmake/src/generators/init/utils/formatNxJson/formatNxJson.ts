@@ -2,7 +2,7 @@ import type { NxJsonConfiguration } from '@nx/devkit';
 
 export const formatNxJson = (
     nxJson: NxJsonConfiguration,
-    updatedNxJson: NxJsonConfiguration
+    updatedNxJson: NxJsonConfiguration,
 ): NxJsonConfiguration => {
     let defaultProject: NxJsonConfiguration['defaultProject'];
     let affected: NxJsonConfiguration['affected'];
