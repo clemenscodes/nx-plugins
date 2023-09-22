@@ -1,7 +1,7 @@
 import type { NxJsonConfiguration } from '@nx/devkit';
 
 export const addTargetDefaults = (
-    updatedNxJson: NxJsonConfiguration
+    updatedNxJson: NxJsonConfiguration,
 ): NxJsonConfiguration => {
     const dependsOnBuild = ['build'];
 

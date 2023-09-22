@@ -1,6 +1,6 @@
-import { readFileWithTree } from './readFileWithTree';
 import type { Tree } from '@nx/devkit';
 import type { LibGeneratorSchema } from './../../../generators/library/schema';
+import { readFileWithTree } from './readFileWithTree';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import libGenerator from './../../../generators/library/generator';
 
@@ -15,7 +15,6 @@ describe('writeFileWithTree', () => {
         libOptions = {
             name: 'link',
             language: 'C++',
-            skipFormat: false,
             generateTests: true,
         };
         await libGenerator(tree, libOptions);

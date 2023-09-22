@@ -1,7 +1,7 @@
+import type { NxJsonConfiguration } from '@nx/devkit';
 import { getWorkspaceLayout } from './getWorkspaceLayout';
 import * as getNxJsonConfigurationModule from '../getNxJsonConfiguration/getNxJsonConfiguration';
-import * as workspaceLayoutModule from '@nx/devkit'; // Import the workspaceLayout function
-import type { NxJsonConfiguration } from '@nx/devkit';
+import * as workspaceLayoutModule from '@nx/devkit';
 
 describe('getWorkspaceLayout', () => {
     let getNxJsonConfigurationSpy: jest.SpyInstance<
@@ -9,60 +9,49 @@ describe('getWorkspaceLayout', () => {
         [],
         unknown
     >;
-
+    let workspaceLayoutSpy: jest.SpyInstance;
+    let mockNxJson: NxJsonConfiguration;
     beforeEach(() => {
         getNxJsonConfigurationSpy = jest.spyOn(
             getNxJsonConfigurationModule,
-            'getNxJsonConfiguration'
+            'getNxJsonConfiguration',
         );
-    });
-
-    afterEach(() => {
-        getNxJsonConfigurationSpy.mockRestore();
-    });
-
-    it('should return the workspace layout from nxJson', () => {
-        const mockNxJson: NxJsonConfiguration = {
+        workspaceLayoutSpy = jest.spyOn(
+            workspaceLayoutModule,
+            'workspaceLayout',
+        );
+        mockNxJson = {
             workspaceLayout: {
                 appsDir: 'apps',
                 libsDir: 'libs',
                 projectNameAndRootFormat: 'as-provided',
             },
         };
-        getNxJsonConfigurationSpy.mockReturnValue(mockNxJson);
+    });
 
-        const workspaceLayoutSpy = jest.spyOn(
-            workspaceLayoutModule,
-            'workspaceLayout'
-        );
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
+
+    it('should return the workspace layout from nxJson', () => {
+        getNxJsonConfigurationSpy.mockReturnValue(mockNxJson);
         workspaceLayoutSpy.mockReturnValue({
             appsDir: 'apps',
             libsDir: 'libs',
         });
-
         const result = getWorkspaceLayout();
-
         expect(getNxJsonConfigurationSpy).toHaveBeenCalledTimes(1);
         expect(workspaceLayoutSpy).toHaveBeenCalledTimes(1);
         expect(result).toEqual(mockNxJson.workspaceLayout);
-
-        workspaceLayoutSpy.mockRestore();
     });
 
     it('should use default layout values if nxJson does not define them', () => {
         getNxJsonConfigurationSpy.mockReturnValue({});
-
-        const workspaceLayoutSpy = jest.spyOn(
-            workspaceLayoutModule,
-            'workspaceLayout'
-        );
         workspaceLayoutSpy.mockReturnValue({
             appsDir: 'bin',
             libsDir: 'packages',
         });
-
         const result = getWorkspaceLayout();
-
         expect(getNxJsonConfigurationSpy).toHaveBeenCalledTimes(1);
         expect(workspaceLayoutSpy).toHaveBeenCalledTimes(1);
         expect(result).toEqual({
@@ -70,7 +59,5 @@ describe('getWorkspaceLayout', () => {
             libsDir: 'packages',
             projectNameAndRootFormat: 'as-provided',
         });
-
-        workspaceLayoutSpy.mockRestore();
     });
 });

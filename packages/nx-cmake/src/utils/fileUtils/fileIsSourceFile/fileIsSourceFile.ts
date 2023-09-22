@@ -5,12 +5,17 @@ export const fileIsSourceFile = (
     workspaceRoot: string,
     projectRoot: string,
     projectType: CProjectType,
-    file: string
+    file: string,
 ): boolean => {
     const root = getAbsolutePath(workspaceRoot, projectRoot);
-    const testRoot = getAbsolutePath(root, 'test');
+    const testRoot = root.endsWith('/test')
+        ? root
+        : getAbsolutePath(root, 'test');
     const isTestFile = file.startsWith(testRoot);
     if (projectType !== CProjectType.Test && isTestFile) {
+        return false;
+    }
+    if (projectType === CProjectType.Test && !isTestFile) {
         return false;
     }
     const isCFile = file.endsWith('.c');

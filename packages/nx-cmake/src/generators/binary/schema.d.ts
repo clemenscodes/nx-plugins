@@ -1,8 +1,8 @@
 import type { BaseOptions } from '../../models/types';
-import { LinkGeneratorSchema } from '../link/schema';
+import type { LinkGeneratorSchema } from '../link/schema';
 
 export type BinGeneratorSchema = BaseOptions & {
-    generateTests: boolean = true;
+    generateTests: boolean;
 };
 
 export type BinSchema = Required<BinGeneratorSchema> & {

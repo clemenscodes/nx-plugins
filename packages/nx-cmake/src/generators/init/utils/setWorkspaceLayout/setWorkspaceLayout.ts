@@ -4,7 +4,7 @@ import type { InitGeneratorSchema } from '../../schema';
 export const setWorkspaceLayout = (
     nxJson: NxJsonConfiguration,
     updatedNxJson: NxJsonConfiguration,
-    options: InitGeneratorSchema
+    options: InitGeneratorSchema,
 ): [NxJsonConfiguration, InitGeneratorSchema] => {
     const { appsDir, libsDir, projectNameAndRootFormat } = options;
 

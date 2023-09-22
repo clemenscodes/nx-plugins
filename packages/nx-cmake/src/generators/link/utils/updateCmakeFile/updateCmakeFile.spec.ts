@@ -1,15 +1,15 @@
+import type { Tree } from '@nx/devkit';
+import type { LinkSchema } from '../../schema';
+import type { LibGeneratorSchema } from '../../../library/schema';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
+import { readFileWithTree } from '../../../../utils/generatorUtils/readFileWithTree/readFileWithTree';
+import libGenerator from '../../../library/generator';
 import {
     getCmakeLink,
     getSourceCmakeFile,
     getUpdatedCmakeFileContent,
     updateCmakeFile,
 } from './updateCmakeFile';
-import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import type { Tree } from '@nx/devkit';
-import type { LinkSchema } from '../../schema';
-import type { LibGeneratorSchema } from '../../../library/schema';
-import libGenerator from '../../../library/generator';
-import { readFileWithTree } from '../../../../utils/generatorUtils/readFileWithTree/readFileWithTree';
 
 describe('updateCmakeFile', () => {
     let tree: Tree;
@@ -24,7 +24,6 @@ describe('updateCmakeFile', () => {
         libOptions = {
             name: 'link',
             language: 'C++',
-            skipFormat: false,
             generateTests: true,
         };
         await libGenerator(tree, libOptions);
@@ -48,7 +47,6 @@ describe('updateCmakeFile', () => {
             source: 'liblink',
             target: 'libtarget',
             link: 'shared',
-            skipFormat: false,
             sourceProjectRoot: 'packages/link',
         };
     });
@@ -88,7 +86,7 @@ describe('updateCmakeFile', () => {
         const newContent = 'New CMake content';
         const updatedContent = getUpdatedCmakeFileContent(
             oldContent,
-            newContent
+            newContent,
         );
         expect(updatedContent).toBe(oldContent + newContent);
     });
@@ -99,7 +97,7 @@ describe('updateCmakeFile', () => {
         updateCmakeFile(tree, linkOptions);
         const updatedCmakeFileContent = readFileWithTree(
             tree,
-            expectedCmakeFile
+            expectedCmakeFile,
         );
         expect(updatedCmakeFileContent).toBe(expectedUpdatedCmakeFileContent);
     });

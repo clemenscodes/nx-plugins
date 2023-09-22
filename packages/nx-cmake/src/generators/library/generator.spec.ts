@@ -1,74 +1,50 @@
+import type { Tree } from '@nx/devkit';
+import type { LibGeneratorSchema } from './schema';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import { Tree, readProjectConfiguration } from '@nx/devkit';
-import { libGenerator } from './generator';
-import { LibGeneratorSchema } from './schema';
-import * as devkit from '@nx/devkit';
+import { readProjectConfiguration } from '@nx/devkit';
+import libGenerator from './generator';
 
 describe('lib generator', () => {
     let tree: Tree;
-    const formatFilesMock = jest
-        .spyOn(devkit, 'formatFiles')
-        .mockImplementation(jest.fn());
+    let options: LibGeneratorSchema;
 
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
+        options = {
+            name: 'test',
+            language: 'C++',
+            generateTests: true,
+        };
     });
 
     it('should run successfully with formatting', async () => {
-        const options: LibGeneratorSchema = {
-            name: 'test',
-            language: 'C++',
-            skipFormat: false,
-            generateTests: true,
-        };
-
         await libGenerator(tree, options);
         const config = readProjectConfiguration(tree, 'libtest');
-        expect(config).toBeDefined();
-        expect(formatFilesMock).toHaveBeenCalledTimes(1);
-        formatFilesMock.mockReset();
+        expect(config.tags).toStrictEqual(['cpp']);
     });
 
     it('should run successfully without formatting', async () => {
-        const options: LibGeneratorSchema = {
-            name: 'test',
-            language: 'C++',
-            skipFormat: true,
-            generateTests: true,
-        };
         await libGenerator(tree, options);
         const config = readProjectConfiguration(tree, 'libtest');
-        expect(config).toBeDefined();
-        expect(formatFilesMock).toHaveBeenCalledTimes(0);
-        formatFilesMock.mockReset();
+        expect(config.tags).toStrictEqual(['cpp']);
     });
 
     it('should generate lib and no tests', async () => {
-        const options: LibGeneratorSchema = {
-            name: 'test',
-            language: 'C++',
-            skipFormat: true,
-            generateTests: false,
-        };
+        options.generateTests = false;
         await libGenerator(tree, options);
         const config = readProjectConfiguration(tree, 'libtest');
-        expect(config).toBeDefined();
+        expect(config.tags).toStrictEqual(['cpp']);
         expect(() => readProjectConfiguration(tree, 'testtest')).toThrow(
-            "Cannot find configuration for 'testtest'"
+            "Cannot find configuration for 'testtest'",
         );
     });
 
     it('should generate lib and tests', async () => {
-        const options: LibGeneratorSchema = {
-            name: 'test',
-            language: 'C++',
-            skipFormat: true,
-            generateTests: true,
-        };
+        options.language = 'C';
         await libGenerator(tree, options);
         const config = readProjectConfiguration(tree, 'libtest');
         const testConfig = readProjectConfiguration(tree, 'testtest');
-        expect(config).toBeDefined();
-        expect(testConfig).toBeDefined();
+        expect(config.tags).toStrictEqual(['c']);
+        expect(testConfig.tags).toStrictEqual(['c', 'test']);
     });
 });

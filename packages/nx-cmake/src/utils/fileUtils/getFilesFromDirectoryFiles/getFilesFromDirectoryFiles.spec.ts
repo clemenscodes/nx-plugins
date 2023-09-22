@@ -9,7 +9,7 @@ describe('getFilesFromDirectoryFiles', () => {
     beforeEach(() => {
         getAbsolutePathMock = jest.spyOn(
             getAbsolutePathModule,
-            'getAbsolutePath'
+            'getAbsolutePath',
         );
         getNestedFilesMock = jest.spyOn(getNestedFilesModule, 'getNestedFiles');
     });
@@ -34,7 +34,7 @@ describe('getFilesFromDirectoryFiles', () => {
         const directoryFiles = ['file1.txt', 'file2.txt'];
 
         getAbsolutePathMock.mockImplementation(
-            (dir, file) => `/absolute/path/${dir}/${file}`
+            (dir, file) => `/absolute/path/${dir}/${file}`,
         );
         getNestedFilesMock.mockImplementation((absolutePath) => [
             `${absolutePath}/nested/file1.txt`,

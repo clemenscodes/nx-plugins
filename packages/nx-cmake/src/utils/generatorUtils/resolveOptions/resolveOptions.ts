@@ -1,12 +1,12 @@
-import { getCMakeC } from '../getCmakeC/getCMakeC';
 import type { BaseOptions } from '../../../models/types';
-import { names, offsetFromRoot } from '@nx/devkit';
+import { getCMakeC } from '../getCmakeC/getCMakeC';
 import { getLanguageExtension } from '../getLanguageExtension/getLanguageExtension';
 import { getProjectRoot } from '../getProjectRoot/getProjectRoot';
 import { CProjectType } from '../../../models/types';
+import { names, offsetFromRoot } from '@nx/devkit';
 
 export const resolveOptions = <T extends BaseOptions, K extends Required<T>>(
-    options: T
+    options: T,
 ): K => {
     const { language } = options;
     const resolvedName = names(options.name);

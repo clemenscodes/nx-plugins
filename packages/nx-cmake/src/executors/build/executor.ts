@@ -4,7 +4,7 @@ import { buildProjectWithMake } from './utils/buildProjectWithMake/buildProjectW
 
 export default async function* runExecutor(
     options: BuildExecutorSchema,
-    ctx: ExecutorContext
+    ctx: ExecutorContext,
 ): AsyncGenerator<{ success: boolean }> {
     const { root: workspaceRoot, projectName, projectsConfigurations } = ctx;
     const { projects } = projectsConfigurations;

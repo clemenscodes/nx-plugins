@@ -1,5 +1,6 @@
-import { type Tree, names } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
 import type { LinkSchema } from '../../schema';
+import { names } from '@nx/devkit';
 import { readFileWithTree } from '../../../../utils/generatorUtils/readFileWithTree/readFileWithTree';
 import { writeFileWithTree } from '../../../../utils/generatorUtils/writeFileWithTree/writeFileWithTree';
 import { trimLib } from '../../../../utils/generatorUtils/trimLib/trimLib';
@@ -12,7 +13,7 @@ export const getIncludeDirective = (project: string): string => {
 
 export const getIncludeFile = (
     project: string,
-    sourceProjectRoot: string
+    sourceProjectRoot: string,
 ): string => {
     const includeFile = `${sourceProjectRoot}/include/${project}.h`;
     return includeFile;
@@ -31,7 +32,7 @@ export const getUpdatedIncludeFileContent = (
     tree: Tree,
     includeFile: string,
     macroDefinition: string,
-    includeDirective: string
+    includeDirective: string,
 ): string => {
     const includeFileContent = readFileWithTree(tree, includeFile);
     if (includeFileContent.includes(includeDirective)) {
@@ -56,7 +57,7 @@ export const updateIncludeFile = (tree: Tree, options: LinkSchema): string => {
         tree,
         includeFile,
         macroDefinition,
-        includeDirective
+        includeDirective,
     );
     return writeFileWithTree(tree, includeFile, updatedIncludeFileContent);
 };

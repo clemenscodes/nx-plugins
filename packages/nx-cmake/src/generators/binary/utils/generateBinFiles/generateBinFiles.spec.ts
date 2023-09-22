@@ -1,5 +1,6 @@
 import type { Tree } from '@nx/devkit';
 import type { BinGeneratorSchema } from '../../schema';
+import { readFileWithTree } from './../../../../utils/generatorUtils/readFileWithTree/readFileWithTree';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { generateBinFiles } from './generateBinFiles';
 import { resolveBinOptions } from '../resolveBinOptions/resolveBinOptions';
@@ -10,6 +11,7 @@ describe('generateBinFiles', () => {
     let expectedSourceFile: string;
     let expectedIncludeFile: string;
     let expectedListsFile: string;
+    let expectedReadMeFile: string;
 
     const defaultTest = () => {
         const resolvedOptions = resolveBinOptions(options);
@@ -17,6 +19,7 @@ describe('generateBinFiles', () => {
         const binarySourceFile = `${projectRoot}/src/${name}.${languageExtension}`;
         const binaryListsFile = `${projectRoot}/CMakeLists.txt`;
         const binaryIncludeFile = `${projectRoot}/include/${name}.h`;
+        const binaryReadMeFile = `${projectRoot}/README.md`;
         generateBinFiles(tree, resolvedOptions);
         const binaryRoot = tree.children(projectRoot);
         expect(binaryRoot).toStrictEqual([
@@ -28,12 +31,15 @@ describe('generateBinFiles', () => {
         expect(tree.exists(binarySourceFile)).toBe(true);
         expect(tree.exists(binaryListsFile)).toBe(true);
         expect(tree.exists(binaryIncludeFile)).toBe(true);
-        const readIncludeFile = tree.read(binaryIncludeFile, 'utf8');
-        const readSourceFile = tree.read(binarySourceFile, 'utf8');
-        const readListsFile = tree.read(binaryListsFile, 'utf8');
+        expect(tree.exists(binaryReadMeFile)).toBe(true);
+        const readIncludeFile = readFileWithTree(tree, binaryIncludeFile);
+        const readSourceFile = readFileWithTree(tree, binarySourceFile);
+        const readListsFile = readFileWithTree(tree, binaryListsFile);
+        const readReadMeFile = readFileWithTree(tree, binaryReadMeFile);
         expect(readIncludeFile).toStrictEqual(expectedIncludeFile);
         expect(readSourceFile).toStrictEqual(expectedSourceFile);
         expect(readListsFile).toStrictEqual(expectedListsFile);
+        expect(readReadMeFile).toStrictEqual(expectedReadMeFile);
     };
 
     beforeEach(() => {
@@ -41,7 +47,6 @@ describe('generateBinFiles', () => {
         options = {
             name: 'test',
             language: 'C++',
-            skipFormat: false,
             generateTests: false,
         };
         expectedSourceFile =
@@ -60,6 +65,46 @@ describe('generateBinFiles', () => {
             'set_binary_settings(${CMAKE_PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})\n';
         expectedIncludeFile =
             '#ifndef _TEST_TEST\n' + '#define _TEST_TEST\n' + '\n' + '#endif\n';
+        expectedReadMeFile =
+            '# test\n' +
+            '\n' +
+            'This C++ binary was generated using [nx-cmake](https://www.npmjs.com/package/nx-cmake).\n' +
+            '\n' +
+            '## Executing the binary\n' +
+            '\n' +
+            '```shell\n' +
+            'nx execute test --output-style=stream\n' +
+            '```\n' +
+            '\n' +
+            '## Configuring the binary using [CMake](https://cmake.org/cmake/help/latest/index.html)\n' +
+            '\n' +
+            '```shell\n' +
+            'nx cmake test --output-style=stream\n' +
+            '```\n' +
+            '\n' +
+            '## Building the binary using [Make](https://www.gnu.org/software/make/manual/make.html) and [GCC](https://gcc.gnu.org/onlinedocs/)\n' +
+            '\n' +
+            '```shell\n' +
+            'nx build test --output-style=stream\n' +
+            '```\n' +
+            '\n' +
+            '## Linting the binary using [clang-tidy](https://clang.llvm.org/extra/clang-tidy/)\n' +
+            '\n' +
+            '```shell\n' +
+            'nx lint test --output-style=stream\n' +
+            '```\n' +
+            '\n' +
+            '## Formatting the binary using [clang-format](https://clang.llvm.org/docs/ClangFormat.html)\n' +
+            '\n' +
+            '```shell\n' +
+            'nx fmt test --output-style=stream\n' +
+            '```\n' +
+            '\n' +
+            '## Debugging the binary using [GDB](https://sourceware.org/gdb/documentation/)\n' +
+            '\n' +
+            '```shell\n' +
+            'nx debug test --output-style=stream\n' +
+            '```\n';
     });
 
     it('should generate a C++ binary', defaultTest);
@@ -72,6 +117,46 @@ describe('generateBinFiles', () => {
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
             'project(test C)\n' +
             'set_binary_settings(${CMAKE_PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})\n';
+        expectedReadMeFile =
+            '# test\n' +
+            '\n' +
+            'This C binary was generated using [nx-cmake](https://www.npmjs.com/package/nx-cmake).\n' +
+            '\n' +
+            '## Executing the binary\n' +
+            '\n' +
+            '```shell\n' +
+            'nx execute test --output-style=stream\n' +
+            '```\n' +
+            '\n' +
+            '## Configuring the binary using [CMake](https://cmake.org/cmake/help/latest/index.html)\n' +
+            '\n' +
+            '```shell\n' +
+            'nx cmake test --output-style=stream\n' +
+            '```\n' +
+            '\n' +
+            '## Building the binary using [Make](https://www.gnu.org/software/make/manual/make.html) and [GCC](https://gcc.gnu.org/onlinedocs/)\n' +
+            '\n' +
+            '```shell\n' +
+            'nx build test --output-style=stream\n' +
+            '```\n' +
+            '\n' +
+            '## Linting the binary using [clang-tidy](https://clang.llvm.org/extra/clang-tidy/)\n' +
+            '\n' +
+            '```shell\n' +
+            'nx lint test --output-style=stream\n' +
+            '```\n' +
+            '\n' +
+            '## Formatting the binary using [clang-format](https://clang.llvm.org/docs/ClangFormat.html)\n' +
+            '\n' +
+            '```shell\n' +
+            'nx fmt test --output-style=stream\n' +
+            '```\n' +
+            '\n' +
+            '## Debugging the binary using [GDB](https://sourceware.org/gdb/documentation/)\n' +
+            '\n' +
+            '```shell\n' +
+            'nx debug test --output-style=stream\n' +
+            '```\n';
         defaultTest();
     });
 });

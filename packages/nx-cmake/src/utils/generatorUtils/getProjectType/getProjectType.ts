@@ -1,25 +1,16 @@
-import { PROJECT_FILE } from '../../../config/projectFilePattern';
 import { CProjectType } from '../../../models/types';
-import { getWorkspaceLayout } from '../getWorkspaceLayout/getWorkspaceLayout';
+import { getProjectTypeFromConfigFileContent } from './getProjectTypeFromConfigFileContent/getProjectFileFromConfigFileContent';
+import { readProjectFile } from './readProjectFile/readProjectFile';
 
-export const getProjectType = (file: string): CProjectType => {
-    const { appsDir, libsDir } = getWorkspaceLayout();
-    if (!file.includes('/') && !file.startsWith('test')) {
-        return CProjectType.App;
+export const getProjectType = (
+    projectConfigurationFile: string,
+): CProjectType => {
+    try {
+        const configFileContent = readProjectFile(projectConfigurationFile);
+        return getProjectTypeFromConfigFileContent(configFileContent);
+    } catch (e) {
+        throw new Error(
+            `Failed to determine project type for the configuration file ${projectConfigurationFile}`,
+        );
     }
-    const directory = file.split('/').shift();
-    if (!directory) {
-        throw new Error('Failed to determine project type');
-    }
-    if (directory !== appsDir && directory !== libsDir) {
-        throw new Error('Failed to determine project type');
-    }
-    if (directory === appsDir) {
-        return CProjectType.App;
-    }
-    const maybeTest = file.split(PROJECT_FILE).shift().split('/').pop();
-    if (maybeTest === 'test') {
-        return CProjectType.Test;
-    }
-    return CProjectType.Lib;
 };

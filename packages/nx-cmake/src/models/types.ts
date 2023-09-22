@@ -1,9 +1,14 @@
-import type { NxJsonConfiguration } from '@nx/devkit';
+import type { NxJsonConfiguration, ProjectGraph } from '@nx/devkit';
+
+export enum CProjectType {
+    App,
+    Lib,
+    Test,
+}
 
 export type BaseOptions = {
     name: string;
     language: C;
-    skipFormat: boolean;
     constantName?: string;
     snakeCaseName?: string;
     relativeRootPath?: string;
@@ -14,12 +19,6 @@ export type BaseOptions = {
 export type ExecutorBaseOptions = {
     args: string[];
 };
-
-export enum CProjectType {
-    App,
-    Lib,
-    Test,
-}
 
 export type C = 'C' | 'C++';
 export type CMakeC = 'C' | 'CXX';
@@ -43,3 +42,10 @@ export type FilteredProject = {
 export type WorkspaceLayout = NxJsonConfiguration['workspaceLayout'];
 
 export type Graph = Record<string, Set<string>>;
+
+export type GraphFile = {
+    graph: {
+        nodes: ProjectGraph['nodes'];
+        dependencies: ProjectGraph['dependencies'];
+    };
+};

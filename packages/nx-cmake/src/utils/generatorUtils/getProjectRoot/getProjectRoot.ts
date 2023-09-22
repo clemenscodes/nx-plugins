@@ -3,7 +3,7 @@ import { getWorkspaceLayout } from '../getWorkspaceLayout/getWorkspaceLayout';
 
 export const getProjectRoot = (
     projectName: string,
-    projectType: CProjectType
+    projectType: CProjectType,
 ): string => {
     const { appsDir, libsDir, projectNameAndRootFormat } = getWorkspaceLayout();
 

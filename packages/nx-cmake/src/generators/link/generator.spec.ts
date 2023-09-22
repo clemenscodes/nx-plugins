@@ -1,9 +1,9 @@
-import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import { type Tree } from '@nx/devkit';
-import { linkGenerator } from './generator';
+import type { Tree } from '@nx/devkit';
 import type { LinkGeneratorSchema } from './schema';
 import type { LibGeneratorSchema } from '../library/schema';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import libGenerator from '../library/generator';
+import linkGenerator from './generator';
 
 describe('link generator', () => {
     let tree: Tree;
@@ -18,7 +18,6 @@ describe('link generator', () => {
         libOptions = {
             name: 'link',
             language: 'C++',
-            skipFormat: false,
             generateTests: true,
         };
         await libGenerator(tree, libOptions);
@@ -42,7 +41,6 @@ describe('link generator', () => {
             source: 'liblink',
             target: 'libtarget',
             link: 'shared',
-            skipFormat: false,
         };
     });
 

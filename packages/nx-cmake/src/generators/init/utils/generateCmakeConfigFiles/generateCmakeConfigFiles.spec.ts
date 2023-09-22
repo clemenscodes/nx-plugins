@@ -1,29 +1,14 @@
-import { generateCmakeConfigFiles } from './generateCmakeConfigFiles';
 import type { Tree } from '@nx/devkit';
+import type { InitGeneratorSchema } from '../../schema';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import { InitGeneratorSchema } from '../../schema';
+import { generateCmakeConfigFiles } from './generateCmakeConfigFiles';
 
 describe('generateCmakeConfigFiles', () => {
     let tree: Tree;
     let options: InitGeneratorSchema;
-    const expectedCmakeSettingsFiles = [
-        'set_binary_settings.cmake',
-        'set_compiler.cmake',
-        'set_compiler_settings.cmake',
-        'set_global_settings.cmake',
-        'set_library_settings.cmake',
-        'set_project_settings.cmake',
-    ];
-    const expectedCmakeUtilsFiles = [
-        'install_cmocka.cmake',
-        'install_gtest.cmake',
-        'link_cmocka.cmake',
-        'link_gtest.cmake',
-        'link_shared_library.cmake',
-        'link_static_library.cmake',
-        'make_var_readonly.cmake',
-        'print_variables.cmake',
-    ];
+    let expectedCmakeSettingsFiles: string[];
+    let expectedCmakeUtilsFiles: string[];
+
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
         options = {
@@ -32,8 +17,25 @@ describe('generateCmakeConfigFiles', () => {
             projectNameAndRootFormat: 'derived',
             cmakeConfigDir: 'cmake',
             addClangPreset: false,
-            skipFormat: false,
         };
+        expectedCmakeSettingsFiles = [
+            'set_binary_settings.cmake',
+            'set_compiler.cmake',
+            'set_compiler_settings.cmake',
+            'set_global_settings.cmake',
+            'set_library_settings.cmake',
+            'set_project_settings.cmake',
+        ];
+        expectedCmakeUtilsFiles = [
+            'install_cmocka.cmake',
+            'install_gtest.cmake',
+            'link_cmocka.cmake',
+            'link_gtest.cmake',
+            'link_shared_library.cmake',
+            'link_static_library.cmake',
+            'make_var_readonly.cmake',
+            'print_variables.cmake',
+        ];
     });
 
     it('should generate cmake config in cmake', async () => {
@@ -90,11 +92,6 @@ describe('generateCmakeConfigFiles', () => {
             '        " -MP"\n' +
             '        )\n' +
             '        set(CMAKE_C_FLAGS ${FLAGS} CACHE INTERNAL "")\n' +
-            '    elseif (CMAKE_C_COMPILER_ID STREQUAL "MSVC")\n' +
-            '        string(CONCAT FLAGS\n' +
-            '        " /W4"\n' +
-            '        )\n' +
-            '        set(CMAKE_C_FLAGS ${FLAGS} CACHE INTERNAL "")\n' +
             '    endif ()\n' +
             'endfunction()\n' +
             '\n' +
@@ -108,12 +105,6 @@ describe('generateCmakeConfigFiles', () => {
             '        " -MMD"\n' +
             '        " -MP"\n' +
             '        " -std=c++17"\n' +
-            '        )\n' +
-            '        set(CMAKE_CXX_FLAGS ${FLAGS} CACHE INTERNAL "")\n' +
-            '    elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")\n' +
-            '        string(CONCAT FLAGS\n' +
-            '        " /W4"\n' +
-            '        " /std:c++17"\n' +
             '        )\n' +
             '        set(CMAKE_CXX_FLAGS ${FLAGS} CACHE INTERNAL "")\n' +
             '    endif ()\n' +

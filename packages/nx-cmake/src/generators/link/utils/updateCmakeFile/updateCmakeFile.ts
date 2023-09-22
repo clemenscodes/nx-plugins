@@ -1,4 +1,4 @@
-import { type Tree } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
 import type { LinkSchema } from '../../schema';
 import type { Link } from '../../../../models/types';
 import { PROJECT_FILE } from '../../../../config/projectFilePattern';
@@ -19,7 +19,7 @@ export const getSourceCmakeFile = (sourceProjectRoot: string): string => {
 
 export const getUpdatedCmakeFileContent = (
     oldContent: string,
-    newContent: string
+    newContent: string,
 ): string => {
     if (oldContent.includes(newContent)) {
         return oldContent;
@@ -35,7 +35,7 @@ export const updateCmakeFile = (tree: Tree, options: LinkSchema) => {
     const cmakeFileContent = readFileWithTree(tree, cmakeFile);
     const updatedCmakeFileContent = getUpdatedCmakeFileContent(
         cmakeFileContent,
-        cmakeLink
+        cmakeLink,
     );
     return writeFileWithTree(tree, cmakeFile, updatedCmakeFileContent);
 };

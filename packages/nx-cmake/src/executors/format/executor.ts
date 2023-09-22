@@ -5,7 +5,7 @@ import { getProjectTypeFromConfig } from '../../utils/generatorUtils/getProjectT
 
 export default async function* runExecutor(
     options: FormatExecutorSchema,
-    ctx: ExecutorContext
+    ctx: ExecutorContext,
 ): AsyncGenerator<{ success: boolean }> {
     const { root: workspaceRoot, projectName, projectsConfigurations } = ctx;
     const { projects } = projectsConfigurations;
@@ -17,7 +17,7 @@ export default async function* runExecutor(
         workspaceRoot,
         projectRoot,
         options,
-        projectType
+        projectType,
     );
 
     yield {

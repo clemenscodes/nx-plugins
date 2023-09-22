@@ -1,9 +1,9 @@
-import { C } from '../../../../models/types';
+import type { C } from '../../../../models/types';
 
 export const getTestSetup = (
     generateTests: boolean,
     language: C,
-    testName: string
+    testName: string,
 ) => {
     if (!generateTests) {
         return '';

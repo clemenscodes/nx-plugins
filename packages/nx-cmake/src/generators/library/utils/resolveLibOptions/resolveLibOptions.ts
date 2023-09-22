@@ -1,3 +1,4 @@
+import type { LibGeneratorSchema, LibOptions } from '../../schema';
 import { offsetFromRoot } from '@nx/devkit';
 import { getBaseTest } from '../getBaseTest/getBaseTest';
 import { getGoogleTestInclude } from '../getGoogleTestInclude/getGoogleTestInclude';
@@ -8,11 +9,10 @@ import { getTestSetup } from '../getTestSetup/getTestSetup';
 import { resolveOptions } from '../../../../utils/generatorUtils/resolveOptions/resolveOptions';
 import { getProjectRoot } from '../../../../utils/generatorUtils/getProjectRoot/getProjectRoot';
 import { CProjectType } from '../../../../models/types';
-import { LibGeneratorSchema, LibOptions } from '../../schema';
 
 export const resolveLibOptions = (options: LibGeneratorSchema): LibOptions => {
     const resolvedOptions = resolveOptions<LibGeneratorSchema, LibOptions>(
-        options
+        options,
     );
     const { name, generateTests, language } = resolvedOptions;
     const projectRoot = getProjectRoot(name, CProjectType.Lib);

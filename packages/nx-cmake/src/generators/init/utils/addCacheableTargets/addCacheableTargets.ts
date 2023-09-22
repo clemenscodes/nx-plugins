@@ -1,14 +1,21 @@
 import type { NxJsonConfiguration } from '@nx/devkit';
 
 export const addCacheableTargets = (
-    updatedNxJson: NxJsonConfiguration
+    updatedNxJson: NxJsonConfiguration,
 ): NxJsonConfiguration => {
     const { tasksRunnerOptions } = updatedNxJson;
     const defaultTasksRunnerOptions = {
         default: {
             runner: 'nx/tasks-runners/default',
             options: {
-                cacheableOperations: ['build', 'debug', 'test', 'lint', 'fmt'],
+                cacheableOperations: [
+                    'cmake',
+                    'build',
+                    'debug',
+                    'test',
+                    'lint',
+                    'fmt',
+                ],
             },
         },
     };

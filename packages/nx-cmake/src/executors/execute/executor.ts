@@ -4,7 +4,7 @@ import { executeBinary } from './utils/executeBinary/executeBinary';
 
 export default async function* runExecutor(
     options: ExecuteExecutorSchema,
-    ctx: ExecutorContext
+    ctx: ExecutorContext,
 ): AsyncGenerator<{ success: boolean }> {
     const { root: workspaceRoot, projectName, projectsConfigurations } = ctx;
     const { projects } = projectsConfigurations;
@@ -15,7 +15,7 @@ export default async function* runExecutor(
         workspaceRoot,
         projectRoot,
         projectName,
-        options
+        options,
     );
 
     yield {

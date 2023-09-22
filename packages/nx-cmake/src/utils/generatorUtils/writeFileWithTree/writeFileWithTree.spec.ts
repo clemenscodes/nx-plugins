@@ -1,8 +1,8 @@
 import type { Tree } from '@nx/devkit';
 import type { LibGeneratorSchema } from '../../../generators/library/schema';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import libGenerator from '../../../generators/library/generator';
 import { writeFileWithTree } from './writeFileWithTree';
+import libGenerator from '../../../generators/library/generator';
 
 describe('writeFileWithTree', () => {
     let tree: Tree;
@@ -15,7 +15,6 @@ describe('writeFileWithTree', () => {
         libOptions = {
             name: 'link',
             language: 'C++',
-            skipFormat: false,
             generateTests: true,
         };
         await libGenerator(tree, libOptions);
@@ -27,7 +26,7 @@ describe('writeFileWithTree', () => {
         const writtenContent = writeFileWithTree(
             tree,
             expectedFile,
-            expectedWrittenContent
+            expectedWrittenContent,
         );
         expect(writtenContent).toBe(expectedWrittenContent);
     });

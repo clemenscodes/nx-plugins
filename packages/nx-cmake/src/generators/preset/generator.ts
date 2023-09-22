@@ -1,6 +1,6 @@
 import type { Tree } from '@nx/devkit';
+import type { InitGeneratorSchema } from '../init/schema';
 import initGenerator from '../init/generator';
-import { InitGeneratorSchema } from '../init/schema';
 
 export async function presetGenerator(tree: Tree) {
     const initOptions: InitGeneratorSchema = {
@@ -9,7 +9,6 @@ export async function presetGenerator(tree: Tree) {
         projectNameAndRootFormat: 'derived',
         cmakeConfigDir: 'cmake',
         addClangPreset: true,
-        skipFormat: false,
     };
     await initGenerator(tree, initOptions);
 }

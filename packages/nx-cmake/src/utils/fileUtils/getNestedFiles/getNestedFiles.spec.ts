@@ -9,11 +9,11 @@ describe('pathIsDirectory', () => {
     beforeEach(() => {
         pathIsDirectoryMock = jest.spyOn(
             pathIsDirectoryModule,
-            'pathIsDirectory'
+            'pathIsDirectory',
         );
         getFilesOfDirectoryRecursivelyMock = jest.spyOn(
             getFilesOfDirectoryRecursivelyModule,
-            'getFilesOfDirectoryRecursively'
+            'getFilesOfDirectoryRecursively',
         );
     });
 
@@ -47,7 +47,7 @@ describe('pathIsDirectory', () => {
         expect(result).toEqual(nestedFiles);
         expect(pathIsDirectoryMock).toHaveBeenCalledWith(absolutePath);
         expect(getFilesOfDirectoryRecursivelyMock).toHaveBeenCalledWith(
-            absolutePath
+            absolutePath,
         );
     });
 });

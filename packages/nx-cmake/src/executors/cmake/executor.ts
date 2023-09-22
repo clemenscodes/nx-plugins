@@ -4,7 +4,7 @@ import { configureProjectWithCMake } from './utils/configureProjectWithCMake/con
 
 export default async function* runExecutor(
     options: CmakeExecutorSchema,
-    ctx: ExecutorContext
+    ctx: ExecutorContext,
 ): AsyncGenerator<{ success: boolean }> {
     const { root: workspaceRoot, projectName, projectsConfigurations } = ctx;
     const { projects } = projectsConfigurations;
@@ -13,7 +13,7 @@ export default async function* runExecutor(
     const success = configureProjectWithCMake(
         workspaceRoot,
         projectRoot,
-        options
+        options,
     );
     yield { success };
 }

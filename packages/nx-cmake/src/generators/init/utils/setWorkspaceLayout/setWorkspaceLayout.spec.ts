@@ -4,31 +4,37 @@ import type { InitGeneratorSchema } from '../../schema';
 import { setWorkspaceLayout } from './setWorkspaceLayout';
 
 describe('setWorkspaceLayout', () => {
-    const baseOptions = {
-        cmakeConfigDir: 'cmake',
-        addClangPreset: false,
-        skipFormat: false,
-    };
+    let nxJson: NxJsonConfiguration;
+    let updatedNxJson: NxJsonConfiguration;
+    let baseOptions: Partial<InitGeneratorSchema>;
+    let workspaceLayoutOptions: Required<WorkspaceLayout>;
+    let options: InitGeneratorSchema;
 
-    const updatedNxJson: NxJsonConfiguration = {};
+    beforeEach(() => {
+        nxJson = {};
+        updatedNxJson = {};
+        baseOptions = {
+            cmakeConfigDir: 'cmake',
+            addClangPreset: false,
+        };
 
-    const workspaceLayoutOptions: Required<WorkspaceLayout> = {
-        appsDir: 'apps',
-        libsDir: 'libs',
-        projectNameAndRootFormat: 'derived',
-    };
+        workspaceLayoutOptions = {
+            appsDir: 'apps',
+            libsDir: 'libs',
+            projectNameAndRootFormat: 'derived',
+        };
 
-    const options: InitGeneratorSchema = {
-        ...baseOptions,
-        ...workspaceLayoutOptions,
-    };
+        options = {
+            ...baseOptions,
+            ...workspaceLayoutOptions,
+        } as InitGeneratorSchema;
+    });
 
     it('should set workspaceLayout when it does not exist in nxJson', () => {
-        const nxJson: NxJsonConfiguration = {};
         const [resultNxJson, resultOptions] = setWorkspaceLayout(
             nxJson,
             updatedNxJson,
-            options
+            options,
         );
 
         expect(resultNxJson.workspaceLayout).toEqual(workspaceLayoutOptions);
@@ -36,27 +42,28 @@ describe('setWorkspaceLayout', () => {
     });
 
     it('should set appsDir when it does not exist in nxJson', () => {
-        const nxJson: NxJsonConfiguration = {
+        nxJson = {
             workspaceLayout: {
                 appsDir: '',
                 libsDir: 'libs',
                 projectNameAndRootFormat: 'derived',
             },
         };
+
         const [resultNxJson, resultOptions] = setWorkspaceLayout(
             nxJson,
             updatedNxJson,
-            options
+            options,
         );
 
         expect(resultNxJson.workspaceLayout.appsDir).toEqual(
-            workspaceLayoutOptions.appsDir
+            workspaceLayoutOptions.appsDir,
         );
         expect(resultOptions).toEqual(options);
     });
 
     it('should set libsDir when it does not exist in nxJson', () => {
-        const nxJson: NxJsonConfiguration = {
+        nxJson = {
             workspaceLayout: {
                 appsDir: 'apps',
                 libsDir: '',
@@ -67,17 +74,17 @@ describe('setWorkspaceLayout', () => {
         const [resultNxJson, resultOptions] = setWorkspaceLayout(
             nxJson,
             updatedNxJson,
-            options
+            options,
         );
 
         expect(resultNxJson.workspaceLayout.appsDir).toEqual(
-            workspaceLayoutOptions.appsDir
+            workspaceLayoutOptions.appsDir,
         );
         expect(resultOptions).toEqual(options);
     });
 
     it('should set projectNameAndRootFormat when it does not exist in nxJson', () => {
-        const nxJson: NxJsonConfiguration = {
+        nxJson = {
             workspaceLayout: {
                 appsDir: '',
                 libsDir: '',
@@ -88,17 +95,17 @@ describe('setWorkspaceLayout', () => {
         const [resultNxJson, resultOptions] = setWorkspaceLayout(
             nxJson,
             updatedNxJson,
-            options
+            options,
         );
 
         expect(resultNxJson.workspaceLayout.appsDir).toEqual(
-            workspaceLayoutOptions.appsDir
+            workspaceLayoutOptions.appsDir,
         );
         expect(resultOptions).toEqual(options);
     });
 
     it('should override options when it they exist in nxJson', () => {
-        const nxJson: NxJsonConfiguration = {
+        nxJson = {
             workspaceLayout: {
                 appsDir: 'bin',
                 libsDir: 'packages',
@@ -109,14 +116,14 @@ describe('setWorkspaceLayout', () => {
         const [resultNxJson, resultOptions] = setWorkspaceLayout(
             nxJson,
             updatedNxJson,
-            options
+            options,
         );
 
         expect(resultNxJson.workspaceLayout).toEqual(nxJson.workspaceLayout);
         expect(resultOptions.appsDir).toEqual(nxJson.workspaceLayout.appsDir);
         expect(resultOptions.libsDir).toEqual(nxJson.workspaceLayout.libsDir);
         expect(resultOptions.projectNameAndRootFormat).toEqual(
-            nxJson.workspaceLayout.projectNameAndRootFormat
+            nxJson.workspaceLayout.projectNameAndRootFormat,
         );
     });
 });

@@ -6,14 +6,12 @@ describe('getBaseTest', () => {
         const language = 'C++';
         const libName = 'MyLib';
         const projectName = 'MyProject';
-
         const result = getBaseTest(
             generateTests,
             language,
             libName,
-            projectName
+            projectName,
         );
-
         expect(result).toBe('');
     });
 
@@ -22,17 +20,14 @@ describe('getBaseTest', () => {
         const language = 'C++';
         const libName = 'libgui';
         const projectName = 'gui';
-
         const expected =
             'TEST(libgui, test_gui) {\n\tEXPECT_EQ(gui(), 0);\n}\n';
-
         const result = getBaseTest(
             generateTests,
             language,
             libName,
-            projectName
+            projectName,
         );
-
         expect(result).toBe(expected);
     });
 
@@ -41,7 +36,6 @@ describe('getBaseTest', () => {
         const language = 'C';
         const libName = 'libparser';
         const projectName = 'parser';
-
         const expected =
             'static int setup(void **state) {\n' +
             '\t(void) state;\n' +
@@ -64,14 +58,12 @@ describe('getBaseTest', () => {
             '\t};\n' +
             '\treturn cmocka_run_group_tests(parser_tests, setup, teardown);\n' +
             '}\n';
-
         const result = getBaseTest(
             generateTests,
             language,
             libName,
-            projectName
+            projectName,
         );
-
         expect(result).toBe(expected);
     });
 });

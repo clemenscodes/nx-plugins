@@ -1,7 +1,7 @@
 import type { NxJsonConfiguration } from '@nx/devkit';
 
 export const addCmakeNamedInput = (
-    updatedNxJson: NxJsonConfiguration
+    updatedNxJson: NxJsonConfiguration,
 ): NxJsonConfiguration => {
     const cmakeNamedInput = [
         '{projectRoot}/**/*.cpp',

@@ -9,7 +9,7 @@ import { formatNxJson } from '../formatNxJson/formatNxJson';
 
 export const getUpdatedNxJson = (
     nxJson: NxJsonConfiguration,
-    options: InitGeneratorSchema
+    options: InitGeneratorSchema,
 ): [NxJsonConfiguration, InitGeneratorSchema] => {
     let updatedNxJson: NxJsonConfiguration = { ...nxJson };
     updatedNxJson = addTargetDefaults(updatedNxJson);
@@ -19,7 +19,7 @@ export const getUpdatedNxJson = (
     [updatedNxJson, options] = setWorkspaceLayout(
         nxJson,
         updatedNxJson,
-        options
+        options,
     );
     updatedNxJson = formatNxJson(nxJson, updatedNxJson);
     return [updatedNxJson, options];

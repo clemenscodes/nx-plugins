@@ -9,26 +9,23 @@ describe('getBaseCmockaTest', () => {
 
     it('should generate test code with the project name', () => {
         const result = getBaseCmockaTest(projectName);
-
         expect(result).toContain(
-            `static void test_nx_cmake_test_c(void **state)`
+            `static void test_nx_cmake_test_c(void **state)`,
         );
         expect(result).toContain(`nx_cmake_test_c();`);
     });
 
     it('should generate test code with setup and teardown functions', () => {
         const result = getBaseCmockaTest(projectName);
-
         expect(result).toContain(`static int setup(void **state)`);
         expect(result).toContain(`static int teardown(void **state)`);
     });
 
     it('should generate test code with cmocka_unit_test and cmocka_run_group_tests', () => {
         const result = getBaseCmockaTest(projectName);
-
         expect(result).toContain(`cmocka_unit_test(test_nx_cmake_test_c)`);
         expect(result).toContain(
-            `cmocka_run_group_tests(nx_cmake_test_c_tests, setup, teardown)`
+            `cmocka_run_group_tests(nx_cmake_test_c_tests, setup, teardown)`,
         );
     });
 

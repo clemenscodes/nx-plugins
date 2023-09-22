@@ -20,11 +20,11 @@ describe('commandExists', () => {
 
     it('should return false if command exists', () => {
         const result = commandExists(
-            'clang-tidy-which-absolutely-doesnt-exist'
+            'clang-tidy-which-absolutely-doesnt-exist',
         );
         expect(result).toBe(false);
         expect(executeCommandMock).toBeCalledWith(
-            'command -v clang-tidy-which-absolutely-doesnt-exist'
+            'command -v clang-tidy-which-absolutely-doesnt-exist',
         );
     });
 
@@ -50,7 +50,7 @@ describe('commandExists', () => {
         const result = commandExists('command-with-$pecial-ch@racters');
         expect(result).toBe(false);
         expect(executeCommandMock).toBeCalledWith(
-            'command -v command-with-$pecial-ch@racters'
+            'command -v command-with-$pecial-ch@racters',
         );
     });
 
@@ -58,7 +58,7 @@ describe('commandExists', () => {
         const result = commandExists('/path/to/a/directory');
         expect(result).toBe(false);
         expect(executeCommandMock).toBeCalledWith(
-            'command -v /path/to/a/directory'
+            'command -v /path/to/a/directory',
         );
     });
 

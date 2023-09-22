@@ -10,17 +10,20 @@ export const lintFilesWithClangTidy = async (
     workspaceRoot: string,
     projectRoot: string,
     options: LintExecutorSchema,
-    projectType: CProjectType
+    projectType: CProjectType,
 ): Promise<boolean> => {
-    const { args } = options;
     const lintCommand = checkCommandExists('clang-tidy');
-    const lintArgs = await getLintArguments(workspaceRoot, projectRoot, args);
+    const lintArgs = await getLintArguments(
+        workspaceRoot,
+        projectRoot,
+        options,
+    );
     const files = getProjectFiles(workspaceRoot, projectRoot);
     const sourceFiles = filterSourceFiles(
         workspaceRoot,
         projectRoot,
         projectType,
-        files
+        files,
     );
     const { success } = runCommand(lintCommand, ...lintArgs, ...sourceFiles);
     return success;

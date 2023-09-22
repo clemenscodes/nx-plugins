@@ -9,11 +9,11 @@ describe('getFilesOfDirectoryRecursively', () => {
     beforeEach(() => {
         readAllFilesOfDirectoryMock = jest.spyOn(
             readAllFilesOfDirectoryModule,
-            'readAllFilesOfDirectory'
+            'readAllFilesOfDirectory',
         );
         getFilesFromDirectoryFilesMock = jest.spyOn(
             getFilesFromDirectoryFilesModule,
-            'getFilesFromDirectoryFiles'
+            'getFilesFromDirectoryFiles',
         );
     });
 
@@ -49,7 +49,7 @@ describe('getFilesOfDirectoryRecursively', () => {
         expect(readAllFilesOfDirectoryMock).toHaveBeenCalledWith(directory);
         expect(getFilesFromDirectoryFilesMock).toHaveBeenCalledWith(
             directory,
-            directoryFiles
+            directoryFiles,
         );
     });
 });

@@ -6,7 +6,7 @@ describe('getBaseGoogleTest', () => {
         const projectName = 'nx-cmake-test-c';
         const result = getBaseGoogleTest(libName, projectName);
         expect(result).toContain(
-            `TEST(libnx_cmake_test_c, test_nx_cmake_test_c)`
+            `TEST(libnx_cmake_test_c, test_nx_cmake_test_c)`,
         );
         expect(result).toContain(`EXPECT_EQ(nx_cmake_test_c(), 0);`);
     });
