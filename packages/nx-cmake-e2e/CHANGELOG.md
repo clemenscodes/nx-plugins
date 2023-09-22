@@ -1,5 +1,13 @@
 # Changelog (nx-cmake)
 
+## [0.2.1](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.2.0...nx-cmake-0.2.1) (2023-09-22)
+
+
+### Bug Fixes
+
+* **nx-cmake:** bug which caused e2e to fail randomly ([70a675e](https://github.com/clemenscodes/nx-plugins/commit/70a675e0940b8393951718acf5c3677f53ff3551))
+* **nx-cmake:** consider cached dependencies when calculating project graph ([5265ed4](https://github.com/clemenscodes/nx-plugins/commit/5265ed41d0ee4507932545e54909fbd8710c9a34))
+
 ## [0.2.0](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.1.2...nx-cmake-0.2.0) (2023-09-17)
 
 
