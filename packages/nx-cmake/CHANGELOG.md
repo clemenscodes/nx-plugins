@@ -1,5 +1,13 @@
 # Changelog (nx-cmake)
 
+## [0.2.3](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.2.2...nx-cmake-0.2.3) (2023-09-22)
+
+
+### Bug Fixes
+
+* **nx-cmake:** binary links include all the library includes ([2714c30](https://github.com/clemenscodes/nx-plugins/commit/2714c30d666a52b60fb587aaed6bae5bb7c82da4))
+* **nx-cmake:** format and lint have inputs, config files trigger cache invalidation now ([0fa4aed](https://github.com/clemenscodes/nx-plugins/commit/0fa4aedf8bd894ea945706424e34ab0dfe4a892f))
+
 ## [0.2.2](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.2.1...nx-cmake-0.2.2) (2023-09-22)
 
 
