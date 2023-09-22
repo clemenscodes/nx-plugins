@@ -2,9 +2,9 @@ import { fileExists } from '../fileExists/fileExists';
 import { getAbsolutePath } from '../getAbsolutePath/getAbsolutePath';
 
 export const getConfigFile = async (
-    configFile: string,
     workspaceRoot: string,
-    projectRoot: string
+    projectRoot: string,
+    configFile: string,
 ): Promise<string> => {
     const joinedProjectRoot = getAbsolutePath(workspaceRoot, projectRoot);
     const projectConfigFile = getAbsolutePath(joinedProjectRoot, configFile);

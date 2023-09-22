@@ -1,16 +1,16 @@
-import * as fileExistsModule from '../fileExists/fileExists';
 import { getConfigFile } from './getConfigFile';
+import * as fileExistsModule from '../fileExists/fileExists';
 
 describe('getConfigFile', () => {
-    let fileExistsMock: jest.SpyInstance;
-    let configFile: string;
     let workspaceRoot: string;
     let projectRoot: string;
+    let configFile: string;
+    let fileExistsMock: jest.SpyInstance;
 
     beforeEach(() => {
-        configFile = '.clang-format';
         workspaceRoot = '/workspace';
         projectRoot = '/project';
+        configFile = '.clang-format';
         fileExistsMock = jest.spyOn(fileExistsModule, 'fileExists');
     });
 
@@ -21,9 +21,9 @@ describe('getConfigFile', () => {
     it('should return config file from project if it exists', async () => {
         fileExistsMock.mockResolvedValueOnce(true);
         const result = await getConfigFile(
-            configFile,
             workspaceRoot,
-            projectRoot
+            projectRoot,
+            configFile
         );
         expect(result).toBe('/workspace/project/.clang-format');
     });
@@ -32,9 +32,9 @@ describe('getConfigFile', () => {
         fileExistsMock.mockResolvedValueOnce(false);
         fileExistsMock.mockResolvedValueOnce(true);
         const result = await getConfigFile(
-            configFile,
             workspaceRoot,
-            projectRoot
+            projectRoot,
+            configFile
         );
         expect(result).toBe('/workspace/.clang-format');
     });
@@ -43,7 +43,7 @@ describe('getConfigFile', () => {
         fileExistsMock.mockResolvedValueOnce(false);
         fileExistsMock.mockResolvedValueOnce(false);
         await expect(
-            getConfigFile(configFile, workspaceRoot, projectRoot)
+            getConfigFile(workspaceRoot, projectRoot, configFile)
         ).rejects.toThrowError(
             `Could not find .clang-format. Please generate a preset using nx-cmake:init or provide your own.`
         );

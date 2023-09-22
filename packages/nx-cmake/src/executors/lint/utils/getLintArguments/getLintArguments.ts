@@ -23,9 +23,9 @@ export const getClangTidyConfigArgument = async (
     projectRoot: string
 ): Promise<string> => {
     const configFile = await getConfigFile(
-        '.clang-tidy',
         workspaceRoot,
-        projectRoot
+        projectRoot,
+        '.clang-tidy'
     );
     const configArgument = `--config-file=${configFile}`;
     return configArgument;

@@ -1,20 +1,8 @@
 import type { FormatExecutorSchema } from '../../schema';
 import { getConfigFile } from '../../../../utils/fileUtils/getConfigFile/getConfigFile';
-
-export const getStyleArgument = (clangFormatFile: string): string => {
-    const styleArgument = `--style=file:${clangFormatFile}`;
-    return styleArgument;
-};
-
-export const getVerboseArgument = (verbose: boolean): string[] => {
-    return verbose ? ['--verbose'] : [];
-};
-
-export const getEditFileInPlaceArgument = (
-    editFilesInPlace: boolean
-): string[] => {
-    return editFilesInPlace ? ['-i'] : [];
-};
+import { getStyleArgument } from './getStyleArgument/getStyleArgument';
+import { getEditFileInPlaceArgument } from './getEditFilesInPlaceArgument/getEditFilesInPlaceArgument';
+import { getVerboseArgument } from './getVerboseArgument/getVerboseArgument';
 
 export const getFormatArguments = async (
     workspaceRoot: string,
@@ -23,9 +11,9 @@ export const getFormatArguments = async (
 ): Promise<string[]> => {
     const { args, verbose, editFilesInPlace } = options;
     const clangFormatFile = await getConfigFile(
-        '.clang-format',
         workspaceRoot,
-        projectRoot
+        projectRoot,
+        '.clang-format'
     );
     const style = getStyleArgument(clangFormatFile);
     const isVerbose = getVerboseArgument(verbose);
