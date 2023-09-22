@@ -305,8 +305,10 @@ describe('generateCmakeConfigFiles', () => {
             '        return()\n' +
             '    endif()\n' +
             '    target_link_libraries(${PROJECT} ${LIB_WITH_PREFIX})\n' +
-            '    set(LIB_INCLUDE_DIR ${WORKSPACE_LIBRARY_DIR}/${LIB}/include)\n' +
-            '    target_include_directories(${PROJECT} PRIVATE ${LIB_INCLUDE_DIR})\n' +
+            '    set(LIB_DIR ${WORKSPACE_LIBRARY_DIR}/${LIB})\n' +
+            '    target_include_directories(${PROJECT} PRIVATE ${LIB_DIR})\n' +
+            '    target_include_directories(${PROJECT} PRIVATE ${LIB_DIR}/include)\n' +
+            '    target_include_directories(${PROJECT} PRIVATE ${LIB_DIR}/src)\n' +
             '    target_link_options(${PROJECT} PRIVATE "-Wl,--as-needed")\n' +
             'endfunction()\n';
         expect(readFile).toStrictEqual(expectedFile);
@@ -328,8 +330,10 @@ describe('generateCmakeConfigFiles', () => {
             '        return()\n' +
             '    endif()\n' +
             '    target_link_libraries(${PROJECT} ${LIB_WITH_PREFIX})\n' +
-            '    set(LIB_INCLUDE_DIR ${WORKSPACE_LIBRARY_DIR}/${LIB}/include)\n' +
-            '    target_include_directories(${PROJECT} PRIVATE ${LIB_INCLUDE_DIR})\n' +
+            '    set(LIB_DIR ${WORKSPACE_LIBRARY_DIR}/${LIB})\n' +
+            '    target_include_directories(${PROJECT} PRIVATE ${LIB_DIR})\n' +
+            '    target_include_directories(${PROJECT} PRIVATE ${LIB_DIR}/include)\n' +
+            '    target_include_directories(${PROJECT} PRIVATE ${LIB_DIR}/src)\n' +
             'endfunction()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
