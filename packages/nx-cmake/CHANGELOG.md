@@ -1,5 +1,13 @@
 # Changelog (nx-cmake)
 
+## [0.2.2](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.2.1...nx-cmake-0.2.2) (2023-09-22)
+
+
+### Bug Fixes
+
+* **nx-cmake:** include directories can be resolved from project root, include or src ([0bd8440](https://github.com/clemenscodes/nx-plugins/commit/0bd8440e62fa4b8b2153441ccf19f08e5382baf8))
+* **nx-cmake:** test binaries are now generated in appsDir ([c010c10](https://github.com/clemenscodes/nx-plugins/commit/c010c10541c6dcbae54e7fa46a96f53291f09c9c))
+
 ## [0.2.1](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.2.0...nx-cmake-0.2.1) (2023-09-22)
 
 
