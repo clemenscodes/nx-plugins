@@ -12,7 +12,7 @@ export const getFormatArguments = async (
     const style = await getStyleArgument(
         workspaceRoot,
         projectRoot,
-        '.clang-format',
+        '.clang-format.yml',
     );
     const isVerbose = getVerboseArgument(verbose);
     const inPlace = getEditFileInPlaceArgument(editFilesInPlace);

@@ -4,17 +4,23 @@ export const addTargetDefaults = (
     updatedNxJson: NxJsonConfiguration,
 ): NxJsonConfiguration => {
     const dependsOnBuild = ['build'];
-
     const defaultInput = ['default'];
+    const lintInput = ['clangTidy'];
+    const fmtInput = ['clangFormat'];
 
     const cmakeTargetDefault = {
         dependsOn: ['^cmake'],
         inputs: ['cmake'],
     };
 
+    const fmtTargetDefault = {
+        dependsOn: [],
+        inputs: fmtInput,
+    };
+
     const lintTargetDefault = {
         dependsOn: ['cmake'],
-        inputs: defaultInput,
+        inputs: lintInput,
     };
 
     const buildTargetDefault = {
@@ -41,15 +47,20 @@ export const addTargetDefaults = (
         updatedNxJson.targetDefaults = {
             cmake: cmakeTargetDefault,
             build: buildTargetDefault,
+            fmt: fmtTargetDefault,
+            lint: lintTargetDefault,
             test: testTargetDefault,
             debug: debugTargetDefault,
             execute: executeTargetDefault,
-            lint: lintTargetDefault,
         };
     }
 
     if (!('lint' in updatedNxJson.targetDefaults)) {
         updatedNxJson.targetDefaults.lint = lintTargetDefault;
+    }
+
+    if (!('fmt' in updatedNxJson.targetDefaults)) {
+        updatedNxJson.targetDefaults.fmt = fmtTargetDefault;
     }
 
     if (!('test' in updatedNxJson.targetDefaults)) {
@@ -111,6 +122,14 @@ export const addTargetDefaults = (
 
     if (!updatedNxJson.targetDefaults.lint.dependsOn.includes('cmake')) {
         updatedNxJson.targetDefaults.lint.dependsOn.push('cmake');
+    }
+
+    if (!updatedNxJson.targetDefaults.lint.inputs) {
+        updatedNxJson.targetDefaults.fmt.inputs = ['clangTidy'];
+    }
+
+    if (!updatedNxJson.targetDefaults.fmt.inputs) {
+        updatedNxJson.targetDefaults.fmt.inputs = ['clangFormat'];
     }
 
     if (!updatedNxJson.targetDefaults.test.dependsOn) {
