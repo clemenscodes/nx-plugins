@@ -16,7 +16,7 @@ export const getGccDependenciesCommand = (
     const language = tag === 'cpp' ? 'c++' : 'c';
     const cmd =
         `gcc -x ${language} -MM ${fileName}` +
-        ` -I ${projectRoot}/include` +
+        ` -I ${projectRoot}` +
         ` -I ${libsDir}` +
         ` -I ${includeDir}` +
         ` -I ${gtestInclude}` +

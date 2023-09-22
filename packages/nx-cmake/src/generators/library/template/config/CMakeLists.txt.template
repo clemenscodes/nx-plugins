@@ -1,5 +1,5 @@
 include("<%= relativeRootPath %>CMakeLists.txt")
 
 cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})
-project(lib<%= name %> <%= cmakeC %>)
+project(<%= libName %> <%= cmakeC %>)
 set_library_settings(${CMAKE_PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})

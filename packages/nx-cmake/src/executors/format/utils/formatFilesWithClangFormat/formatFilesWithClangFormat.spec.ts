@@ -1,15 +1,13 @@
 import type { FormatExecutorSchema } from '../../schema';
-import { CProjectType } from '../../../../models/types';
+import { formatFilesWithClangFormat } from './formatFilesWithClangFormat';
 import * as getProjectFilesModule from '../../../../utils/fileUtils/getProjectFiles/getProjectFiles';
 import * as checkCommandExistsModule from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
 import * as executeCommandForFilesModule from '../../../../utils/commandUtils/executeCommandForFiles/executeCommandForFiles';
 import * as getFormatArgumentsModule from '../getFormatArguments/getFormatArguments';
-import { formatFilesWithClangFormat } from './formatFilesWithClangFormat';
 
 describe('formatFilesWithClangFormat', () => {
     let workspaceRoot: string;
     let projectRoot: string;
-    let projectType: CProjectType;
     let options: FormatExecutorSchema;
     let getFormatArgumentsMock: jest.SpyInstance;
     let getProjectFilesMock: jest.SpyInstance;
@@ -22,7 +20,6 @@ describe('formatFilesWithClangFormat', () => {
     beforeEach(() => {
         workspaceRoot = '/workspaceRoot';
         projectRoot = '/projectRoot';
-        projectType = CProjectType.Lib;
         options = {
             args: [],
             verbose: true,
@@ -58,12 +55,7 @@ describe('formatFilesWithClangFormat', () => {
         getProjectFilesMock.mockReturnValue(sourceFiles);
         checkCommandExistsMock.mockReturnValue(formatCommand);
         executeCommandForFilesMock.mockReturnValue(true);
-        await formatFilesWithClangFormat(
-            workspaceRoot,
-            projectRoot,
-            options,
-            projectType,
-        );
+        await formatFilesWithClangFormat(workspaceRoot, projectRoot, options);
         expect(getFormatArgumentsMock).toHaveBeenCalledWith(
             workspaceRoot,
             projectRoot,
@@ -90,7 +82,6 @@ describe('formatFilesWithClangFormat', () => {
             workspaceRoot,
             projectRoot,
             options,
-            projectType,
         );
         expect(result).toBe(true);
     });
@@ -104,7 +95,6 @@ describe('formatFilesWithClangFormat', () => {
             workspaceRoot,
             projectRoot,
             options,
-            projectType,
         );
         expect(result).toBe(false);
     });

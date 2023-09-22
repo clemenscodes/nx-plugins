@@ -3,6 +3,7 @@ import type { LibOptions } from '../../schema';
 import { addProjectConfiguration } from '@nx/devkit';
 import { getProjectTargets } from '../../../../utils/generatorUtils/getProjectTargets/getProjectTargets';
 import { CProjectType } from '../../../../models/types';
+import { getWorkspaceLayout } from '../../../../utils/generatorUtils/getWorkspaceLayout/getWorkspaceLayout';
 
 export const addTestProjectConfig = (
     tree: Tree,
@@ -11,12 +12,13 @@ export const addTestProjectConfig = (
     if (!resolvedLibOptions.generateTests) {
         return;
     }
-    const { projectRoot, testName, languageExtension } = resolvedLibOptions;
+    const { appsDir } = getWorkspaceLayout();
+    const { testName, languageExtension } = resolvedLibOptions;
     const testTargets = getProjectTargets(CProjectType.Test);
     addProjectConfiguration(tree, testName, {
-        root: `${projectRoot}/test`,
+        root: `${appsDir}/${testName}`,
         projectType: 'application',
-        sourceRoot: `${projectRoot}/test/src`,
+        sourceRoot: `${appsDir}/${testName}/src`,
         tags: [languageExtension, 'test'],
         targets: testTargets,
     });

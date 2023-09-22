@@ -21,10 +21,10 @@ describe('addTestProjectConfig', () => {
         resolvedOptions = resolveLibOptions(options);
         expectedProjectConfiguration = {
             name: 'testtest',
-            root: 'packages/test/test',
-            $schema: '../../../node_modules/nx/schemas/project-schema.json',
+            root: 'bin/testtest',
+            $schema: '../../node_modules/nx/schemas/project-schema.json',
             projectType: 'application',
-            sourceRoot: 'packages/test/test/src',
+            sourceRoot: 'bin/testtest/src',
             tags: ['c', 'test'],
             targets: {
                 cmake: {

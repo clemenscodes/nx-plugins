@@ -45,11 +45,11 @@ describe('generateLibTestFiles', () => {
             generateTests: true,
         };
         resolvedOptions = resolveLibOptions(options);
-        testRoot = `packages/test/test`;
-        testListsFile = `packages/test/test/CMakeLists.txt`;
-        testSourceFile = `packages/test/test/src/testtest.c`;
-        testIncludeFile = `packages/test/test/include/testtest.h`;
-        testReadMeFile = `packages/test/test/README.md`;
+        testRoot = `bin/testtest`;
+        testListsFile = `${testRoot}/CMakeLists.txt`;
+        testSourceFile = `${testRoot}/src/testtest.c`;
+        testIncludeFile = `${testRoot}/include/testtest.h`;
+        testReadMeFile = `${testRoot}/README.md`;
         expectedTestRootFiles = [
             'CMakeLists.txt',
             'README.md',
@@ -66,7 +66,7 @@ describe('generateLibTestFiles', () => {
             '#endif\n';
 
         expectedSourceFile =
-            '#include <test/test/include/testtest.h>\n' +
+            '#include "include/testtest.h"\n' +
             '\n' +
             'static int setup(void **state) {\n' +
             '\t(void) state;\n' +
@@ -92,7 +92,7 @@ describe('generateLibTestFiles', () => {
             '\n';
 
         expectedListsFile =
-            'include("../../../CMakeLists.txt")\n' +
+            'include("../../CMakeLists.txt")\n' +
             '\n' +
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
             'project(testtest C)\n' +
@@ -153,7 +153,7 @@ describe('generateLibTestFiles', () => {
         options.generateTests = true;
         options.language = 'C++';
         resolvedOptions = resolveLibOptions(options);
-        testSourceFile = `packages/test/test/src/testtest.cpp`;
+        testSourceFile = `bin/testtest/src/testtest.cpp`;
         expectedIncludeFile =
             '#ifndef _TESTTEST_TEST\n' +
             '#define _TESTTEST_TEST\n' +
@@ -163,14 +163,14 @@ describe('generateLibTestFiles', () => {
             '\n' +
             '#endif\n';
         expectedSourceFile =
-            '#include <test/test/include/testtest.h>\n' +
+            '#include "include/testtest.h"\n' +
             '\n' +
             'TEST(libtest, test_test) {\n' +
             '\tEXPECT_EQ(test(), 0);\n' +
             '}\n' +
             '\n';
         expectedListsFile =
-            'include("../../../CMakeLists.txt")\n' +
+            'include("../../CMakeLists.txt")\n' +
             '\n' +
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
             'project(testtest CXX)\n' +

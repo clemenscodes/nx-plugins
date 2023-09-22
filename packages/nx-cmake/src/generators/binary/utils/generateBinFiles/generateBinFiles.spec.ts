@@ -50,7 +50,7 @@ describe('generateBinFiles', () => {
             generateTests: false,
         };
         expectedSourceFile =
-            '#include "test.h"\n' +
+            '#include "include/test.h"\n' +
             '\n' +
             'int main(int argc, char *argv[]) {\n' +
             '    (void)argc;\n' +

@@ -1,6 +1,6 @@
 import { getFilesFromDirectoryFiles } from './getFilesFromDirectoryFiles';
-import * as getNestedFilesModule from './../getNestedFiles/getNestedFiles';
-import * as getAbsolutePathModule from './../getAbsolutePath/getAbsolutePath';
+import * as getNestedFilesModule from '../getNestedFiles/getNestedFiles';
+import * as getAbsolutePathModule from '../getAbsolutePath/getAbsolutePath';
 
 describe('getFilesFromDirectoryFiles', () => {
     let getAbsolutePathMock: jest.SpyInstance;
