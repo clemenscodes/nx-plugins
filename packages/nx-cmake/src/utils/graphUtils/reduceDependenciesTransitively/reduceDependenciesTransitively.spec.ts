@@ -1,10 +1,6 @@
-import { DependencyType, ProjectGraphDependencyWithFile } from '@nx/devkit';
-import type { Graph } from '../../../models/types';
-import {
-    reduceDependencies,
-    reduceDependenciesTransitively,
-    reduceGraph,
-} from './reduceDependenciesTransitively';
+import type { ProjectGraphDependencyWithFile } from '@nx/devkit';
+import { DependencyType } from '@nx/devkit';
+import { reduceDependenciesTransitively } from './reduceDependenciesTransitively';
 
 describe('reduceDependenciesTransitively', () => {
     let dependencies: ProjectGraphDependencyWithFile[];
@@ -13,149 +9,233 @@ describe('reduceDependenciesTransitively', () => {
     beforeEach(() => {
         dependencies = [
             {
-                source: 'testbb',
-                target: 'libbb',
-                sourceFile: 'packages/bb/include/libbb.h',
+                source: 'testtrash',
+                target: 'libtrash',
+                sourceFile: 'packages/trash/test/include/testtrash.h',
                 dependencyType: DependencyType.static,
             },
             {
-                source: 'testbb',
-                target: 'libbb',
-                sourceFile: 'packages/bb/src/libbb.cpp',
+                source: 'testtrash',
+                target: 'libcrap',
+                sourceFile: 'packages/trash/test/include/testtrash.h',
                 dependencyType: DependencyType.static,
             },
             {
-                source: 'testbb',
-                target: 'libcc',
-                sourceFile: 'packages/cc/include/libcc.h',
+                source: 'testtrash',
+                target: 'libshit',
+                sourceFile: 'packages/trash/test/include/testtrash.h',
                 dependencyType: DependencyType.static,
             },
             {
-                source: 'testbb',
-                target: 'libcc',
-                sourceFile: 'packages/cc/src/libcc.cpp',
+                source: 'testtrash',
+                target: 'libtrash',
+                sourceFile: 'packages/trash/test/src/testtrash.c',
                 dependencyType: DependencyType.static,
             },
             {
-                source: 'testcc',
-                target: 'libcc',
-                sourceFile: 'packages/cc/include/libcc.h',
+                source: 'testtrash',
+                target: 'libcrap',
+                sourceFile: 'packages/trash/test/src/testtrash.c',
                 dependencyType: DependencyType.static,
             },
             {
-                source: 'testcc',
-                target: 'libcc',
-                sourceFile: 'packages/cc/src/libcc.cpp',
+                source: 'testtrash',
+                target: 'libshit',
+                sourceFile: 'packages/trash/test/src/testtrash.c',
                 dependencyType: DependencyType.static,
             },
             {
-                source: 'libbb',
-                target: 'libcc',
-                sourceFile: 'packages/cc/include/libcc.h',
+                source: 'testcrap',
+                target: 'libcrap',
+                sourceFile: 'packages/crap/test/include/testcrap.h',
                 dependencyType: DependencyType.static,
             },
             {
-                source: 'libbb',
-                target: 'libcc',
-                sourceFile: 'packages/cc/src/libcc.cpp',
+                source: 'testcrap',
+                target: 'libshit',
+                sourceFile: 'packages/crap/test/include/testcrap.h',
                 dependencyType: DependencyType.static,
             },
             {
-                source: 'cc',
-                target: 'libcc',
-                sourceFile: 'packages/cc/include/libcc.h',
+                source: 'testcrap',
+                target: 'libcrap',
+                sourceFile: 'packages/crap/test/src/testcrap.c',
                 dependencyType: DependencyType.static,
             },
             {
-                source: 'cc',
-                target: 'libcc',
-                sourceFile: 'packages/cc/src/libcc.cpp',
+                source: 'testcrap',
+                target: 'libshit',
+                sourceFile: 'packages/crap/test/src/testcrap.c',
                 dependencyType: DependencyType.static,
             },
             {
-                source: 'bb',
-                target: 'libbb',
-                sourceFile: 'packages/bb/include/libbb.h',
+                source: 'testshit',
+                target: 'libshit',
+                sourceFile: 'packages/shit/test/include/testshit.h',
                 dependencyType: DependencyType.static,
             },
             {
-                source: 'bb',
-                target: 'libbb',
-                sourceFile: 'packages/bb/src/libbb.cpp',
+                source: 'testshit',
+                target: 'libshit',
+                sourceFile: 'packages/shit/test/src/testshit.c',
                 dependencyType: DependencyType.static,
             },
             {
-                source: 'bb',
-                target: 'libcc',
-                sourceFile: 'packages/cc/include/libcc.h',
+                source: 'libtrash',
+                target: 'libcrap',
+                sourceFile: 'packages/trash/include/libtrash.h',
                 dependencyType: DependencyType.static,
             },
             {
-                source: 'bb',
-                target: 'libcc',
-                sourceFile: 'packages/cc/src/libcc.cpp',
+                source: 'libtrash',
+                target: 'libshit',
+                sourceFile: 'packages/trash/include/libtrash.h',
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'libtrash',
+                target: 'libcrap',
+                sourceFile: 'packages/trash/src/libtrash.c',
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'libtrash',
+                target: 'libshit',
+                sourceFile: 'packages/trash/src/libtrash.c',
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'libcrap',
+                target: 'libshit',
+                sourceFile: 'packages/crap/include/libcrap.h',
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'libcrap',
+                target: 'libshit',
+                sourceFile: 'packages/crap/src/libcrap.c',
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'shit',
+                target: 'libshit',
+                sourceFile: 'bin/shit/include/shit.h',
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'shit',
+                target: 'libshit',
+                sourceFile: 'bin/shit/src/shit.c',
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'crap',
+                target: 'libcrap',
+                sourceFile: 'bin/crap/include/crap.h',
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'crap',
+                target: 'libshit',
+                sourceFile: 'bin/crap/include/crap.h',
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'crap',
+                target: 'libcrap',
+                sourceFile: 'bin/crap/src/crap.c',
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'crap',
+                target: 'libshit',
+                sourceFile: 'bin/crap/src/crap.c',
                 dependencyType: DependencyType.static,
             },
         ];
         expectedReducedDependencies = [
             {
-                source: 'testbb',
-                target: 'libbb',
-                sourceFile: 'packages/bb/include/libbb.h',
+                source: 'testtrash',
+                target: 'libtrash',
+                sourceFile: 'packages/trash/test/include/testtrash.h',
                 dependencyType: DependencyType.static,
             },
             {
-                source: 'testbb',
-                target: 'libbb',
-                sourceFile: 'packages/bb/src/libbb.cpp',
+                source: 'testtrash',
+                target: 'libtrash',
+                sourceFile: 'packages/trash/test/src/testtrash.c',
                 dependencyType: DependencyType.static,
             },
             {
-                source: 'testcc',
-                target: 'libcc',
-                sourceFile: 'packages/cc/include/libcc.h',
+                source: 'testcrap',
+                target: 'libcrap',
+                sourceFile: 'packages/crap/test/include/testcrap.h',
                 dependencyType: DependencyType.static,
             },
             {
-                source: 'testcc',
-                target: 'libcc',
-                sourceFile: 'packages/cc/src/libcc.cpp',
+                source: 'testcrap',
+                target: 'libcrap',
+                sourceFile: 'packages/crap/test/src/testcrap.c',
                 dependencyType: DependencyType.static,
             },
             {
-                source: 'libbb',
-                target: 'libcc',
-                sourceFile: 'packages/cc/include/libcc.h',
+                source: 'testshit',
+                target: 'libshit',
+                sourceFile: 'packages/shit/test/include/testshit.h',
                 dependencyType: DependencyType.static,
             },
             {
-                source: 'libbb',
-                target: 'libcc',
-                sourceFile: 'packages/cc/src/libcc.cpp',
+                source: 'testshit',
+                target: 'libshit',
+                sourceFile: 'packages/shit/test/src/testshit.c',
                 dependencyType: DependencyType.static,
             },
             {
-                source: 'cc',
-                target: 'libcc',
-                sourceFile: 'packages/cc/include/libcc.h',
+                source: 'libtrash',
+                target: 'libcrap',
+                sourceFile: 'packages/trash/include/libtrash.h',
                 dependencyType: DependencyType.static,
             },
             {
-                source: 'cc',
-                target: 'libcc',
-                sourceFile: 'packages/cc/src/libcc.cpp',
+                source: 'libtrash',
+                target: 'libcrap',
+                sourceFile: 'packages/trash/src/libtrash.c',
                 dependencyType: DependencyType.static,
             },
             {
-                source: 'bb',
-                target: 'libbb',
-                sourceFile: 'packages/bb/include/libbb.h',
+                source: 'libcrap',
+                target: 'libshit',
+                sourceFile: 'packages/crap/include/libcrap.h',
                 dependencyType: DependencyType.static,
             },
             {
-                source: 'bb',
-                target: 'libbb',
-                sourceFile: 'packages/bb/src/libbb.cpp',
+                source: 'libcrap',
+                target: 'libshit',
+                sourceFile: 'packages/crap/src/libcrap.c',
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'shit',
+                target: 'libshit',
+                sourceFile: 'bin/shit/include/shit.h',
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'shit',
+                target: 'libshit',
+                sourceFile: 'bin/shit/src/shit.c',
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'crap',
+                target: 'libcrap',
+                sourceFile: 'bin/crap/include/crap.h',
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'crap',
+                target: 'libcrap',
+                sourceFile: 'bin/crap/src/crap.c',
                 dependencyType: DependencyType.static,
             },
         ];
@@ -164,56 +244,5 @@ describe('reduceDependenciesTransitively', () => {
     it('should reduce dependencies transitively', () => {
         const deps = reduceDependenciesTransitively(dependencies);
         expect(deps).toStrictEqual(expectedReducedDependencies);
-    });
-
-    describe('reduceGraph', () => {
-        let graph: Graph;
-        let expectedReducedGraph: Graph;
-
-        beforeEach(() => {
-            graph = {
-                testcc: new Set<string>().add('libcc'),
-                libcc: new Set<string>(),
-                testbb: new Set<string>().add('libbb').add('libcc'),
-                libbb: new Set<string>().add('libcc'),
-                cc: new Set<string>().add('libcc'),
-                bb: new Set<string>().add('libbb').add('libcc'),
-            };
-            expectedReducedGraph = {
-                testcc: new Set<string>().add('libcc'),
-                libcc: new Set<string>(),
-                testbb: new Set<string>().add('libbb'),
-                libbb: new Set<string>().add('libcc'),
-                cc: new Set<string>().add('libcc'),
-                bb: new Set<string>().add('libbb'),
-            };
-        });
-
-        it('should reduce graph', () => {
-            const reducedGraph = reduceGraph(graph);
-            expect(reducedGraph).toStrictEqual(expectedReducedGraph);
-        });
-    });
-
-    describe('reduceDependencies', () => {
-        let graph: Graph;
-
-        beforeEach(() => {
-            graph = {
-                testcc: new Set<string>().add('libcc'),
-                libcc: new Set<string>(),
-                testbb: new Set<string>().add('libbb'),
-                libbb: new Set<string>().add('libcc'),
-                cc: new Set<string>().add('libcc'),
-                bb: new Set<string>().add('libbb'),
-            };
-        });
-
-        it('should reduce depdencies', () => {
-            const reducedDependencies = reduceDependencies(graph, dependencies);
-            expect(reducedDependencies).toStrictEqual(
-                expectedReducedDependencies
-            );
-        });
     });
 });

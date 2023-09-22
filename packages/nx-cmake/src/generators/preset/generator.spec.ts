@@ -1,23 +1,25 @@
-import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import { type Tree, readNxJson } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
 import type { WorkspaceLayout } from '../../models/types';
-import { presetGenerator } from './generator';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
+import { readNxJson } from '@nx/devkit';
+import presetGenerator from './generator';
 
 describe('preset generator', () => {
     let tree: Tree;
+    let expectedWorkspaceLayout: WorkspaceLayout;
 
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
+        expectedWorkspaceLayout = {
+            appsDir: 'bin',
+            libsDir: 'libs',
+            projectNameAndRootFormat: 'derived',
+        };
     });
 
     it('should run successfully', async () => {
         await presetGenerator(tree);
         const { workspaceLayout } = readNxJson(tree);
-        const expectedWorkspaceLayout: WorkspaceLayout = {
-            appsDir: 'bin',
-            libsDir: 'libs',
-            projectNameAndRootFormat: 'derived',
-        };
         expect(workspaceLayout).toEqual(expectedWorkspaceLayout);
     });
 });

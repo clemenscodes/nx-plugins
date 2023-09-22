@@ -1,8 +1,5 @@
-import {
-    type NxJsonConfiguration,
-    readJsonFile,
-    workspaceRoot,
-} from '@nx/devkit';
+import type { NxJsonConfiguration } from '@nx/devkit';
+import { readJsonFile, workspaceRoot } from '@nx/devkit';
 
 export const getNxJsonConfiguration = (): NxJsonConfiguration => {
     const nxJsonFile = `${workspaceRoot}/nx.json`;

@@ -1,9 +1,14 @@
+import type { InitGeneratorSchema } from '../../schema';
+import type { NxJsonConfiguration } from '@nx/devkit';
 import { getUpdatedNxJson } from './getUpdatedNxJson';
-import { InitGeneratorSchema } from '../../schema';
 
 describe('getUpdatedNxJson', () => {
-    it('should get updated nx.json', async () => {
-        const mockNxJson = {
+    let mockNxJson: NxJsonConfiguration;
+    let mockOptions: InitGeneratorSchema;
+    let mockUpdatedNxJson: NxJsonConfiguration;
+
+    beforeEach(() => {
+        mockNxJson = {
             extends: 'nx/presets/npm.json',
             $schema: './node_modules/nx/schemas/nx-schema.json',
             defaultProject: 'nx-cmake',
@@ -17,8 +22,9 @@ describe('getUpdatedNxJson', () => {
                     analyzeSourceFiles: true,
                 },
             },
-        };
-        const mockOptions: InitGeneratorSchema = {
+        } as NxJsonConfiguration;
+
+        mockOptions = {
             projectNameAndRootFormat: 'derived',
             appsDir: 'bin',
             libsDir: 'packages',
@@ -26,7 +32,8 @@ describe('getUpdatedNxJson', () => {
             addClangPreset: true,
             skipFormat: false,
         };
-        const mockUpdatedNxJson = {
+
+        mockUpdatedNxJson = {
             extends: 'nx/presets/npm.json',
             $schema: './node_modules/nx/schemas/nx-schema.json',
             defaultProject: 'nx-cmake',
@@ -35,6 +42,7 @@ describe('getUpdatedNxJson', () => {
                     runner: 'nx-cloud',
                     options: {
                         cacheableOperations: [
+                            'cmake',
                             'build',
                             'debug',
                             'test',
@@ -73,7 +81,10 @@ describe('getUpdatedNxJson', () => {
                 libsDir: 'packages',
                 projectNameAndRootFormat: 'derived',
             },
-        };
+        } as NxJsonConfiguration;
+    });
+
+    it('should get updated nx.json', async () => {
         const [resultNxJson, resultOptions] = getUpdatedNxJson(
             mockNxJson,
             mockOptions

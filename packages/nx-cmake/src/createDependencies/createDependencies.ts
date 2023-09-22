@@ -1,20 +1,38 @@
-import {
-    type CreateDependencies,
-    type CreateDependenciesContext,
-    type ProjectGraphDependencyWithFile,
+import type {
+    CreateDependencies,
+    CreateDependenciesContext,
+    ProjectGraphDependencyWithFile,
 } from '@nx/devkit';
 import { filterProjects } from '../utils/graphUtils/filterProjects/filterProjects';
 import { getDependencies } from '../utils/graphUtils/getDependencies/getDependencies';
 import { reduceDependenciesTransitively } from '../utils/graphUtils/reduceDependenciesTransitively/reduceDependenciesTransitively';
+import { filterFilesToProcess } from '../utils/graphUtils/filterFilesToProcess/filterFilesToProcess';
 
 export const createDependencies: CreateDependencies = (
     context: CreateDependenciesContext
 ): ProjectGraphDependencyWithFile[] => {
-    const { graph, nxJsonConfiguration } = context;
+    const { graph, nxJsonConfiguration, filesToProcess } = context;
     const { workspaceLayout } = nxJsonConfiguration;
     const { nodes } = graph;
+    if (Object.keys(filesToProcess).length === 0) {
+        return [];
+    }
     const filteredProjects = filterProjects(nodes);
-    const deps = getDependencies(workspaceLayout, filteredProjects);
+    const filteredFilesToProcess = filterFilesToProcess(
+        filesToProcess,
+        filteredProjects
+    );
+    if (Object.keys(filteredFilesToProcess).length === 0) {
+        return [];
+    }
+    const deps = getDependencies(
+        workspaceLayout,
+        filteredProjects,
+        filteredFilesToProcess
+    );
+    if (deps.length === 0) {
+        return [];
+    }
     const reducedDeps = reduceDependenciesTransitively(deps);
     return reducedDeps;
 };

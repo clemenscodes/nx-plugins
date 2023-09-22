@@ -1,17 +1,17 @@
 import type { Tree } from '@nx/devkit';
+import type { InitGeneratorSchema } from '../../schema';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { generateRootConfig } from './generateRootConfig';
-import { InitGeneratorSchema } from '../../schema';
+import { readFileWithTree } from '../../../../utils/generatorUtils/readFileWithTree/readFileWithTree';
 
 describe('generateRootConfig', () => {
     let tree: Tree;
+    let options: InitGeneratorSchema;
+    let rootConfig: string;
 
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
-    });
-
-    it('should generate root config', async () => {
-        const options: InitGeneratorSchema = {
+        options = {
             appsDir: 'bin',
             libsDir: 'packages',
             projectNameAndRootFormat: 'derived',
@@ -19,23 +19,17 @@ describe('generateRootConfig', () => {
             addClangPreset: false,
             skipFormat: false,
         };
+        rootConfig = 'CMakeLists.txt';
+    });
+
+    it('should generate root config', async () => {
         generateRootConfig(tree, options);
-        const rootConfig = 'CMakeLists.txt';
         expect(tree.exists(rootConfig)).toBe(true);
     });
 
     it('should generate root config correctly', async () => {
-        const options: InitGeneratorSchema = {
-            appsDir: 'bin',
-            libsDir: 'packages',
-            projectNameAndRootFormat: 'derived',
-            cmakeConfigDir: 'cmake',
-            addClangPreset: false,
-            skipFormat: false,
-        };
         generateRootConfig(tree, options);
-        const rootConfig = 'CMakeLists.txt';
-        const readRootConfig = tree.read(rootConfig, 'utf-8');
+        const readRootConfig = readFileWithTree(tree, rootConfig);
         const expectedRootConfig =
             'get_filename_component(CURRENT_DIR "${CMAKE_CURRENT_LIST_FILE}" DIRECTORY)\n' +
             'list(APPEND CMAKE_MODULE_PATH ${CURRENT_DIR}/cmake)\n' +

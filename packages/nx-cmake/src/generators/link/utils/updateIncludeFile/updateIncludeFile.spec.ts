@@ -1,10 +1,10 @@
-import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import type { Tree } from '@nx/devkit';
 import type { LinkSchema } from '../../schema';
 import type { LibGeneratorSchema } from '../../../library/schema';
-import libGenerator from '../../../library/generator';
 import { readFileWithTree } from '../../../../utils/generatorUtils/readFileWithTree/readFileWithTree';
 import { updateIncludeFile } from './updateIncludeFile';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
+import libGenerator from '../../../library/generator';
 
 describe('updateIncludeFile', () => {
     let tree: Tree;

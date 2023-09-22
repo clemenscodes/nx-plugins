@@ -1,16 +1,12 @@
-export const isValidGccOutput = (chunk: string): boolean => {
-    return (
-        /\.(h|c|cpp)/.test(chunk) &&
-        !chunk.includes('.o') &&
-        !chunk.startsWith('/usr/') &&
-        !chunk.startsWith('dist/')
-    );
-};
+import { isValidGccOutput } from './isValidGccOutput/isValidGccOutput';
 
-export const filterGccDependencyOutput = (output: string): string[] => {
+export const filterGccDependencyOutput = (
+    output: string,
+    originalFile: string
+): string[] => {
     const filteredOutput = output
         .split(' ')
-        .filter(isValidGccOutput)
-        .map((line) => line.trim());
+        .map((line) => line.trim())
+        .filter((file) => isValidGccOutput(file, originalFile));
     return filteredOutput;
 };

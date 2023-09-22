@@ -1,62 +1,119 @@
-import {
-    CProjectType,
-    type FilteredProject,
-    type WorkspaceLayout,
-} from '../../../models/types';
-import { DependencyType, ProjectGraphDependencyWithFile } from '@nx/devkit';
+import type {
+    ProjectFileMap,
+    ProjectGraphDependencyWithFile,
+} from '@nx/devkit';
+import type { FilteredProject, WorkspaceLayout } from '../../../models/types';
+import { DependencyType } from '@nx/devkit';
+import { CProjectType } from '../../../models/types';
 import { getDependencies } from './getDependencies';
 import * as filterDependenciesOfProjectModule from '../filterDependenciesOfProject/filterDependenciesOfProject';
 
 describe('getDependencies', () => {
-    const projects: FilteredProject[] = [
-        {
-            name: 'testnx-cmake-test',
-            root: 'packages/nx-cmake-test/test',
-            sourceRoot: 'packages/nx-cmake-test/test/src',
-            type: CProjectType.App,
-            tag: 'c',
-        },
-        {
-            name: 'libnx-cmake-test',
-            root: 'packages/nx-cmake-test',
-            sourceRoot: 'packages/nx-cmake-test/src',
-            type: CProjectType.Lib,
-            tag: 'c',
-        },
-        {
-            name: 'nx-cmake-test',
-            root: 'nx-cmake-test',
-            sourceRoot: 'nx-cmake-test/src',
-            type: CProjectType.App,
-            tag: 'c',
-        },
-    ];
+    let filesToProcess: ProjectFileMap;
+    let projects: FilteredProject[];
+    let workspaceLayout: WorkspaceLayout;
+    let expectedDependencies: ProjectGraphDependencyWithFile[];
+    let filterDependenciesOfProjectMock: jest.SpyInstance;
 
-    const workspaceLayout: WorkspaceLayout = {
-        appsDir: 'bin',
-        libsDir: 'packages',
-        projectNameAndRootFormat: 'as-provided',
-    };
-
-    it('should get dependencies', () => {
-        const dummyDependency = {
-            source: 'testnx-cmake-test',
-            target: 'libnx-cmake-test',
-            sourceFile: 'packages/nx-cmake-test/include/libnx-cmake-test.h',
-            dependencyType: DependencyType.static,
+    beforeEach(() => {
+        workspaceLayout = {
+            appsDir: 'bin',
+            libsDir: 'packages',
+            projectNameAndRootFormat: 'as-provided',
         };
-
-        jest.spyOn(
+        projects = [
+            {
+                name: 'testparser',
+                root: 'packages/parser/test',
+                type: CProjectType.Test,
+                tag: 'c',
+                sourceRoot: 'packages/parser/test/src',
+            },
+            {
+                name: 'libparser',
+                root: 'packages/parser',
+                type: CProjectType.Lib,
+                tag: 'c',
+                sourceRoot: 'packages/parser/src',
+            },
+            {
+                name: 'parser',
+                root: 'bin/parser',
+                type: CProjectType.App,
+                tag: 'c',
+                sourceRoot: 'bin/parser/src',
+            },
+        ];
+        expectedDependencies = [
+            {
+                source: 'parser',
+                target: 'libparser',
+                sourceFile: 'bin/parser/include/parser.h',
+                dependencyType: DependencyType.static,
+            },
+            {
+                source: 'parser',
+                target: 'libparser',
+                sourceFile: 'bin/parser/src/parser.c',
+                dependencyType: DependencyType.static,
+            },
+        ];
+        filesToProcess = {
+            parser: [
+                {
+                    file: 'bin/parser/include/parser.h',
+                    hash: '11279262444086169535',
+                },
+                {
+                    file: 'bin/parser/src/parser.c',
+                    hash: '12936305865606923809',
+                },
+            ],
+        };
+        filterDependenciesOfProjectMock = jest.spyOn(
             filterDependenciesOfProjectModule,
             'filterDependenciesOfProject'
-        ).mockReturnValue([dummyDependency]);
+        );
+        filterDependenciesOfProjectMock.mockReturnValueOnce([
+            {
+                source: 'parser',
+                target: 'libparser',
+                sourceFile: 'bin/parser/include/parser.h',
+                dependencyType: 'static',
+            },
+            {
+                source: 'parser',
+                target: 'libparser',
+                sourceFile: 'bin/parser/src/parser.c',
+                dependencyType: 'static',
+            },
+        ]);
+    });
 
-        const result = getDependencies(workspaceLayout, projects);
-        const expected: ProjectGraphDependencyWithFile[] = [
-            dummyDependency,
-            dummyDependency,
-            dummyDependency,
-        ];
-        expect(result).toStrictEqual(expected);
+    afterEach(() => {
+        jest.resetAllMocks();
+    });
+
+    it('should not get dependencies if no files to process', () => {
+        filesToProcess = {};
+        const result = getDependencies(
+            workspaceLayout,
+            projects,
+            filesToProcess
+        );
+        expect(filterDependenciesOfProjectMock).toBeCalledTimes(0);
+        expect(result).toStrictEqual([]);
+    });
+
+    it('should get dependencies', () => {
+        const result = getDependencies(
+            workspaceLayout,
+            projects,
+            filesToProcess
+        );
+        expect(filterDependenciesOfProjectMock).toBeCalledTimes(
+            Object.keys(filesToProcess).length
+        );
+        expect(result).toStrictEqual(expectedDependencies);
     });
 });

@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/schema",
     "$id": "Library",
     "title": "Library generator",
-    "description": "Generate a C or C++ library and link it against another library or binary",
+    "description": "Generate a C or C++ library",
     "type": "object",
     "properties": {
         "name": {

@@ -1,8 +1,8 @@
 import type { Tree } from '@nx/devkit';
 import type { LibGeneratorSchema } from '../../../generators/library/schema';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import libGenerator from '../../../generators/library/generator';
 import { writeFileWithTree } from './writeFileWithTree';
+import libGenerator from '../../../generators/library/generator';
 
 describe('writeFileWithTree', () => {
     let tree: Tree;

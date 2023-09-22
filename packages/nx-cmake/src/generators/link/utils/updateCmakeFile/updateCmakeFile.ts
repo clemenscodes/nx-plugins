@@ -1,4 +1,4 @@
-import { type Tree } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
 import type { LinkSchema } from '../../schema';
 import type { Link } from '../../../../models/types';
 import { PROJECT_FILE } from '../../../../config/projectFilePattern';

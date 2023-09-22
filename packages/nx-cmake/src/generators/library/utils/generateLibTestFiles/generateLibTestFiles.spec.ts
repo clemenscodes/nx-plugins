@@ -1,56 +1,63 @@
+import type { Tree } from '@nx/devkit';
+import type { LibGeneratorSchema, LibOptions } from '../../schema';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import { Tree, readProjectConfiguration } from '@nx/devkit';
-import { LibGeneratorSchema } from '../../schema';
+import { readProjectConfiguration } from '@nx/devkit';
 import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
 import { generateLibTestFiles } from './generateLibTestFiles';
+import { readFileWithTree } from '../../../../utils/generatorUtils/readFileWithTree/readFileWithTree';
 
 describe('generateLibTestFiles', () => {
     let tree: Tree;
+    let options: LibGeneratorSchema;
+    let resolvedOptions: LibOptions;
+    let testRoot: string;
+    let testListsFile: string;
+    let testSourceFile: string;
+    let testIncludeFile: string;
+    let testReadMeFile: string;
+    let expectedTestRootFiles: string[];
+    let expectedIncludeFile: string;
+    let expectedSourceFile: string;
+    let expectedListsFile: string;
+    let expectedReadMeFile: string;
+
+    const defaultTest = () => {
+        generateLibTestFiles(tree, resolvedOptions);
+        const testRootFiles = tree.children(testRoot);
+        expect(testRootFiles).toStrictEqual(expectedTestRootFiles);
+        expect(tree.exists(testSourceFile));
+        expect(tree.exists(testIncludeFile));
+        const includeFileContent = readFileWithTree(tree, testIncludeFile);
+        const sourceFileContent = readFileWithTree(tree, testSourceFile);
+        const listsFileContent = readFileWithTree(tree, testListsFile);
+        const readMeFileContent = readFileWithTree(tree, testReadMeFile);
+        expect(includeFileContent).toStrictEqual(expectedIncludeFile);
+        expect(sourceFileContent).toStrictEqual(expectedSourceFile);
+        expect(listsFileContent).toStrictEqual(expectedListsFile);
+        expect(readMeFileContent).toStrictEqual(expectedReadMeFile);
+    };
 
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
-    });
-
-    it('should not generate a C++ test library', () => {
-        const options: LibGeneratorSchema = {
-            name: 'test',
-            language: 'C++',
-            skipFormat: false,
-            generateTests: false,
-        };
-        const resolvedOptions = resolveLibOptions(options);
-        generateLibTestFiles(tree, resolvedOptions);
-
-        expect(() =>
-            readProjectConfiguration(tree, resolvedOptions.testName)
-        ).toThrow("Cannot find configuration for 'testtest'");
-    });
-
-    it('should generate a C test library', () => {
-        const options: LibGeneratorSchema = {
+        options = {
             name: 'test',
             language: 'C',
             skipFormat: false,
             generateTests: true,
         };
-        const resolvedOptions = resolveLibOptions(options);
-        generateLibTestFiles(tree, resolvedOptions);
-        const libraryRoot = tree.children(`packages/test/test`);
-        const libraryListsFile = `packages/test/test/CMakeLists.txt`;
-        const librarySourceFile = `packages/test/test/src/testtest.c`;
-        const libraryIncludeFile = `packages/test/test/include/testtest.h`;
-        expect(libraryRoot).toStrictEqual([
+        resolvedOptions = resolveLibOptions(options);
+        testRoot = `packages/test/test`;
+        testListsFile = `packages/test/test/CMakeLists.txt`;
+        testSourceFile = `packages/test/test/src/testtest.c`;
+        testIncludeFile = `packages/test/test/include/testtest.h`;
+        testReadMeFile = `packages/test/test/README.md`;
+        expectedTestRootFiles = [
             'CMakeLists.txt',
             'README.md',
             'include',
             'src',
-        ]);
-        expect(tree.exists(librarySourceFile));
-        expect(tree.exists(libraryIncludeFile));
-        const readIncludeFile = tree.read(libraryIncludeFile, 'utf8');
-        const readSourceFile = tree.read(librarySourceFile, 'utf8');
-        const readListsFile = tree.read(libraryListsFile, 'utf8');
-        const expectedIncludeFile =
+        ];
+        expectedIncludeFile =
             '#ifndef _TESTTEST_TEST\n' +
             '#define _TESTTEST_TEST\n' +
             '\n' +
@@ -59,7 +66,7 @@ describe('generateLibTestFiles', () => {
             '\n' +
             '#endif\n';
 
-        const expectedSourceFile =
+        expectedSourceFile =
             '#include <test/test/include/testtest.h>\n' +
             '\n' +
             'static int setup(void **state) {\n' +
@@ -85,7 +92,7 @@ describe('generateLibTestFiles', () => {
             '}\n' +
             '\n';
 
-        const expectedListsFile =
+        expectedListsFile =
             'include("../../../CMakeLists.txt")\n' +
             '\n' +
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
@@ -97,36 +104,58 @@ describe('generateLibTestFiles', () => {
             '\n' +
             'add_test(UnitTests testtest)\n';
 
-        expect(readIncludeFile).toStrictEqual(expectedIncludeFile);
-        expect(readSourceFile).toStrictEqual(expectedSourceFile);
-        expect(readListsFile).toStrictEqual(expectedListsFile);
+        expectedReadMeFile =
+            '# testtest\n' +
+            '\n' +
+            'This C test binary was generated using [nx-cmake](https://www.npmjs.com/package/nx-cmake).\n' +
+            '\n' +
+            '## Configuring the test binary using [CMake](https://cmake.org/cmake/help/latest/index.html)\n' +
+            '\n' +
+            '```shell\n' +
+            'nx cmake testtest --output-style=stream\n' +
+            '```\n' +
+            '\n' +
+            '## Building the test binary using [Make](https://www.gnu.org/software/make/manual/make.html) and [GCC](https://gcc.gnu.org/onlinedocs/)\n' +
+            '\n' +
+            '```shell\n' +
+            'nx build testtest --output-style=stream\n' +
+            '```\n' +
+            '\n' +
+            '## Linting the test binary using [clang-tidy](https://clang.llvm.org/extra/clang-tidy/)\n' +
+            '\n' +
+            '```shell\n' +
+            'nx lint testtest --output-style=stream\n' +
+            '```\n' +
+            '\n' +
+            '## Formatting the test binary using [clang-format](https://clang.llvm.org/docs/ClangFormat.html)\n' +
+            '\n' +
+            '```shell\n' +
+            'nx fmt testtest --output-style=stream\n' +
+            '```\n' +
+            '\n' +
+            '## Testing the test binary using [ctest](https://cmake.org/cmake/help/latest/manual/ctest.1.html) and  [cmocka](https://cmocka.org/) \n' +
+            '\n' +
+            '```shell\n' +
+            'nx test testtest --output-style=stream\n' +
+            '```\n';
     });
 
-    it('should generate a C++ test library', () => {
-        const options: LibGeneratorSchema = {
-            name: 'test',
-            language: 'C++',
-            skipFormat: false,
-            generateTests: true,
-        };
-        const resolvedOptions = resolveLibOptions(options);
+    it('should not generate a test library', () => {
+        options.generateTests = false;
         generateLibTestFiles(tree, resolvedOptions);
-        const libraryRoot = tree.children(`packages/test/test`);
-        const libraryListsFile = `packages/test/test/CMakeLists.txt`;
-        const librarySourceFile = `packages/test/test/src/testtest.cpp`;
-        const libraryIncludeFile = `packages/test/test/include/testtest.h`;
-        expect(libraryRoot).toStrictEqual([
-            'CMakeLists.txt',
-            'README.md',
-            'include',
-            'src',
-        ]);
-        expect(tree.exists(librarySourceFile));
-        expect(tree.exists(libraryIncludeFile));
-        const readIncludeFile = tree.read(libraryIncludeFile, 'utf8');
-        const readSourceFile = tree.read(librarySourceFile, 'utf8');
-        const readListsFile = tree.read(libraryListsFile, 'utf8');
-        const expectedIncludeFile =
+        expect(() =>
+            readProjectConfiguration(tree, resolvedOptions.testName)
+        ).toThrow("Cannot find configuration for 'testtest'");
+    });
+
+    it('should generate a C test library', defaultTest);
+
+    it('should generate a C++ test library', () => {
+        options.generateTests = true;
+        options.language = 'C++';
+        resolvedOptions = resolveLibOptions(options);
+        testSourceFile = `packages/test/test/src/testtest.cpp`;
+        expectedIncludeFile =
             '#ifndef _TESTTEST_TEST\n' +
             '#define _TESTTEST_TEST\n' +
             '\n' +
@@ -134,16 +163,14 @@ describe('generateLibTestFiles', () => {
             '#include <test/include/libtest.h>\n' +
             '\n' +
             '#endif\n';
-
-        const expectedSourceFile =
+        expectedSourceFile =
             '#include <test/test/include/testtest.h>\n' +
             '\n' +
             'TEST(libtest, test_test) {\n' +
             '\tEXPECT_EQ(test(), 0);\n' +
             '}\n' +
             '\n';
-
-        const expectedListsFile =
+        expectedListsFile =
             'include("../../../CMakeLists.txt")\n' +
             '\n' +
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
@@ -154,9 +181,40 @@ describe('generateLibTestFiles', () => {
             'link_gtest(${CMAKE_PROJECT_NAME})\n' +
             'include(GoogleTest)\n' +
             'gtest_discover_tests(testtest)\n';
-
-        expect(readIncludeFile).toStrictEqual(expectedIncludeFile);
-        expect(readSourceFile).toStrictEqual(expectedSourceFile);
-        expect(readListsFile).toStrictEqual(expectedListsFile);
+        expectedReadMeFile =
+            '# testtest\n' +
+            '\n' +
+            'This C++ test binary was generated using [nx-cmake](https://www.npmjs.com/package/nx-cmake).\n' +
+            '\n' +
+            '## Configuring the test binary using [CMake](https://cmake.org/cmake/help/latest/index.html)\n' +
+            '\n' +
+            '```shell\n' +
+            'nx cmake testtest --output-style=stream\n' +
+            '```\n' +
+            '\n' +
+            '## Building the test binary using [Make](https://www.gnu.org/software/make/manual/make.html) and [GCC](https://gcc.gnu.org/onlinedocs/)\n' +
+            '\n' +
+            '```shell\n' +
+            'nx build testtest --output-style=stream\n' +
+            '```\n' +
+            '\n' +
+            '## Linting the test binary using [clang-tidy](https://clang.llvm.org/extra/clang-tidy/)\n' +
+            '\n' +
+            '```shell\n' +
+            'nx lint testtest --output-style=stream\n' +
+            '```\n' +
+            '\n' +
+            '## Formatting the test binary using [clang-format](https://clang.llvm.org/docs/ClangFormat.html)\n' +
+            '\n' +
+            '```shell\n' +
+            'nx fmt testtest --output-style=stream\n' +
+            '```\n' +
+            '\n' +
+            '## Testing the test binary using [ctest](https://cmake.org/cmake/help/latest/manual/ctest.1.html) and  [googletest](https://google.github.io/googletest/) \n' +
+            '\n' +
+            '```shell\n' +
+            'nx test testtest --output-style=stream\n' +
+            '```\n';
+        defaultTest();
     });
 });

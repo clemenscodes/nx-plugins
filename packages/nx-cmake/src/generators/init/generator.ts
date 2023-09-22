@@ -1,21 +1,29 @@
 import type { InitGeneratorSchema } from './schema';
+import type { Tree } from '@nx/devkit';
+import { getUpdatedNxJson } from './utils/getUpdatedNxJson/getUpdatedNxJson';
+import { generateCmakeConfigFiles } from './utils/generateCmakeConfigFiles/generateCmakeConfigFiles';
+import { generateRootConfig } from './utils/generateRootConfig/generateRootConfig';
+import { generateClangPreset } from './utils/generateClangPreset/generateClangPreset';
+import { generateGlobalIncludeDir } from './utils/generateGlobalIncludeDir/generateGlobalIncludeDir';
+import { checkNxVersion } from '../../utils/generatorUtils/checkNxVersion/checkNxVersion';
+import { checkOs } from '../../utils/generatorUtils/checkOs/checkOs';
+import { getRequiredVersionOfNx } from '../../utils/generatorUtils/getRequiredVersionOfNx/getRequiredVersionOfNx';
 import {
-    type Tree,
     formatFiles,
     readNxJson,
     updateNxJson,
     NX_VERSION,
     output,
 } from '@nx/devkit';
-import { getUpdatedNxJson } from './utils/getUpdatedNxJson/getUpdatedNxJson';
-import { generateCmakeConfigFiles } from './utils/generateCmakeConfigFiles/generateCmakeConfigFiles';
-import { generateRootConfig } from './utils/generateRootConfig/generateRootConfig';
-import { generateClangPreset } from './utils/generateClangPreset/generateClangPreset';
-import { generateGlobalIncludeDir } from './utils/generateGlobalIncludeDir/generateGlobalIncludeDir';
-import { checkNxVersion } from './utils/checkNxVersion/checkNxVersion';
-import { getRequiredVersionOfNx } from './utils/getRequiredVersionOfNx/getRequiredVersionOfNx';
 
 export async function initGenerator(tree: Tree, options: InitGeneratorSchema) {
+    if (!checkOs(process.platform)) {
+        output.error({
+            title: `Unsupported platform: Windows`,
+            bodyLines: [`Currently this plugin does not support windows.`],
+        });
+        throw new Error('Windows is not supported');
+    }
     if (!checkNxVersion(NX_VERSION)) {
         output.warn({
             title: `Unsupported version of Nx`,

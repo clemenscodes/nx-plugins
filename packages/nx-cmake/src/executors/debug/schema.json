@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/schema",
     "version": 2,
     "title": "Debug executor",
-    "description": "Debug a C or C++ project using gdb",
+    "description": "Debug a C or C++ binary using gdb",
     "type": "object",
     "properties": {
         "args": {
