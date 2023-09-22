@@ -1,3 +1,0 @@
-#include <<%= name %>/test/include/test<%= name %>.h>
-
-<%= baseTest %>

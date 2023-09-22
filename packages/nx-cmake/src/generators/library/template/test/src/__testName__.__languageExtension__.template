@@ -1,0 +1,3 @@
+#include "include/<%= testName %>.h"
+
+<%= baseTest %>

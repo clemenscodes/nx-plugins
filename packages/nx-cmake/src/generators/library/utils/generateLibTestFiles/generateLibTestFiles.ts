@@ -1,6 +1,8 @@
-import { Tree, generateFiles } from '@nx/devkit';
+import type { LibOptions } from '../../schema';
+import type { Tree } from '@nx/devkit';
+import { generateFiles } from '@nx/devkit';
 import { join } from 'path';
-import { LibOptions } from '../../schema';
+import { getWorkspaceLayout } from '../../../../utils/generatorUtils/getWorkspaceLayout/getWorkspaceLayout';
 
 export const generateLibTestFiles = (
     tree: Tree,
@@ -9,11 +11,12 @@ export const generateLibTestFiles = (
     if (!resolvedLibOptions.generateTests) {
         return;
     }
-    const { projectRoot } = resolvedLibOptions;
+    const { appsDir } = getWorkspaceLayout();
+    const { testName } = resolvedLibOptions;
     generateFiles(
         tree,
         join(__dirname, '../../', 'template', 'test'),
-        `${projectRoot}/test`,
+        `${appsDir}/${testName}`,
         resolvedLibOptions,
     );
 };

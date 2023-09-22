@@ -72,6 +72,8 @@ describe('generateCmakeConfigFiles', () => {
             '    set_project_settings(${PROJECT} ${SOURCE_DIR})\n' +
             '    add_executable(${PROJECT} ${${PROJECT}_SOURCES})\n' +
             '    target_include_directories(${PROJECT} PRIVATE ${${PROJECT}_INCLUDE_DIR} ${WORKSPACE_INCLUDE_DIR})\n' +
+            '    target_include_directories(${PROJECT} PRIVATE ${${PROJECT}_INCLUDE_DIR}/include ${WORKSPACE_INCLUDE_DIR})\n' +
+            '    target_include_directories(${PROJECT} PRIVATE ${${PROJECT}_INCLUDE_DIR}/src ${WORKSPACE_INCLUDE_DIR})\n' +
             'endfunction()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
@@ -178,6 +180,10 @@ describe('generateCmakeConfigFiles', () => {
             '    set_target_properties(${PROJECT}_static PROPERTIES OUTPUT_NAME ${PROJECT})\n' +
             '    target_include_directories(${PROJECT} PUBLIC ${${PROJECT}_INCLUDE_DIR} ${WORKSPACE_INCLUDE_DIR})\n' +
             '    target_include_directories(${PROJECT}_static PUBLIC ${${PROJECT}_INCLUDE_DIR} ${WORKSPACE_INCLUDE_DIR})\n' +
+            '    target_include_directories(${PROJECT} PUBLIC ${${PROJECT}_INCLUDE_DIR}/include ${WORKSPACE_INCLUDE_DIR})\n' +
+            '    target_include_directories(${PROJECT}_static PUBLIC ${${PROJECT}_INCLUDE_DIR}/include ${WORKSPACE_INCLUDE_DIR})\n' +
+            '    target_include_directories(${PROJECT} PUBLIC ${${PROJECT}_INCLUDE_DIR}/src ${WORKSPACE_INCLUDE_DIR})\n' +
+            '    target_include_directories(${PROJECT}_static PUBLIC ${${PROJECT}_INCLUDE_DIR}/src ${WORKSPACE_INCLUDE_DIR})\n' +
             'endfunction()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
@@ -190,13 +196,12 @@ describe('generateCmakeConfigFiles', () => {
             'include(settings/set_compiler_settings)\n' +
             '\n' +
             'function(set_project_settings PROJECT SOURCE_DIR)\n' +
-            '    set(${PROJECT}_SOURCES_DIR ${SOURCE_DIR}/src CACHE INTERNAL "")\n' +
-            '    set(${PROJECT}_TEST_SOURCES_DIR ${SOURCE_DIR}/test CACHE INTERNAL "")\n' +
-            '    set(${PROJECT}_INCLUDE_DIR ${SOURCE_DIR}/include CACHE INTERNAL "")\n' +
-            '    file(GLOB_RECURSE SOURCES ${${PROJECT}_SOURCES_DIR}/*.c*)\n' +
-            '    file(GLOB_RECURSE TEST_SOURCES ${${PROJECT}_TEST_SOURCES_DIR}/*.c*)\n' +
+            '    set(${PROJECT}_SOURCES_DIR ${SOURCE_DIR} CACHE INTERNAL "")\n' +
+            '    set(${PROJECT}_INCLUDE_DIR ${SOURCE_DIR} CACHE INTERNAL "")\n' +
+            '    file(GLOB_RECURSE INCLUDE_SOURCES ${${PROJECT}_INCLUDE_DIR}/**/*.h*)\n' +
+            '    file(GLOB_RECURSE SOURCES ${${PROJECT}_SOURCES_DIR}/**/*.c*)\n' +
             '    set(${PROJECT}_SOURCES ${SOURCES} CACHE INTERNAL "")\n' +
-            '    set(${PROJECT}_TEST_SOURCES ${TEST_SOURCES} CACHE INTERNAL "")\n' +
+            '    set(${PROJECT}_INCLUDE_SOURCES ${INCLUDE_SOURCES} CACHE INTERNAL "")\n' +
             '    set_compiler_settings()\n' +
             'endfunction()\n';
         expect(readFile).toStrictEqual(expectedFile);

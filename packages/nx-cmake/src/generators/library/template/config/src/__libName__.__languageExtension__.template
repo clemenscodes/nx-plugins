@@ -1,4 +1,4 @@
-#include <<%= name %>/include/lib<%= name %>.h>
+#include <<%= name %>/include/<%= libName %>.h>
 
 int <%= snakeCaseName %>(void) {
     return 0;
