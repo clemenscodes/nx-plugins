@@ -8,13 +8,7 @@ export const addCacheableTargets = (
         default: {
             runner: 'nx/tasks-runners/default',
             options: {
-                cacheableOperations: [
-                    'cmake',
-                    'build',
-                    'test',
-                    'lint',
-                    'fmt',
-                ],
+                cacheableOperations: ['cmake', 'build', 'test', 'lint', 'fmt'],
             },
         },
     };
