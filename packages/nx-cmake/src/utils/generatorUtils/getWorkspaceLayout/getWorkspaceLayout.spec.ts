@@ -24,7 +24,6 @@ describe('getWorkspaceLayout', () => {
             workspaceLayout: {
                 appsDir: 'apps',
                 libsDir: 'libs',
-                projectNameAndRootFormat: 'as-provided',
             },
         };
     });
@@ -57,7 +56,6 @@ describe('getWorkspaceLayout', () => {
         expect(result).toEqual({
             appsDir: 'bin',
             libsDir: 'packages',
-            projectNameAndRootFormat: 'as-provided',
         });
     });
 });

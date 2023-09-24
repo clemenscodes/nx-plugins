@@ -17,7 +17,6 @@ describe('generateClangPreset', () => {
         options = {
             appsDir: 'bin',
             libsDir: 'packages',
-            projectNameAndRootFormat: 'derived',
             cmakeConfigDir: 'cmake',
             addClangPreset: false,
         };

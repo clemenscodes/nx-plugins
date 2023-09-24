@@ -1,7 +1,7 @@
 import type {
     CreateDependencies,
     CreateDependenciesContext,
-    ProjectGraphDependencyWithFile,
+    RawProjectGraphDependency,
 } from '@nx/devkit';
 import { filterProjects } from '../utils/graphUtils/filterProjects/filterProjects';
 import { getDependencies } from '../utils/graphUtils/getDependencies/getDependencies';
@@ -10,16 +10,16 @@ import { filterFilesToProcess } from '../utils/graphUtils/filterFilesToProcess/f
 
 export const createDependencies: CreateDependencies = (
     context: CreateDependenciesContext,
-): ProjectGraphDependencyWithFile[] => {
-    const { graph, nxJsonConfiguration, filesToProcess } = context;
+): RawProjectGraphDependency[] => {
+    const { projects, nxJsonConfiguration, filesToProcess } = context;
+    const { projectFileMap } = filesToProcess;
     const { workspaceLayout } = nxJsonConfiguration;
-    const { nodes } = graph;
     if (Object.keys(filesToProcess).length === 0) {
         return [];
     }
-    const filteredProjects = filterProjects(nodes);
+    const filteredProjects = filterProjects(projects);
     const filteredFilesToProcess = filterFilesToProcess(
-        filesToProcess,
+        projectFileMap,
         filteredProjects,
     );
     if (Object.keys(filteredFilesToProcess).length === 0) {

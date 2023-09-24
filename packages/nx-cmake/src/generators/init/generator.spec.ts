@@ -19,7 +19,6 @@ describe('init generator', () => {
         options = {
             appsDir: 'bin',
             libsDir: 'packages',
-            projectNameAndRootFormat: 'as-provided',
             cmakeConfigDir: 'cmake',
             addClangPreset: true,
         };

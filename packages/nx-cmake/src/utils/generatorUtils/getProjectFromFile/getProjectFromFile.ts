@@ -9,8 +9,8 @@ export const getProjectFromFile = (
     }
 
     const project = projects.find(({ root, sourceRoot }) => {
-        const isInSourceRoot = file.startsWith(sourceRoot);
-        const isInProjectRoot = file.startsWith(root);
+        const isInSourceRoot = file.startsWith(`${sourceRoot}/`);
+        const isInProjectRoot = file.startsWith(`${root}/`);
         if (isInSourceRoot) {
             return true;
         }

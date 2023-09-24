@@ -1,4 +1,4 @@
-import type { FileData, ProjectGraphDependencyWithFile } from '@nx/devkit';
+import type { FileData, RawProjectGraphDependency } from '@nx/devkit';
 import type { FilteredProject, WorkspaceLayout } from '../../../models/types';
 import { workspaceRoot } from '@nx/devkit';
 import { filterGccDependencyOutput } from '../filterGccDependencyOutput/filterGccDependencyOutput';
@@ -12,9 +12,9 @@ export const filterDependenciesOfProject = (
     workspaceLayout: WorkspaceLayout,
     projects: FilteredProject[],
     filesToProcess: FileData[],
-): ProjectGraphDependencyWithFile[] => {
+): RawProjectGraphDependency[] => {
     const { root, tag } = project;
-    const projectDependencies: ProjectGraphDependencyWithFile[] = [];
+    const projectDependencies: RawProjectGraphDependency[] = [];
     const filteredFilesToProcess = filesToProcess.filter((fileData) => {
         const { file } = fileData;
         const isSourceFile = isValidProjectFile(file, tag);

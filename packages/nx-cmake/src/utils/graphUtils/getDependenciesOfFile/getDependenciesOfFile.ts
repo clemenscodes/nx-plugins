@@ -1,4 +1,4 @@
-import type { ProjectGraphDependencyWithFile } from '@nx/devkit';
+import type { RawProjectGraphDependency } from '@nx/devkit';
 import type { FilteredProject } from '../../../models/types';
 import { DependencyType } from '@nx/devkit';
 import { getProjectFromFile } from '../../generatorUtils/getProjectFromFile/getProjectFromFile';
@@ -8,10 +8,10 @@ export const getDependenciesOfFile = (
     file: string,
     files: string[],
     projects: FilteredProject[],
-): ProjectGraphDependencyWithFile[] => {
+): RawProjectGraphDependency[] => {
     const { name } = mainProject;
     const projectSet: Set<string> = new Set();
-    const dependencies: ProjectGraphDependencyWithFile[] = [];
+    const dependencies: RawProjectGraphDependency[] = [];
 
     for (const file of files) {
         const project = getProjectFromFile(file, projects);
@@ -25,7 +25,7 @@ export const getDependenciesOfFile = (
             source: name,
             target: project,
             sourceFile: file,
-            dependencyType: DependencyType.static,
+            type: DependencyType.static,
         });
     }
 
