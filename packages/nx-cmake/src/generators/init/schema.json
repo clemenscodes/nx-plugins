@@ -29,19 +29,6 @@
             "x-priority": "important",
             "x-prompt": "Where do you want to generate the libraries?"
         },
-        "projectNameAndRootFormat": {
-            "type": "string",
-            "description": "Whether to derive the project location or take it as provided (nx.json has higher precendence)",
-            "default": "derived",
-            "aliases": ["p"],
-            "enum": ["as-provided", "derived"],
-            "$default": {
-                "$source": "argv",
-                "index": 2
-            },
-            "x-priority": "important",
-            "x-prompt": "Derive project locations or take as provided?"
-        },
         "cmakeConfigDir": {
             "type": "string",
             "description": "Where the configuration for CMake will be generated",

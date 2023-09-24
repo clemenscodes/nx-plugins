@@ -1,10 +1,10 @@
-import type { ProjectGraphDependencyWithFile } from '@nx/devkit';
+import type { RawProjectGraphDependency } from '@nx/devkit';
 import type { Graph } from '../../../../models/types';
 
 export const reduceDependencies = (
     graph: Graph,
-    deps: ProjectGraphDependencyWithFile[],
-): ProjectGraphDependencyWithFile[] => {
+    deps: RawProjectGraphDependency[],
+): RawProjectGraphDependency[] => {
     const reducedDeps = [];
     for (const dep of deps) {
         const { source, target } = dep;

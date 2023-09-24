@@ -1,10 +1,13 @@
-import type { ProjectConfiguration, ProjectGraphProjectNode } from '@nx/devkit';
+import type {
+    CreateDependenciesContext,
+    ProjectConfiguration,
+} from '@nx/devkit';
 import { filterProjects } from './filterProjects';
 import { CProjectType } from '../../../models/types';
 import { getProjectConfiguration } from '../../generatorUtils/getProjectConfiguration/getProjectConfiguration';
 
 describe('filterProjects', () => {
-    let nodes: Record<string, ProjectGraphProjectNode>;
+    let projects: CreateDependenciesContext['projects'];
     let project1: ProjectConfiguration;
     let project2: ProjectConfiguration;
     let project3: ProjectConfiguration;
@@ -28,28 +31,20 @@ describe('filterProjects', () => {
             'path/to/project4',
             CProjectType.Lib,
         )['libproject4'];
-        nodes = {
+        projects = {
             project1: {
-                type: 'app',
-                name: 'project1',
-                data: {
-                    ...project1,
-                    tags: ['c'],
-                },
+                ...project1,
+                tags: ['c'],
             },
             libproject2: {
-                type: 'lib',
-                name: 'libproject2',
-                data: {
-                    ...project2,
-                    tags: ['cpp'],
-                },
+                ...project2,
+                tags: ['cpp'],
             },
         };
     });
 
     it('should filter projects based on tags', () => {
-        const filteredProjects = filterProjects(nodes);
+        const filteredProjects = filterProjects(projects);
         const expectedProjects = [
             {
                 name: 'project1',
@@ -70,12 +65,8 @@ describe('filterProjects', () => {
     });
 
     it('should handle projects with no "c" or "cpp" tags', () => {
-        nodes['project3'] = {
-            type: 'lib',
-            name: 'project3',
-            data: project3,
-        };
-        const filteredProjects = filterProjects(nodes);
+        projects['project3'] = project3;
+        const filteredProjects = filterProjects(projects);
         const expectedProjects = [
             {
                 name: 'project1',
@@ -96,22 +87,11 @@ describe('filterProjects', () => {
     });
 
     it('should handle projects with other tags', () => {
-        nodes['project4'] = {
-            type: 'lib',
-            name: 'project4',
-            data: {
-                ...project4,
-                tags: [
-                    'js',
-                    'ts',
-                    'java',
-                    'python',
-                    'rust',
-                    'best-language-ever',
-                ],
-            },
+        projects['project4'] = {
+            ...project4,
+            tags: ['js', 'ts', 'java', 'python', 'rust', 'best-language-ever'],
         };
-        const filteredProjects = filterProjects(nodes);
+        const filteredProjects = filterProjects(projects);
         const expectedProjects = [
             {
                 name: 'project1',

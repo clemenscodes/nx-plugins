@@ -1,4 +1,4 @@
-import type { FileData, ProjectGraphDependencyWithFile } from '@nx/devkit';
+import type { FileData, RawProjectGraphDependency } from '@nx/devkit';
 import type { FilteredProject, WorkspaceLayout } from '../../../models/types';
 import { DependencyType } from '@nx/devkit';
 import { filterDependenciesOfProject } from './filterDependenciesOfProject';
@@ -9,7 +9,7 @@ describe('filterDependenciesOfProject', () => {
     let workspaceLayout: WorkspaceLayout;
     let projects: FilteredProject[];
     let filesToProcess: FileData[];
-    let expectedProjectDependencies: ProjectGraphDependencyWithFile[];
+    let expectedProjectDependencies: RawProjectGraphDependency[];
     let getGccDependenciesMock: jest.SpyInstance;
 
     beforeEach(() => {
@@ -23,7 +23,6 @@ describe('filterDependenciesOfProject', () => {
         workspaceLayout = {
             appsDir: 'bin',
             libsDir: 'packages',
-            projectNameAndRootFormat: 'derived',
         };
         projects = [
             {
@@ -75,13 +74,13 @@ describe('filterDependenciesOfProject', () => {
                 source: 'testparser',
                 target: 'libparser',
                 sourceFile: 'packages/parser/test/include/testparser.h',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'testparser',
                 target: 'libparser',
                 sourceFile: 'packages/parser/test/src/testparser.c',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
         ];
         getGccDependenciesMock = jest.spyOn(

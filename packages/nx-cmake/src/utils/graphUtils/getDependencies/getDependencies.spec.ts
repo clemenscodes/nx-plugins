@@ -1,7 +1,4 @@
-import type {
-    ProjectFileMap,
-    ProjectGraphDependencyWithFile,
-} from '@nx/devkit';
+import type { ProjectFileMap, RawProjectGraphDependency } from '@nx/devkit';
 import type { FilteredProject, WorkspaceLayout } from '../../../models/types';
 import { DependencyType } from '@nx/devkit';
 import { CProjectType } from '../../../models/types';
@@ -12,14 +9,13 @@ describe('getDependencies', () => {
     let filesToProcess: ProjectFileMap;
     let projects: FilteredProject[];
     let workspaceLayout: WorkspaceLayout;
-    let expectedDependencies: ProjectGraphDependencyWithFile[];
+    let expectedDependencies: RawProjectGraphDependency[];
     let filterDependenciesOfProjectMock: jest.SpyInstance;
 
     beforeEach(() => {
         workspaceLayout = {
             appsDir: 'bin',
             libsDir: 'packages',
-            projectNameAndRootFormat: 'as-provided',
         };
         projects = [
             {
@@ -49,13 +45,13 @@ describe('getDependencies', () => {
                 source: 'parser',
                 target: 'libparser',
                 sourceFile: 'bin/parser/include/parser.h',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'parser',
                 target: 'libparser',
                 sourceFile: 'bin/parser/src/parser.c',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
         ];
         filesToProcess = {
@@ -79,13 +75,13 @@ describe('getDependencies', () => {
                 source: 'parser',
                 target: 'libparser',
                 sourceFile: 'bin/parser/include/parser.h',
-                dependencyType: 'static',
+                type: 'static',
             },
             {
                 source: 'parser',
                 target: 'libparser',
                 sourceFile: 'bin/parser/src/parser.c',
-                dependencyType: 'static',
+                type: 'static',
             },
         ]);
     });

@@ -21,7 +21,6 @@ describe('setWorkspaceLayout', () => {
         workspaceLayoutOptions = {
             appsDir: 'apps',
             libsDir: 'libs',
-            projectNameAndRootFormat: 'derived',
         };
 
         options = {
@@ -46,7 +45,6 @@ describe('setWorkspaceLayout', () => {
             workspaceLayout: {
                 appsDir: '',
                 libsDir: 'libs',
-                projectNameAndRootFormat: 'derived',
             },
         };
 
@@ -67,7 +65,6 @@ describe('setWorkspaceLayout', () => {
             workspaceLayout: {
                 appsDir: 'apps',
                 libsDir: '',
-                projectNameAndRootFormat: 'derived',
             },
         };
 
@@ -88,7 +85,6 @@ describe('setWorkspaceLayout', () => {
             workspaceLayout: {
                 appsDir: '',
                 libsDir: '',
-                projectNameAndRootFormat: '' as 'as-provided',
             },
         };
 
@@ -109,7 +105,6 @@ describe('setWorkspaceLayout', () => {
             workspaceLayout: {
                 appsDir: 'bin',
                 libsDir: 'packages',
-                projectNameAndRootFormat: 'as-provided',
             },
         };
 
@@ -122,8 +117,5 @@ describe('setWorkspaceLayout', () => {
         expect(resultNxJson.workspaceLayout).toEqual(nxJson.workspaceLayout);
         expect(resultOptions.appsDir).toEqual(nxJson.workspaceLayout.appsDir);
         expect(resultOptions.libsDir).toEqual(nxJson.workspaceLayout.libsDir);
-        expect(resultOptions.projectNameAndRootFormat).toEqual(
-            nxJson.workspaceLayout.projectNameAndRootFormat,
-        );
     });
 });

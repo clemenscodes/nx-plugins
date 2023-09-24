@@ -18,7 +18,6 @@ describe('generateGlobalIncludeDir', () => {
         options = {
             appsDir: 'bin',
             libsDir: 'packages',
-            projectNameAndRootFormat: 'derived',
             cmakeConfigDir: 'cmake',
             addClangPreset: false,
         };

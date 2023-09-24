@@ -1,14 +1,15 @@
+import type { RawProjectGraphDependency } from '@nx/devkit';
 import { getDependenciesOfFile } from './getDependenciesOfFile';
 import { FilteredProject } from '../../../models/types';
-import { DependencyType, ProjectGraphDependencyWithFile } from '@nx/devkit';
+import { DependencyType } from '@nx/devkit';
 
 describe('getDependenciesOfFile', () => {
     let mainProject: FilteredProject;
     let file: string;
     let files: string[];
     let projects: FilteredProject[];
+    let expectedDependencies: RawProjectGraphDependency[];
 
-    let expectedDependencies: ProjectGraphDependencyWithFile[];
     beforeEach(() => {
         mainProject = {
             name: 'testa',
@@ -68,13 +69,13 @@ describe('getDependenciesOfFile', () => {
                 source: 'testa',
                 target: 'liba',
                 sourceFile: 'packages/a/test/include/testa.h',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'testa',
                 target: 'libb',
                 sourceFile: 'packages/a/test/include/testa.h',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
         ];
     });
