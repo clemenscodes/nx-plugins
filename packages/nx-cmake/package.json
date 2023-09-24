@@ -34,7 +34,7 @@
         "email": "me@clemenshorn.com"
     },
     "dependencies": {
-        "@nx/devkit": "16.8.1",
+        "@nx/devkit": "16.9.0",
         "tslib": "^2.3.0"
     }
 }
