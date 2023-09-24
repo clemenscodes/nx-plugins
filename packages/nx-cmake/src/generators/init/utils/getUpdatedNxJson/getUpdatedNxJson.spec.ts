@@ -42,7 +42,6 @@ describe('getUpdatedNxJson', () => {
                         cacheableOperations: [
                             'cmake',
                             'build',
-                            'debug',
                             'test',
                             'lint',
                             'fmt',

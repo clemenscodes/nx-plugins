@@ -11,7 +11,6 @@ export const addCacheableTargets = (
                 cacheableOperations: [
                     'cmake',
                     'build',
-                    'debug',
                     'test',
                     'lint',
                     'fmt',
