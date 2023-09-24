@@ -12,7 +12,7 @@ export const getDependencies = (
     filesToProcess: ProjectFileMap,
 ): RawProjectGraphDependency[] => {
     const deps: RawProjectGraphDependency[] = [];
-    for (const project of Object.keys(filesToProcess)) {
+    for (const project in filesToProcess) {
         const projectFiles = filesToProcess[project];
         const filteredProject = projects.find(({ name }) => name === project);
         const dependencies = filterDependenciesOfProject(

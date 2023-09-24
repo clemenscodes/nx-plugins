@@ -20,6 +20,11 @@ After initializing the plugin, the generators for creating a binary can be used.
 
 If not configured otherwise via `nx.json`, by default binaries (applications) will be placed  in `bin` and libraries will be placed in `libs`.
 
+Binaries are by default just basic wrappers around libraries to make testing easy.
+When creating a binary, a library will be created with two binary projects, one of which is the actual binary to be used and the other one is a testing binary.
+
+The library project will have 'lib' prepended and the test project will have 'test' prepended to the name given to the generator.
+
 When a library was created, it can be included from any other library or binary using `#include </dirNameOfLibrary/pathInLibrary/fileNameOfLibrary.h>`.
 
 ### Project Inference
@@ -28,8 +33,8 @@ Each `CMakeLists.txt` file tells this plugin to register another project and add
 A project configuration will be automatically inferred for each `CMakeLists.txt` file and the according project type.
 
 The generators of this plugin will also generate a `project.json` file that is the equivalent of what this has plugin inferred for the `CMakeLists.txt`.
-If no changes are made to the `project.json` file, it can also be deleted and this plugin will keep telling Nx how to deal with these C or C++ projects.
-Changes made to the `project.json` file will override the inferred settings for the project so it is recommended to keep these files.
+If no changes are made to the project.json file, it can also be deleted and this plugin will keep telling Nx how to deal with these C or C++ projects.
+Changes made to the project.json file will override the inferred settings for the project so it is recommended to keep these files.
 
 ### Project Graph Processing
 
@@ -50,7 +55,7 @@ NOTE: Windows is not natively supported. Using WSL2 and installing the dependenc
 
 The following tools need to be installed for this plugin to work correctly:
 
-- nx 16.7+ (this plugin uses the latest Nx v2 plugin API)
+- nx 16.9+ (this plugin uses the latest Nx v2 plugin API)
 - node
 - gcc
 - cmake
@@ -62,14 +67,17 @@ The following tools need to be installed for this plugin to work correctly:
 
 ### Installation
 
+#### Installing from a preset
+
+```shell
+npx create-nx-workspace --preset=nx-cmake
+```
+
+#### Installing in an existing workspace
+
 ```shell
 pnpm add -D nx-cmake
 pnpm nx g nx-cmake:init
-```
-
-```shell
-bun install -D nx-cmake
-bun run nx g nx-cmake:init
 ```
 
 ```shell
@@ -96,8 +104,6 @@ In general, settings in nx.json have higher precedence.
 > --appsDir (Where the binaries will be generated) [string] [default: "bin"]
 >
 > --libsDir (Where the libraries will be generated) [string] [default: "libs"]
->
-> --projectNameAndRootFormat (Whether to derive the project location or take it as provided) [string] [choices: "as-provided", "derived"] [default: "derived"]
 >
 > --cmakeConfigDir (Where the configuration for CMake will be generated) [string] [default: "cmake"]
 >
