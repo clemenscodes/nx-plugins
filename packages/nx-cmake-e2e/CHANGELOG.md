@@ -1,5 +1,12 @@
 # Changelog (nx-cmake)
 
+## [0.2.4](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.2.3...nx-cmake-0.2.4) (2023-09-24)
+
+
+### Bug Fixes
+
+* **nx-cmake:** inferring projectName from filePath ([e3952fb](https://github.com/clemenscodes/nx-plugins/commit/e3952fb1a6fec2e302542767f86ecf596db3f278))
+
 ## [0.2.3](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.2.2...nx-cmake-0.2.3) (2023-09-22)
 
 ## [0.2.2](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.2.1...nx-cmake-0.2.2) (2023-09-22)
