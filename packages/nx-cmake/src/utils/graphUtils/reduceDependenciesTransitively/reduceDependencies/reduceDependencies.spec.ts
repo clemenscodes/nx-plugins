@@ -1,12 +1,12 @@
-import type { ProjectGraphDependencyWithFile } from '@nx/devkit';
+import type { RawProjectGraphDependency } from '@nx/devkit';
 import type { Graph } from '../../../../models/types';
 import { DependencyType } from '@nx/devkit';
 import { reduceDependencies } from './reduceDependencies';
 
 describe('reduceDependencies', () => {
     let graph: Graph;
-    let dependencies: ProjectGraphDependencyWithFile[];
-    let expectedReducedDependencies: ProjectGraphDependencyWithFile[];
+    let dependencies: RawProjectGraphDependency[];
+    let expectedReducedDependencies: RawProjectGraphDependency[];
 
     beforeEach(() => {
         graph = {
@@ -22,85 +22,85 @@ describe('reduceDependencies', () => {
                 source: 'testbb',
                 target: 'libbb',
                 sourceFile: 'packages/bb/include/libbb.h',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'testbb',
                 target: 'libbb',
                 sourceFile: 'packages/bb/src/libbb.cpp',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'testbb',
                 target: 'libcc',
                 sourceFile: 'packages/cc/include/libcc.h',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'testbb',
                 target: 'libcc',
                 sourceFile: 'packages/cc/src/libcc.cpp',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'testcc',
                 target: 'libcc',
                 sourceFile: 'packages/cc/include/libcc.h',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'testcc',
                 target: 'libcc',
                 sourceFile: 'packages/cc/src/libcc.cpp',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'libbb',
                 target: 'libcc',
                 sourceFile: 'packages/cc/include/libcc.h',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'libbb',
                 target: 'libcc',
                 sourceFile: 'packages/cc/src/libcc.cpp',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'cc',
                 target: 'libcc',
                 sourceFile: 'packages/cc/include/libcc.h',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'cc',
                 target: 'libcc',
                 sourceFile: 'packages/cc/src/libcc.cpp',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'bb',
                 target: 'libbb',
                 sourceFile: 'packages/bb/include/libbb.h',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'bb',
                 target: 'libbb',
                 sourceFile: 'packages/bb/src/libbb.cpp',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'bb',
                 target: 'libcc',
                 sourceFile: 'packages/cc/include/libcc.h',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'bb',
                 target: 'libcc',
                 sourceFile: 'packages/cc/src/libcc.cpp',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
         ];
         expectedReducedDependencies = [
@@ -108,61 +108,61 @@ describe('reduceDependencies', () => {
                 source: 'testbb',
                 target: 'libbb',
                 sourceFile: 'packages/bb/include/libbb.h',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'testbb',
                 target: 'libbb',
                 sourceFile: 'packages/bb/src/libbb.cpp',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'testcc',
                 target: 'libcc',
                 sourceFile: 'packages/cc/include/libcc.h',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'testcc',
                 target: 'libcc',
                 sourceFile: 'packages/cc/src/libcc.cpp',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'libbb',
                 target: 'libcc',
                 sourceFile: 'packages/cc/include/libcc.h',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'libbb',
                 target: 'libcc',
                 sourceFile: 'packages/cc/src/libcc.cpp',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'cc',
                 target: 'libcc',
                 sourceFile: 'packages/cc/include/libcc.h',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'cc',
                 target: 'libcc',
                 sourceFile: 'packages/cc/src/libcc.cpp',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'bb',
                 target: 'libbb',
                 sourceFile: 'packages/bb/include/libbb.h',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
             {
                 source: 'bb',
                 target: 'libbb',
                 sourceFile: 'packages/bb/src/libbb.cpp',
-                dependencyType: DependencyType.static,
+                type: DependencyType.static,
             },
         ];
     });

@@ -25,7 +25,6 @@ describe('getUpdatedNxJson', () => {
         } as NxJsonConfiguration;
 
         mockOptions = {
-            projectNameAndRootFormat: 'derived',
             appsDir: 'bin',
             libsDir: 'packages',
             cmakeConfigDir: 'cmake',
@@ -98,7 +97,6 @@ describe('getUpdatedNxJson', () => {
             workspaceLayout: {
                 appsDir: 'bin',
                 libsDir: 'packages',
-                projectNameAndRootFormat: 'derived',
             },
         } as NxJsonConfiguration;
     });

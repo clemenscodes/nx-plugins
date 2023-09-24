@@ -5,12 +5,10 @@ export const getProjectRoot = (
     projectName: string,
     projectType: CProjectType,
 ): string => {
-    const { appsDir, libsDir, projectNameAndRootFormat } = getWorkspaceLayout();
+    const { appsDir, libsDir } = getWorkspaceLayout();
 
     if (projectType === CProjectType.App) {
-        return projectNameAndRootFormat === 'as-provided'
-            ? projectName
-            : `${appsDir}/${projectName}`;
+        return `${appsDir}/${projectName}`;
     }
 
     if (projectType === CProjectType.Lib) {
@@ -18,10 +16,8 @@ export const getProjectRoot = (
     }
 
     if (projectType === CProjectType.Test) {
-        return `${libsDir}/${projectName}/test`;
+        return `${appsDir}/${projectName}`;
     }
 
-    return projectNameAndRootFormat === 'as-provided'
-        ? projectName
-        : `${libsDir}/${projectName}`;
+    throw new Error(`Failed to get project root of project ${projectName}`);
 };

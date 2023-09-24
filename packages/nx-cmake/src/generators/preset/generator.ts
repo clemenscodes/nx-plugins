@@ -6,7 +6,6 @@ export async function presetGenerator(tree: Tree) {
     const initOptions: InitGeneratorSchema = {
         appsDir: 'bin',
         libsDir: 'libs',
-        projectNameAndRootFormat: 'derived',
         cmakeConfigDir: 'cmake',
         addClangPreset: true,
     };

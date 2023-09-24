@@ -1,5 +1,5 @@
-import { workspaceLayout } from '@nx/devkit';
 import type { WorkspaceLayout } from '../../../models/types';
+import { workspaceLayout } from '@nx/devkit';
 import { getNxJsonConfiguration } from '../getNxJsonConfiguration/getNxJsonConfiguration';
 
 export const getWorkspaceLayout = (): WorkspaceLayout => {
@@ -9,7 +9,6 @@ export const getWorkspaceLayout = (): WorkspaceLayout => {
     if (!layout) {
         return {
             ...defaultLayout,
-            projectNameAndRootFormat: 'as-provided',
         };
     }
     if (!layout.appsDir) {
@@ -17,9 +16,6 @@ export const getWorkspaceLayout = (): WorkspaceLayout => {
     }
     if (!layout.libsDir) {
         layout.libsDir = defaultLayout.libsDir;
-    }
-    if (!layout.projectNameAndRootFormat) {
-        layout.projectNameAndRootFormat = 'as-provided';
     }
     return layout;
 };

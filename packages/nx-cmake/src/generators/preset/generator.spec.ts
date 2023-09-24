@@ -13,7 +13,6 @@ describe('preset generator', () => {
         expectedWorkspaceLayout = {
             appsDir: 'bin',
             libsDir: 'libs',
-            projectNameAndRootFormat: 'derived',
         };
     });
 

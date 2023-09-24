@@ -6,13 +6,12 @@ export const setWorkspaceLayout = (
     updatedNxJson: NxJsonConfiguration,
     options: InitGeneratorSchema,
 ): [NxJsonConfiguration, InitGeneratorSchema] => {
-    const { appsDir, libsDir, projectNameAndRootFormat } = options;
+    const { appsDir, libsDir } = options;
 
     if (!updatedNxJson.workspaceLayout) {
         updatedNxJson.workspaceLayout = {
             appsDir,
             libsDir,
-            projectNameAndRootFormat,
         };
     }
 
@@ -20,7 +19,6 @@ export const setWorkspaceLayout = (
         updatedNxJson.workspaceLayout = {
             appsDir,
             libsDir,
-            projectNameAndRootFormat,
         };
         return [updatedNxJson, options];
     }
@@ -33,11 +31,6 @@ export const setWorkspaceLayout = (
         updatedNxJson.workspaceLayout.libsDir = options.libsDir;
     }
 
-    if (!nxJson.workspaceLayout.projectNameAndRootFormat) {
-        updatedNxJson.workspaceLayout.projectNameAndRootFormat =
-            options.projectNameAndRootFormat;
-    }
-
     if (nxJson.workspaceLayout.appsDir) {
         options.appsDir = nxJson.workspaceLayout.appsDir;
         updatedNxJson.workspaceLayout.appsDir = options.appsDir;
@@ -46,13 +39,6 @@ export const setWorkspaceLayout = (
     if (nxJson.workspaceLayout.libsDir) {
         options.libsDir = nxJson.workspaceLayout.libsDir;
         updatedNxJson.workspaceLayout.libsDir = options.libsDir;
-    }
-
-    if (nxJson.workspaceLayout.projectNameAndRootFormat) {
-        options.projectNameAndRootFormat =
-            nxJson.workspaceLayout.projectNameAndRootFormat;
-        updatedNxJson.workspaceLayout.projectNameAndRootFormat =
-            options.projectNameAndRootFormat;
     }
 
     return [updatedNxJson, options];
