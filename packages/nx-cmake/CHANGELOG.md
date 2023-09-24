@@ -1,5 +1,12 @@
 # Changelog (nx-cmake)
 
+## [0.2.5](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.2.4...nx-cmake-0.2.5) (2023-09-24)
+
+
+### Bug Fixes
+
+* **nx-cmake:** debug shouldnt be a cacheable target ([d2f6ec3](https://github.com/clemenscodes/nx-plugins/commit/d2f6ec3c88c06f09ac3b5c905f9aa76e0734d7bf))
+
 ## [0.2.4](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.2.3...nx-cmake-0.2.4) (2023-09-24)
 
 
