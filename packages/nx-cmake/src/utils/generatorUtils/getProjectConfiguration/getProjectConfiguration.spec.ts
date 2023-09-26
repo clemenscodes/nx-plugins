@@ -1,5 +1,7 @@
+import type { C } from '../../../models/types';
 import { getProjectConfiguration } from './getProjectConfiguration';
 import { CProjectType } from '../../../models/types';
+import { PLUGIN_NAME } from '../../../config/pluginName';
 import {
     defaultTargets,
     appTargets,
@@ -7,10 +9,18 @@ import {
 } from '../getProjectTargets/getProjectTargets';
 
 describe('getProjectConfiguration', () => {
+    let root: string;
+    let type: CProjectType;
+    let language: C;
+
+    beforeEach(() => {
+        root = 'libs/my-lib';
+        type = CProjectType.Lib;
+        language = 'C';
+    });
+
     it('should return the correct configuration for a library project', () => {
-        const root = 'libs/my-lib';
-        const type = CProjectType.Lib;
-        const result = getProjectConfiguration(root, type);
+        const result = getProjectConfiguration(root, type, language);
         expect(result).toEqual({
             'libmy-lib': {
                 name: 'libmy-lib',
@@ -18,15 +28,15 @@ describe('getProjectConfiguration', () => {
                 sourceRoot: 'libs/my-lib/src',
                 projectType: 'library',
                 targets: defaultTargets,
-                tags: [],
+                tags: [PLUGIN_NAME, 'c'],
             },
         });
     });
 
     it('should return the correct configuration for an application project', () => {
-        const root = 'apps/my-app';
-        const type = CProjectType.App;
-        const result = getProjectConfiguration(root, type);
+        root = 'apps/my-app';
+        type = CProjectType.App;
+        const result = getProjectConfiguration(root, type, language);
         expect(result).toEqual({
             'my-app': {
                 name: 'my-app',
@@ -34,15 +44,16 @@ describe('getProjectConfiguration', () => {
                 sourceRoot: 'apps/my-app/src',
                 projectType: 'application',
                 targets: appTargets,
-                tags: [],
+                tags: [PLUGIN_NAME, 'c'],
             },
         });
     });
 
     it('should return the correct configuration for a test project', () => {
-        const root = 'apps/my-app';
-        const type = CProjectType.Test;
-        const result = getProjectConfiguration(root, type);
+        root = 'apps/my-app';
+        type = CProjectType.Test;
+        language = 'C++';
+        const result = getProjectConfiguration(root, type, language);
         expect(result).toEqual({
             'testmy-app': {
                 name: 'testmy-app',
@@ -50,7 +61,7 @@ describe('getProjectConfiguration', () => {
                 sourceRoot: 'apps/my-app/src',
                 projectType: 'application',
                 targets: testTargets,
-                tags: ['test'],
+                tags: [PLUGIN_NAME, 'cpp', 'test'],
             },
         });
     });

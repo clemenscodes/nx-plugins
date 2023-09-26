@@ -1,20 +1,24 @@
 import type { CreateNodesContext, ProjectConfiguration } from '@nx/devkit';
+import type { C } from '../models/types';
 import { createNodesFunction } from './createNodesFunction';
 import { CProjectType } from '../models/types';
-import * as getProjectTypeModule from '../utils/generatorUtils/getProjectType/getProjectType';
+import * as getProjectTypeModule from '../utils/generatorUtils/getProjectTypeAndVariant/getProjectTypeAndVariant';
 import * as getProjectConfigurationModule from './../utils/generatorUtils/getProjectConfiguration/getProjectConfiguration';
 
 describe('createNodesFunction', () => {
     let mockGetProjectType: jest.SpyInstance;
     let mockGetProjectConfiguration: jest.SpyInstance;
     let getProjectConfigurationReturnMock: Record<string, ProjectConfiguration>;
-    let getProjectTypeReturnMock: CProjectType;
+    let getProjectTypeReturnMock: [CProjectType, C];
     let root: string;
     let projectConfigurationFile: string;
     let context: CreateNodesContext;
 
     beforeEach(() => {
-        mockGetProjectType = jest.spyOn(getProjectTypeModule, 'getProjectType');
+        mockGetProjectType = jest.spyOn(
+            getProjectTypeModule,
+            'getProjectTypeAndVariant',
+        );
         mockGetProjectConfiguration = jest.spyOn(
             getProjectConfigurationModule,
             'getProjectConfiguration',
@@ -96,7 +100,7 @@ describe('createNodesFunction', () => {
                 implicitDependencies: [],
             },
         };
-        getProjectTypeReturnMock = CProjectType.App;
+        getProjectTypeReturnMock = [CProjectType.App, 'C'];
         root = 'packages';
         projectConfigurationFile = `${root}/CMakeLists.txt`;
         context = {} as unknown as CreateNodesContext;
@@ -118,7 +122,8 @@ describe('createNodesFunction', () => {
         );
         expect(mockGetProjectConfiguration).toHaveBeenCalledWith(
             root,
-            getProjectTypeReturnMock,
+            getProjectTypeReturnMock[0],
+            getProjectTypeReturnMock[1],
         );
     });
 });

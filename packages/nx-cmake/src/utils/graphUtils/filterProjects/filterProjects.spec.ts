@@ -17,19 +17,22 @@ describe('filterProjects', () => {
         project1 = getProjectConfiguration(
             'path/to/project1',
             CProjectType.App,
+            'C',
         )['project1'];
         project2 = getProjectConfiguration(
             'path/to/project2',
             CProjectType.Lib,
+            'C++',
         )['libproject2'];
-
         project3 = getProjectConfiguration(
             'path/to/project3',
             CProjectType.Lib,
+            'C',
         )['libproject3'];
         project4 = getProjectConfiguration(
             'path/to/project4',
             CProjectType.Lib,
+            'C',
         )['libproject4'];
         projects = {
             project1: {
@@ -81,6 +84,13 @@ describe('filterProjects', () => {
                 sourceRoot: 'path/to/project2/src',
                 type: CProjectType.Lib,
                 tag: 'cpp',
+            },
+            {
+                name: 'libproject3',
+                root: 'path/to/project3',
+                sourceRoot: 'path/to/project3/src',
+                type: CProjectType.Lib,
+                tag: 'c',
             },
         ];
         expect(filteredProjects).toEqual(expectedProjects);
