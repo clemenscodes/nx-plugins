@@ -1,5 +1,13 @@
 # Changelog (nx-cmake)
 
+## [0.3.0](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.2.5...nx-cmake-0.3.0) (2023-09-26)
+
+
+### Features
+
+* **nx-cmake:** write generator config when running init generator ([36dba57](https://github.com/clemenscodes/nx-plugins/commit/36dba57cce630a60928d6e3362a55bba70dfff95))
+* **nx-cmake:** write plugin config to nx.json when running init generator ([63f8148](https://github.com/clemenscodes/nx-plugins/commit/63f8148acf286a5956abd83c44a892832e8a6a3b))
+
 ## [0.2.5](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.2.4...nx-cmake-0.2.5) (2023-09-24)
 
 
