@@ -3,6 +3,7 @@ import type { WorkspaceLayout } from '../../models/types';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { readNxJson } from '@nx/devkit';
 import presetGenerator from './generator';
+import * as devkit from '@nx/devkit';
 
 describe('preset generator', () => {
     let tree: Tree;
@@ -14,6 +15,7 @@ describe('preset generator', () => {
             appsDir: 'bin',
             libsDir: 'libs',
         };
+        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
     });
 
     it('should run successfully', async () => {

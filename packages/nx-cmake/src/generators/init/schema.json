@@ -5,6 +5,40 @@
     "description": "Initializes this plugin and sets up the boilerplate to support CMake, C and C++",
     "type": "object",
     "properties": {
+        "language": {
+            "description": "Whether to use C or C++",
+            "type": "string",
+            "aliases": ["language", "lang", "c"],
+            "enum": ["C", "C++"],
+            "default": "C",
+            "$default": {
+                "$source": "argv",
+                "index": 0
+            },
+            "x-prompt": "C or C++?"
+        },
+        "cmakeConfigDir": {
+            "description": "Where the configuration for CMake will be generated",
+            "type": "string",
+            "aliases": ["cmake", "config"],
+            "default": ".cmake",
+            "$default": {
+                "$source": "argv",
+                "index": 1
+            },
+            "x-prompt": "Where do you want to generate the CMake configuration?"
+        },
+        "globalIncludeDir": {
+            "description": "Where the global include directory will be generated",
+            "type": "string",
+            "aliases": ["include"],
+            "default": "include",
+            "$default": {
+                "$source": "argv",
+                "index": 2
+            },
+            "x-prompt": "Where do you want to generate the global include directory?"
+        },
         "appsDir": {
             "type": "string",
             "description": "Where the binaries will be generated (nx.json has higher precedence)",
@@ -12,10 +46,9 @@
             "aliases": ["apps", "a"],
             "$default": {
                 "$source": "argv",
-                "index": 0
+                "index": 3
             },
-            "x-priority": "important",
-            "x-prompt": "Where do you want to generate the binaries?"
+            "x-prompt": "Where do you want to generate binaries?"
         },
         "libsDir": {
             "type": "string",
@@ -24,26 +57,20 @@
             "aliases": ["libs", "l"],
             "$default": {
                 "$source": "argv",
-                "index": 1
+                "index": 4
             },
-            "x-priority": "important",
-            "x-prompt": "Where do you want to generate the libraries?"
-        },
-        "cmakeConfigDir": {
-            "type": "string",
-            "description": "Where the configuration for CMake will be generated",
-            "default": "cmake",
-            "$default": {
-                "$source": "argv",
-                "index": 3
-            },
-            "x-priority": "important",
-            "x-prompt": "Where do you want to generate the CMake configuration?"
+            "x-prompt": "Where do you want to generate libraries?"
         },
         "addClangPreset": {
             "description": "Generate a clang preset",
             "type": "boolean",
-            "default": true
+            "aliases": ["clang"],
+            "default": true,
+            "$default": {
+                "$source": "argv",
+                "index": 5
+            },
+            "x-prompt": "Do you want to generate an opinoated set of configuration files for clang-format and clang-tidy?"
         }
     },
     "required": []

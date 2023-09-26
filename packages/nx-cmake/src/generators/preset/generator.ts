@@ -4,9 +4,11 @@ import initGenerator from '../init/generator';
 
 export async function presetGenerator(tree: Tree) {
     const initOptions: InitGeneratorSchema = {
+        language: 'C',
+        cmakeConfigDir: '.cmake',
+        globalIncludeDir: 'include',
         appsDir: 'bin',
         libsDir: 'libs',
-        cmakeConfigDir: 'cmake',
         addClangPreset: true,
     };
     await initGenerator(tree, initOptions);

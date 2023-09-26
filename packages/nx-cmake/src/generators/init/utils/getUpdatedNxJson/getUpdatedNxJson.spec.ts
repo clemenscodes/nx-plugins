@@ -25,9 +25,11 @@ describe('getUpdatedNxJson', () => {
         } as NxJsonConfiguration;
 
         mockOptions = {
+            language: 'C',
+            cmakeConfigDir: '.cmake',
+            globalIncludeDir: 'include',
             appsDir: 'bin',
-            libsDir: 'packages',
-            cmakeConfigDir: 'cmake',
+            libsDir: 'libs',
             addClangPreset: true,
         };
 
@@ -49,7 +51,26 @@ describe('getUpdatedNxJson', () => {
                     },
                 },
             },
-            pluginsConfig: { '@nx/js': { analyzeSourceFiles: true } },
+            pluginsConfig: {
+                '@nx/js': { analyzeSourceFiles: true },
+                'nx-cmake': {
+                    cmakeConfigDir: '.cmake',
+                    globalIncludeDir: 'include',
+                    language: 'C',
+                },
+            },
+            generators: {
+                'nx-cmake': {
+                    binary: {
+                        generateTests: true,
+                        language: 'C',
+                    },
+                    library: {
+                        generateTests: true,
+                        language: 'C',
+                    },
+                },
+            },
             targetDefaults: {
                 cmake: { dependsOn: ['^cmake'], inputs: ['cmake'] },
                 build: {
@@ -95,7 +116,7 @@ describe('getUpdatedNxJson', () => {
             plugins: ['nx-cmake'],
             workspaceLayout: {
                 appsDir: 'bin',
-                libsDir: 'packages',
+                libsDir: 'libs',
             },
         } as NxJsonConfiguration;
     });

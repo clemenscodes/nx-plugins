@@ -15,10 +15,12 @@ describe('generateClangPreset', () => {
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
         options = {
+            language: 'C',
+            cmakeConfigDir: '.cmake',
+            globalIncludeDir: 'include',
             appsDir: 'bin',
-            libsDir: 'packages',
-            cmakeConfigDir: 'cmake',
-            addClangPreset: false,
+            libsDir: 'libs',
+            addClangPreset: true,
         };
         clangFormatFile = '.clang-format.yml';
         clangTidyFile = '.clang-tidy.yml';
@@ -79,20 +81,19 @@ describe('generateClangPreset', () => {
     });
 
     it('should not generate clang preset when addClangPreset is false', async () => {
+        options.addClangPreset = false;
         generateClangPreset(tree, options);
         expect(tree.exists('.clang-format.yml')).toBe(false);
         expect(tree.exists('.clang-tidy.yml')).toBe(false);
     });
 
     it('should generate clang preset when addClangFormatPreset is true', async () => {
-        options.addClangPreset = true;
         generateClangPreset(tree, options);
         expect(tree.exists('.clang-format.yml')).toBe(true);
         expect(tree.exists('.clang-tidy.yml')).toBe(true);
     });
 
     it('should generate clang preset correctly', async () => {
-        options.addClangPreset = true;
         generateClangPreset(tree, options);
         const clangFileContent = readFileWithTree(tree, clangFormatFile);
         const clangTidyContent = readFileWithTree(tree, clangTidyFile);

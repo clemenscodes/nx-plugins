@@ -8,7 +8,13 @@ import { generateGlobalIncludeDir } from './utils/generateGlobalIncludeDir/gener
 import { checkNxVersion } from '../../utils/generatorUtils/checkNxVersion/checkNxVersion';
 import { checkOs } from '../../utils/generatorUtils/checkOs/checkOs';
 import { getRequiredVersionOfNx } from '../../utils/generatorUtils/getRequiredVersionOfNx/getRequiredVersionOfNx';
-import { readNxJson, updateNxJson, NX_VERSION, output } from '@nx/devkit';
+import {
+    readNxJson,
+    updateNxJson,
+    NX_VERSION,
+    output,
+    formatFiles,
+} from '@nx/devkit';
 
 export async function initGenerator(tree: Tree, options: InitGeneratorSchema) {
     if (!checkOs(process.platform)) {
@@ -35,6 +41,7 @@ export async function initGenerator(tree: Tree, options: InitGeneratorSchema) {
     generateGlobalIncludeDir(tree, updatedOptions);
     generateRootConfig(tree, updatedOptions);
     generateClangPreset(tree, updatedOptions);
+    await formatFiles(tree);
 }
 
 export default initGenerator;

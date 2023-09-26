@@ -1,10 +1,37 @@
 import type { NxJsonConfiguration, ProjectGraph } from '@nx/devkit';
+import { PLUGIN_NAME } from '../config/pluginName';
 
-export enum CProjectType {
-    App,
-    Lib,
-    Test,
-}
+export type NxPluginsConfig = NxJsonConfiguration['pluginsConfig'];
+
+export type NxGeneratorConfig = NxJsonConfiguration['generators'];
+
+export type NxCmakePluginConfig = {
+    language: C;
+    cmakeConfigDir: string;
+    globalIncludeDir: string;
+};
+
+export type BaseGeneratorOptions = {
+    language: C;
+    generateTests: boolean;
+};
+
+export type BinaryGeneratorOptions = BaseGeneratorOptions;
+
+export type LibraryGeneratorOptions = BaseGeneratorOptions;
+
+export type NxCmakeGeneratorConfig = {
+    binary: BinaryGeneratorOptions;
+    library: LibraryGeneratorOptions;
+};
+
+export type PluginConfig = {
+    [PLUGIN_NAME]: NxCmakePluginConfig;
+} & NxPluginsConfig;
+
+export type PluginGeneratorConfig = {
+    [PLUGIN_NAME]: NxCmakeGeneratorConfig;
+} & NxGeneratorConfig;
 
 export type BaseOptions = {
     name: string;
@@ -19,11 +46,6 @@ export type BaseOptions = {
 export type ExecutorBaseOptions = {
     args: string[];
 };
-
-export type C = 'C' | 'C++';
-export type CMakeC = 'C' | 'CXX';
-export type CTag = 'c' | 'cpp';
-export type Link = 'shared' | 'static';
 
 export type Deps = {
     sourceProject: string;
@@ -49,3 +71,17 @@ export type GraphFile = {
         dependencies: ProjectGraph['dependencies'];
     };
 };
+
+export type C = 'C' | 'C++';
+
+export type CMakeC = 'C' | 'CXX';
+
+export type CTag = 'c' | 'cpp';
+
+export type Link = 'shared' | 'static';
+
+export enum CProjectType {
+    App,
+    Lib,
+    Test,
+}

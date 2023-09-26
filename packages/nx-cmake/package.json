@@ -27,7 +27,7 @@
     "repository": {
         "directory": "packages/nx-cmake",
         "type": "git",
-        "url": "https://github.com/clemenscodes/nx-plugins"
+        "url": "https://github.com/clemenscodes/nx-plugins/packages/nx-cmake"
     },
     "bugs": {
         "url": "https://github.com/clemenscodes/nx-plugins/issues/new",
@@ -35,6 +35,6 @@
     },
     "dependencies": {
         "@nx/devkit": "16.9.0",
-        "tslib": "^2.3.0"
+        "tslib": "^2.6.2"
     }
 }

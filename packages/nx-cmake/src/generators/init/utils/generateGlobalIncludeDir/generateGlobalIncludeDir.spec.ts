@@ -16,10 +16,12 @@ describe('generateGlobalIncludeDir', () => {
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
         options = {
+            language: 'C',
+            cmakeConfigDir: '.cmake',
+            globalIncludeDir: 'include',
             appsDir: 'bin',
-            libsDir: 'packages',
-            cmakeConfigDir: 'cmake',
-            addClangPreset: false,
+            libsDir: 'libs',
+            addClangPreset: true,
         };
         commonFile = 'include/common.h';
         libcmockaFile = 'include/libcmocka.h';
