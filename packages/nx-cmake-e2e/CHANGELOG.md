@@ -1,5 +1,7 @@
 # Changelog (nx-cmake)
 
+## [0.3.2](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.1...nx-cmake-0.3.2) (2023-09-26)
+
 ## [0.3.1](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.0...nx-cmake-0.3.1) (2023-09-26)
 
 ## [0.3.0](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.2.5...nx-cmake-0.3.0) (2023-09-26)

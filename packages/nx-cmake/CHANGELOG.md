@@ -1,5 +1,12 @@
 # Changelog (nx-cmake)
 
+## [0.3.2](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.1...nx-cmake-0.3.2) (2023-09-26)
+
+
+### Bug Fixes
+
+* **nx-cmake:** infer language variant when creating project graph nodes ([4914c5a](https://github.com/clemenscodes/nx-plugins/commit/4914c5acc97772f2ecd2fae8697d18bc5cf4066b))
+
 ## [0.3.1](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.0...nx-cmake-0.3.1) (2023-09-26)
 
 
