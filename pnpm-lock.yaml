@@ -120,6 +120,9 @@ importers:
       '@nx/devkit':
         specifier: 16.9.0
         version: 16.9.0(nx@16.9.0)
+      tslib:
+        specifier: ^2.6.2
+        version: 2.6.2
 
 packages:
 
