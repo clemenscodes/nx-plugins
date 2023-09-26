@@ -4,17 +4,24 @@ import { PLUGIN_NAME } from '../../../config/pluginName';
 import { assertIsPluginConfig } from '../assertIsPluginConfig/assertIsPluginConfig';
 
 export const getPluginConfig = (): NxCmakePluginConfig => {
+    const defaultPluginConfig: NxCmakePluginConfig = {
+        language: 'C',
+        cmakeConfigDir: '.cmake',
+        globalIncludeDir: 'include',
+    };
     const config = getNxJsonConfiguration();
     const pluginsConfig = config.pluginsConfig;
     if (!pluginsConfig) {
-        throw new Error('Failed to read pluginsConfig of nx.json');
+        return defaultPluginConfig;
     }
     if (!(PLUGIN_NAME in pluginsConfig)) {
-        throw new Error(
-            `Failed to read ${PLUGIN_NAME} field in pluginsConfig of nx.json`,
-        );
+        return defaultPluginConfig;
     }
     const pluginConfig = pluginsConfig[PLUGIN_NAME];
-    assertIsPluginConfig(pluginConfig);
+    try {
+        assertIsPluginConfig(pluginConfig);
+    } catch {
+        return defaultPluginConfig;
+    }
     return pluginConfig;
 };

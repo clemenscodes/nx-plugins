@@ -35,15 +35,16 @@ describe('getPluginConfig', () => {
         );
     });
 
-    it('should throw an error if the plugin config is missing in nx.json', () => {
+    it('should return default config if the plugin config is missing in nx.json', () => {
         mockNxJsonConfig = {
             pluginsConfig: {},
         };
-
         getNxJsonConfigurationSpy.mockReturnValue(mockNxJsonConfig);
-
-        expect(() => getPluginConfig()).toThrow(
-            'Failed to read nx-cmake field in pluginsConfig of nx.json',
-        );
+        const result = getPluginConfig();
+        expect(result).toEqual({
+            language: 'C',
+            cmakeConfigDir: '.cmake',
+            globalIncludeDir: 'include',
+        });
     });
 });
