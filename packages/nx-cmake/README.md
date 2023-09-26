@@ -101,11 +101,15 @@ In general, settings in nx.json have higher precedence.
 >
 > Initializes this plugin and sets up the boilerplate to support CMake, C and C++.
 >
+> --language (Whether to use C or C++ by default for generators) [choices: "C", "C++"] [default: "C"]
+>
+> --cmakeConfigDir (Where the configuration for CMake will be generated) [string] [default: ".cmake"]
+>
+> --globalIncludeDir (Where the global include directory will be generated) [string] [default: "include"]
+>
 > --appsDir (Where the binaries will be generated) [string] [default: "bin"]
 >
 > --libsDir (Where the libraries will be generated) [string] [default: "libs"]
->
-> --cmakeConfigDir (Where the configuration for CMake will be generated) [string] [default: "cmake"]
 >
 > --addClangPreset (Generate a clang preset) [boolean] [default: true]
 >
