@@ -1,5 +1,12 @@
 # Changelog (nx-cmake)
 
+## [0.3.1](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.0...nx-cmake-0.3.1) (2023-09-26)
+
+
+### Bug Fixes
+
+* **nx-cmake:** return default config if not yet defined ([9e7251b](https://github.com/clemenscodes/nx-plugins/commit/9e7251ba0fe4052afe5953720978f272e50c680e))
+
 ## [0.3.0](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.2.5...nx-cmake-0.3.0) (2023-09-26)
 
 
