@@ -1,7 +1,7 @@
 import type { CTag, WorkspaceLayout } from '../../../../models/types';
 import { getCmockaInclude } from '../getCmockaInclude/getCmockaInclude';
 import { getGtestInclude } from '../getGtestInclude/getGtestInclude';
-import { getWorkspaceIncludeDir } from '../getWorkspaceIncludeDir/getWorkspaceIncludeDir';
+import { getWorkspaceIncludeDir } from '../../../pluginUtils/getWorkspaceIncludeDir/getWorkspaceIncludeDir';
 
 export const getGccDependenciesCommand = (
     fileName: string,
