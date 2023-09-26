@@ -59,6 +59,18 @@ describe('getUpdatedNxJson', () => {
                     language: 'C',
                 },
             },
+            generators: {
+                'nx-cmake': {
+                    binary: {
+                        generateTests: true,
+                        language: 'C',
+                    },
+                    library: {
+                        generateTests: true,
+                        language: 'C',
+                    },
+                },
+            },
             targetDefaults: {
                 cmake: { dependsOn: ['^cmake'], inputs: ['cmake'] },
                 build: {

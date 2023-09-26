@@ -118,11 +118,8 @@ importers:
   packages/nx-cmake:
     dependencies:
       '@nx/devkit':
-        specifier: 16.8.1
-        version: 16.8.1(nx@16.9.0)
-      tslib:
-        specifier: ^2.3.0
-        version: 2.6.2
+        specifier: 16.9.0
+        version: 16.9.0(nx@16.9.0)
 
 packages:
 

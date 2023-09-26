@@ -1,6 +1,9 @@
+import type {
+    NxCmakePluginConfig,
+    NxPluginsConfig,
+} from '../../../../models/types';
 import type { NxJsonConfiguration } from '@nx/devkit';
 import type { InitGeneratorSchema } from '../../schema';
-import type { NxPluginsConfig } from '../../../../models/types';
 import { writeConfig } from './writeConfig';
 import { PLUGIN_NAME } from '../../../../config/pluginName';
 
@@ -8,6 +11,7 @@ describe('writeConfig', () => {
     let nxJson: NxJsonConfiguration;
     let updatedNxJson: NxJsonConfiguration;
     let options: InitGeneratorSchema;
+    let pluginConfig: NxCmakePluginConfig;
     let expectedPluginConfig: NxPluginsConfig;
 
     beforeEach(() => {
@@ -21,12 +25,13 @@ describe('writeConfig', () => {
             appsDir: 'apps',
             libsDir: 'libs',
         };
+        pluginConfig = {
+            language: options.language,
+            globalIncludeDir: options.globalIncludeDir,
+            cmakeConfigDir: options.cmakeConfigDir,
+        };
         expectedPluginConfig = {
-            'nx-cmake': {
-                language: options.language,
-                globalIncludeDir: options.globalIncludeDir,
-                cmakeConfigDir: options.cmakeConfigDir,
-            },
+            'nx-cmake': pluginConfig,
         };
     });
 

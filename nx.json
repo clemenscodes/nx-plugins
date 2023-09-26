@@ -31,11 +31,11 @@
     },
     "generators": {
         "nx-cmake": {
-            "library": {
-                "language": "C"
-            },
             "binary": {
-                "language": "C"
+                "language": "C++"
+            },
+            "library": {
+                "language": "C++"
             }
         }
     },

@@ -9,6 +9,7 @@ import { formatNxJson } from '../formatNxJson/formatNxJson';
 import { addClangFormatNamedInput } from '../addClangFormatNamedInput/addClangFormatNamedInput';
 import { addClangTidyNamedInput } from '../addClangTidyNamedInput/addClangTidyNamedInput';
 import { writeConfig } from '../writeConfig/writeConfig';
+import { writeGeneratorConfig } from '../writeGeneratorConfig/writeGeneratorConfig';
 
 export const getUpdatedNxJson = (
     nxJson: NxJsonConfiguration,
@@ -27,6 +28,7 @@ export const getUpdatedNxJson = (
         options,
     );
     updatedNxJson = writeConfig(nxJson, updatedNxJson, options);
+    updatedNxJson = writeGeneratorConfig(nxJson, updatedNxJson, options);
     updatedNxJson = formatNxJson(nxJson, updatedNxJson);
     return [updatedNxJson, options];
 };
