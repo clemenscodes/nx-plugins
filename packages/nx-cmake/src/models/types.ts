@@ -9,13 +9,15 @@ export enum CProjectType {
 
 export type NxPluginsConfig = NxJsonConfiguration['pluginsConfig'];
 
+export type NxCmakePluginConfig = {
+    language: C;
+    cmakeConfigDir: string;
+    globalIncludeDir: string;
+};
+
 export type PluginConfig = {
-    [PLUGIN_NAME]: {
-        language: C;
-        cmakeConfigDir: string;
-        globalIncludeDir: string;
-    };
-} & NxPluginsConfig;
+    [PLUGIN_NAME]: NxCmakePluginConfig;
+};
 
 export type BaseOptions = {
     name: string;

@@ -22,6 +22,11 @@
     "pluginsConfig": {
         "@nx/js": {
             "analyzeSourceFiles": true
+        },
+        "nx-cmake": {
+            "language": "C",
+            "globalIncludeDir": "include",
+            "cmakeConfigDir": ".cmake"
         }
     },
     "generators": {

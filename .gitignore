@@ -44,6 +44,10 @@ Thumbs.db
 /.cmake
 /cmake
 /include
-/.clang-format**
-/.clang-tidy**
+/.clang-format
+/.clang-format.yml
+/.clang-format.yaml
+/.clang-tidy
+/.clang-tidy.yml
+/.clang-tidy.yaml
 /CMakeLists.txt

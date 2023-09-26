@@ -51,7 +51,14 @@ describe('getUpdatedNxJson', () => {
                     },
                 },
             },
-            pluginsConfig: { '@nx/js': { analyzeSourceFiles: true } },
+            pluginsConfig: {
+                '@nx/js': { analyzeSourceFiles: true },
+                'nx-cmake': {
+                    cmakeConfigDir: '.cmake',
+                    globalIncludeDir: 'include',
+                    language: 'C',
+                },
+            },
             targetDefaults: {
                 cmake: { dependsOn: ['^cmake'], inputs: ['cmake'] },
                 build: {

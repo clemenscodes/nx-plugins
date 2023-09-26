@@ -8,6 +8,7 @@ import { setWorkspaceLayout } from '../setWorkspaceLayout/setWorkspaceLayout';
 import { formatNxJson } from '../formatNxJson/formatNxJson';
 import { addClangFormatNamedInput } from '../addClangFormatNamedInput/addClangFormatNamedInput';
 import { addClangTidyNamedInput } from '../addClangTidyNamedInput/addClangTidyNamedInput';
+import { writeConfig } from '../writeConfig/writeConfig';
 
 export const getUpdatedNxJson = (
     nxJson: NxJsonConfiguration,
@@ -25,6 +26,7 @@ export const getUpdatedNxJson = (
         updatedNxJson,
         options,
     );
+    updatedNxJson = writeConfig(nxJson, updatedNxJson, options);
     updatedNxJson = formatNxJson(nxJson, updatedNxJson);
     return [updatedNxJson, options];
 };
