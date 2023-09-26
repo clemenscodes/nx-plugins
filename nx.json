@@ -24,7 +24,7 @@
             "analyzeSourceFiles": true
         },
         "nx-cmake": {
-            "language": "C",
+            "language": "C++",
             "globalIncludeDir": "include",
             "cmakeConfigDir": ".cmake"
         }
@@ -32,10 +32,12 @@
     "generators": {
         "nx-cmake": {
             "binary": {
-                "language": "C++"
+                "language": "C++",
+                "generateTests": true
             },
             "library": {
-                "language": "C++"
+                "language": "C++",
+                "generateTests": true
             }
         }
     },
