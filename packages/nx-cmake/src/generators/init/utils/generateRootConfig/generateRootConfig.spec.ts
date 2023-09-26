@@ -12,9 +12,11 @@ describe('generateRootConfig', () => {
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
         options = {
+            language: 'C',
+            cmakeConfigDir: '.cmake',
+            globalIncludeDir: 'include',
             appsDir: 'bin',
-            libsDir: 'packages',
-            cmakeConfigDir: 'cmake',
+            libsDir: 'libs',
             addClangPreset: false,
         };
         rootConfig = 'CMakeLists.txt';
@@ -30,7 +32,7 @@ describe('generateRootConfig', () => {
         const readRootConfig = readFileWithTree(tree, rootConfig);
         const expectedRootConfig =
             'get_filename_component(CURRENT_DIR "${CMAKE_CURRENT_LIST_FILE}" DIRECTORY)\n' +
-            'list(APPEND CMAKE_MODULE_PATH ${CURRENT_DIR}/cmake)\n' +
+            `list(APPEND CMAKE_MODULE_PATH \${CURRENT_DIR}/${options.cmakeConfigDir})\n` +
             'cmake_policy(SET CMP0003 NEW)\n' +
             'cmake_policy(SET CMP0011 NEW)\n' +
             'cmake_policy(SET CMP0054 NEW)\n' +
@@ -47,11 +49,11 @@ describe('generateRootConfig', () => {
             'include(settings/set_library_settings)\n' +
             'include(settings/set_binary_settings)\n' +
             'make_var_readonly(WORKSPACE_DIR ${CURRENT_DIR})\n' +
-            'make_var_readonly(WORKSPACE_INCLUDE_DIR ${WORKSPACE_DIR}/include)\n' +
-            'make_var_readonly(WORKSPACE_LIBRARY_DIR ${WORKSPACE_DIR}/packages)\n' +
+            `make_var_readonly(WORKSPACE_INCLUDE_DIR \${WORKSPACE_DIR}/${options.globalIncludeDir})\n` +
+            `make_var_readonly(WORKSPACE_LIBRARY_DIR \${WORKSPACE_DIR}/${options.libsDir})\n` +
             'include_directories(SYSTEM ${WORKSPACE_LIBRARY_DIR})\n' +
             'set(CMAKE_INCLUDE_PATH ${WORKSPACE_INCLUDE_DIR})\n' +
-            'set(CMAKE_LIBRARY_PATH ${WORKSPACE_DIR}/dist/packages)\n' +
+            `set(CMAKE_LIBRARY_PATH \${WORKSPACE_DIR}/dist/${options.libsDir})\n` +
             'set_global_settings()\n';
 
         expect(readRootConfig).toStrictEqual(expectedRootConfig);

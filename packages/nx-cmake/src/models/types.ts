@@ -1,10 +1,21 @@
 import type { NxJsonConfiguration, ProjectGraph } from '@nx/devkit';
+import { PLUGIN_NAME } from '../config/pluginName';
 
 export enum CProjectType {
     App,
     Lib,
     Test,
 }
+
+export type NxPluginsConfig = NxJsonConfiguration['pluginsConfig'];
+
+export type PluginConfig = {
+    [PLUGIN_NAME]: {
+        language: C;
+        cmakeConfigDir: string;
+        globalIncludeDir: string;
+    };
+} & NxPluginsConfig;
 
 export type BaseOptions = {
     name: string;

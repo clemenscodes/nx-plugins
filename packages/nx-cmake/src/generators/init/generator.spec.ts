@@ -4,6 +4,7 @@ import { output } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import initGenerator from './generator';
 import * as checkNxVersionModule from '../../utils/generatorUtils/checkNxVersion/checkNxVersion';
+import * as devkit from '@nx/devkit';
 import * as checkOsModule from '../../utils/generatorUtils/checkOs/checkOs';
 
 describe('init generator', () => {
@@ -17,15 +18,18 @@ describe('init generator', () => {
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
         options = {
+            language: 'C',
+            cmakeConfigDir: '.cmake',
+            globalIncludeDir: 'include',
             appsDir: 'bin',
             libsDir: 'packages',
-            cmakeConfigDir: 'cmake',
             addClangPreset: true,
         };
         checkNxVersionMock = jest.spyOn(checkNxVersionModule, 'checkNxVersion');
         checkOsMock = jest.spyOn(checkOsModule, 'checkOs');
         nxOutputWarnMock = jest.spyOn(output, 'warn');
         nxOutputErrorMock = jest.spyOn(output, 'error');
+        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
     });
 
     afterEach(() => {

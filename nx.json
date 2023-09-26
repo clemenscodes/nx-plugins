@@ -9,7 +9,6 @@
                 "cacheableOperations": [
                     "cmake",
                     "build",
-                    "debug",
                     "test",
                     "e2e",
                     "lint",
@@ -59,6 +58,10 @@
         "lint": {
             "dependsOn": ["cmake"],
             "inputs": ["default"]
+        },
+        "fmt": {
+            "dependsOn": [],
+            "inputs": ["clangFormat"]
         }
     },
     "namedInputs": {
@@ -70,12 +73,27 @@
             "{projectRoot}/CMakeLists.txt",
             "{workspaceRoot}/CMakeLists.txt",
             "{workspaceRoot}/cmake/**/*.cmake"
+        ],
+        "clangFormat": [
+            "{projectRoot}/.clang-format",
+            "{projectRoot}/.clang-format.yml",
+            "{projectRoot}/.clang-format.yaml",
+            "{workspaceRoot}/.clang-format",
+            "{workspaceRoot}/.clang-format.yml",
+            "{workspaceRoot}/.clang-format.yaml"
+        ],
+        "clangTidy": [
+            "{projectRoot}/.clang-tidy",
+            "{projectRoot}/.clang-tidy.yml",
+            "{projectRoot}/.clang-tidy.yaml",
+            "{workspaceRoot}/.clang-tidy",
+            "{workspaceRoot}/.clang-tidy.yml",
+            "{workspaceRoot}/.clang-tidy.yaml"
         ]
     },
     "plugins": ["nx-cmake"],
     "workspaceLayout": {
         "appsDir": "bin",
-        "libsDir": "packages",
-        "projectNameAndRootFormat": "derived"
+        "libsDir": "packages"
     }
 }

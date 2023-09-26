@@ -25,9 +25,11 @@ describe('getUpdatedNxJson', () => {
         } as NxJsonConfiguration;
 
         mockOptions = {
+            language: 'C',
+            cmakeConfigDir: '.cmake',
+            globalIncludeDir: 'include',
             appsDir: 'bin',
-            libsDir: 'packages',
-            cmakeConfigDir: 'cmake',
+            libsDir: 'libs',
             addClangPreset: true,
         };
 
@@ -95,7 +97,7 @@ describe('getUpdatedNxJson', () => {
             plugins: ['nx-cmake'],
             workspaceLayout: {
                 appsDir: 'bin',
-                libsDir: 'packages',
+                libsDir: 'libs',
             },
         } as NxJsonConfiguration;
     });

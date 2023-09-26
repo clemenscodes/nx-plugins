@@ -12,10 +12,12 @@ describe('generateCmakeConfigFiles', () => {
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
         options = {
+            language: 'C',
+            cmakeConfigDir: '.cmake',
+            globalIncludeDir: 'include',
             appsDir: 'bin',
-            libsDir: 'packages',
-            cmakeConfigDir: 'cmake',
-            addClangPreset: false,
+            libsDir: 'libs',
+            addClangPreset: true,
         };
         expectedCmakeSettingsFiles = [
             'set_binary_settings.cmake',
@@ -39,7 +41,7 @@ describe('generateCmakeConfigFiles', () => {
 
     it('should generate cmake config in cmake', async () => {
         generateCmakeConfigFiles(tree, options);
-        const cmakeChildren = tree.children('cmake');
+        const cmakeChildren = tree.children(options.cmakeConfigDir);
         const expectedCmakeChildren = ['settings', 'utils'];
         expect(cmakeChildren).toStrictEqual(expectedCmakeChildren);
     });
@@ -54,15 +56,19 @@ describe('generateCmakeConfigFiles', () => {
 
     it('should generate cmake config files', async () => {
         generateCmakeConfigFiles(tree, options);
-        const cmakeSettingsFiles = tree.children('cmake/settings');
-        const cmakeUtilsFiles = tree.children('cmake/utils');
+        const cmakeSettingsFiles = tree.children(
+            `${options.cmakeConfigDir}/settings`,
+        );
+        const cmakeUtilsFiles = tree.children(
+            `${options.cmakeConfigDir}/utils`,
+        );
         expect(cmakeSettingsFiles).toStrictEqual(expectedCmakeSettingsFiles);
         expect(cmakeUtilsFiles).toStrictEqual(expectedCmakeUtilsFiles);
     });
 
     it('should generate cmake/settings/set_binary_settings.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
-        const file = 'cmake/settings/set_binary_settings.cmake';
+        const file = `${options.cmakeConfigDir}/settings/set_binary_settings.cmake`;
         const readFile = tree.read(file, 'utf-8');
         const expectedFile =
             'include(settings/set_project_settings)\n' +
@@ -79,7 +85,7 @@ describe('generateCmakeConfigFiles', () => {
 
     it('should generate cmake/settings/set_compiler_settings.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
-        const file = 'cmake/settings/set_compiler_settings.cmake';
+        const file = `${options.cmakeConfigDir}/settings/set_compiler_settings.cmake`;
         const readFile = tree.read(file, 'utf-8');
         const expectedFile =
             'function(set_c_flags)\n' +
@@ -126,7 +132,7 @@ describe('generateCmakeConfigFiles', () => {
 
     it('should generate cmake/settings/set_compiler.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
-        const file = 'cmake/settings/set_compiler.cmake';
+        const file = `${options.cmakeConfigDir}/settings/set_compiler.cmake`;
         const readFile = tree.read(file, 'utf-8');
         const expectedFile =
             'function(set_compiler)\n' +
@@ -142,7 +148,7 @@ describe('generateCmakeConfigFiles', () => {
 
     it('should generate cmake/settings/set_global_settings.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
-        const file = 'cmake/settings/set_global_settings.cmake';
+        const file = `${options.cmakeConfigDir}/settings/set_global_settings.cmake`;
         const readFile = tree.read(file, 'utf-8');
         const expectedFile =
             'include(settings/set_compiler)\n' +
@@ -166,7 +172,7 @@ describe('generateCmakeConfigFiles', () => {
 
     it('should generate cmake/settings/set_library_settings.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
-        const file = 'cmake/settings/set_library_settings.cmake';
+        const file = `${options.cmakeConfigDir}/settings/set_library_settings.cmake`;
         const readFile = tree.read(file, 'utf-8');
         const expectedFile =
             'include(settings/set_project_settings)\n' +
@@ -189,7 +195,7 @@ describe('generateCmakeConfigFiles', () => {
 
     it('should generate cmake/settings/set_project_settings.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
-        const file = 'cmake/settings/set_project_settings.cmake';
+        const file = `${options.cmakeConfigDir}/settings/set_project_settings.cmake`;
         const readFile = tree.read(file, 'utf-8');
         const expectedFile =
             'include(settings/set_compiler_settings)\n' +
@@ -208,7 +214,7 @@ describe('generateCmakeConfigFiles', () => {
 
     it('should generate cmake/utils/install_cmocka.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
-        const file = 'cmake/utils/install_cmocka.cmake';
+        const file = `${options.cmakeConfigDir}/utils/install_cmocka.cmake`;
         const readFile = tree.read(file, 'utf-8');
         const expectedFile =
             'function(install_cmocka)\n' +
@@ -237,7 +243,7 @@ describe('generateCmakeConfigFiles', () => {
 
     it('should generate cmake/utils/install_gtest.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
-        const file = 'cmake/utils/install_gtest.cmake';
+        const file = `${options.cmakeConfigDir}/utils/install_gtest.cmake`;
         const readFile = tree.read(file, 'utf-8');
         const expectedFile =
             'function(install_gtest)\n' +
@@ -259,7 +265,7 @@ describe('generateCmakeConfigFiles', () => {
 
     it('should generate cmake/utils/link_cmocka.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
-        const file = 'cmake/utils/link_cmocka.cmake';
+        const file = `${options.cmakeConfigDir}/utils/link_cmocka.cmake`;
         const readFile = tree.read(file, 'utf-8');
         const expectedFile =
             'include(utils/install_cmocka)\n' +
@@ -275,7 +281,7 @@ describe('generateCmakeConfigFiles', () => {
 
     it('should generate cmake/utils/link_gtest.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
-        const file = 'cmake/utils/link_gtest.cmake';
+        const file = `${options.cmakeConfigDir}/utils/link_gtest.cmake`;
         const readFile = tree.read(file, 'utf-8');
         const expectedFile =
             'include(utils/install_gtest)\n' +
@@ -290,7 +296,7 @@ describe('generateCmakeConfigFiles', () => {
 
     it('should generate cmake/utils/link_shared_library.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
-        const file = 'cmake/utils/link_shared_library.cmake';
+        const file = `${options.cmakeConfigDir}/utils/link_shared_library.cmake`;
         const readFile = tree.read(file, 'utf-8');
         const expectedFile =
             'function(link_shared_library PROJECT LIB)\n' +
@@ -315,7 +321,7 @@ describe('generateCmakeConfigFiles', () => {
 
     it('should generate cmake/utils/link_static_library.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
-        const file = 'cmake/utils/link_static_library.cmake';
+        const file = `${options.cmakeConfigDir}/utils/link_static_library.cmake`;
         const readFile = tree.read(file, 'utf-8');
         const expectedFile =
             'function(link_static_library PROJECT LIB)\n' +
@@ -339,7 +345,7 @@ describe('generateCmakeConfigFiles', () => {
 
     it('should generate cmake/utils/make_var_readonly.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
-        const file = 'cmake/utils/make_var_readonly.cmake';
+        const file = `${options.cmakeConfigDir}/utils/make_var_readonly.cmake`;
         const readFile = tree.read(file, 'utf-8');
         const expectedFile =
             'macro(make_var_readonly VAR)\n' +
@@ -364,7 +370,7 @@ describe('generateCmakeConfigFiles', () => {
 
     it('should generate cmake/utils/print_variables.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
-        const file = 'cmake/utils/print_variables.cmake';
+        const file = `${options.cmakeConfigDir}/utils/print_variables.cmake`;
         const readFile = tree.read(file, 'utf-8');
         const expectedFile =
             'function(print_variables)\n' +
