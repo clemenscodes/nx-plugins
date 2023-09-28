@@ -49,6 +49,9 @@ describe('addTestProjectConfig', () => {
                     configurations: {
                         development: { args: [] },
                         production: { args: [] },
+                        ci: {
+                            args: ['--warnings-as-errors=*'],
+                        },
                     },
                 },
                 fmt: {
@@ -64,6 +67,11 @@ describe('addTestProjectConfig', () => {
                             args: [],
                             verbose: true,
                             editFilesInPlace: true,
+                        },
+                        ci: {
+                            args: ['--dry-run', '--ferror-limit=0', '-Werror'],
+                            editFilesInPlace: false,
+                            verbose: false,
                         },
                     },
                 },

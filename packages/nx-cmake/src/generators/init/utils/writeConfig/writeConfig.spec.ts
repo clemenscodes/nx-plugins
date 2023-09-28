@@ -24,6 +24,7 @@ describe('writeConfig', () => {
             addClangPreset: false,
             appsDir: 'apps',
             libsDir: 'libs',
+            skipFormat: false,
         };
         pluginConfig = {
             language: options.language,

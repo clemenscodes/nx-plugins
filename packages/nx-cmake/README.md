@@ -69,25 +69,42 @@ The following tools need to be installed for this plugin to work correctly:
 
 #### Installing from a preset
 
+Using pnpm:
+
 ```shell
-npx create-nx-workspace --preset=nx-cmake
+npx create-nx-workspace@latest <repoName> --preset=nx-cmake --pm pnpm 
+```
+
+Using yarn:
+
+```shell
+npx create-nx-workspace@latest <repoName> --preset=nx-cmake --pm yarn
+```
+
+Using yarn:
+
+```shell
+npx create-nx-workspace@latest <repoName> --preset=nx-cmake --pm npm
 ```
 
 #### Installing in an existing workspace
 
 ```shell
 pnpm add -D nx-cmake
-pnpm nx g nx-cmake:init
 ```
 
 ```shell
 yarn add -D nx-cmake
-yarn nx g nx-cmake:init
 ```
 
 ```shell
 npm install -D nx-cmake
-npx nx g nx-cmake:init
+```
+
+After installing:
+
+```shell
+nx g nx-cmake:init
 ```
 
 ## Generators

@@ -6,6 +6,7 @@ import { resolveLinkOptions } from './resolveLinkOptions';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import libGenerator from '../../../library/generator';
 import binGenerator from '../../../binary/generator';
+import * as devkit from '@nx/devkit';
 
 describe('resolveLinkOptions', () => {
     let tree: Tree;
@@ -30,6 +31,7 @@ describe('resolveLinkOptions', () => {
             language: 'C++',
             generateTests: true,
         };
+        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
     });
 
     it('should throw when source project does not exist', () => {

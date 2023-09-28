@@ -18,6 +18,7 @@ describe('generateCmakeConfigFiles', () => {
             appsDir: 'bin',
             libsDir: 'libs',
             addClangPreset: true,
+            skipFormat: false,
         };
         expectedCmakeSettingsFiles = [
             'set_binary_settings.cmake',

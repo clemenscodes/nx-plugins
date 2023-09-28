@@ -1,5 +1,8 @@
+import { snakeCaseToCamelCase } from '../../../../utils/pluginUtils/snakeCaseToCamelCase/snakeCaseToCamelCase';
+
 export const getBaseCmockaTest = (projectName: string) => {
     const snakeCaseProjectName = projectName.replace(/-/g, '_');
+    const camelCaseProjectName = snakeCaseToCamelCase(snakeCaseProjectName);
 
     return (
         `static int setup(void **state) {\n` +
@@ -10,7 +13,7 @@ export const getBaseCmockaTest = (projectName: string) => {
         `\treturn 0;\n}\n\n` +
         `static void test_${snakeCaseProjectName}(void **state) {\n` +
         `\t(void) state;\n` +
-        `\t${snakeCaseProjectName}();\n}\n\n` +
+        `\t${camelCaseProjectName}();\n}\n\n` +
         `int main(void) {\n` +
         `\tconst struct CMUnitTest ${snakeCaseProjectName}_tests[] = {\n` +
         `\t\tcmocka_unit_test(test_${snakeCaseProjectName}),\n\t};\n` +

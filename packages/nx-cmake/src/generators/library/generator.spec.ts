@@ -3,6 +3,7 @@ import type { LibGeneratorSchema } from './schema';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { readProjectConfiguration } from '@nx/devkit';
 import libGenerator from './generator';
+import * as devkit from '@nx/devkit';
 
 describe('lib generator', () => {
     let tree: Tree;
@@ -15,6 +16,11 @@ describe('lib generator', () => {
             language: 'C++',
             generateTests: true,
         };
+        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
     });
 
     it('should run successfully with formatting', async () => {

@@ -5,6 +5,7 @@ import { readFileWithTree } from '../../../../utils/generatorUtils/readFileWithT
 import { updateIncludeFile } from './updateIncludeFile';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import libGenerator from '../../../library/generator';
+import * as devkit from '@nx/devkit';
 
 describe('updateIncludeFile', () => {
     let tree: Tree;
@@ -22,6 +23,7 @@ describe('updateIncludeFile', () => {
             language: 'C++',
             generateTests: true,
         };
+        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
         await libGenerator(tree, libOptions);
         expectedIncludeFile = 'packages/link/include/liblink.h';
         expectedIncludeDirective = '#include <target/include/libtarget.h>';

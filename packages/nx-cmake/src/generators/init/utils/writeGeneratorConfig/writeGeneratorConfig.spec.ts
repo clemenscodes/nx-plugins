@@ -24,6 +24,7 @@ describe('writeGeneratorConfig', () => {
             addClangPreset: false,
             appsDir: 'apps',
             libsDir: 'libs',
+            skipFormat: false,
         };
         generatorConfig = {
             binary: {

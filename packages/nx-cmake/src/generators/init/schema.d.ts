@@ -7,4 +7,5 @@ export type InitGeneratorSchema = {
     appsDir: WorkspaceLayout['appsDir'];
     libsDir: WorkspaceLayout['libsDir'];
     addClangPreset: boolean;
+    skipFormat: boolean;
 };

@@ -51,7 +51,18 @@ export const buildTarget = {
 
 export const lintTarget = {
     executor: `${PLUGIN_NAME}:lint`,
-    ...defaultConfiguration,
+    defaultConfiguration: 'development',
+    configurations: {
+        development: {
+            args: [],
+        },
+        production: {
+            args: [],
+        },
+        ci: {
+            args: ['--warnings-as-errors=*'],
+        },
+    },
 };
 
 export const fmtTarget = {
@@ -67,6 +78,11 @@ export const fmtTarget = {
             args: [],
             verbose: true,
             editFilesInPlace: true,
+        },
+        ci: {
+            args: ['--dry-run', '--ferror-limit=0', '-Werror'],
+            verbose: false,
+            editFilesInPlace: false,
         },
     },
 };

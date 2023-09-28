@@ -21,6 +21,7 @@ describe('generateClangPreset', () => {
             appsDir: 'bin',
             libsDir: 'libs',
             addClangPreset: true,
+            skipFormat: false,
         };
         clangFormatFile = '.clang-format.yml';
         clangTidyFile = '.clang-tidy.yml';

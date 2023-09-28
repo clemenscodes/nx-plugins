@@ -4,6 +4,7 @@ import type { LibGeneratorSchema } from '../../../library/schema';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { readFileWithTree } from '../../../../utils/generatorUtils/readFileWithTree/readFileWithTree';
 import libGenerator from '../../../library/generator';
+import * as devkit from '@nx/devkit';
 import {
     getCmakeLink,
     getSourceCmakeFile,
@@ -26,6 +27,7 @@ describe('updateCmakeFile', () => {
             language: 'C++',
             generateTests: true,
         };
+        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
         await libGenerator(tree, libOptions);
         expectedCmakeFile = 'packages/link/CMakeLists.txt';
         expectedCmakeFileContent =

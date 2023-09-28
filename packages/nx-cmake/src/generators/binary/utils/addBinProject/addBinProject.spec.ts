@@ -47,6 +47,9 @@ describe('addBinProject', () => {
                     configurations: {
                         development: { args: [] },
                         production: { args: [] },
+                        ci: {
+                            args: ['--warnings-as-errors=*'],
+                        },
                     },
                 },
                 fmt: {
@@ -62,6 +65,11 @@ describe('addBinProject', () => {
                             args: [],
                             verbose: true,
                             editFilesInPlace: true,
+                        },
+                        ci: {
+                            args: ['--dry-run', '--ferror-limit=0', '-Werror'],
+                            editFilesInPlace: false,
+                            verbose: false,
                         },
                     },
                 },

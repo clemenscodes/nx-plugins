@@ -15,6 +15,8 @@ describe('resolveOptions', () => {
             relativeRootPath: '../../',
             constantName: 'EXAMPLE_NAME',
             snakeCaseName: 'example_name',
+            camelCaseName: 'exampleName',
+            className: 'ExampleName',
             languageExtension: 'cpp',
             cmakeC: 'CXX',
         };
