@@ -14,8 +14,6 @@ describe('generateReadMe', () => {
         expectedReadMe =
             '# repoName\n' +
             '\n' +
-            'This repository was generated using [nx-cmake](https://www.npmjs.com/package/nx-cmake).\n' +
-            '\n' +
             '## Generators\n' +
             '\n' +
             'Use Nx Console to see the full list of options for each generator.\n' +
