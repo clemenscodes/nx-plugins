@@ -1,5 +1,12 @@
 # Changelog (nx-cmake)
 
+## [0.3.4](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.3...nx-cmake-0.3.4) (2023-09-28)
+
+
+### Bug Fixes
+
+* **nx-cmake:** preset generator ([4df188c](https://github.com/clemenscodes/nx-plugins/commit/4df188c74692b1a599be113716c6172a181c938a))
+
 ## [0.3.3](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.2...nx-cmake-0.3.3) (2023-09-28)
 
 
