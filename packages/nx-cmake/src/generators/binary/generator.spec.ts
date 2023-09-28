@@ -3,6 +3,7 @@ import type { BinGeneratorSchema } from './schema';
 import { readProjectConfiguration } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import binGenerator from './generator';
+import * as devkit from '@nx/devkit';
 
 describe('bin generator', () => {
     let tree: Tree;
@@ -15,6 +16,11 @@ describe('bin generator', () => {
             generateTests: true,
             language: 'C',
         };
+        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
     });
 
     it('should generate a binary with tests and formatting', async () => {

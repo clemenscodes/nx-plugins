@@ -4,6 +4,7 @@ import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { getProjectTypeWithTree } from './getProjectTypeWithTree';
 import { CProjectType } from '../../../models/types';
 import binGenerator from '../../../generators/binary/generator';
+import * as devkit from '@nx/devkit';
 
 describe('getProjectTypeWithTree', () => {
     let tree: Tree;
@@ -16,6 +17,7 @@ describe('getProjectTypeWithTree', () => {
             language: 'C++',
             generateTests: true,
         };
+        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
         await binGenerator(tree, binOptions);
     });
 

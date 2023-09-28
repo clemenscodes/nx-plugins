@@ -1,5 +1,6 @@
 import type { Tree } from '@nx/devkit';
 import type { BinGeneratorSchema } from './schema';
+import { formatFiles } from '@nx/devkit';
 import { resolveBinOptions } from './utils/resolveBinOptions/resolveBinOptions';
 import { generateBinFiles } from './utils/generateBinFiles/generateBinFiles';
 import { addBinProject } from './utils/addBinProject/addBinProject';
@@ -13,6 +14,7 @@ export async function binGenerator(tree: Tree, options: BinGeneratorSchema) {
     generateBinFiles(tree, resolvedOptions);
     await libGenerator(tree, resolvedOptions);
     await linkGenerator(tree, linkOptions);
+    await formatFiles(tree);
 }
 
 export default binGenerator;

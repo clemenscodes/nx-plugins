@@ -4,6 +4,7 @@ import type { LibGeneratorSchema } from '../library/schema';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import libGenerator from '../library/generator';
 import linkGenerator from './generator';
+import * as devkit from '@nx/devkit';
 
 describe('link generator', () => {
     let tree: Tree;
@@ -20,6 +21,7 @@ describe('link generator', () => {
             language: 'C++',
             generateTests: true,
         };
+        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
         await libGenerator(tree, libOptions);
         expectedCmakeFile = 'packages/link/CMakeLists.txt';
         expectedCmakeFileContent =
@@ -42,6 +44,10 @@ describe('link generator', () => {
             target: 'libtarget',
             link: 'shared',
         };
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
     });
 
     it('should run successfully', async () => {

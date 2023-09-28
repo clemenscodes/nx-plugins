@@ -18,6 +18,10 @@ describe('preset generator', () => {
         jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
     });
 
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
+
     it('should run successfully', async () => {
         await presetGenerator(tree);
         const { workspaceLayout } = readNxJson(tree);
