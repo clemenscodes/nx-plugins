@@ -12,7 +12,7 @@ describe('getBaseCmockaTest', () => {
         expect(result).toContain(
             `static void test_nx_cmake_test_c(void **state)`,
         );
-        expect(result).toContain(`nx_cmake_test_c();`);
+        expect(result).toContain(`nxCmakeTestC();`);
     });
 
     it('should generate test code with setup and teardown functions', () => {

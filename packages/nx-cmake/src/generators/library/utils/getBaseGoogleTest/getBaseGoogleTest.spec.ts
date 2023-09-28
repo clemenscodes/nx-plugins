@@ -8,7 +8,7 @@ describe('getBaseGoogleTest', () => {
         expect(result).toContain(
             `TEST(libnx_cmake_test_c, test_nx_cmake_test_c)`,
         );
-        expect(result).toContain(`EXPECT_EQ(nx_cmake_test_c(), 0);`);
+        expect(result).toContain(`EXPECT_EQ(nxCmakeTestC(), 0);`);
     });
     it('should generate test code with the library name and project name', () => {
         const libName = 'libgui';

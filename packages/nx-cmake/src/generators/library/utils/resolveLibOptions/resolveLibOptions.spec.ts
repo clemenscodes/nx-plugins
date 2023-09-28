@@ -15,6 +15,7 @@ describe('resolveLibOptions', () => {
             ...options,
             constantName: 'BASE',
             snakeCaseName: 'base',
+            camelCaseName: 'base',
             languageExtension: 'c',
             relativeRootPath: '../../',
             cmakeC: 'C',

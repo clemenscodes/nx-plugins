@@ -1,6 +1,6 @@
 #ifndef _LIB<%= constantName %>_<%= constantName %>
 #define _LIB<%= constantName %>_<%= constantName %>
 
-int <%= snakeCaseName %>(void);
+int <%= camelCaseName %>(void);
 
 #endif
