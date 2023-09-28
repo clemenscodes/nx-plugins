@@ -31,7 +31,7 @@ describe('getUpdatedNxJson', () => {
             appsDir: 'bin',
             libsDir: 'libs',
             addClangPreset: true,
-            skipFormat: false
+            skipFormat: false,
         };
 
         mockUpdatedNxJson = {

@@ -18,7 +18,7 @@ describe('generateRootConfig', () => {
             appsDir: 'bin',
             libsDir: 'libs',
             addClangPreset: false,
-            skipFormat: false
+            skipFormat: false,
         };
         rootConfig = 'CMakeLists.txt';
     });

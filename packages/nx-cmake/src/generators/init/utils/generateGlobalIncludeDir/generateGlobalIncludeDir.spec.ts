@@ -22,7 +22,7 @@ describe('generateGlobalIncludeDir', () => {
             appsDir: 'bin',
             libsDir: 'libs',
             addClangPreset: true,
-            skipFormat: false
+            skipFormat: false,
         };
         commonFile = 'include/common.h';
         libcmockaFile = 'include/libcmocka.h';
