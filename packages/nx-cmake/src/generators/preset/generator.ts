@@ -6,7 +6,6 @@ import {
 } from '@nx/devkit';
 import type { InitGeneratorSchema } from '../init/schema';
 import initGenerator from '../init/generator';
-import { formatFiles } from '@nx/devkit';
 import { generateReadMe } from './utils/generateReadMe/generateReadMe';
 import { PLUGIN_NAME } from '../../config/pluginName';
 
@@ -28,7 +27,6 @@ export async function presetGenerator(tree: Tree) {
     );
     return async () => {
         installPackagesTask(tree);
-        await formatFiles(tree);
     };
 }
 

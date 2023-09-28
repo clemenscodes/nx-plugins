@@ -160,7 +160,7 @@ describe('generateReadMe', () => {
 
     it('should generate README.md', () => {
         generateReadMe(tree, name);
-        const result = readFileWithTree(tree, `${tree.root}/README.md`);
+        const result = readFileWithTree(tree, `README.md`);
         expect(result).toStrictEqual(expectedReadMe);
     });
 });
