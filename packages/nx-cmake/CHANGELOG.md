@@ -1,5 +1,21 @@
 # Changelog (nx-cmake)
 
+## [0.3.4](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.3...nx-cmake-0.3.4) (2023-09-28)
+
+
+### Bug Fixes
+
+* **nx-cmake:** preset generator ([4df188c](https://github.com/clemenscodes/nx-plugins/commit/4df188c74692b1a599be113716c6172a181c938a))
+
+## [0.3.3](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.2...nx-cmake-0.3.3) (2023-09-28)
+
+
+### Bug Fixes
+
+* **nx-cmake:** format and lint target have ci config, generators format files ([866fe77](https://github.com/clemenscodes/nx-plugins/commit/866fe771e64e2edc4fa421dc70b282db0414a7b8))
+* **nx-cmake:** function names are now camelCase ([181867f](https://github.com/clemenscodes/nx-plugins/commit/181867fffab483f3a51d492e2ba7ad61c8f17cf3))
+* **nx-cmake:** update readme when using preset generator and install prettier ([83fdcb0](https://github.com/clemenscodes/nx-plugins/commit/83fdcb0f0762e39d4077b203f3b5763c8ae364f6))
+
 ## [0.3.2](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.1...nx-cmake-0.3.2) (2023-09-26)
 
 
