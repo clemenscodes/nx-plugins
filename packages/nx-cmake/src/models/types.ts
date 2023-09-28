@@ -39,6 +39,7 @@ export type BaseOptions = {
     constantName?: string;
     snakeCaseName?: string;
     camelCaseName?: string;
+    className?: string;
     relativeRootPath?: string;
     languageExtension?: string;
     cmakeC?: CMakeC;

@@ -24,6 +24,7 @@ describe('init generator', () => {
             appsDir: 'bin',
             libsDir: 'packages',
             addClangPreset: true,
+            skipFormat: false,
         };
         checkNxVersionMock = jest.spyOn(checkNxVersionModule, 'checkNxVersion');
         checkOsMock = jest.spyOn(checkOsModule, 'checkOs');

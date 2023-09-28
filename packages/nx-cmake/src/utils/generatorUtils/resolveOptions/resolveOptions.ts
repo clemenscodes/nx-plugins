@@ -4,16 +4,15 @@ import { getLanguageExtension } from '../getLanguageExtension/getLanguageExtensi
 import { getProjectRoot } from '../getProjectRoot/getProjectRoot';
 import { CProjectType } from '../../../models/types';
 import { names, offsetFromRoot } from '@nx/devkit';
-import { snakeCaseToCamelCase } from '../../pluginUtils/snakeCaseToCamelCase/snakeCaseToCamelCase';
 
 export const resolveOptions = <T extends BaseOptions, K extends Required<T>>(
     options: T,
 ): K => {
     const { language } = options;
     const resolvedName = names(options.name);
-    const { name, constantName } = resolvedName;
+    const { name, constantName, propertyName, className } = resolvedName;
     const snakeCaseName = constantName.toLowerCase();
-    const camelCaseName = snakeCaseToCamelCase(snakeCaseName);
+    const camelCaseName = propertyName;
     const projectRoot = getProjectRoot(name, CProjectType.Lib);
     const relativeRootPath = offsetFromRoot(projectRoot);
     const languageExtension = getLanguageExtension(language);
@@ -25,6 +24,7 @@ export const resolveOptions = <T extends BaseOptions, K extends Required<T>>(
         constantName,
         snakeCaseName,
         camelCaseName,
+        className,
         languageExtension,
         relativeRootPath,
         cmakeC,

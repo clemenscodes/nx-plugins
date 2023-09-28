@@ -1,7 +1,8 @@
 import { snakeCaseToCamelCase } from '../../../../utils/pluginUtils/snakeCaseToCamelCase/snakeCaseToCamelCase';
+
 export const getBaseCmockaTest = (projectName: string) => {
     const snakeCaseProjectName = projectName.replace(/-/g, '_');
-    const camelCaseProjectName = snakeCaseToCamelCase(snakeCaseProjectName)
+    const camelCaseProjectName = snakeCaseToCamelCase(snakeCaseProjectName);
 
     return (
         `static int setup(void **state) {\n` +
