@@ -1,7 +1,5 @@
 # <%= name %>
 
-This repository was generated using [nx-cmake](https://www.npmjs.com/package/nx-cmake).
-
 ## Generators
 
 Use Nx Console to see the full list of options for each generator.
