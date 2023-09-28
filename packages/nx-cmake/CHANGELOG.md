@@ -1,5 +1,12 @@
 # Changelog (nx-cmake)
 
+## [0.3.5](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.4...nx-cmake-0.3.5) (2023-09-28)
+
+
+### Bug Fixes
+
+* **nx-cmake:** repo url for npmjs ([5c53b22](https://github.com/clemenscodes/nx-plugins/commit/5c53b2214c589cf394c39bf96918724e672a7668))
+
 ## [0.3.4](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.3...nx-cmake-0.3.4) (2023-09-28)
 
 
