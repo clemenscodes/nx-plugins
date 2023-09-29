@@ -1,5 +1,12 @@
 # Changelog (nx-cmake)
 
+## [0.3.10](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.9...nx-cmake-0.3.10) (2023-09-29)
+
+
+### Bug Fixes
+
+* **nx-cmake:** find out why verdaccio keeps using npmjs packages instead of locals ([96a0d1d](https://github.com/clemenscodes/nx-plugins/commit/96a0d1d43e024fe6571d1c22a626d7b3f3dcef98))
+
 ## [0.3.9](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.8...nx-cmake-0.3.9) (2023-09-29)
 
 ## [0.3.8](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.7...nx-cmake-0.3.8) (2023-09-29)

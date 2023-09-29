@@ -1,5 +1,14 @@
 # Changelog (nx-cmake)
 
+## [0.3.10](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.9...nx-cmake-0.3.10) (2023-09-29)
+
+
+### Bug Fixes
+
+* **nx-cmake:** deactivate husky to allow commits ([65e8033](https://github.com/clemenscodes/nx-plugins/commit/65e80334a0482bb5f8283d636b6caa0b5c35f535))
+* **nx-cmake:** tests pass when running on windows ([38bc684](https://github.com/clemenscodes/nx-plugins/commit/38bc684727972c9aeb960e4084ba40fe3cdf9041))
+* **nx-cmake:** win32 to os in package.json, remove unix constraint in cmake, e2e fix ([7bc78db](https://github.com/clemenscodes/nx-plugins/commit/7bc78db708a7d9522bbec0162fdba5e61ed09a99))
+
 ## [0.3.9](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.8...nx-cmake-0.3.9) (2023-09-29)
 
 
