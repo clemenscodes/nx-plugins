@@ -38,15 +38,41 @@ describe('runCommand', () => {
             stdio: ['inherit', 'inherit', 'pipe'],
         });
         expect(outputErrorMock).toHaveBeenCalledWith({
-            title: 'nx-cmake command failed: invalid-command',
+            title: 'Command failed: invalid-command',
             bodyLines: ['Command failed'],
         });
     });
 
-    it('should print stderr', () => {
+    it('should return success:false when the command segfaults', () => {
+        execSyncMock.mockImplementation(() => {
+            throw { signal: 'SIGSEVG', pid: 999, stderr: 'stderr', status: 1 };
+        });
         outputErrorMock.mockImplementationOnce(jest.fn());
-        const result = runCommand(`ls doenstexist`);
+        const result = runCommand('invalid-command');
         expect(result).toEqual({ success: false });
-        expect(outputErrorMock).toHaveBeenCalledTimes(1);
+        expect(execSyncMock).toHaveBeenCalledWith('invalid-command', {
+            encoding: 'utf-8',
+            stdio: ['inherit', 'inherit', 'pipe'],
+        });
+        expect(outputErrorMock).toHaveBeenCalledWith({
+            title: '[SIGSEVG]: Killed invalid-command (PID: 999)',
+        });
+    });
+
+    it('should return success:false when the command itself exits irregularly', () => {
+        execSyncMock.mockImplementation(() => {
+            throw { signal: null, pid: 999, stderr: 'stderr', status: 1 };
+        });
+        outputErrorMock.mockImplementationOnce(jest.fn());
+        const result = runCommand('invalid-command');
+        expect(result).toEqual({ success: false });
+        expect(execSyncMock).toHaveBeenCalledWith('invalid-command', {
+            encoding: 'utf-8',
+            stdio: ['inherit', 'inherit', 'pipe'],
+        });
+        expect(outputErrorMock).toHaveBeenCalledWith({
+            title: '[Process failed: invalid-command] [Exit: 1]:',
+            bodyLines: ['stderr'],
+        });
     });
 });
