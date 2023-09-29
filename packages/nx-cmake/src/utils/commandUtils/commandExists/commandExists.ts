@@ -1,3 +1,4 @@
+import { isWindows } from '../../pluginUtils/isWindows/isWindows';
 import { executeCommand } from '../executeCommand/executeCommand';
 
 export const checkCommandExistsWindows = (command: string): boolean => {
@@ -13,7 +14,7 @@ export const checkCommandExistsUnix = (command: string): boolean => {
 export const commandExists = (command: string): boolean => {
     try {
         const [beforeSpace] = command.split(' ');
-        if (process.platform === 'win32') {
+        if (isWindows(process.platform)) {
             return checkCommandExistsWindows(beforeSpace);
         }
         return checkCommandExistsUnix(beforeSpace);

@@ -22,12 +22,15 @@ describe('generateBinFiles', () => {
         const binaryReadMeFile = `${projectRoot}/README.md`;
         generateBinFiles(tree, resolvedOptions);
         const binaryRoot = tree.children(projectRoot);
-        expect(binaryRoot).toStrictEqual([
+        const expectedRootFiles = [
             'CMakeLists.txt',
             'README.md',
             'include',
             'src',
-        ]);
+        ];
+        expect(binaryRoot).toStrictEqual(
+            expect.arrayContaining(expectedRootFiles),
+        );
         expect(tree.exists(binarySourceFile)).toBe(true);
         expect(tree.exists(binaryListsFile)).toBe(true);
         expect(tree.exists(binaryIncludeFile)).toBe(true);

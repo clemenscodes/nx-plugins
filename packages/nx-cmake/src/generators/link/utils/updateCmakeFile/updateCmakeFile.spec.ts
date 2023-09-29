@@ -5,6 +5,7 @@ import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { readFileWithTree } from '../../../../utils/generatorUtils/readFileWithTree/readFileWithTree';
 import libGenerator from '../../../library/generator';
 import * as devkit from '@nx/devkit';
+import { normalizeLineEndings } from '../../../../utils/testUtils/normalizeLineEndings/normalizeLineEndings';
 import {
     getCmakeLink,
     getSourceCmakeFile,
@@ -90,17 +91,23 @@ describe('updateCmakeFile', () => {
             oldContent,
             newContent,
         );
-        expect(updatedContent).toBe(oldContent + newContent);
+        expect(normalizeLineEndings(updatedContent)).toBe(
+            oldContent + newContent,
+        );
     });
 
     it('should update cmake file', () => {
         const cmakeFileContent = readFileWithTree(tree, expectedCmakeFile);
-        expect(cmakeFileContent).toBe(expectedCmakeFileContent);
+        expect(normalizeLineEndings(cmakeFileContent)).toBe(
+            expectedCmakeFileContent,
+        );
         updateCmakeFile(tree, linkOptions);
         const updatedCmakeFileContent = readFileWithTree(
             tree,
             expectedCmakeFile,
         );
-        expect(updatedCmakeFileContent).toBe(expectedUpdatedCmakeFileContent);
+        expect(normalizeLineEndings(updatedCmakeFileContent)).toBe(
+            expectedUpdatedCmakeFileContent,
+        );
     });
 });

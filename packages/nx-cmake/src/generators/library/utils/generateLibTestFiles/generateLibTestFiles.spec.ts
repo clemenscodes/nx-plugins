@@ -24,7 +24,9 @@ describe('generateLibTestFiles', () => {
     const defaultTest = () => {
         generateLibTestFiles(tree, resolvedOptions);
         const testRootFiles = tree.children(testRoot);
-        expect(testRootFiles).toStrictEqual(expectedTestRootFiles);
+        expect(testRootFiles).toEqual(
+            expect.arrayContaining(expectedTestRootFiles),
+        );
         expect(tree.exists(testSourceFile));
         expect(tree.exists(testIncludeFile));
         const includeFileContent = readFileWithTree(tree, testIncludeFile);

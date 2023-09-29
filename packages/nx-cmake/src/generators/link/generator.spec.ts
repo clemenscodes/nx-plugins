@@ -5,6 +5,8 @@ import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import libGenerator from '../library/generator';
 import linkGenerator from './generator';
 import * as devkit from '@nx/devkit';
+import { normalizeLineEndings } from '../../utils/testUtils/normalizeLineEndings/normalizeLineEndings';
+import { readFileWithTree } from '../../utils/generatorUtils/readFileWithTree/readFileWithTree';
 
 describe('link generator', () => {
     let tree: Tree;
@@ -51,10 +53,17 @@ describe('link generator', () => {
     });
 
     it('should run successfully', async () => {
-        const cmakeFileContent = tree.read(expectedCmakeFile, 'utf-8');
-        expect(cmakeFileContent).toBe(expectedCmakeFileContent);
+        const cmakeFileContent = readFileWithTree(tree, expectedCmakeFile);
+        expect(normalizeLineEndings(cmakeFileContent)).toBe(
+            expectedCmakeFileContent,
+        );
         await linkGenerator(tree, linkOptions);
-        const updatedCmakeFileContent = tree.read(expectedCmakeFile, 'utf-8');
-        expect(updatedCmakeFileContent).toBe(expectedUpdatedCmakeFileContent);
+        const updatedCmakeFileContent = readFileWithTree(
+            tree,
+            expectedCmakeFile,
+        );
+        expect(normalizeLineEndings(updatedCmakeFileContent)).toBe(
+            expectedUpdatedCmakeFileContent,
+        );
     });
 });

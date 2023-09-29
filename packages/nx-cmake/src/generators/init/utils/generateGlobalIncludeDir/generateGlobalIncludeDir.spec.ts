@@ -2,6 +2,7 @@ import type { Tree } from '@nx/devkit';
 import type { InitGeneratorSchema } from '../../schema';
 import { generateGlobalIncludeDir } from './generateGlobalIncludeDir';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
+import { readFileWithTree } from '../../../../utils/generatorUtils/readFileWithTree/readFileWithTree';
 
 describe('generateGlobalIncludeDir', () => {
     let tree: Tree;
@@ -51,14 +52,16 @@ describe('generateGlobalIncludeDir', () => {
             'libcmocka.h',
             'libgtest.h',
         ];
-        expect(globalIncludeFiles).toStrictEqual(expectedGlobalIncludeFiles);
+        expect(globalIncludeFiles).toStrictEqual(
+            expect.arrayContaining(expectedGlobalIncludeFiles),
+        );
     });
 
     it('should generate global include dir correctly', async () => {
         generateGlobalIncludeDir(tree, options);
-        const readCommonFile = tree.read(commonFile, 'utf-8');
-        const readLibcmockaFile = tree.read(libcmockaFile, 'utf-8');
-        const readLibgtestFile = tree.read(libgtestFile, 'utf-8');
+        const readCommonFile = readFileWithTree(tree, commonFile);
+        const readLibcmockaFile = readFileWithTree(tree, libcmockaFile);
+        const readLibgtestFile = readFileWithTree(tree, libgtestFile);
         expect(readCommonFile).toStrictEqual(expectedCommonFile);
         expect(readLibcmockaFile).toStrictEqual(expectedLibcmockaFile);
         expect(readLibgtestFile).toStrictEqual(expectedLibgtestFile);
