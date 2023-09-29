@@ -1,5 +1,12 @@
 # Changelog (nx-cmake)
 
+## [0.3.7](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.6...nx-cmake-0.3.7) (2023-09-29)
+
+
+### Bug Fixes
+
+* **nx-cmake:** capture signals, add verbose logging ([ecb1156](https://github.com/clemenscodes/nx-plugins/commit/ecb115672ff6528f5297e267f042cb19fc9137fa))
+
 ## [0.3.6](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.5...nx-cmake-0.3.6) (2023-09-29)
 
 
