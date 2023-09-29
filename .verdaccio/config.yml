@@ -5,7 +5,7 @@ storage: ../tmp/local-registry/storage
 uplinks:
     npmjs:
         url: https://registry.npmjs.org/
-        maxage: 60m
+        maxage: 1m
 
 packages:
     '**':
