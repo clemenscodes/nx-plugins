@@ -11,7 +11,7 @@ export type Graph = {
     };
 };
 
-const plugin = 'nx-cmake'
+const plugin = 'nx-cmake';
 
 describe(plugin, () => {
     let projectDirectory: string;
