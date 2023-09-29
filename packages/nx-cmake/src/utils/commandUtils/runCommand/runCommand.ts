@@ -30,7 +30,13 @@ export const runCommand = (
                 });
                 return { success: false };
             }
-            if (stderr && status && pid) {
+            if (
+                stderr !== undefined &&
+                status !== undefined &&
+                stderr !== null &&
+                status !== null &&
+                pid
+            ) {
                 output.error({
                     title: `[Process failed: ${cmd}] [Exit: ${status}]:`,
                     bodyLines: stderr.split('\n'),
