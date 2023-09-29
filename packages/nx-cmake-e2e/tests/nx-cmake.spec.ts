@@ -11,7 +11,9 @@ export type Graph = {
     };
 };
 
-describe('nx-cmake', () => {
+const plugin = 'nx-cmake';
+
+describe(plugin, () => {
     let projectDirectory: string;
 
     const execCmd = (cmd: string) => {
@@ -30,7 +32,7 @@ describe('nx-cmake', () => {
     };
 
     const testExecutor = (executorName: string) => {
-        describe(`nx-cmake:${executorName}`, () => {
+        describe(`${plugin}:${executorName}`, () => {
             let projectName: string;
             let cmd: string;
             let args: string;
@@ -60,28 +62,28 @@ describe('nx-cmake', () => {
 
         // The plugin has been built and published to a local registry in the jest globalSetup
         // Install the plugin built with the latest source code into the test repo
-        execCmd('npm install nx-cmake@e2e');
+        execCmd(`npm install ${plugin}@e2e`);
     });
 
     afterAll(() => {
         // Cleanup the test project
-        rmSync(projectDirectory, {
-            recursive: true,
-            force: true,
-        });
+        // rmSync(projectDirectory, {
+        //     recursive: true,
+        //     force: true,
+        // });
     });
 
     it('should be installed', () => {
         // npm ls will fail if the package is not installed properly
-        execCmd('npm ls nx-cmake');
+        execCmd(`npm ls ${plugin}`);
     });
 
     describe('generators', () => {
         let projectName: string;
 
-        describe('nx-cmake:init', () => {
+        describe(`nx-cmake:init`, () => {
             it('should initialize', async () => {
-                const cmd = 'nx g nx-cmake:init --no-interactive';
+                const cmd = `nx g nx-cmake:init --no-interactive`;
                 execCmd(cmd);
             });
         });
@@ -200,7 +202,7 @@ describe('nx-cmake', () => {
             describe('nx-cmake:lib', () => {
                 it('should generate C++ library', async () => {
                     projectName += '-lib';
-                    const cmd = `nx g nx-cmake:lib --name=${projectName} --language=C++ --no-interactive`;
+                    const cmd = `nx g ${plugin}:lib --name=${projectName} --language=C++ --no-interactive`;
                     execCmd(cmd);
                 });
             });
@@ -359,7 +361,7 @@ function createTestProject() {
     });
 
     execSync(
-        `npx --yes create-nx-workspace@latest ${projectName} --preset=nx-cmake --no-nxCloud --no-interactive`,
+        `npx --yes create-nx-workspace@latest ${projectName} --preset=${plugin} --no-nxCloud --no-interactive`,
         {
             cwd: dirname(projectDirectory),
             stdio: 'inherit',

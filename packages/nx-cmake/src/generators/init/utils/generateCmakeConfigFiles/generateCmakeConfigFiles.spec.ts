@@ -2,6 +2,7 @@ import type { Tree } from '@nx/devkit';
 import type { InitGeneratorSchema } from '../../schema';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { generateCmakeConfigFiles } from './generateCmakeConfigFiles';
+import { readFileWithTree } from '../../../../utils/generatorUtils/readFileWithTree/readFileWithTree';
 
 describe('generateCmakeConfigFiles', () => {
     let tree: Tree;
@@ -70,7 +71,7 @@ describe('generateCmakeConfigFiles', () => {
     it('should generate cmake/settings/set_binary_settings.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
         const file = `${options.cmakeConfigDir}/settings/set_binary_settings.cmake`;
-        const readFile = tree.read(file, 'utf-8');
+        const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'include(settings/set_project_settings)\n' +
             '\n' +
@@ -87,7 +88,7 @@ describe('generateCmakeConfigFiles', () => {
     it('should generate cmake/settings/set_compiler_settings.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
         const file = `${options.cmakeConfigDir}/settings/set_compiler_settings.cmake`;
-        const readFile = tree.read(file, 'utf-8');
+        const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'function(set_c_flags)\n' +
             '    if (CMAKE_C_COMPILER_ID MATCHES "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "GNU")\n' +
@@ -134,15 +135,11 @@ describe('generateCmakeConfigFiles', () => {
     it('should generate cmake/settings/set_compiler.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
         const file = `${options.cmakeConfigDir}/settings/set_compiler.cmake`;
-        const readFile = tree.read(file, 'utf-8');
+        const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'function(set_compiler)\n' +
-            '    if (UNIX)\n' +
-            '        set(CMAKE_C_COMPILER gcc CACHE INTERNAL "")\n' +
-            '        set(CMAKE_CXX_COMPILER ${CMAKE_C_COMPILER} CACHE INTERNAL "")\n' +
-            '    else()\n' +
-            '        message(FATAL_ERROR "Unsupported platform. Please set the compiler manually.")\n' +
-            '    endif ()\n' +
+            '    set(CMAKE_C_COMPILER gcc CACHE INTERNAL "")\n' +
+            '    set(CMAKE_CXX_COMPILER ${CMAKE_C_COMPILER} CACHE INTERNAL "")\n' +
             'endfunction()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
@@ -150,7 +147,7 @@ describe('generateCmakeConfigFiles', () => {
     it('should generate cmake/settings/set_global_settings.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
         const file = `${options.cmakeConfigDir}/settings/set_global_settings.cmake`;
-        const readFile = tree.read(file, 'utf-8');
+        const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'include(settings/set_compiler)\n' +
             '\n' +
@@ -174,7 +171,7 @@ describe('generateCmakeConfigFiles', () => {
     it('should generate cmake/settings/set_library_settings.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
         const file = `${options.cmakeConfigDir}/settings/set_library_settings.cmake`;
-        const readFile = tree.read(file, 'utf-8');
+        const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'include(settings/set_project_settings)\n' +
             '\n' +
@@ -197,7 +194,7 @@ describe('generateCmakeConfigFiles', () => {
     it('should generate cmake/settings/set_project_settings.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
         const file = `${options.cmakeConfigDir}/settings/set_project_settings.cmake`;
-        const readFile = tree.read(file, 'utf-8');
+        const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'include(settings/set_compiler_settings)\n' +
             '\n' +
@@ -216,7 +213,7 @@ describe('generateCmakeConfigFiles', () => {
     it('should generate cmake/utils/install_cmocka.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
         const file = `${options.cmakeConfigDir}/utils/install_cmocka.cmake`;
-        const readFile = tree.read(file, 'utf-8');
+        const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'function(install_cmocka)\n' +
             '    set(FETCHCONTENT_BASE_DIR ${CMAKE_LIBRARY_PATH}/cmocka)\n' +
@@ -245,7 +242,7 @@ describe('generateCmakeConfigFiles', () => {
     it('should generate cmake/utils/install_gtest.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
         const file = `${options.cmakeConfigDir}/utils/install_gtest.cmake`;
-        const readFile = tree.read(file, 'utf-8');
+        const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'function(install_gtest)\n' +
             '    set(FETCHCONTENT_BASE_DIR ${CMAKE_LIBRARY_PATH}/gtest)\n' +
@@ -267,7 +264,7 @@ describe('generateCmakeConfigFiles', () => {
     it('should generate cmake/utils/link_cmocka.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
         const file = `${options.cmakeConfigDir}/utils/link_cmocka.cmake`;
-        const readFile = tree.read(file, 'utf-8');
+        const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'include(utils/install_cmocka)\n' +
             '\n' +
@@ -283,7 +280,7 @@ describe('generateCmakeConfigFiles', () => {
     it('should generate cmake/utils/link_gtest.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
         const file = `${options.cmakeConfigDir}/utils/link_gtest.cmake`;
-        const readFile = tree.read(file, 'utf-8');
+        const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'include(utils/install_gtest)\n' +
             '\n' +
@@ -298,18 +295,13 @@ describe('generateCmakeConfigFiles', () => {
     it('should generate cmake/utils/link_shared_library.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
         const file = `${options.cmakeConfigDir}/utils/link_shared_library.cmake`;
-        const readFile = tree.read(file, 'utf-8');
+        const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'function(link_shared_library PROJECT LIB)\n' +
             '    set(PREFIX "lib")\n' +
             '    set(LIB_WITH_PREFIX ${PREFIX}${LIB})\n' +
             '    add_library(${LIB_WITH_PREFIX} SHARED IMPORTED)\n' +
-            '    if (UNIX)\n' +
-            '        set_target_properties(${LIB_WITH_PREFIX} PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_PATH}/${LIB}/${LIB_WITH_PREFIX}.so)\n' +
-            '    else()\n' +
-            '        message(FATAL_ERROR "Unsupported platform. Please link the library manually.")\n' +
-            '        return()\n' +
-            '    endif()\n' +
+            '    set_target_properties(${LIB_WITH_PREFIX} PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_PATH}/${LIB}/${LIB_WITH_PREFIX}.so)\n' +
             '    target_link_libraries(${PROJECT} ${LIB_WITH_PREFIX})\n' +
             '    set(LIB_DIR ${WORKSPACE_LIBRARY_DIR}/${LIB})\n' +
             '    target_include_directories(${PROJECT} PRIVATE ${LIB_DIR})\n' +
@@ -323,18 +315,13 @@ describe('generateCmakeConfigFiles', () => {
     it('should generate cmake/utils/link_static_library.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
         const file = `${options.cmakeConfigDir}/utils/link_static_library.cmake`;
-        const readFile = tree.read(file, 'utf-8');
+        const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'function(link_static_library PROJECT LIB)\n' +
             '    set(PREFIX "lib")\n' +
             '    set(LIB_WITH_PREFIX ${PREFIX}${LIB})\n' +
             '    add_library(${LIB_WITH_PREFIX} STATIC IMPORTED)\n' +
-            '    if (UNIX)\n' +
-            '        set_target_properties(${LIB_WITH_PREFIX} PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_PATH}/${LIB}/${LIB_WITH_PREFIX}.a)\n' +
-            '    else()\n' +
-            '        message(FATAL_ERROR "Unsupported platform. Please link the library manually.")\n' +
-            '        return()\n' +
-            '    endif()\n' +
+            '    set_target_properties(${LIB_WITH_PREFIX} PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_PATH}/${LIB}/${LIB_WITH_PREFIX}.a)\n' +
             '    target_link_libraries(${PROJECT} ${LIB_WITH_PREFIX})\n' +
             '    set(LIB_DIR ${WORKSPACE_LIBRARY_DIR}/${LIB})\n' +
             '    target_include_directories(${PROJECT} PRIVATE ${LIB_DIR})\n' +
@@ -347,7 +334,7 @@ describe('generateCmakeConfigFiles', () => {
     it('should generate cmake/utils/make_var_readonly.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
         const file = `${options.cmakeConfigDir}/utils/make_var_readonly.cmake`;
-        const readFile = tree.read(file, 'utf-8');
+        const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'macro(make_var_readonly VAR)\n' +
             '  # Set the variable itself\n' +
@@ -372,7 +359,7 @@ describe('generateCmakeConfigFiles', () => {
     it('should generate cmake/utils/print_variables.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
         const file = `${options.cmakeConfigDir}/utils/print_variables.cmake`;
-        const readFile = tree.read(file, 'utf-8');
+        const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'function(print_variables)\n' +
             '    get_cmake_property(_variableNames VARIABLES)\n' +

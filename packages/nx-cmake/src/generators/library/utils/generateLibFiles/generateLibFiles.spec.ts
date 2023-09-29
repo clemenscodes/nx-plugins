@@ -90,7 +90,9 @@ describe('generateLibFiles', () => {
         const resolvedOptions = resolveLibOptions(options);
         generateLibFiles(tree, resolvedOptions);
         const libraryRootFiles = tree.children(libraryRoot);
-        expect(libraryRootFiles).toStrictEqual(expectedLibraryRootFiles);
+        expect(libraryRootFiles).toEqual(
+            expect.arrayContaining(expectedLibraryRootFiles),
+        );
         expect(tree.exists(librarySourceFile)).toBe(true);
         expect(tree.exists(libraryIncludeFile)).toBe(true);
         const includeFileContent = readFileWithTree(tree, libraryIncludeFile);

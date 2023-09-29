@@ -3,6 +3,7 @@ import type { InitGeneratorSchema } from '../../schema';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { generateRootConfig } from './generateRootConfig';
 import { readFileWithTree } from '../../../../utils/generatorUtils/readFileWithTree/readFileWithTree';
+import { normalizeLineEndings } from '../../../../utils/testUtils/normalizeLineEndings/normalizeLineEndings';
 
 describe('generateRootConfig', () => {
     let tree: Tree;
@@ -57,6 +58,6 @@ describe('generateRootConfig', () => {
             `set(CMAKE_LIBRARY_PATH \${WORKSPACE_DIR}/dist/${options.libsDir})\n` +
             'set_global_settings()\n';
 
-        expect(readRootConfig).toStrictEqual(expectedRootConfig);
+        expect(readRootConfig).toBe(normalizeLineEndings(expectedRootConfig));
     });
 });
