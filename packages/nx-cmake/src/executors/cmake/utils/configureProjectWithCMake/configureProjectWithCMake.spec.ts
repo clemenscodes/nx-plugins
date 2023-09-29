@@ -2,13 +2,14 @@ import type { CmakeExecutorSchema } from '../../schema';
 import * as runCommandModule from '../../../../utils/commandUtils/runCommand/runCommand';
 import * as checkCommandExistsModule from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
 import { configureProjectWithCMake } from './configureProjectWithCMake';
-
+import * as isWindowsModule from '../../../../utils/pluginUtils/isWindows/isWindows';
 describe('buildProjectWithMake', () => {
     let workspaceRoot: string;
     let projectRoot: string;
     let options: CmakeExecutorSchema;
     let runCommandMock: jest.SpyInstance;
     let checkCommandExistsMock: jest.SpyInstance;
+    let isWindowsMock: jest.SpyInstance;
 
     beforeEach(() => {
         workspaceRoot = 'workspaceRoot';
@@ -19,10 +20,12 @@ describe('buildProjectWithMake', () => {
         };
 
         runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
-        checkCommandExistsMock = jest.spyOn(
-            checkCommandExistsModule,
-            'checkCommandExists',
-        );
+        checkCommandExistsMock = jest
+            .spyOn(checkCommandExistsModule, 'checkCommandExists')
+            .mockReturnValueOnce('cmake');
+        isWindowsMock = jest
+            .spyOn(isWindowsModule, 'isWindows')
+            .mockReturnValue(false);
     });
 
     afterEach(() => {
@@ -49,6 +52,7 @@ describe('buildProjectWithMake', () => {
     });
 
     it('should error if cmake is not installed', () => {
+        checkCommandExistsMock.mockReset();
         checkCommandExistsMock.mockImplementation(() => {
             throw new Error();
         });
@@ -81,6 +85,7 @@ describe('buildProjectWithMake', () => {
     });
 
     it('should return false if cmake failed', () => {
+        isWindowsMock.mockReturnValue(true);
         runCommandMock.mockReturnValue({ success: false });
         const result = configureProjectWithCMake(
             workspaceRoot,
@@ -93,6 +98,7 @@ describe('buildProjectWithMake', () => {
             '-S',
             `${workspaceRoot}/${projectRoot}`,
             `${workspaceRoot}/dist/${projectRoot}`,
+            '-G "Unix Makefiles"',
             '-DCMAKE_BUILD_TYPE=Debug',
             ...options.args,
         );

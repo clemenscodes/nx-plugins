@@ -26,7 +26,7 @@ describe('getConfigFile', () => {
             projectRoot,
             configFile,
         );
-        const expectedPath = join(workspaceRoot, projectRoot, configFile)
+        const expectedPath = join(workspaceRoot, projectRoot, configFile);
         expect(result).toBe(expectedPath);
     });
 
@@ -38,7 +38,7 @@ describe('getConfigFile', () => {
             projectRoot,
             configFile,
         );
-        const expectedPath = join(workspaceRoot, configFile)
+        const expectedPath = join(workspaceRoot, configFile);
         expect(result).toBe(expectedPath);
     });
 

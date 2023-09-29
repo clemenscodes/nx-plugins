@@ -70,7 +70,7 @@
                 "$source": "argv",
                 "index": 5
             },
-            "x-prompt": "Do you want to generate an opinoated set of configuration files for clang-format and clang-tidy?"
+            "x-prompt": "Do you want to generate an opinionated set of configuration files for clang-format and clang-tidy?"
         }
     },
     "required": []

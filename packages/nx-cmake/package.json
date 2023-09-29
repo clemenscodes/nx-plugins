@@ -14,7 +14,8 @@
         "url": "https://clemenshorn.com"
     },
     "os": [
-        "macos",
+        "win32",
+        "darwin",
         "linux"
     ],
     "keywords": [

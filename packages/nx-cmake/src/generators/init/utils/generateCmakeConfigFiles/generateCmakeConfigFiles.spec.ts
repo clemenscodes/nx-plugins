@@ -138,12 +138,8 @@ describe('generateCmakeConfigFiles', () => {
         const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'function(set_compiler)\n' +
-            '    if (UNIX)\n' +
-            '        set(CMAKE_C_COMPILER gcc CACHE INTERNAL "")\n' +
-            '        set(CMAKE_CXX_COMPILER ${CMAKE_C_COMPILER} CACHE INTERNAL "")\n' +
-            '    else()\n' +
-            '        message(FATAL_ERROR "Unsupported platform. Please set the compiler manually.")\n' +
-            '    endif ()\n' +
+            '    set(CMAKE_C_COMPILER gcc CACHE INTERNAL "")\n' +
+            '    set(CMAKE_CXX_COMPILER ${CMAKE_C_COMPILER} CACHE INTERNAL "")\n' +
             'endfunction()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
@@ -305,12 +301,7 @@ describe('generateCmakeConfigFiles', () => {
             '    set(PREFIX "lib")\n' +
             '    set(LIB_WITH_PREFIX ${PREFIX}${LIB})\n' +
             '    add_library(${LIB_WITH_PREFIX} SHARED IMPORTED)\n' +
-            '    if (UNIX)\n' +
-            '        set_target_properties(${LIB_WITH_PREFIX} PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_PATH}/${LIB}/${LIB_WITH_PREFIX}.so)\n' +
-            '    else()\n' +
-            '        message(FATAL_ERROR "Unsupported platform. Please link the library manually.")\n' +
-            '        return()\n' +
-            '    endif()\n' +
+            '    set_target_properties(${LIB_WITH_PREFIX} PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_PATH}/${LIB}/${LIB_WITH_PREFIX}.so)\n' +
             '    target_link_libraries(${PROJECT} ${LIB_WITH_PREFIX})\n' +
             '    set(LIB_DIR ${WORKSPACE_LIBRARY_DIR}/${LIB})\n' +
             '    target_include_directories(${PROJECT} PRIVATE ${LIB_DIR})\n' +
@@ -330,12 +321,7 @@ describe('generateCmakeConfigFiles', () => {
             '    set(PREFIX "lib")\n' +
             '    set(LIB_WITH_PREFIX ${PREFIX}${LIB})\n' +
             '    add_library(${LIB_WITH_PREFIX} STATIC IMPORTED)\n' +
-            '    if (UNIX)\n' +
-            '        set_target_properties(${LIB_WITH_PREFIX} PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_PATH}/${LIB}/${LIB_WITH_PREFIX}.a)\n' +
-            '    else()\n' +
-            '        message(FATAL_ERROR "Unsupported platform. Please link the library manually.")\n' +
-            '        return()\n' +
-            '    endif()\n' +
+            '    set_target_properties(${LIB_WITH_PREFIX} PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_PATH}/${LIB}/${LIB_WITH_PREFIX}.a)\n' +
             '    target_link_libraries(${PROJECT} ${LIB_WITH_PREFIX})\n' +
             '    set(LIB_DIR ${WORKSPACE_LIBRARY_DIR}/${LIB})\n' +
             '    target_include_directories(${PROJECT} PRIVATE ${LIB_DIR})\n' +

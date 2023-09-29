@@ -1,6 +1,7 @@
 import type { CmakeExecutorSchema } from '../../schema';
 import { runCommand } from '../../../../utils/commandUtils/runCommand/runCommand';
 import { checkCommandExists } from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
+import { isWindows } from '../../../../utils/pluginUtils/isWindows/isWindows';
 
 export const configureProjectWithCMake = (
     workspaceRoot: string,
@@ -14,6 +15,7 @@ export const configureProjectWithCMake = (
         '-S',
         `${workspaceRoot}/${projectRoot}`,
         `${workspaceRoot}/dist/${projectRoot}`,
+        ...(isWindows(process.platform) ? ['-G "Unix Makefiles"'] : []),
         `-DCMAKE_BUILD_TYPE=${release ? 'Release' : 'Debug'}`,
         ...args,
     );
