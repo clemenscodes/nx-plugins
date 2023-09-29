@@ -13,10 +13,6 @@
         "name": "Clemens Horn",
         "url": "https://clemenshorn.com"
     },
-    "os": [
-        "macos",
-        "linux"
-    ],
     "keywords": [
         "nx",
         "monorepo",
