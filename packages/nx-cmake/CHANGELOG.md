@@ -1,5 +1,12 @@
 # Changelog (nx-cmake)
 
+## [0.3.8](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.7...nx-cmake-0.3.8) (2023-09-29)
+
+
+### Bug Fixes
+
+* **nx-cmake:** print exit code even for empty stderr ([8ae980f](https://github.com/clemenscodes/nx-plugins/commit/8ae980f7248f5d81f8f4c51fcb4b8dcd12c80d76))
+
 ## [0.3.7](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.6...nx-cmake-0.3.7) (2023-09-29)
 
 
