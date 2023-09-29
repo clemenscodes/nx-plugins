@@ -1,5 +1,12 @@
 # Changelog (nx-cmake)
 
+## [0.3.6](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.5...nx-cmake-0.3.6) (2023-09-29)
+
+
+### Bug Fixes
+
+* **nx-cmake:** print stderr when commands fail ([5d42a57](https://github.com/clemenscodes/nx-plugins/commit/5d42a57134bed8f8dc492d5a988b2f10a891cf9a)), closes [#51](https://github.com/clemenscodes/nx-plugins/issues/51)
+
 ## [0.3.5](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.4...nx-cmake-0.3.5) (2023-09-28)
 
 
