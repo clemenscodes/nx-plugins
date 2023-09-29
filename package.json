@@ -1,6 +1,6 @@
 {
     "name": "nx-plugins",
-    "version": "0.3.8",
+    "version": "0.3.9",
     "license": "MIT",
     "scripts": {
         "prepare": "husky install"

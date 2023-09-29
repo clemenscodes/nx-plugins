@@ -1,5 +1,12 @@
 # Changelog (nx-cmake)
 
+## [0.3.9](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.8...nx-cmake-0.3.9) (2023-09-29)
+
+
+### Bug Fixes
+
+* **nx-cmake:** remove os constraint for  package on npm ([4d2bb31](https://github.com/clemenscodes/nx-plugins/commit/4d2bb310c11a422f7af405f706775686afe6ccac))
+
 ## [0.3.8](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.7...nx-cmake-0.3.8) (2023-09-29)
 
 
