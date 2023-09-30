@@ -1,9 +1,9 @@
 import type { BuildExecutorSchema } from '../../schema';
-import { buildProjectWithMake } from './buildProjectWithMake';
+import { buildProjectWithCMake } from './buildProjectWithCMake';
 import * as runCommandModule from '../../../../utils/commandUtils/runCommand/runCommand';
 import * as checkCommandExistsModule from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
 
-describe('buildProjectWithMake', () => {
+describe('buildProjectWithCMake', () => {
     let workspaceRoot: string;
     let projectRoot: string;
     let options: BuildExecutorSchema;
@@ -29,27 +29,27 @@ describe('buildProjectWithMake', () => {
 
     it('should call checkCommandExists with "make"', () => {
         runCommandMock.mockReturnValue({ success: true });
-        buildProjectWithMake(workspaceRoot, projectRoot, options);
-        expect(checkCommandExistsMock).toHaveBeenCalledWith('make');
+        buildProjectWithCMake(workspaceRoot, projectRoot, options);
+        expect(checkCommandExistsMock).toHaveBeenCalledWith('cmake');
     });
 
-    it('should error if make is not installed', () => {
+    it('should error if cmake is not installed', () => {
         checkCommandExistsMock.mockImplementation(() => {
             throw new Error();
         });
         expect(() =>
-            buildProjectWithMake(workspaceRoot, projectRoot, options),
+            buildProjectWithCMake(workspaceRoot, projectRoot, options),
         ).toThrowError();
-        expect(checkCommandExistsMock).toHaveBeenCalledWith('make');
+        expect(checkCommandExistsMock).toHaveBeenCalledWith('cmake');
         expect(runCommandMock).not.toHaveBeenCalled();
     });
 
     it('should call runCommand with the correct arguments', () => {
         runCommandMock.mockReturnValue({ success: true });
-        buildProjectWithMake(workspaceRoot, projectRoot, options);
+        buildProjectWithCMake(workspaceRoot, projectRoot, options);
         expect(runCommandMock).toHaveBeenCalledWith(
-            'make',
-            '-C',
+            'cmake',
+            '--build',
             `${workspaceRoot}/dist/${projectRoot}`,
             ...options.args,
         );
@@ -57,7 +57,7 @@ describe('buildProjectWithMake', () => {
 
     it('should return true if runCommand succeeds', () => {
         runCommandMock.mockReturnValue({ success: true });
-        const result = buildProjectWithMake(
+        const result = buildProjectWithCMake(
             workspaceRoot,
             projectRoot,
             options,
@@ -67,7 +67,7 @@ describe('buildProjectWithMake', () => {
 
     it('should return false if runCommand fails', () => {
         runCommandMock.mockReturnValue({ success: false });
-        const result = buildProjectWithMake(
+        const result = buildProjectWithCMake(
             workspaceRoot,
             projectRoot,
             options,
