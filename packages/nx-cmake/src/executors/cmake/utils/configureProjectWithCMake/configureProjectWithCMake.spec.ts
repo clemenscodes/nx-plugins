@@ -1,8 +1,9 @@
 import type { CmakeExecutorSchema } from '../../schema';
+import { configureProjectWithCMake } from './configureProjectWithCMake';
 import * as runCommandModule from '../../../../utils/commandUtils/runCommand/runCommand';
 import * as checkCommandExistsModule from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
-import { configureProjectWithCMake } from './configureProjectWithCMake';
 import * as isWindowsModule from '../../../../utils/pluginUtils/isWindows/isWindows';
+
 describe('buildProjectWithMake', () => {
     let workspaceRoot: string;
     let projectRoot: string;
@@ -98,7 +99,7 @@ describe('buildProjectWithMake', () => {
             '-S',
             `${workspaceRoot}/${projectRoot}`,
             `${workspaceRoot}/dist/${projectRoot}`,
-            '-G "MSYS Makefiles"',
+            '-G "MinGW Makefiles"',
             '-DCMAKE_BUILD_TYPE=Debug',
             ...options.args,
         );
