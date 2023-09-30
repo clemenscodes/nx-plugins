@@ -15,7 +15,7 @@ export const configureProjectWithCMake = (
         '-S',
         `${workspaceRoot}/${projectRoot}`,
         `${workspaceRoot}/dist/${projectRoot}`,
-        ...(isWindows(process.platform) ? ['-G "Unix Makefiles"'] : []),
+        ...(isWindows(process.platform) ? ['-G "MSYS Makefiles"'] : []),
         `-DCMAKE_BUILD_TYPE=${release ? 'Release' : 'Debug'}`,
         ...args,
     );

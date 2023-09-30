@@ -98,7 +98,7 @@ describe('buildProjectWithMake', () => {
             '-S',
             `${workspaceRoot}/${projectRoot}`,
             `${workspaceRoot}/dist/${projectRoot}`,
-            '-G "Unix Makefiles"',
+            '-G "MSYS Makefiles"',
             '-DCMAKE_BUILD_TYPE=Debug',
             ...options.args,
         );
