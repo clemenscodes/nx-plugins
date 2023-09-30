@@ -187,6 +187,10 @@ describe('generateCmakeConfigFiles', () => {
             '    target_include_directories(${PROJECT}_static PUBLIC ${${PROJECT}_INCLUDE_DIR}/include ${WORKSPACE_INCLUDE_DIR})\n' +
             '    target_include_directories(${PROJECT} PUBLIC ${${PROJECT}_INCLUDE_DIR}/src ${WORKSPACE_INCLUDE_DIR})\n' +
             '    target_include_directories(${PROJECT}_static PUBLIC ${${PROJECT}_INCLUDE_DIR}/src ${WORKSPACE_INCLUDE_DIR})\n' +
+            '    if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")\n' +
+            '        set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE CACHE INTERNAL "")\n' +
+            '        set(CMAKE_IMPORT_LIBRARY_PREFIX "" PARENT_SCOPE)\n' +
+            '    endif()\n' +
             'endfunction()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
@@ -301,7 +305,11 @@ describe('generateCmakeConfigFiles', () => {
             '    set(PREFIX "lib")\n' +
             '    set(LIB_WITH_PREFIX ${PREFIX}${LIB})\n' +
             '    add_library(${LIB_WITH_PREFIX} SHARED IMPORTED)\n' +
-            '    set_target_properties(${LIB_WITH_PREFIX} PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_PATH}/${LIB}/${LIB_WITH_PREFIX}.so)\n' +
+            '    if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")\n' +
+            '        set_target_properties(${LIB_WITH_PREFIX} PROPERTIES IMPORTED_IMPLIB ${CMAKE_LIBRARY_PATH}/${LIB}/${LIB_WITH_PREFIX}.dll.a)\n' +
+            '    else()\n' +
+            '        set_target_properties(${LIB_WITH_PREFIX} PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_PATH}/${LIB}/${LIB_WITH_PREFIX}.so)\n' +
+            '    endif()\n' +
             '    target_link_libraries(${PROJECT} ${LIB_WITH_PREFIX})\n' +
             '    set(LIB_DIR ${WORKSPACE_LIBRARY_DIR}/${LIB})\n' +
             '    target_include_directories(${PROJECT} PRIVATE ${LIB_DIR})\n' +

@@ -1,6 +1,6 @@
 import type { BuildExecutorSchema } from './schema';
 import type { ExecutorContext } from '@nx/devkit';
-import { buildProjectWithMake } from './utils/buildProjectWithMake/buildProjectWithMake';
+import { buildProjectWithCMake } from './utils/buildProjectWithCMake/buildProjectWithCMake';
 
 export default async function* runExecutor(
     options: BuildExecutorSchema,
@@ -11,7 +11,7 @@ export default async function* runExecutor(
     const project = projects[projectName];
     const { root: projectRoot } = project;
 
-    const success = buildProjectWithMake(workspaceRoot, projectRoot, options);
+    const success = buildProjectWithCMake(workspaceRoot, projectRoot, options);
 
     yield {
         success,
