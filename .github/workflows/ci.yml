@@ -181,7 +181,7 @@ jobs:
               id: nx_cache
               with:
                   path: ${{ env.NX_CACHE_DIRECTORY }}
-                  key: ${{ matrix.os }}-nx-cache-${{ hashFiles(node_modules/.cache/nx/**) }}
+                  key: ${{ matrix.os }}-nx-cache-${{ hashFiles('node_modules/.cache/nx/**') }}
                   restore-keys: |
                       ${{ matrix.os }}-nx-cache
 
