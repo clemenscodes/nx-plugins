@@ -20,8 +20,7 @@ jobs:
         strategy:
             matrix:
                 os: [ubuntu-latest, macos-latest, windows-latest]
-                node: [16, 18, 20]
-        name: Deps ${{ matrix.os }}/node ${{ matrix.node }}
+        name: Deps [${{ matrix.os }}]
         permissions:
             contents: read
             actions: read
@@ -53,7 +52,7 @@ jobs:
             - name: Install Node
               uses: actions/setup-node@v3
               with:
-                  node-version: ${{ matrix.node }}
+                  node-version: lts
                   cache: 'pnpm'
 
             - name: Cache node_modules
@@ -62,7 +61,7 @@ jobs:
               with:
                   lookup-only: true
                   path: '**/node_modules'
-                  key: ${{ matrix.os }}-node_modules-${{ matrix.node}}
+                  key: ${{ matrix.os }}-node_modules
 
             - name: Install dependencies
               if: steps.cache.outputs.cache-hit != 'true'
