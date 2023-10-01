@@ -100,7 +100,9 @@ jobs:
             run:
                 shell: bash
         strategy:
-            matrix: ${{fromJson(needs.set-agents.outputs.matrix)}}
+            matrix:
+                runner:
+                    - ${{fromJson(needs.set-agents.outputs.matrix)}}
         steps:
             - name: Checkout [Pull Request]
               uses: actions/checkout@v3
