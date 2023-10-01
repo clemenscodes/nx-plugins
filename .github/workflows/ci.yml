@@ -52,7 +52,7 @@ jobs:
                   which gcc-11 ||
                   gcc-11 --version ||
                   which gcc-13 ||
-                  gcc-13 --version ||
+                  gcc-13 --version
 
             - name: Derive SHAs
               uses: nrwl/nx-set-shas@v3
