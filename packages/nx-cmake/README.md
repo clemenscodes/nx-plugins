@@ -67,7 +67,13 @@ The following tools need to be installed for this plugin to work correctly:
 
 NOTE: It is necessary to install a MinGW-w64-ucrt-posix toolchain.
 
-The latest version can be downloaded from [winlibs](https://winlibs.com).
+Using chocolatey:
+
+```shell
+choco install mingw
+```
+
+Alternatively, the latest version can also be downloaded from [winlibs](https://winlibs.com).
 
 The recommended release can be downloaded [here](https://github.com/brechtsanders/winlibs_mingw/releases/download/13.2.0-16.0.6-11.0.0-ucrt-r1/winlibs-x86_64-posix-seh-gcc-13.2.0-llvm-16.0.6-mingw-w64ucrt-11.0.0-r1.zip).
 

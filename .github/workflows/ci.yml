@@ -40,6 +40,15 @@ jobs:
               with:
                   fetch-depth: 0
 
+            - name: Check format
+              if: matrix.os == 'macos-latest''
+              run: |
+                  which gcc
+                  which gcc-8
+                  which gcc-10
+                  which gcc-11
+                  which gcc-13
+
             - name: Derive SHAs
               uses: nrwl/nx-set-shas@v3
 
@@ -157,7 +166,7 @@ jobs:
             - name: Install MinGW-w64 (windows-latest)
               if: matrix.os == 'windows-latest'
               run: |
-                  choco install mingw
+                  choco upgrade mingw
 
             - name: Run Agent
               run: npx nx-cloud start-agent
@@ -231,7 +240,7 @@ jobs:
             - name: Install MinGW-w64 (windows-latest)
               if: matrix.os == 'windows-latest'
               run: |
-                  choco install mingw
+                  choco upgrade mingw
 
             - name: Start Agents
               if: needs.agents.result != 'failure' &&
