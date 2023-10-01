@@ -58,7 +58,7 @@ describe('generateRootConfig', () => {
             `set(CMAKE_LIBRARY_PATH \${WORKSPACE_DIR}/dist/${options.libsDir})\n` +
             'set_global_settings()\n' +
             'if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")\n' +
-            '    set(CMAKE_C_COMPILER gcc-13)\n' +
+            '    set(CMAKE_C_COMPILER /usr/local/bin/gcc-13)\n' +
             '    set(CMAKE_CXX_COMPILER ${CMAKE_C_COMPILER})\n' +
             'else()\n' +
             '    set(CMAKE_C_COMPILER gcc)\n' +

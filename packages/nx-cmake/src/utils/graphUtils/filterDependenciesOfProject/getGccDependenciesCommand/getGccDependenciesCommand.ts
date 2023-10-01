@@ -2,6 +2,7 @@ import type { CTag, WorkspaceLayout } from '../../../../models/types';
 import { getCmockaInclude } from '../getCmockaInclude/getCmockaInclude';
 import { getGtestInclude } from '../getGtestInclude/getGtestInclude';
 import { getWorkspaceIncludeDir } from '../../../pluginUtils/getWorkspaceIncludeDir/getWorkspaceIncludeDir';
+import { getCompiler } from '../../../pluginUtils/getCompiler/getCompiler';
 
 export const getGccDependenciesCommand = (
     fileName: string,
@@ -14,9 +15,9 @@ export const getGccDependenciesCommand = (
     const gtestInclude = getGtestInclude(workspaceLayout);
     const cmockaInclude = getCmockaInclude(workspaceLayout);
     const language = tag === 'cpp' ? 'c++' : 'c';
-    const gcc = process.platform === 'darwin' ? 'gcc-13' : 'gcc';
+    const cc = getCompiler();
     const cmd =
-        `${gcc} -x ${language} -MM ${fileName}` +
+        `${cc} -x ${language} -MM ${fileName}` +
         ` -I ${projectRoot}` +
         ` -I ${projectRoot}/include` +
         ` -I ${projectRoot}/src` +
