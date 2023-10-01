@@ -129,8 +129,12 @@ describe('generateCmakeConfigFiles', () => {
             'endfunction()\n' +
             '\n' +
             'function(set_compiler_settings)\n' +
-            '    set_c_flags()\n' +
-            '    set_cxx_flags()\n' +
+            '    if(CMAKE_C_COMPILER_ID)\n' +
+            '        set_c_flags()\n' +
+            '    endif()\n' +
+            '    if(CMAKE_CXX_COMPILER_ID)\n' +
+            '        set_cxx_flags()\n' +
+            '    endif()\n' +
             '    set(CMAKE_EXE_LINKER_FLAGS    "-Wl,--as-needed ${CMAKE_EXE_LINKER_FLAGS}")\n' +
             '    set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--as-needed ${CMAKE_SHARED_LINKER_FLAGS}")\n' +
             'endfunction()\n' +

@@ -64,8 +64,8 @@ describe('generateBinFiles', () => {
             'include("../../CMakeLists.txt")\n' +
             '\n' +
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
-            'project(test CXX)\n' +
-            'set_binary_settings(${CMAKE_PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})\n';
+            'set_binary_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n' +
+            'project(test CXX)\n';
         expectedIncludeFile =
             '#ifndef _TEST_TEST\n' + '#define _TEST_TEST\n' + '\n' + '#endif\n';
         expectedReadMeFile =
@@ -118,8 +118,8 @@ describe('generateBinFiles', () => {
             'include("../../CMakeLists.txt")\n' +
             '\n' +
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
-            'project(test C)\n' +
-            'set_binary_settings(${CMAKE_PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})\n';
+            'set_binary_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n' +
+            'project(test C)\n';
         expectedReadMeFile =
             '# test\n' +
             '\n' +
