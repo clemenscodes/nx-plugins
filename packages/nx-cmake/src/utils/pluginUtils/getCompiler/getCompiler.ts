@@ -1,5 +1,13 @@
 import { isDarwin } from '../isDarwin/isDarwin';
+import { isWindows } from '../isWindows/isWindows';
+import { DARWIN_GCC, WINDOWS_GCC, LINUX_GCC } from '../../../config/compiler';
 
 export const getCompiler = () => {
-    return isDarwin(process.platform) ? '/usr/local/bin/gcc-13' : 'gcc';
+    if (isDarwin(process.platform)) {
+        return DARWIN_GCC;
+    }
+    if (isWindows(process.platform)) {
+        return WINDOWS_GCC;
+    }
+    return LINUX_GCC;
 };
