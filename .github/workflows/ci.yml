@@ -153,6 +153,10 @@ jobs:
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
                   ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
 
+            - name: Uninstall gcc (windows-latest)
+              if: matrix.os == 'windows-latest'
+              run: choco uninstall gcc
+
             - name: Install MinGW-w64 (windows-latest)
               if: matrix.os == 'windows-latest'
               uses: msys2/setup-msys2@v2
@@ -230,6 +234,10 @@ jobs:
                   brew install llvm gdb
                   ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
+
+            - name: Uninstall gcc (windows-latest)
+              if: matrix.os == 'windows-latest'
+              run: choco uninstall gcc
 
             - name: Install MinGW-w64 (windows-latest)
               if: matrix.os == 'windows-latest'
