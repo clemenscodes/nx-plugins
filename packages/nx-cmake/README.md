@@ -53,12 +53,12 @@ This allows for efficient caching mechanisms and parallelization of tasks.
 
 The following tools need to be installed for this plugin to work correctly:
 
-- nx 16.9+ (this plugin uses the latest Nx v2 plugin API)
-- node lts
+- nx v16.9+ (this plugin uses the latest Nx v2 plugin API)
+- node v18.18+
 - cmake v3.21+
 - ctest
 - make
-- gcc (posix threads, mutex support is required)
+- gcc v13+
 - gdb
 - clang-format
 - clang-tidy

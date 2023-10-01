@@ -95,7 +95,7 @@ describe('generateCmakeConfigFiles', () => {
         const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'function(set_c_flags)\n' +
-            '    if (CMAKE_C_COMPILER_ID MATCHES "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "GNU")\n' +
+            '    if (CMAKE_C_COMPILER_ID STREQUAL "GNU")\n' +
             '        string(CONCAT FLAGS\n' +
             '        " -Wall"\n' +
             '        " -Wextra"\n' +
@@ -105,6 +105,9 @@ describe('generateCmakeConfigFiles', () => {
             '        " -MP"\n' +
             '        )\n' +
             '        set(CMAKE_C_FLAGS ${FLAGS} CACHE INTERNAL "")\n' +
+            '    else()\n' +
+            '        message(FATAL_ERROR "Not using gcc, but only gcc is supported")\n' +
+            '        return()\n' +
             '    endif ()\n' +
             'endfunction()\n' +
             '\n' +
@@ -120,6 +123,9 @@ describe('generateCmakeConfigFiles', () => {
             '        " -std=c++17"\n' +
             '        )\n' +
             '        set(CMAKE_CXX_FLAGS ${FLAGS} CACHE INTERNAL "")\n' +
+            '    else()\n' +
+            '        message(FATAL_ERROR "Not using gcc, but only gcc is supported")\n' +
+            '        return()\n' +
             '    endif ()\n' +
             'endfunction()\n' +
             '\n' +
@@ -142,8 +148,13 @@ describe('generateCmakeConfigFiles', () => {
         const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'function(set_compiler)\n' +
-            '    set(CMAKE_C_COMPILER gcc CACHE INTERNAL "")\n' +
-            '    set(CMAKE_CXX_COMPILER ${CMAKE_C_COMPILER} CACHE INTERNAL "")\n' +
+            '    if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")\n' +
+            '        set(CMAKE_C_COMPILER gcc-13 CACHE INTERNAL "")\n' +
+            '        set(CMAKE_CXX_COMPILER ${CMAKE_C_COMPILER} CACHE INTERNAL "")\n' +
+            '    else()\n' +
+            '        set(CMAKE_C_COMPILER gcc CACHE INTERNAL "")\n' +
+            '        set(CMAKE_CXX_COMPILER ${CMAKE_C_COMPILER} CACHE INTERNAL "")\n' +
+            '    endif()\n' +
             'endfunction()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
