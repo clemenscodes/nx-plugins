@@ -156,8 +156,7 @@ jobs:
             - name: Install MinGW-w64 (windows-latest)
               if: matrix.os == 'windows-latest'
               run: |
-                  choco upgrade mingw
-                  gcc --version
+                  echo %PATH:;=&echo.%
 
             - name: Run Agent
               run: npx nx-cloud start-agent
@@ -232,9 +231,7 @@ jobs:
             - name: Install MinGW-w64 (windows-latest)
               if: matrix.os == 'windows-latest'
               run: |
-                  gcc --version
-                  choco upgrade mingw
-                  gcc --version
+                  echo %PATH:;=&echo.%
 
             - name: Start Agents
               if: needs.agents.result != 'failure' &&
