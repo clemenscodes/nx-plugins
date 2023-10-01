@@ -1,7 +1,7 @@
 {
     "name": "nx-cmake",
     "description": "An Nx plugin to add CMake, C and C++ support for Nx workspaces",
-    "version": "0.3.8",
+    "version": "0.3.9",
     "license": "MIT",
     "type": "commonjs",
     "main": "./src/index.js",
@@ -13,11 +13,6 @@
         "name": "Clemens Horn",
         "url": "https://clemenshorn.com"
     },
-    "os": [
-        "win32",
-        "darwin",
-        "linux"
-    ],
     "keywords": [
         "nx",
         "monorepo",
