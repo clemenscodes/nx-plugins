@@ -57,16 +57,16 @@ describe('generateRootConfig', () => {
             'set(CMAKE_INCLUDE_PATH ${WORKSPACE_INCLUDE_DIR})\n' +
             `set(CMAKE_LIBRARY_PATH \${WORKSPACE_DIR}/dist/${options.libsDir})\n` +
             'set_global_settings()\n' +
-            'if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")\n' +
-            '    set(CMAKE_FORCE_C_COMPILER /usr/local/bin/gcc-13 GNU)\n' +
-            '    set(CMAKE_FORCE_CXX_COMPILER ${CMAKE_C_COMPILER} GNU)\n' +
-            'elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")\n' +
-            '    set(CMAKE_FORCE_C_COMPILER C:/msys64/ucrt64/bin/gcc.exe GNU)\n' +
-            '    set(CMAKE_FORCE_CXX_COMPILER ${CMAKE_C_COMPILER} GNU)\n' +
-            'else()\n' +
-            '    set(CMAKE_FORCE_C_COMPILER gcc GNU)\n' +
-            '    set(CMAKE_FORCE_CXX_COMPILER ${CMAKE_C_COMPILER} GNU)\n' +
-            'endif()\n';
+            '#if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")\n' +
+            '#    set(CMAKE_FORCE_C_COMPILER /usr/local/bin/gcc-13 GNU)\n' +
+            '#    set(CMAKE_FORCE_CXX_COMPILER ${CMAKE_C_COMPILER} GNU)\n' +
+            '#elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")\n' +
+            '#    set(CMAKE_FORCE_C_COMPILER C:/MinGW/mingw64/bin/gcc.exe GNU)\n' +
+            '#    set(CMAKE_FORCE_CXX_COMPILER ${CMAKE_C_COMPILER} GNU)\n' +
+            '#else()\n' +
+            '#    set(CMAKE_FORCE_C_COMPILER gcc GNU)\n' +
+            '#    set(CMAKE_FORCE_CXX_COMPILER ${CMAKE_C_COMPILER} GNU)\n' +
+            '#endif()\n';
         expect(readRootConfig).toBe(normalizeLineEndings(expectedRootConfig));
     });
 });
