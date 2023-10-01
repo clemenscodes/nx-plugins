@@ -1,5 +1,3 @@
-include(settings/set_compiler)
-
 function(set_c_flags)
     if (CMAKE_C_COMPILER_ID STREQUAL "GNU")
         string(CONCAT FLAGS
@@ -36,7 +34,6 @@ function(set_cxx_flags)
 endfunction()
 
 function(set_compiler_settings)
-    set_compiler()
     set_c_flags()
     set_cxx_flags()
     set(CMAKE_EXE_LINKER_FLAGS    "-Wl,--as-needed ${CMAKE_EXE_LINKER_FLAGS}")

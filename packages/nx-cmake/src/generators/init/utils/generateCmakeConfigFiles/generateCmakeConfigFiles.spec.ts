@@ -23,7 +23,6 @@ describe('generateCmakeConfigFiles', () => {
         };
         expectedCmakeSettingsFiles = [
             'set_binary_settings.cmake',
-            'set_compiler.cmake',
             'set_compiler_settings.cmake',
             'set_global_settings.cmake',
             'set_library_settings.cmake',
@@ -94,8 +93,6 @@ describe('generateCmakeConfigFiles', () => {
         const file = `${options.cmakeConfigDir}/settings/set_compiler_settings.cmake`;
         const readFile = readFileWithTree(tree, file);
         const expectedFile =
-            'include(settings/set_compiler)\n' +
-            '\n' +
             'function(set_c_flags)\n' +
             '    if (CMAKE_C_COMPILER_ID STREQUAL "GNU")\n' +
             '        string(CONCAT FLAGS\n' +
@@ -132,7 +129,6 @@ describe('generateCmakeConfigFiles', () => {
             'endfunction()\n' +
             '\n' +
             'function(set_compiler_settings)\n' +
-            '    set_compiler()\n' +
             '    set_c_flags()\n' +
             '    set_cxx_flags()\n' +
             '    set(CMAKE_EXE_LINKER_FLAGS    "-Wl,--as-needed ${CMAKE_EXE_LINKER_FLAGS}")\n' +
@@ -142,23 +138,6 @@ describe('generateCmakeConfigFiles', () => {
             'if(DEFINED CUSTOM_C_FLAGS)\n' +
             '    set(CMAKE_CXX_FLAGS ${CUSTOM_C_FLAGS} CACHE STRING "" FORCE)\n' +
             'endif()\n';
-        expect(readFile).toStrictEqual(expectedFile);
-    });
-
-    it('should generate cmake/settings/set_compiler.cmake correctly', async () => {
-        generateCmakeConfigFiles(tree, options);
-        const file = `${options.cmakeConfigDir}/settings/set_compiler.cmake`;
-        const readFile = readFileWithTree(tree, file);
-        const expectedFile =
-            'function(set_compiler)\n' +
-            '    if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")\n' +
-            '        set(CMAKE_C_COMPILER gcc-13 PARENT_SCOPE)\n' +
-            '        set(CMAKE_CXX_COMPILER ${CMAKE_C_COMPILER} PARENT_SCOPE)\n' +
-            '    else()\n' +
-            '        set(CMAKE_C_COMPILER gcc PARENT_SCOPE)\n' +
-            '        set(CMAKE_CXX_COMPILER ${CMAKE_C_COMPILER} PARENT_SCOPE)\n' +
-            '    endif()\n' +
-            'endfunction()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
 
