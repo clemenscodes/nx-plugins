@@ -95,7 +95,7 @@ export default async () => {
     global.stopLocalRegistry = await startLocalRegistry({
         localRegistryTarget,
         storage,
-        verbose: true,
+        verbose: false,
     });
     execSync('pnpm nx run-many --targets publish --ver 1.0.0 --tag e2e', {
         env: {

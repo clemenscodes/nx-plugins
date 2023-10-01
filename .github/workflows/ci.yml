@@ -140,11 +140,23 @@ jobs:
             - name: Install dependencies
               run: pnpm install --no-frozen-lockfile
 
-            - name: Install gdb
+            - name: Install gdb (ubuntu-latest)
               if: matrix.os == 'ubuntu-latest'
               run: |
                   sudo apt-get update -y
                   sudo apt-get install gdb -y
+
+            - name: Install clang-tidy (macos-latest)
+              if: matrix.os == 'macos-latest'
+              run: |
+                  brew install llvm
+                  ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
+
+            - name: Install MinGW-w64 (windows-latest)
+              if: matrix.os == 'windows-latest'
+              uses: egor-tensin/setup-mingw@v2
+              with:
+                  platform: x64
 
             - name: Run Agent
               run: npx nx-cloud start-agent
@@ -203,11 +215,17 @@ jobs:
             - name: Install dependencies
               run: pnpm install --no-frozen-lockfile
 
-            - name: Install gdb
+            - name: Install gdb (ubuntu-latest)
               if: matrix.os == 'ubuntu-latest'
               run: |
                   sudo apt-get update -y
                   sudo apt-get install gdb -y
+
+            - name: Install clang-tidy (macos-latest)
+              if: matrix.os == 'macos-latest'
+              run: |
+                  brew install llvm
+                  ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
 
             - name: Start Agents
               if: needs.agents.result != 'failure' &&
