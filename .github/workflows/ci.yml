@@ -55,14 +55,6 @@ jobs:
                   node-version: lts/*
                   cache: 'pnpm'
 
-            - name: Cache node_modules
-              id: cache-modules
-              uses: actions/cache@v3
-              with:
-                  lookup-only: true
-                  path: '**/node_modules'
-                  key: ${{ matrix.os }}-node_modules
-
             - name: Install dependencies
               if: steps.cache.outputs.cache-hit != 'true'
               run: pnpm install --no-frozen-lockfile
@@ -127,21 +119,13 @@ jobs:
               id: pnpm-install
               with:
                   version: latest
-                  run_install: false
+                  run_install: true
 
             - name: Install Node
               uses: actions/setup-node@v3
               with:
                   node-version: lts/*
                   cache: 'pnpm'
-
-            - name: Cache node_modules
-              id: cache-modules
-              uses: actions/cache@v3
-              with:
-                  lookup-only: true
-                  path: '**/node_modules'
-                  key: ${{ matrix.os }}-node_modules
 
             - name: Install gdb
               if: matrix.os == 'ubuntu-latest'
@@ -179,36 +163,19 @@ jobs:
             - name: Install Node
               uses: actions/setup-node@v3
               with:
-                  node-version: 16
+                  node-version: lts/*
 
             - name: Install pnpm
               uses: pnpm/action-setup@v2
               id: pnpm-install
               with:
                   version: latest
-                  run_install: false
+                  run_install: true
 
             - name: Install gdb
               run: |
                   sudo apt-get update -y
                   sudo apt-get install gdb -y
-
-            - name: Get pnpm store directory
-              id: pnpm-cache
-              shell: bash
-              run: |
-                  echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-            - name: Restore pnpm cache
-              uses: actions/cache/restore@v3
-              id: cache
-              with:
-                  path: |
-                      ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-                      node_modules/
-                  key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-                  restore-keys: |
-                      ${{ runner.os }}-pnpm-store-
 
             - name: Start Agents
               if: needs.agents.result != 'failure' &&
@@ -288,7 +255,7 @@ jobs:
                   echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
             - name: Restore pnpm cache
-              uses: actions/cache/restore@v3
+              uses: actions/cache@v3
               if: startsWith(github.ref, 'refs/heads/main')
               id: cache
               with:
