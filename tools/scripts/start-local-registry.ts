@@ -32,7 +32,13 @@ export function startLocalRegistry({
                 ),
                 ...(storage ? [`--storage`, storage] : []),
             ],
-            { stdio: 'pipe' },
+            {
+                stdio: 'pipe',
+                env: {
+                    ...process.env,
+                    NX_CLOUD_DISTRIBUTED_EXECUTION: 'false',
+                },
+            },
         );
 
         const listener = (data) => {
@@ -92,7 +98,10 @@ export default async () => {
         verbose: true,
     });
     execSync('pnpm nx run-many --targets publish --ver 1.0.0 --tag e2e', {
-        env: process.env,
+        env: {
+            ...process.env,
+            NX_CLOUD_DISTRIBUTED_EXECUTION: 'false',
+        },
         stdio: 'inherit',
     });
 };
