@@ -119,13 +119,16 @@ jobs:
               id: pnpm-install
               with:
                   version: latest
-                  run_install: true
+                  run_install: false
 
             - name: Install Node
               uses: actions/setup-node@v3
               with:
                   node-version: lts/*
                   cache: 'pnpm'
+
+            - name: Install dependencies
+              run: pnpm install --no-frozen-lockfile
 
             - name: Install gdb
               if: matrix.os == 'ubuntu-latest'
@@ -137,11 +140,14 @@ jobs:
               run: npx nx-cloud start-agent
 
     main:
-        name: Main Job
+        strategy:
+            matrix:
+                os: [ubuntu-latest, macos-latest, windows-latest]
+        name: Main Job [${{ matrix.os }}]
         permissions:
             contents: read
             actions: read
-        runs-on: ubuntu-latest
+        runs-on: ${{ matrix.os }}
         needs: [set-agents, deps]
         steps:
             - name: Checkout [Pull Request]
@@ -160,19 +166,23 @@ jobs:
             - name: Derive SHAs
               uses: nrwl/nx-set-shas@v3
 
-            - name: Install Node
-              uses: actions/setup-node@v3
-              with:
-                  node-version: lts/*
-
             - name: Install pnpm
               uses: pnpm/action-setup@v2
               id: pnpm-install
               with:
                   version: latest
-                  run_install: true
+                  run_install: false
+
+            - name: Install Node
+              uses: actions/setup-node@v3
+              with:
+                  node-version: lts/*
+
+            - name: Install dependencies
+              run: pnpm install --no-frozen-lockfile
 
             - name: Install gdb
+              if: matrix.os == 'ubuntu-latest'
               run: |
                   sudo apt-get update -y
                   sudo apt-get install gdb -y
