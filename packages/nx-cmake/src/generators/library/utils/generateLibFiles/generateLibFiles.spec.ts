@@ -56,7 +56,8 @@ describe('generateLibFiles', () => {
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
             'set_project_settings(libtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(libtest CXX)\n' +
-            'set_library_settings(libtest ${CMAKE_CURRENT_SOURCE_DIR})\n';
+            'set_library_settings(libtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
+            'print_variables()\n';
         expectedReadMeFile =
             '# libtest\n' +
             '\n' +
@@ -117,7 +118,8 @@ describe('generateLibFiles', () => {
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
             'set_project_settings(libtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(libtest C)\n' +
-            'set_library_settings(libtest ${CMAKE_CURRENT_SOURCE_DIR})\n';
+            'set_library_settings(libtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
+            'print_variables()\n';
         expectedReadMeFile =
             '# libtest\n' +
             '\n' +

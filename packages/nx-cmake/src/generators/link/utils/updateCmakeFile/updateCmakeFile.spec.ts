@@ -37,7 +37,8 @@ describe('updateCmakeFile', () => {
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
             'set_project_settings(liblink ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(liblink CXX)\n' +
-            'set_library_settings(liblink ${CMAKE_CURRENT_SOURCE_DIR})\n';
+            'set_library_settings(liblink ${CMAKE_CURRENT_SOURCE_DIR})\n' +
+            'print_variables()\n';
         expectedUpdatedCmakeFileContent =
             'include("../../CMakeLists.txt")\n' +
             '\n' +
@@ -45,6 +46,7 @@ describe('updateCmakeFile', () => {
             'set_project_settings(liblink ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(liblink CXX)\n' +
             'set_library_settings(liblink ${CMAKE_CURRENT_SOURCE_DIR})\n' +
+            'print_variables()\n' +
             'link_shared_library(${CMAKE_PROJECT_NAME} target)\n';
         libOptions.name = 'target';
         await libGenerator(tree, libOptions);
