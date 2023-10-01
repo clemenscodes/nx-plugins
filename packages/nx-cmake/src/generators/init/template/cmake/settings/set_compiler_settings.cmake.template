@@ -1,5 +1,5 @@
 function(set_c_flags)
-    if (CMAKE_C_COMPILER_ID STREQUAL "GNU")
+    if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
         string(CONCAT FLAGS
         " -Wall"
         " -Wextra"
@@ -10,13 +10,13 @@ function(set_c_flags)
         )
         set(CMAKE_C_FLAGS ${FLAGS} CACHE INTERNAL "")
     else()
-        message(FATAL_ERROR "Not using gcc, but only gcc is supported")
+        message(FATAL_ERROR "Not using gcc, but only gcc is supported. compiler id: ${CMAKE_C_COMPILER_ID}")
         return()
     endif ()
 endfunction()
 
 function(set_cxx_flags)
-    if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
         string(CONCAT FLAGS
         " -Wall"
         " -Wextra"
@@ -28,7 +28,7 @@ function(set_cxx_flags)
         )
         set(CMAKE_CXX_FLAGS ${FLAGS} CACHE INTERNAL "")
     else()
-        message(FATAL_ERROR "Not using gcc, but only gcc is supported")
+        message(FATAL_ERROR "Not using gcc, but only gcc is supported. compiler id: ${CMAKE_CXX_COMPILER_ID}")
         return()
     endif ()
 endfunction()

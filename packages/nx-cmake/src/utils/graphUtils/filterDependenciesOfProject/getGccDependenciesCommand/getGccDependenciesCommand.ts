@@ -13,9 +13,10 @@ export const getGccDependenciesCommand = (
     const includeDir = getWorkspaceIncludeDir();
     const gtestInclude = getGtestInclude(workspaceLayout);
     const cmockaInclude = getCmockaInclude(workspaceLayout);
-    const language = tag === 'cpp' ? 'c++ -std=c++14' : 'c';
+    const language = tag === 'cpp' ? 'c++' : 'c';
+    const gcc = process.platform === 'darwin' ? 'gcc-13' : 'gcc';
     const cmd =
-        `gcc -x ${language} -MM ${fileName}` +
+        `${gcc} -x ${language} -MM ${fileName}` +
         ` -I ${projectRoot}` +
         ` -I ${projectRoot}/include` +
         ` -I ${projectRoot}/src` +
