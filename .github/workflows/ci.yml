@@ -43,6 +43,7 @@ jobs:
             - name: Check format
               if: matrix.os == 'macos-latest'
               run: |
+                  set +e
                   which gcc;
                   gcc --version;
                   which gcc-8;
@@ -54,6 +55,7 @@ jobs:
                   which gcc-13;
                   gcc-13 --version;
                   true
+                  set -e
 
             - name: Derive SHAs
               uses: nrwl/nx-set-shas@v3
