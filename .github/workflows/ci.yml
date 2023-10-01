@@ -90,9 +90,9 @@ jobs:
                   echo "matrix=$AGENTS_JSON_ARRAY" >> $GITHUB_OUTPUT
 
     agents:
-        name: Agent ${{ matrix.agent }}
+        name: Agent ${{ matrix.agent }} [${{ matrix.os }}]
         needs: [set-agents, deps]
-        runs-on: ubuntu-latest
+        runs-on: ${{ matrix.os }}
         permissions:
             contents: read
             actions: read
@@ -100,9 +100,7 @@ jobs:
             run:
                 shell: bash
         strategy:
-            matrix:
-                agent:
-                    - ${{fromJson(needs.set-agents.outputs.matrix)}}
+            matrix: ${{fromJson(needs.set-agents.outputs.matrix)}}
         steps:
             - name: Checkout [Pull Request]
               uses: actions/checkout@v3
@@ -120,11 +118,6 @@ jobs:
             - name: Derive SHAs
               uses: nrwl/nx-set-shas@v3
 
-            - name: Install Node
-              uses: actions/setup-node@v3
-              with:
-                  node-version: 16
-
             - name: Install pnpm
               uses: pnpm/action-setup@v2
               id: pnpm-install
@@ -132,27 +125,25 @@ jobs:
                   version: latest
                   run_install: false
 
+            - name: Install Node
+              uses: actions/setup-node@v3
+              with:
+                  node-version: lts/*
+                  cache: 'pnpm'
+
+            - name: Cache node_modules
+              id: cache-modules
+              uses: actions/cache@v3
+              with:
+                  lookup-only: true
+                  path: '**/node_modules'
+                  key: ${{ matrix.os }}-node_modules
+
             - name: Install gdb
+              if: matrix.os == 'ubuntu-latest'
               run: |
                   sudo apt-get update -y
                   sudo apt-get install gdb -y
-
-            - name: Get pnpm store directory
-              id: pnpm-cache
-              shell: bash
-              run: |
-                  echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-            - name: Restore pnpm cache
-              uses: actions/cache/restore@v3
-              id: cache
-              with:
-                  path: |
-                      ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-                      node_modules/
-                  key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-                  restore-keys: |
-                      ${{ runner.os }}-pnpm-store-
 
             - name: Run Agent
               run: npx nx-cloud start-agent
