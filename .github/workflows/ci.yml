@@ -40,10 +40,6 @@ jobs:
               with:
                   fetch-depth: 0
 
-            - name: Configure Git for line endings
-              run: |
-                  git config --global core.autocrlf input
-
             - name: Derive SHAs
               uses: nrwl/nx-set-shas@v3
 
