@@ -156,7 +156,7 @@ jobs:
             - name: Install MinGW-w64 (windows-latest)
               if: matrix.os == 'windows-latest'
               run: |
-                  echo %PATH:;=&echo.%
+                  $Env:Path
 
             - name: Run Agent
               run: npx nx-cloud start-agent
@@ -231,7 +231,7 @@ jobs:
             - name: Install MinGW-w64 (windows-latest)
               if: matrix.os == 'windows-latest'
               run: |
-                  echo %PATH:;=&echo.%
+                  $Env:Path
 
             - name: Start Agents
               if: needs.agents.result != 'failure' &&

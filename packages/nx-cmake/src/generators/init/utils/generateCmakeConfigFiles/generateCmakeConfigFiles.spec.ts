@@ -276,7 +276,11 @@ describe('generateCmakeConfigFiles', () => {
             'function(link_cmocka PROJECT)\n' +
             '    install_cmocka()\n' +
             '    include_directories(${cmocka_SOURCE_DIR}/include)\n' +
-            '    target_link_libraries(${PROJECT} cmocka-static -Wl,--copy-dt-needed-entries)\n' +
+            '    if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")\n' +
+            '        target_link_libraries(${PROJECT} cmocka-static -Wl,-export_dynamic)\n' +
+            '    else()\n' +
+            '        target_link_libraries(${PROJECT} cmocka-static -Wl,--copy-dt-needed-entries)\n' +
+            '    endif()\n' +
             '    add_test(UnitTests ${PROJECT})\n' +
             'endfunction()\n';
         expect(readFile).toStrictEqual(expectedFile);
@@ -292,7 +296,11 @@ describe('generateCmakeConfigFiles', () => {
             'function(link_gtest PROJECT)\n' +
             '    install_gtest()\n' +
             '    include_directories(${googletest_SOURCE_DIR}/googletest/include/gtest)\n' +
-            '    target_link_libraries(${PROJECT} GTest::gtest_main -Wl,--copy-dt-needed-entries)\n' +
+            '    if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")\n' +
+            '        target_link_libraries(${PROJECT} GTest::gtest_main -Wl,-export_dynamic)\n' +
+            '    else()\n' +
+            '        target_link_libraries(${PROJECT} GTest::gtest_main -Wl,--copy-dt-needed-entries)\n' +
+            '    endif()\n' +
             'endfunction()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
