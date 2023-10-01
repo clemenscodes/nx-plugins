@@ -153,6 +153,7 @@ jobs:
         strategy:
             matrix:
                 os: [ubuntu-latest, macos-latest, windows-latest]
+            fail-fast: false
         name: Main Job [${{ matrix.os }}]
         env:
             NX_CACHE_DIRECTORY: node_modules/.cache/nx/${{ matrix.os }}
@@ -219,16 +220,7 @@ jobs:
               if: needs.agents.result != 'failure' &&
                   needs.agents.result != 'cancelled' &&
                   needs.agents.result != 'skipped'
-              run: |
-                  pnpm nx affected \
-                      --nx-bail \
-                      --base=$NX_BASE \
-                      --head=$NX_HEAD \
-                      --configuration=ci \
-                      --output-style=stream \
-                      --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT \
-                      --no-cloud \
-                      -t build lint test e2e
+              run: pnpm nx affected --nx-bail --base=$NX_BASE --head=$NX_HEAD --configuration=ci --output-style=stream --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT --no-cloud -t build lint test e2e
 
             - name: Stop Agents
               if: always()
