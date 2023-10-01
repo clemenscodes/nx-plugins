@@ -3,7 +3,7 @@ import { configureProjectWithCMake } from './configureProjectWithCMake';
 import * as runCommandModule from '../../../../utils/commandUtils/runCommand/runCommand';
 import * as checkCommandExistsModule from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
 import * as isWindowsModule from '../../../../utils/pluginUtils/isWindows/isWindows';
-
+import * as getCompilerModule from '../../../../utils/pluginUtils/getCompiler/getCompiler';
 describe('buildProjectWithMake', () => {
     let workspaceRoot: string;
     let projectRoot: string;
@@ -11,6 +11,7 @@ describe('buildProjectWithMake', () => {
     let runCommandMock: jest.SpyInstance;
     let checkCommandExistsMock: jest.SpyInstance;
     let isWindowsMock: jest.SpyInstance;
+    let getCompilerMock: jest.SpyInstance;
 
     beforeEach(() => {
         workspaceRoot = 'workspaceRoot';
@@ -27,6 +28,9 @@ describe('buildProjectWithMake', () => {
         isWindowsMock = jest
             .spyOn(isWindowsModule, 'isWindows')
             .mockReturnValue(false);
+        getCompilerMock = jest
+            .spyOn(getCompilerModule, 'getCompiler')
+            .mockReturnValue('gcc');
     });
 
     afterEach(() => {
@@ -47,6 +51,8 @@ describe('buildProjectWithMake', () => {
             `${workspaceRoot}/${projectRoot}`,
             `${workspaceRoot}/dist/${projectRoot}`,
             '-G "Unix Makefiles"',
+            '-DCMAKE_C_COMPILER=gcc',
+            '-DCMAKE_CXX_COMPILER=gcc',
             '-DCMAKE_BUILD_TYPE=Debug',
             ...options.args,
         );
@@ -80,6 +86,8 @@ describe('buildProjectWithMake', () => {
             `${workspaceRoot}/${projectRoot}`,
             `${workspaceRoot}/dist/${projectRoot}`,
             '-G "Unix Makefiles"',
+            '-DCMAKE_C_COMPILER=gcc',
+            '-DCMAKE_CXX_COMPILER=gcc',
             '-DCMAKE_BUILD_TYPE=Debug',
             '--arg1',
             '--arg2',
@@ -89,6 +97,7 @@ describe('buildProjectWithMake', () => {
 
     it('should return false if cmake failed', () => {
         isWindowsMock.mockReturnValue(true);
+        getCompilerMock.mockReturnValueOnce('gcc-13');
         runCommandMock.mockReturnValue({ success: false });
         const result = configureProjectWithCMake(
             workspaceRoot,
@@ -102,6 +111,8 @@ describe('buildProjectWithMake', () => {
             `${workspaceRoot}/${projectRoot}`,
             `${workspaceRoot}/dist/${projectRoot}`,
             '-G "MinGW Makefiles"',
+            '-DCMAKE_C_COMPILER=gcc-13',
+            '-DCMAKE_CXX_COMPILER=gcc-13',
             '-DCMAKE_BUILD_TYPE=Debug',
             ...options.args,
         );

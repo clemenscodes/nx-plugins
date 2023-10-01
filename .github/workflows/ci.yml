@@ -153,16 +153,11 @@ jobs:
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
                   ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
 
-            - uses: msys2/setup-msys2@v2
-              if: matrix.os == 'windows-latest'
-              with:
-                  msystem: UCRT64
-
             - name: Install MinGW-w64 (windows-latest)
               if: matrix.os == 'windows-latest'
               run: |
+                  choco upgrade mingw
                   gcc --version
-              #   choco upgrade mingw
 
             - name: Run Agent
               run: npx nx-cloud start-agent
@@ -234,16 +229,11 @@ jobs:
                   ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
 
-            - uses: msys2/setup-msys2@v2
-              if: matrix.os == 'windows-latest'
-              with:
-                  msystem: UCRT64
-
             - name: Install MinGW-w64 (windows-latest)
               if: matrix.os == 'windows-latest'
               run: |
+                  choco upgrade mingw
                   gcc --version
-              #   choco upgrade mingw
 
             - name: Start Agents
               if: needs.agents.result != 'failure' &&
