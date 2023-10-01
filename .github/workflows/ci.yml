@@ -157,9 +157,8 @@ jobs:
               if: matrix.os == 'windows-latest'
               shell: bash
               run: |
-                echo $PATH
-                echo "PATH=$PATH:C:\msys64\mingw64\bin" >> $GITHUB_ENV
-
+                  echo $PATH
+                  echo "PATH=$PATH:C:\msys64\mingw64\bin" >> $GITHUB_ENV
 
             - name: Run Agent
               run: npx nx-cloud start-agent
@@ -235,8 +234,8 @@ jobs:
               if: matrix.os == 'windows-latest'
               shell: bash
               run: |
-                echo $PATH
-                echo "PATH=$PATH:C:\msys64\mingw64\bin" >> $GITHUB_ENV
+                  echo $PATH
+                  echo "PATH=$PATH:C:\msys64\mingw64\bin" >> $GITHUB_ENV
 
             - name: Start Agents
               if: needs.agents.result != 'failure' &&
