@@ -75,7 +75,6 @@ describe('generateCmakeConfigFiles', () => {
             'include(settings/set_project_settings)\n' +
             '\n' +
             'function(set_binary_settings PROJECT SOURCE_DIR)\n' +
-            '    set_project_settings(${PROJECT} ${SOURCE_DIR})\n' +
             '    add_executable(${PROJECT} ${${PROJECT}_SOURCES})\n' +
             '    set_target_properties(${PROJECT}\n' +
             '        PROPERTIES\n' +
@@ -173,7 +172,6 @@ describe('generateCmakeConfigFiles', () => {
             'include(settings/set_project_settings)\n' +
             '\n' +
             'function(set_library_settings PROJECT SOURCE_DIR)\n' +
-            '    set_project_settings(${PROJECT} ${SOURCE_DIR})\n' +
             '    add_library(${PROJECT} SHARED ${${PROJECT}_SOURCES})\n' +
             '    add_library(${PROJECT}_static STATIC ${${PROJECT}_SOURCES})\n' +
             '    set_target_properties(${PROJECT} ${PROJECT}_static PROPERTIES PREFIX "")\n' +

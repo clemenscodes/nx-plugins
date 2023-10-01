@@ -97,8 +97,9 @@ describe('generateLibTestFiles', () => {
             'include("../../CMakeLists.txt")\n' +
             '\n' +
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
-            'set_binary_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
+            'set_project_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(testtest C)\n' +
+            'set_binary_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'link_static_library(${CMAKE_PROJECT_NAME} test)\n' +
             'enable_testing()\n' +
             'link_cmocka(${CMAKE_PROJECT_NAME})\n' +
@@ -175,8 +176,9 @@ describe('generateLibTestFiles', () => {
             'include("../../CMakeLists.txt")\n' +
             '\n' +
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
-            'set_binary_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
+            'set_project_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(testtest CXX)\n' +
+            'set_binary_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'link_static_library(${CMAKE_PROJECT_NAME} test)\n' +
             'enable_testing()\n' +
             'link_gtest(${CMAKE_PROJECT_NAME})\n' +
