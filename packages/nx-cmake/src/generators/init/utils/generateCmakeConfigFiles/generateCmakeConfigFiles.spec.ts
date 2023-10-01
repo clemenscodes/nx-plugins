@@ -317,6 +317,8 @@ describe('generateCmakeConfigFiles', () => {
             '    if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")\n' +
             '        set_target_properties(${LIB_WITH_PREFIX} PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_PATH}/${LIB}/${CMAKE_BUILD_TYPE}/bin/${LIB_WITH_PREFIX}.dll)\n' +
             '        set_target_properties(${LIB_WITH_PREFIX} PROPERTIES IMPORTED_IMPLIB ${CMAKE_LIBRARY_PATH}/${LIB}/${CMAKE_BUILD_TYPE}/lib/${LIB_WITH_PREFIX}.dll.a)\n' +
+            '    elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")\n' +
+            '        set_target_properties(${LIB_WITH_PREFIX} PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_PATH}/${LIB}/${CMAKE_BUILD_TYPE}/lib/${LIB_WITH_PREFIX}.dylib)\n' +
             '    else()\n' +
             '        set_target_properties(${LIB_WITH_PREFIX} PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_PATH}/${LIB}/${CMAKE_BUILD_TYPE}/lib/${LIB_WITH_PREFIX}.so)\n' +
             '    endif()\n' +

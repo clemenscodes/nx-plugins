@@ -155,10 +155,7 @@ jobs:
 
             - name: Install MinGW-w64 (windows-latest)
               if: matrix.os == 'windows-latest'
-              shell: bash
-              run: |
-                  echo $PATH
-                  echo "PATH=$PATH:C:\msys64\mingw64\bin" >> $GITHUB_ENV
+              uses: msys2/setup-msys2@v2
 
             - name: Run Agent
               run: npx nx-cloud start-agent
@@ -232,10 +229,7 @@ jobs:
 
             - name: Install MinGW-w64 (windows-latest)
               if: matrix.os == 'windows-latest'
-              shell: bash
-              run: |
-                  echo $PATH
-                  echo "PATH=$PATH:C:\msys64\mingw64\bin" >> $GITHUB_ENV
+              uses: msys2/setup-msys2@v2
 
             - name: Start Agents
               if: needs.agents.result != 'failure' &&
