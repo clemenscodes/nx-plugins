@@ -82,9 +82,7 @@ jobs:
               run: |
                   AGENTS_JSON_ARRAY=$(node -e "
                     const agents = Array.from(new Array($NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT)).map((_, i) => i + 1);
-                    const os = ['ubuntu-latest', 'macos-latest', 'windows-latest'];
-                    const result = agents.flatMap(agent => os.map(o => ({ os: o, agent })));
-                    console.log(JSON.stringify(result));
+                    console.log(JSON.stringify(agents));
                   ")
                   echo $AGENTS_JSON_ARRAY
                   echo "matrix=$AGENTS_JSON_ARRAY" >> $GITHUB_OUTPUT
@@ -101,8 +99,10 @@ jobs:
                 shell: bash
         strategy:
             matrix:
-                runner:
+                agents:
                     - ${{fromJson(needs.set-agents.outputs.matrix)}}
+                os:
+                    - [ubuntu-latest, macos-latest, windows-latest]
         steps:
             - name: Checkout [Pull Request]
               uses: actions/checkout@v3
