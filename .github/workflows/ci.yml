@@ -146,17 +146,23 @@ jobs:
                   sudo apt-get update -y
                   sudo apt-get install gdb -y
 
-            - name: Install clang-tidy and fix gcc (macos-latest)
+            - name: Install clang-tidy and clang-format (macos-latest)
               if: matrix.os == 'macos-latest'
               run: |
                   brew install llvm
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
-                  ln -s gcc-13 gcc
+                  ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
 
-            # - name: Install MinGW-w64 (windows-latest)
-            #   if: matrix.os == 'windows-latest'
-            #   run: |
-            #       choco upgrade mingw
+            - uses: msys2/setup-msys2@v2
+              if: matrix.os == 'windows-latest'
+              with:
+                  msystem: UCRT64
+
+            - name: Install MinGW-w64 (windows-latest)
+              if: matrix.os == 'windows-latest'
+              run: |
+                  gcc --version
+              #   choco upgrade mingw
 
             - name: Run Agent
               run: npx nx-cloud start-agent
@@ -221,17 +227,23 @@ jobs:
                   sudo apt-get update -y
                   sudo apt-get install gdb -y
 
-            - name: Install clang-tidy and fix gcc (macos-latest)
+            - name: Install clang-tidy and clang-format (macos-latest)
               if: matrix.os == 'macos-latest'
               run: |
                   brew install llvm
+                  ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
-                  ln -s gcc-13 gcc
 
-            # - name: Install MinGW-w64 (windows-latest)
-            #   if: matrix.os == 'windows-latest'
-            #   run: |
-            #       choco upgrade mingw
+            - uses: msys2/setup-msys2@v2
+              if: matrix.os == 'windows-latest'
+              with:
+                  msystem: UCRT64
+
+            - name: Install MinGW-w64 (windows-latest)
+              if: matrix.os == 'windows-latest'
+              run: |
+                  gcc --version
+              #   choco upgrade mingw
 
             - name: Start Agents
               if: needs.agents.result != 'failure' &&
