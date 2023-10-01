@@ -146,16 +146,17 @@ jobs:
                   sudo apt-get update -y
                   sudo apt-get install gdb -y
 
-            - name: Install clang-tidy (macos-latest)
+            - name: Install clang-tidy and fix gcc (macos-latest)
               if: matrix.os == 'macos-latest'
               run: |
-                  brew install llvm gcc
+                  brew install llvm
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
+                  ln -s gcc-13 gcc
 
-            - name: Install MinGW-w64 (windows-latest)
-              if: matrix.os == 'windows-latest'
-              run: |
-                  choco upgrade mingw
+            # - name: Install MinGW-w64 (windows-latest)
+            #   if: matrix.os == 'windows-latest'
+            #   run: |
+            #       choco upgrade mingw
 
             - name: Run Agent
               run: npx nx-cloud start-agent
@@ -220,16 +221,17 @@ jobs:
                   sudo apt-get update -y
                   sudo apt-get install gdb -y
 
-            - name: Install clang-tidy (macos-latest)
+            - name: Install clang-tidy and fix gcc (macos-latest)
               if: matrix.os == 'macos-latest'
               run: |
-                  brew install llvm gcc
+                  brew install llvm
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
+                  ln -s gcc-13 gcc
 
-            - name: Install MinGW-w64 (windows-latest)
-              if: matrix.os == 'windows-latest'
-              run: |
-                  choco upgrade mingw
+            # - name: Install MinGW-w64 (windows-latest)
+            #   if: matrix.os == 'windows-latest'
+            #   run: |
+            #       choco upgrade mingw
 
             - name: Start Agents
               if: needs.agents.result != 'failure' &&

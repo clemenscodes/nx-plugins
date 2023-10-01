@@ -94,8 +94,10 @@ describe('generateCmakeConfigFiles', () => {
         const file = `${options.cmakeConfigDir}/settings/set_compiler_settings.cmake`;
         const readFile = readFileWithTree(tree, file);
         const expectedFile =
+            'include(settings/set_compiler)\n' +
+            '\n' +
             'function(set_c_flags)\n' +
-            '    if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")\n' +
+            '    if (CMAKE_C_COMPILER_ID STREQUAL "GNU")\n' +
             '        string(CONCAT FLAGS\n' +
             '        " -Wall"\n' +
             '        " -Wextra"\n' +
@@ -112,7 +114,7 @@ describe('generateCmakeConfigFiles', () => {
             'endfunction()\n' +
             '\n' +
             'function(set_cxx_flags)\n' +
-            '    if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")\n' +
+            '    if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")\n' +
             '        string(CONCAT FLAGS\n' +
             '        " -Wall"\n' +
             '        " -Wextra"\n' +
@@ -130,6 +132,7 @@ describe('generateCmakeConfigFiles', () => {
             'endfunction()\n' +
             '\n' +
             'function(set_compiler_settings)\n' +
+            '    set_compiler()\n' +
             '    set_c_flags()\n' +
             '    set_cxx_flags()\n' +
             '    set(CMAKE_EXE_LINKER_FLAGS    "-Wl,--as-needed ${CMAKE_EXE_LINKER_FLAGS}")\n' +
@@ -164,8 +167,6 @@ describe('generateCmakeConfigFiles', () => {
         const file = `${options.cmakeConfigDir}/settings/set_global_settings.cmake`;
         const readFile = readFileWithTree(tree, file);
         const expectedFile =
-            'include(settings/set_compiler)\n' +
-            '\n' +
             'function(set_global_settings)\n' +
             '    set(CMAKE_MINIMUM_REQUIRED_VERSION 3.21.0 CACHE INTERNAL "")\n' +
             '    set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")\n' +
@@ -177,8 +178,6 @@ describe('generateCmakeConfigFiles', () => {
             '    if (NOT CMAKE_BUILD_TYPE)\n' +
             '        set(CMAKE_BUILD_TYPE Debug CACHE INTERNAL "")\n' +
             '    endif ()\n' +
-            '\n' +
-            '    set_compiler()\n' +
             'endfunction()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
