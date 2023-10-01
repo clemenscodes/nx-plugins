@@ -327,7 +327,11 @@ describe('generateCmakeConfigFiles', () => {
             '    target_include_directories(${PROJECT} PRIVATE ${LIB_DIR})\n' +
             '    target_include_directories(${PROJECT} PRIVATE ${LIB_DIR}/include)\n' +
             '    target_include_directories(${PROJECT} PRIVATE ${LIB_DIR}/src)\n' +
-            '    target_link_options(${PROJECT} PRIVATE "-Wl,--as-needed")\n' +
+            '    if(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")\n' +
+            '        target_link_options(${PROJECT} PRIVATE "-Wl,-undefined,dynamic_lookup" "-Wl,-dead_strip")\n' +
+            '    else()\n' +
+            '        target_link_options(${PROJECT} PRIVATE "-Wl,--as-needed")\n' +
+            '    endif()\n' +
             '    add_custom_command(TARGET ${PROJECT} POST_BUILD\n' +
             '        COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:${PROJECT}> $<TARGET_RUNTIME_DLLS:${PROJECT}>\n' +
             '        COMMAND_EXPAND_LISTS\n' +

@@ -15,7 +15,11 @@ function(link_shared_library PROJECT LIB)
     target_include_directories(${PROJECT} PRIVATE ${LIB_DIR})
     target_include_directories(${PROJECT} PRIVATE ${LIB_DIR}/include)
     target_include_directories(${PROJECT} PRIVATE ${LIB_DIR}/src)
-    target_link_options(${PROJECT} PRIVATE "-Wl,--as-needed")
+    if(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+        target_link_options(${PROJECT} PRIVATE "-Wl,-undefined,dynamic_lookup" "-Wl,-dead_strip")
+    else()
+        target_link_options(${PROJECT} PRIVATE "-Wl,--as-needed")
+    endif()
     add_custom_command(TARGET ${PROJECT} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:${PROJECT}> $<TARGET_RUNTIME_DLLS:${PROJECT}>
         COMMAND_EXPAND_LISTS
