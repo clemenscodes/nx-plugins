@@ -31,7 +31,7 @@ describe('getGccDependenciesCommand', () => {
     });
 
     it('should generate the correct gcc c++ dependency command', () => {
-        getCompilerMock.mockReturnValueOnce('gcc-13')
+        getCompilerMock.mockReturnValueOnce('gcc-13');
         tag = 'cpp';
         const result = getGccDependenciesCommand(
             fileName,
