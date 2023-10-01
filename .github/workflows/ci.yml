@@ -52,7 +52,7 @@ jobs:
             - name: Install Node
               uses: actions/setup-node@v3
               with:
-                  node-version: lts
+                  node-version: lts/*
                   cache: 'pnpm'
 
             - name: Cache node_modules
