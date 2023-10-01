@@ -33,7 +33,7 @@ describe('getGccDependenciesCommand', () => {
             workspaceLayout,
             tag,
         );
-        const expectedCmd = `gcc -x c++ -MM ${fileName} -I projectA -I projectA/include -I projectA/src -I libs -I include -I dist/libs/gtest/googletest-src/googletest/include -I dist/libs/cmocka/cmocka-src/include`;
+        const expectedCmd = `gcc -x c++ -std=c++14 -MM ${fileName} -I projectA -I projectA/include -I projectA/src -I libs -I include -I dist/libs/gtest/googletest-src/googletest/include -I dist/libs/cmocka/cmocka-src/include`;
         expect(result).toBe(expectedCmd);
     });
 });

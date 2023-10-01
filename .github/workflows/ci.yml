@@ -13,6 +13,8 @@ concurrency:
 env:
     NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT: 2
     NX_CLOUD_DISTRIBUTED_EXECUTION: true
+    CC: gcc
+    CXX: gcc
 
 jobs:
     deps:
