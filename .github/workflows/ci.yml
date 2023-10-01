@@ -211,15 +211,15 @@ jobs:
                   needs.agents.result != 'cancelled' &&
                   needs.agents.result != 'skipped'
               run: |
-                pnpm nx affected \
-                    --nx-bail \
-                    --base=$NX_BASE \
-                    --head=$NX_HEAD \
-                    --configuration=ci \
-                    --output-style=stream \
-                    --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT \
-                    --no-cloud \
-                    -t build lint test e2e
+                  pnpm nx affected \
+                      --nx-bail \
+                      --base=$NX_BASE \
+                      --head=$NX_HEAD \
+                      --configuration=ci \
+                      --output-style=stream \
+                      --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT \
+                      --no-cloud \
+                      -t build lint test e2e
 
             - name: Stop Agents
               if: always()
