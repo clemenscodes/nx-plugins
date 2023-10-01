@@ -151,14 +151,13 @@ jobs:
             - name: Install clang-tidy (macos-latest)
               if: matrix.os == 'macos-latest'
               run: |
-                  brew install llvm
+                  brew install llvm gcc
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
 
             - name: Install MinGW-w64 (windows-latest)
               if: matrix.os == 'windows-latest'
-              uses: egor-tensin/setup-mingw@v2
-              with:
-                  platform: x64
+              run: |
+                  choco install mingw
 
             - name: Run Agent
               run: npx nx-cloud start-agent
@@ -226,8 +225,13 @@ jobs:
             - name: Install clang-tidy (macos-latest)
               if: matrix.os == 'macos-latest'
               run: |
-                  brew install llvm
+                  brew install llvm gcc
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
+
+            - name: Install MinGW-w64 (windows-latest)
+              if: matrix.os == 'windows-latest'
+              run: |
+                  choco install mingw
 
             - name: Start Agents
               if: needs.agents.result != 'failure' &&

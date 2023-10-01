@@ -46,6 +46,7 @@ describe('buildProjectWithMake', () => {
             '-S',
             `${workspaceRoot}/${projectRoot}`,
             `${workspaceRoot}/dist/${projectRoot}`,
+            '-G "Unix Makefiles"',
             '-DCMAKE_BUILD_TYPE=Debug',
             ...options.args,
         );
@@ -78,6 +79,7 @@ describe('buildProjectWithMake', () => {
             '-S',
             `${workspaceRoot}/${projectRoot}`,
             `${workspaceRoot}/dist/${projectRoot}`,
+            '-G "Unix Makefiles"',
             '-DCMAKE_BUILD_TYPE=Debug',
             '--arg1',
             '--arg2',
