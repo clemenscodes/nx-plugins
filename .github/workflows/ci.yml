@@ -146,16 +146,20 @@ jobs:
                   sudo apt-get update -y
                   sudo apt-get install gdb -y
 
-            - name: Install clang-tidy and clang-format (macos-latest)
+            - name: Install clang-tidy clang-format and gdb(macos-latest)
               if: matrix.os == 'macos-latest'
               run: |
-                  brew install llvm
+                  brew install llvm gdb
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
                   ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
 
             - name: Install MinGW-w64 (windows-latest)
               if: matrix.os == 'windows-latest'
               uses: msys2/setup-msys2@v2
+              with:
+                  msystem: UCRT64
+                  update: true
+                  install: mingw-w64-ucrt-x86_64-gcc
 
             - name: Run Agent
               run: npx nx-cloud start-agent
@@ -220,16 +224,20 @@ jobs:
                   sudo apt-get update -y
                   sudo apt-get install gdb -y
 
-            - name: Install clang-tidy and clang-format (macos-latest)
+            - name: Install clang-tidy clang-format and gdb (macos-latest)
               if: matrix.os == 'macos-latest'
               run: |
-                  brew install llvm
+                  brew install llvm gdb
                   ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
 
             - name: Install MinGW-w64 (windows-latest)
               if: matrix.os == 'windows-latest'
               uses: msys2/setup-msys2@v2
+              with:
+                  msystem: UCRT64
+                  update: true
+                  install: mingw-w64-ucrt-x86_64-gcc
 
             - name: Start Agents
               if: needs.agents.result != 'failure' &&
