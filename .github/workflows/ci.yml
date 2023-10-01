@@ -99,10 +99,10 @@ jobs:
                 shell: bash
         strategy:
             matrix:
-                agents:
-                    - ${{fromJson(needs.set-agents.outputs.matrix)}}
                 os:
                     - [ubuntu-latest, macos-latest, windows-latest]
+                agent:
+                    - ${{fromJson(needs.set-agents.outputs.matrix)}}
         steps:
             - name: Checkout [Pull Request]
               uses: actions/checkout@v3
