@@ -55,13 +55,13 @@ The following tools need to be installed for this plugin to work correctly:
 
 - nx 16.9+ (this plugin uses the latest Nx v2 plugin API)
 - node
-- gcc (posix threads, mutex support is required)
-- cmake
-- make
+- cmake v3.21.0
 - ctest
+- make
+- gcc (posix threads, mutex support is required)
+- gdb
 - clang-format
 - clang-tidy
-- gdb
 
 #### Windows
 

@@ -17,6 +17,7 @@ describe('debugBinaryWithGdb', () => {
         projectName = 'myProject';
         options = {
             args: [],
+            release: false,
         };
 
         runCommandMock = jest.spyOn(runCommandModule, 'runCommand');

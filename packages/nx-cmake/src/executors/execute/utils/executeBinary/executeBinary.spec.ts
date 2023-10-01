@@ -17,6 +17,7 @@ describe('executeBinary', () => {
         projectName = 'myProject';
         options = {
             args: [],
+            release: false,
         };
 
         runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
@@ -37,7 +38,7 @@ describe('executeBinary', () => {
             options,
         );
         expect(runCommandMock).toHaveBeenCalledWith(
-            `${workspaceRoot}/dist/${projectRoot}/${projectName}`,
+            `${workspaceRoot}/dist/${projectRoot}/Debug/${projectName}`,
             ...options.args,
         );
         expect(result).toBe(true);
@@ -51,7 +52,7 @@ describe('executeBinary', () => {
             `The binary of ${projectName} was not found and cound not be executed.`,
         );
         expect(fileExistsMock).toHaveBeenCalledWith(
-            `${workspaceRoot}/dist/${projectRoot}/${projectName}`,
+            `${workspaceRoot}/dist/${projectRoot}/Debug/${projectName}`,
         );
         expect(runCommandMock).not.toHaveBeenCalled();
     });
@@ -60,6 +61,7 @@ describe('executeBinary', () => {
         fileExistsMock.mockReturnValue(true);
         runCommandMock.mockReturnValue({ success: true });
         options.args = ['-ex', 'run', '--arg1', 'value1'];
+        options.release = true;
         const result = executeBinary(
             workspaceRoot,
             projectRoot,
@@ -67,7 +69,7 @@ describe('executeBinary', () => {
             options,
         );
         expect(runCommandMock).toHaveBeenCalledWith(
-            `${workspaceRoot}/dist/${projectRoot}/${projectName}`,
+            `${workspaceRoot}/dist/${projectRoot}/Release/${projectName}`,
             '-ex',
             'run',
             '--arg1',
@@ -86,7 +88,7 @@ describe('executeBinary', () => {
             options,
         );
         expect(runCommandMock).toHaveBeenCalledWith(
-            `${workspaceRoot}/dist/${projectRoot}/${projectName}`,
+            `${workspaceRoot}/dist/${projectRoot}/Debug/${projectName}`,
             ...options.args,
         );
         expect(result).toBe(false);

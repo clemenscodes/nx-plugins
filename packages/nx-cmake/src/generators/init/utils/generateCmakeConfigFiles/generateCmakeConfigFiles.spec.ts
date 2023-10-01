@@ -78,6 +78,10 @@ describe('generateCmakeConfigFiles', () => {
             'function(set_binary_settings PROJECT SOURCE_DIR)\n' +
             '    set_project_settings(${PROJECT} ${SOURCE_DIR})\n' +
             '    add_executable(${PROJECT} ${${PROJECT}_SOURCES})\n' +
+            '    set_target_properties(${PROJECT}\n' +
+            '        PROPERTIES\n' +
+            '        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}"\n' +
+            '    )\n' +
             '    target_include_directories(${PROJECT} PRIVATE ${${PROJECT}_INCLUDE_DIR} ${WORKSPACE_INCLUDE_DIR})\n' +
             '    target_include_directories(${PROJECT} PRIVATE ${${PROJECT}_INCLUDE_DIR}/include ${WORKSPACE_INCLUDE_DIR})\n' +
             '    target_include_directories(${PROJECT} PRIVATE ${${PROJECT}_INCLUDE_DIR}/src ${WORKSPACE_INCLUDE_DIR})\n' +
@@ -152,7 +156,7 @@ describe('generateCmakeConfigFiles', () => {
             'include(settings/set_compiler)\n' +
             '\n' +
             'function(set_global_settings)\n' +
-            '    set(CMAKE_MINIMUM_REQUIRED_VERSION 3.16.3 CACHE INTERNAL "")\n' +
+            '    set(CMAKE_MINIMUM_REQUIRED_VERSION 3.21.0 CACHE INTERNAL "")\n' +
             '    set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")\n' +
             '    set(CMAKE_CXX_STANDARD 17 CACHE INTERNAL "")\n' +
             '    set(CMAKE_CXX_EXTENSIONS OFF CACHE INTERNAL "")\n' +
@@ -181,6 +185,12 @@ describe('generateCmakeConfigFiles', () => {
             '    add_library(${PROJECT}_static STATIC ${${PROJECT}_SOURCES})\n' +
             '    set_target_properties(${PROJECT} ${PROJECT}_static PROPERTIES PREFIX "")\n' +
             '    set_target_properties(${PROJECT}_static PROPERTIES OUTPUT_NAME ${PROJECT})\n' +
+            '    set_target_properties(${PROJECT} ${PROJECT}_static\n' +
+            '        PROPERTIES\n' +
+            '        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib"\n' +
+            '        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib"\n' +
+            '        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/bin"\n' +
+            '    )\n' +
             '    target_include_directories(${PROJECT} PUBLIC ${${PROJECT}_INCLUDE_DIR} ${WORKSPACE_INCLUDE_DIR})\n' +
             '    target_include_directories(${PROJECT}_static PUBLIC ${${PROJECT}_INCLUDE_DIR} ${WORKSPACE_INCLUDE_DIR})\n' +
             '    target_include_directories(${PROJECT} PUBLIC ${${PROJECT}_INCLUDE_DIR}/include ${WORKSPACE_INCLUDE_DIR})\n' +
@@ -306,9 +316,10 @@ describe('generateCmakeConfigFiles', () => {
             '    set(LIB_WITH_PREFIX ${PREFIX}${LIB})\n' +
             '    add_library(${LIB_WITH_PREFIX} SHARED IMPORTED)\n' +
             '    if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")\n' +
-            '        set_target_properties(${LIB_WITH_PREFIX} PROPERTIES IMPORTED_IMPLIB ${CMAKE_LIBRARY_PATH}/${LIB}/${LIB_WITH_PREFIX}.dll.a)\n' +
+            '        set_target_properties(${LIB_WITH_PREFIX} PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_PATH}/${LIB}/${CMAKE_BUILD_TYPE}/bin/${LIB_WITH_PREFIX}.dll)\n' +
+            '        set_target_properties(${LIB_WITH_PREFIX} PROPERTIES IMPORTED_IMPLIB ${CMAKE_LIBRARY_PATH}/${LIB}/${CMAKE_BUILD_TYPE}/lib/${LIB_WITH_PREFIX}.dll.a)\n' +
             '    else()\n' +
-            '        set_target_properties(${LIB_WITH_PREFIX} PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_PATH}/${LIB}/${LIB_WITH_PREFIX}.so)\n' +
+            '        set_target_properties(${LIB_WITH_PREFIX} PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_PATH}/${LIB}/${CMAKE_BUILD_TYPE}/lib/${LIB_WITH_PREFIX}.so)\n' +
             '    endif()\n' +
             '    target_link_libraries(${PROJECT} ${LIB_WITH_PREFIX})\n' +
             '    set(LIB_DIR ${WORKSPACE_LIBRARY_DIR}/${LIB})\n' +
@@ -316,6 +327,10 @@ describe('generateCmakeConfigFiles', () => {
             '    target_include_directories(${PROJECT} PRIVATE ${LIB_DIR}/include)\n' +
             '    target_include_directories(${PROJECT} PRIVATE ${LIB_DIR}/src)\n' +
             '    target_link_options(${PROJECT} PRIVATE "-Wl,--as-needed")\n' +
+            '    add_custom_command(TARGET ${PROJECT} POST_BUILD\n' +
+            '        COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:${PROJECT}> $<TARGET_RUNTIME_DLLS:${PROJECT}>\n' +
+            '        COMMAND_EXPAND_LISTS\n' +
+            '    )\n' +
             'endfunction()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
@@ -329,7 +344,7 @@ describe('generateCmakeConfigFiles', () => {
             '    set(PREFIX "lib")\n' +
             '    set(LIB_WITH_PREFIX ${PREFIX}${LIB})\n' +
             '    add_library(${LIB_WITH_PREFIX} STATIC IMPORTED)\n' +
-            '    set_target_properties(${LIB_WITH_PREFIX} PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_PATH}/${LIB}/${LIB_WITH_PREFIX}.a)\n' +
+            '    set_target_properties(${LIB_WITH_PREFIX} PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_PATH}/${LIB}/${CMAKE_BUILD_TYPE}/lib/${LIB_WITH_PREFIX}.a)\n' +
             '    target_link_libraries(${PROJECT} ${LIB_WITH_PREFIX})\n' +
             '    set(LIB_DIR ${WORKSPACE_LIBRARY_DIR}/${LIB})\n' +
             '    target_include_directories(${PROJECT} PRIVATE ${LIB_DIR})\n' +

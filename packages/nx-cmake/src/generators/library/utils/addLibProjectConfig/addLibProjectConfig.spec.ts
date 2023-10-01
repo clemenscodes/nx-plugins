@@ -29,26 +29,25 @@ describe('addLibProjectConfig', () => {
             targets: {
                 cmake: {
                     executor: 'nx-cmake:cmake',
-                    defaultConfiguration: 'development',
+                    defaultConfiguration: 'debug',
                     configurations: {
-                        development: { release: false, args: [] },
-                        production: { release: true, args: [] },
+                        debug: { release: false, args: [] },
+                        release: { release: true, args: [] },
                     },
                 },
                 build: {
                     executor: 'nx-cmake:build',
-                    defaultConfiguration: 'development',
+                    defaultConfiguration: 'debug',
                     configurations: {
-                        development: { args: [] },
-                        production: { args: [] },
+                        debug: { release: false, args: [] },
+                        release: { release: true, args: [] },
                     },
                 },
                 lint: {
                     executor: 'nx-cmake:lint',
-                    defaultConfiguration: 'development',
+                    defaultConfiguration: 'local',
                     configurations: {
-                        development: { args: [] },
-                        production: { args: [] },
+                        local: { args: [] },
                         ci: {
                             args: ['--warnings-as-errors=*'],
                         },
@@ -56,14 +55,9 @@ describe('addLibProjectConfig', () => {
                 },
                 fmt: {
                     executor: 'nx-cmake:format',
-                    defaultConfiguration: 'development',
+                    defaultConfiguration: 'local',
                     configurations: {
-                        development: {
-                            args: [],
-                            verbose: true,
-                            editFilesInPlace: true,
-                        },
-                        production: {
+                        local: {
                             args: [],
                             verbose: true,
                             editFilesInPlace: true,

@@ -14,6 +14,7 @@ describe('getLintArguments', () => {
         projectRoot = '/projectRoot';
         options = {
             args: [],
+            release: false,
         };
         expectedArguments = [
             `--config-file=${workspaceRoot}/${projectRoot}/.clang-format`,

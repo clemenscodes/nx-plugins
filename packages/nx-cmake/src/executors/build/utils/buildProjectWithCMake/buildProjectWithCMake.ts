@@ -8,11 +8,13 @@ export const buildProjectWithCMake = (
     options: BuildExecutorSchema,
 ): boolean => {
     const buildCommand = checkCommandExists('cmake');
-    const { args } = options;
+    const { args, release } = options;
+    const config = release ? 'Release' : 'Debug';
     const { success } = runCommand(
         buildCommand,
         '--build',
         `${workspaceRoot}/dist/${projectRoot}`,
+        `--config=${config}`,
         ...args,
     );
     return success;

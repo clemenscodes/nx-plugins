@@ -15,6 +15,7 @@ describe('buildProjectWithCMake', () => {
         projectRoot = 'projectRoot';
         options = {
             args: [],
+            release: false,
         };
         runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
         checkCommandExistsMock = jest.spyOn(
@@ -45,12 +46,14 @@ describe('buildProjectWithCMake', () => {
     });
 
     it('should call runCommand with the correct arguments', () => {
+        options.release = true;
         runCommandMock.mockReturnValue({ success: true });
         buildProjectWithCMake(workspaceRoot, projectRoot, options);
         expect(runCommandMock).toHaveBeenCalledWith(
             'cmake',
             '--build',
             `${workspaceRoot}/dist/${projectRoot}`,
+            '--config=Release',
             ...options.args,
         );
     });

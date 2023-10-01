@@ -22,6 +22,7 @@ describe('lintFilesWithClangTidy', () => {
         projectRoot = '/projectRoot';
         options = {
             args: [],
+            release: false,
         };
         getLintArgumentsMock = jest.spyOn(
             getLintArgumentsModule,
