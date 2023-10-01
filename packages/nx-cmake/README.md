@@ -65,7 +65,7 @@ The following tools need to be installed for this plugin to work correctly:
 
 #### Windows
 
-NOTE: Windows support is experimental. It is necessary to install a MinGW-w64-ucrt-posix toolchain.
+NOTE: It is necessary to install a MinGW-w64-ucrt-posix toolchain.
 
 The latest version can be downloaded from [winlibs](https://winlibs.com).
 
@@ -199,6 +199,9 @@ All the executors support these additional properties:
 > Configure a C or C++ library with CMake
 >
 > ```shell
+>
+> --release (Configure in release mode) default: false
+>
 > nx cmake <project>
 > ```
 
@@ -207,6 +210,9 @@ All the executors support these additional properties:
 > Build a C or C++ library with Make
 >
 > ```shell
+>
+> --release (Build in release mode) default: false
+>
 > nx build <project>
 > ```
 
@@ -235,6 +241,9 @@ All the executors support these additional properties:
 > Test a C library using CMocka or C++ library using googletest
 >
 > ```shell
+>
+> --release (Test in release mode) default: false
+>
 > nx test <testproject>
 > ```
 
@@ -243,6 +252,9 @@ All the executors support these additional properties:
 > Execute a C or C++ binary
 >
 > ```shell
+>
+> --release (Execute in release mode) default: false
+>
 > nx execute <binaryproject>
 > ```
 
@@ -251,6 +263,9 @@ All the executors support these additional properties:
 > Debug a C or C++ project using gdb
 >
 > ```shell
+>
+> --release (Debug in release mode) default: false
+>
 > nx debug <binaryproject>
 > ```
 
