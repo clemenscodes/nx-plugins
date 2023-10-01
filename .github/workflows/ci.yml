@@ -83,7 +83,7 @@ jobs:
         needs: [set-agents, deps]
         runs-on: ${{ matrix.os }}
         env:
-            NX_CACHE_DIRECTORY: ${{ github.workspace }}/node_modules/.cache/nx/${{ matrix.os }}
+            NX_CACHE_DIRECTORY: node_modules/.cache/nx/${{ matrix.os }}
         permissions:
             contents: read
             actions: read
@@ -133,6 +133,7 @@ jobs:
               id: nx_cache
               with:
                   path: ${{ env.NX_CACHE_DIRECTORY }}
+                  key: ${{ matrix.os }}-nx-cache-${{ hashFiles('node_modules/.cache/nx/**') }}
                   restore-keys: |
                       ${{ matrix.os }}-nx-cache
 
@@ -154,7 +155,7 @@ jobs:
                 os: [ubuntu-latest, macos-latest, windows-latest]
         name: Main Job [${{ matrix.os }}]
         env:
-            NX_CACHE_DIRECTORY: ${{ github.workspace }}/node_modules/.cache/nx/${{ matrix.os }}
+            NX_CACHE_DIRECTORY: node_modules/.cache/nx/${{ matrix.os }}
         permissions:
             contents: read
             actions: read
