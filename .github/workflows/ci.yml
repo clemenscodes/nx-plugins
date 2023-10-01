@@ -209,7 +209,7 @@ jobs:
               id: agents
               if: needs.agents.result != 'failure' &&
                   needs.agents.result != 'cancelled' &&
-                  needs.agents.result != 'skipped' &&
+                  needs.agents.result != 'skipped'
               run: |
                 pnpm nx affected \
                     --nx-bail \
