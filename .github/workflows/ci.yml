@@ -13,7 +13,6 @@ concurrency:
 env:
     NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT: 2
     NX_CLOUD_DISTRIBUTED_EXECUTION: true
-    NX_EXEC: 'pnpm nx affected --nx-bail --base=$NX_BASE --head=$NX_HEAD --output-style=stream --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT -t'
 
 jobs:
     deps:
@@ -83,6 +82,8 @@ jobs:
         name: Agent ${{ matrix.agent }} [${{ matrix.os }}]
         needs: [set-agents, deps]
         runs-on: ${{ matrix.os }}
+        env:
+            NX_CACHE_DIRECTORY: ${{ github.workspace }}/node_modules/.cache/nx/${{ matrix.os }}
         permissions:
             contents: read
             actions: read
@@ -144,6 +145,8 @@ jobs:
             matrix:
                 os: [ubuntu-latest, macos-latest, windows-latest]
         name: Main Job [${{ matrix.os }}]
+        env:
+            NX_CACHE_DIRECTORY: ${{ github.workspace }}/node_modules/.cache/nx/${{ matrix.os }}
         permissions:
             contents: read
             actions: read
@@ -173,6 +176,15 @@ jobs:
                   version: latest
                   run_install: false
 
+            - name: Nx cache
+              uses: actions/cache@v3
+              id: nx_cache
+              with:
+                  path: ${{ env.NX_CACHE_DIRECTORY }}
+                  key: ${{ matrix.os }}-nx-cache-${{ hashFiles(${{ env.NX_CACHE_DIRECTORY }}/**) }}
+                  restore-keys: |
+                      ${{ matrix.os }}-nx-cache
+
             - name: Install Node
               uses: actions/setup-node@v3
               with:
@@ -197,19 +209,24 @@ jobs:
               id: agents
               if: needs.agents.result != 'failure' &&
                   needs.agents.result != 'cancelled' &&
-                  needs.agents.result != 'skipped'
-              uses: jameshenry/parallel-bash-commands@v1
-              with:
-                  cmd1: $NX_EXEC build
-                  cmd2: $NX_EXEC lint --configuration=ci
-                  cmd3: $NX_EXEC test --configuration=ci
-                  cmd4: $NX_EXEC e2e --configuration=ci
+                  needs.agents.result != 'skipped' &&
+              run: |
+                pnpm nx affected \
+                    --nx-bail \
+                    --base=$NX_BASE \
+                    --head=$NX_HEAD \
+                    --configuration=ci \
+                    --output-style=stream \
+                    --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT \
+                    --no-cloud \
+                    -t build lint test e2e
 
             - name: Stop Agents
               if: always()
               run: npx nx-cloud stop-all-agents
 
             - name: Upload coverage reports to Codecov
+              if: matrix.os == 'ubuntu-latest'
               uses: codecov/codecov-action@v3
               env:
                   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
