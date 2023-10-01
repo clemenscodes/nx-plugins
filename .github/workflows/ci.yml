@@ -128,6 +128,14 @@ jobs:
                   node-version: lts/*
                   cache: 'pnpm'
 
+            - name: Nx cache
+              uses: actions/cache/restore@v3
+              id: nx_cache
+              with:
+                  path: ${{ env.NX_CACHE_DIRECTORY }}
+                  restore-keys: |
+                      ${{ matrix.os }}-nx-cache
+
             - name: Install dependencies
               run: pnpm install --no-frozen-lockfile
 
