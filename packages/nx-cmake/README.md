@@ -1,4 +1,4 @@
-# nx-cmake  ![GitHub](https://img.shields.io/github/license/clemenscodes/nx-plugins) [![codecov](https://codecov.io/github/clemenscodes/nx-plugins/graph/badge.svg?token=5053DT3DIF)](https://codecov.io/github/clemenscodes/nx-plugins) ![GitHub package.json version (subfolder of monorepo)](https://img.shields.io/github/package-json/v/clemenscodes/nx-plugins?filename=packages%2Fnx-cmake%2Fpackage.json)
+# nx-cmake  ![GitHub](https://img.shields.io/github/license/clemenscodes/nx-plugins) [![codecov](https://codecov.io/github/clemenscodes/nx-plugins/graph/badge.svg?token=5053DT3DIF)](https://codecov.io/github/clemenscodes/nx-plugins) ![GitHub package.json version (subfolder of monorepo)](https://img.shields.io/github/package-json/v/clemenscodes/nx-plugins?filename=packages%2Fnx-cmake%2Fpackage.json) [![CI](https://github.com/clemenscodes/nx-plugins/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/clemenscodes/nx-plugins/actions/workflows/ci.yml)
 
 ## Motivation
 
