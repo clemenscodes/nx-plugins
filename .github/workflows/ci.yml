@@ -171,6 +171,19 @@ jobs:
                     mingw-w64-ucrt-x86_64-gdb `
                     mingw-w64-ucrt-x86_64-nasm
 
+            - name: Debug windows dependencies (windows-latest)
+              if: matrix.os == 'windows-latest'
+              shell: powershell
+              run: |
+                  where.exe gcc
+                  where.exe make
+                  where.exe cmake
+                  where.exe ctest
+                  where.exe gdb
+                  where.exe nasm
+                  where.exe clang-format
+                  where.exe clang-tidy
+
             - name: Run Agent
               run: npx nx-cloud start-agent
 
@@ -257,6 +270,19 @@ jobs:
                     mingw-w64-ucrt-x86_64-clang-tools-extra `
                     mingw-w64-ucrt-x86_64-gdb `
                     mingw-w64-ucrt-x86_64-nasm
+
+            - name: Debug windows dependencies (windows-latest)
+              if: matrix.os == 'windows-latest'
+              shell: powershell
+              run: |
+                  where.exe gcc
+                  where.exe make
+                  where.exe cmake
+                  where.exe ctest
+                  where.exe gdb
+                  where.exe nasm
+                  where.exe clang-format
+                  where.exe clang-tidy
 
             - name: Start Agents (unix)
               if: needs.agents.result != 'failure' &&

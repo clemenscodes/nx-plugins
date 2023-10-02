@@ -1,10 +1,6 @@
 import type { CTag, WorkspaceLayout } from '../../../../models/types';
 import { getGccDependenciesCommand } from './getGccDependenciesCommand';
-import {
-    DARWIN_GCC,
-    LINUX_GCC,
-    WINDOWS_GCC,
-} from '../../../../config/programs';
+import { GCC, DARWIN_GCC } from '../../../../config/programs';
 import * as isWindowsModule from '../../../pluginUtils/isWindows/isWindows';
 import * as isDarwinModule from '../../../pluginUtils/isDarwin/isDarwin';
 
@@ -40,7 +36,7 @@ describe('getGccDependenciesCommand', () => {
             workspaceLayout,
             tag,
         );
-        const expectedCmd = `${LINUX_GCC} -x c -MM ${fileName} -I projectA -I projectA/include -I projectA/src -I libs -I include -I dist/libs/gtest/googletest-src/googletest/include -I dist/libs/cmocka/cmocka-src/include`;
+        const expectedCmd = `${GCC} -x c -MM ${fileName} -I projectA -I projectA/include -I projectA/src -I libs -I include -I dist/libs/gtest/googletest-src/googletest/include -I dist/libs/cmocka/cmocka-src/include`;
         expect(result).toBe(expectedCmd);
     });
 
@@ -66,7 +62,7 @@ describe('getGccDependenciesCommand', () => {
             workspaceLayout,
             tag,
         );
-        const expectedCmd = `${WINDOWS_GCC} -x c++ -MM ${fileName} -I projectA -I projectA/include -I projectA/src -I libs -I include -I dist/libs/gtest/googletest-src/googletest/include -I dist/libs/cmocka/cmocka-src/include`;
+        const expectedCmd = `${GCC} -x c++ -MM ${fileName} -I projectA -I projectA/include -I projectA/src -I libs -I include -I dist/libs/gtest/googletest-src/googletest/include -I dist/libs/cmocka/cmocka-src/include`;
         expect(result).toBe(expectedCmd);
     });
 });

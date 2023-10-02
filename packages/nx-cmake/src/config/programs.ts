@@ -1,3 +1,5 @@
+export const GCC = 'gcc';
+
 export const LINUX_GCC = '/usr/bin/gcc';
 export const LINUX_MAKE = '/usr/bin/make';
 export const LINUX_CMAKE = '/usr/local/bin/cmake';
