@@ -185,9 +185,14 @@ jobs:
                   where.exe clang-format
                   where.exe clang-tidy
 
-            - name: Run Agent
+            - name: Run Agent (unix)
+              if: matrix.os != 'windows-latest'
               run: npx nx-cloud start-agent
 
+            - name: Run Agent (windows)
+              if: matrix.os == 'windows-latest'
+              shell: powershell
+              run: npx nx-cloud start-agent
     main:
         strategy:
             matrix:
