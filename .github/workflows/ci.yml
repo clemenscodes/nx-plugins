@@ -38,6 +38,30 @@ jobs:
               with:
                   fetch-depth: 0
 
+            - name: Debug paths (unix)
+              if: matrix.os != 'windows-latest'
+              run: |
+                  which gcc
+                  which make
+                  which cmake
+                  which ctest
+                  which clang-format
+                  which clang-tidy
+                  which nasm
+                  which node
+
+            - name: Debug paths (windows)
+              if: matrix.os == 'windows-latest'
+              run: |
+                  where.exe gcc
+                  where.exe make
+                  where.exe cmake
+                  where.exe ctest
+                  where.exe clang-format
+                  where.exe clang-tidy
+                  where.exe nasm
+                  where.exe node
+
             - name: Derive SHAs
               uses: nrwl/nx-set-shas@v3
 
