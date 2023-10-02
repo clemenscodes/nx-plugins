@@ -153,11 +153,11 @@ jobs:
                   ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
 
-            - name: Upgrade MinGW (windows-latest)
-              if: matrix.os == 'windows-latest'
-              run: |
-                  choco uninstall mingw
-                  choco install mingw
+            # - name: Upgrade MinGW (windows-latest)
+            #   if: matrix.os == 'windows-latest'
+            #   run: |
+            #       choco uninstall mingw
+            #       choco install mingw
 
             # - name: Install MSYS2 (windows-latest)
             #   if: matrix.os == 'windows-latest'
@@ -237,11 +237,11 @@ jobs:
                   ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
 
-            - name: Upgrade MinGW (windows-latest)
-              if: matrix.os == 'windows-latest'
-              run: |
-                  choco uninstall mingw
-                  choco install mingw
+            # - name: Upgrade MinGW (windows-latest)
+            #   if: matrix.os == 'windows-latest'
+            #   run: |
+            #       choco uninstall mingw
+            #       choco install mingw
 
             # - name: Install MSYS2 (windows-latest)
             #   if: matrix.os == 'windows-latest'

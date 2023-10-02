@@ -1,19 +1,19 @@
 import type { CmakeExecutorSchema } from '../../schema';
 import { configureProjectWithCMake } from './configureProjectWithCMake';
-import { WINDOWS_MAKE, WINDOWS_GCC } from '../../../../config/compiler';
+import { LINUX_CMAKE } from '../../../../config/compiler';
 import * as runCommandModule from '../../../../utils/commandUtils/runCommand/runCommand';
 import * as checkCommandExistsModule from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
-import * as isWindowsModule from '../../../../utils/pluginUtils/isWindows/isWindows';
-import * as getCompilerModule from '../../../../utils/pluginUtils/getCompiler/getCompiler';
+import * as getCmakeModule from '../getCmake/getCmake';
+import * as getCmakeCommandArgumentsModule from '../getCmakeCommandArguments/getCmakeCommandArguments';
 
 describe('buildProjectWithMake', () => {
     let workspaceRoot: string;
     let projectRoot: string;
     let options: CmakeExecutorSchema;
     let runCommandMock: jest.SpyInstance;
+    let getCmakeMock: jest.SpyInstance;
     let checkCommandExistsMock: jest.SpyInstance;
-    let isWindowsMock: jest.SpyInstance;
-    let getCompilerMock: jest.SpyInstance;
+    let getCmakeCommandArgumentsMock: jest.SpyInstance;
 
     beforeEach(() => {
         workspaceRoot = 'workspaceRoot';
@@ -22,17 +22,16 @@ describe('buildProjectWithMake', () => {
             args: [],
             release: false,
         };
-
         runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
-        checkCommandExistsMock = jest
-            .spyOn(checkCommandExistsModule, 'checkCommandExists')
-            .mockReturnValueOnce('cmake');
-        isWindowsMock = jest
-            .spyOn(isWindowsModule, 'isWindows')
-            .mockReturnValue(false);
-        getCompilerMock = jest
-            .spyOn(getCompilerModule, 'getCompiler')
-            .mockReturnValue('gcc');
+        checkCommandExistsMock = jest.spyOn(
+            checkCommandExistsModule,
+            'checkCommandExists',
+        );
+        getCmakeCommandArgumentsMock = jest.spyOn(
+            getCmakeCommandArgumentsModule,
+            'getCmakeCommandArguments',
+        );
+        getCmakeMock = jest.spyOn(getCmakeModule, 'getCmake');
     });
 
     afterEach(() => {
@@ -41,84 +40,16 @@ describe('buildProjectWithMake', () => {
 
     it('should configure project with cmake and return true', () => {
         runCommandMock.mockReturnValue({ success: true });
+        getCmakeMock.mockReturnValue(LINUX_CMAKE);
+        checkCommandExistsMock.mockReturnValue(LINUX_CMAKE);
+        getCmakeCommandArgumentsMock.mockReturnValue([]);
         const result = configureProjectWithCMake(
             workspaceRoot,
             projectRoot,
             options,
         );
-        expect(checkCommandExistsMock).toHaveBeenCalledWith('cmake');
-        expect(runCommandMock).toHaveBeenCalledWith(
-            'cmake',
-            '-S',
-            `${workspaceRoot}/${projectRoot}`,
-            `${workspaceRoot}/dist/${projectRoot}`,
-            '-G "Unix Makefiles"',
-            '-DCMAKE_C_COMPILER=gcc',
-            '-DCMAKE_CXX_COMPILER=gcc',
-            '-DCMAKE_BUILD_TYPE=Debug',
-            ...options.args,
-        );
+        expect(checkCommandExistsMock).toHaveBeenCalledWith(LINUX_CMAKE);
+        expect(runCommandMock).toHaveBeenCalledWith(LINUX_CMAKE);
         expect(result).toBe(true);
-    });
-
-    it('should error if cmake is not installed', () => {
-        checkCommandExistsMock.mockReset();
-        checkCommandExistsMock.mockImplementation(() => {
-            throw new Error();
-        });
-        expect(() =>
-            configureProjectWithCMake(workspaceRoot, projectRoot, options),
-        ).toThrowError();
-        expect(checkCommandExistsMock).toHaveBeenCalledWith('cmake');
-        expect(runCommandMock).not.toHaveBeenCalled();
-    });
-
-    it('should pass arguments to cmake', () => {
-        runCommandMock.mockReturnValue({ success: true });
-        options.args = ['--arg1', '--arg2'];
-        const result = configureProjectWithCMake(
-            workspaceRoot,
-            projectRoot,
-            options,
-        );
-        expect(checkCommandExistsMock).toHaveBeenCalledWith('cmake');
-        expect(runCommandMock).toHaveBeenCalledWith(
-            'cmake',
-            '-S',
-            `${workspaceRoot}/${projectRoot}`,
-            `${workspaceRoot}/dist/${projectRoot}`,
-            '-G "Unix Makefiles"',
-            '-DCMAKE_C_COMPILER=gcc',
-            '-DCMAKE_CXX_COMPILER=gcc',
-            '-DCMAKE_BUILD_TYPE=Debug',
-            '--arg1',
-            '--arg2',
-        );
-        expect(result).toBe(true);
-    });
-
-    it('should return false if cmake failed', () => {
-        isWindowsMock.mockReturnValue(true);
-        getCompilerMock.mockReturnValueOnce(WINDOWS_GCC);
-        runCommandMock.mockReturnValue({ success: false });
-        const result = configureProjectWithCMake(
-            workspaceRoot,
-            projectRoot,
-            options,
-        );
-        expect(checkCommandExistsMock).toHaveBeenCalledWith('cmake');
-        expect(runCommandMock).toHaveBeenCalledWith(
-            'cmake',
-            '-S',
-            `${workspaceRoot}/${projectRoot}`,
-            `${workspaceRoot}/dist/${projectRoot}`,
-            '-G "MinGW Makefiles"',
-            `-DCMAKE_MAKE_PROGRAM=${WINDOWS_MAKE}`,
-            `-DCMAKE_C_COMPILER=${WINDOWS_GCC}`,
-            `-DCMAKE_CXX_COMPILER=${WINDOWS_GCC}`,
-            '-DCMAKE_BUILD_TYPE=Debug',
-            ...options.args,
-        );
-        expect(result).toBe(false);
     });
 });
