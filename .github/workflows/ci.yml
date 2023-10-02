@@ -157,13 +157,13 @@ jobs:
               if: matrix.os == 'windows-latest'
               run: choco upgrade mingw
 
-            - name: Install MSYS2 (windows-latest)
-              if: matrix.os == 'windows-latest'
-              uses: msys2/setup-msys2@v2
-              with:
-                  msystem: UCRT64
-                  update: true
-                  install: mingw-w64-ucrt-x86_64-gcc
+            # - name: Install MSYS2 (windows-latest)
+            #   if: matrix.os == 'windows-latest'
+            #   uses: msys2/setup-msys2@v2
+            #   with:
+            #       msystem: UCRT64
+            #       update: true
+            #       install: mingw-w64-ucrt-x86_64-gcc
 
             - name: Run Agent
               run: npx nx-cloud start-agent
@@ -239,13 +239,13 @@ jobs:
               if: matrix.os == 'windows-latest'
               run: choco upgrade mingw
 
-            - name: Install MSYS2 (windows-latest)
-              if: matrix.os == 'windows-latest'
-              uses: msys2/setup-msys2@v2
-              with:
-                  msystem: UCRT64
-                  update: true
-                  install: mingw-w64-ucrt-x86_64-gcc
+            # - name: Install MSYS2 (windows-latest)
+            #   if: matrix.os == 'windows-latest'
+            #   uses: msys2/setup-msys2@v2
+            #   with:
+            #       msystem: UCRT64
+            #       update: true
+            #       install: mingw-w64-ucrt-x86_64-gcc
 
             - name: Start Agents
               if: needs.agents.result != 'failure' &&

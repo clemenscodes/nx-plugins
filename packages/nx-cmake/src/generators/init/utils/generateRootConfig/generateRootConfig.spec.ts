@@ -61,7 +61,7 @@ describe('generateRootConfig', () => {
             '#    set(CMAKE_FORCE_C_COMPILER /usr/local/bin/gcc-13 GNU)\n' +
             '#    set(CMAKE_FORCE_CXX_COMPILER ${CMAKE_C_COMPILER} GNU)\n' +
             '#elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")\n' +
-            '#    set(CMAKE_FORCE_C_COMPILER C:/MinGW/mingw64/bin/gcc.exe GNU)\n' +
+            '#    set(CMAKE_FORCE_C_COMPILER C:/ProgramData/mingw64/mingw64/bin/gcc.exe GNU)\n' +
             '#    set(CMAKE_FORCE_CXX_COMPILER ${CMAKE_C_COMPILER} GNU)\n' +
             '#else()\n' +
             '#    set(CMAKE_FORCE_C_COMPILER gcc GNU)\n' +
