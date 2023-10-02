@@ -161,7 +161,7 @@ jobs:
             - name: Install windows dependencies (windows-latest)
               if: matrix.os == 'windows-latest'
               run: |
-                  C:\tools\msys64\usr\bin\pacman.exe -Sy --no-confirm `
+                  C:\tools\msys64\usr\bin\pacman.exe -Sy `
                     mingw-w64-ucrt-x86_64-gcc `
                     mingw-w64-ucrt-x86_64-make `
                     mingw-w64-ucrt-x86_64-cmake `
@@ -248,7 +248,7 @@ jobs:
             - name: Install windows dependencies (windows-latest)
               if: matrix.os == 'windows-latest'
               run: |
-                  C:\tools\msys64\usr\bin\pacman.exe -Sy --no-confirm `
+                  C:\tools\msys64\usr\bin\pacman.exe -Sy `
                     mingw-w64-ucrt-x86_64-gcc `
                     mingw-w64-ucrt-x86_64-make `
                     mingw-w64-ucrt-x86_64-cmake `
@@ -295,14 +295,14 @@ jobs:
                   needs.win_agents.result != 'skipped' &&
                   matrix.os == 'windows-latest'
               run: |
-                  pnpm nx affected ^
-                      --nx-bail ^
-                      --base=$NX_BASE ^
-                      --head=$NX_HEAD ^
-                      --configuration=ci ^
-                      --output-style=stream ^
-                      --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT ^
-                      --no-cloud ^
+                  pnpm nx affected `
+                      --nx-bail `
+                      --base=$NX_BASE `
+                      --head=$NX_HEAD `
+                      --configuration=ci `
+                      --output-style=stream `
+                      --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT `
+                      --no-cloud `
                       -t build lint test e2e
 
             - name: Stop Agents
