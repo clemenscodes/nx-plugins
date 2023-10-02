@@ -1,9 +1,11 @@
 import type { CmakeExecutorSchema } from '../../schema';
 import { configureProjectWithCMake } from './configureProjectWithCMake';
+import { WINDOWS_MAKE, WINDOWS_GCC } from '../../../../config/compiler';
 import * as runCommandModule from '../../../../utils/commandUtils/runCommand/runCommand';
 import * as checkCommandExistsModule from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
 import * as isWindowsModule from '../../../../utils/pluginUtils/isWindows/isWindows';
 import * as getCompilerModule from '../../../../utils/pluginUtils/getCompiler/getCompiler';
+
 describe('buildProjectWithMake', () => {
     let workspaceRoot: string;
     let projectRoot: string;
@@ -97,7 +99,7 @@ describe('buildProjectWithMake', () => {
 
     it('should return false if cmake failed', () => {
         isWindowsMock.mockReturnValue(true);
-        getCompilerMock.mockReturnValueOnce('gcc-13');
+        getCompilerMock.mockReturnValueOnce(WINDOWS_GCC);
         runCommandMock.mockReturnValue({ success: false });
         const result = configureProjectWithCMake(
             workspaceRoot,
@@ -111,8 +113,9 @@ describe('buildProjectWithMake', () => {
             `${workspaceRoot}/${projectRoot}`,
             `${workspaceRoot}/dist/${projectRoot}`,
             '-G "MinGW Makefiles"',
-            '-DCMAKE_C_COMPILER=gcc-13',
-            '-DCMAKE_CXX_COMPILER=gcc-13',
+            `-DCMAKE_MAKE_PROGRAM=${WINDOWS_MAKE}`,
+            `-DCMAKE_C_COMPILER=${WINDOWS_GCC}`,
+            `-DCMAKE_CXX_COMPILER=${WINDOWS_GCC}`,
             '-DCMAKE_BUILD_TYPE=Debug',
             ...options.args,
         );
