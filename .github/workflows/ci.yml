@@ -47,7 +47,6 @@ jobs:
                   which ctest
                   which clang-format
                   which clang-tidy
-                  which node
 
             - name: Debug paths (windows)
               if: matrix.os == 'windows-latest'
@@ -58,7 +57,6 @@ jobs:
                   where.exe ctest
                   where.exe clang-format
                   where.exe clang-tidy
-                  where.exe node
 
             - name: Derive SHAs
               uses: nrwl/nx-set-shas@v3
