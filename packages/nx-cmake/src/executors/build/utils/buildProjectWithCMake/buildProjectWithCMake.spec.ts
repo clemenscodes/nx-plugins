@@ -1,14 +1,15 @@
 import type { BuildExecutorSchema } from '../../schema';
 import { buildProjectWithCMake } from './buildProjectWithCMake';
 import * as runCommandModule from '../../../../utils/commandUtils/runCommand/runCommand';
-import * as checkCommandExistsModule from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
+import * as getCmakeModule from '../../../cmake/utils/getCmake/getCmake';
+import { LINUX_CMAKE } from '../../../../config/programs';
 
 describe('buildProjectWithCMake', () => {
     let workspaceRoot: string;
     let projectRoot: string;
     let options: BuildExecutorSchema;
     let runCommandMock: jest.SpyInstance;
-    let checkCommandExistsMock: jest.SpyInstance;
+    let getCmakeMock: jest.SpyInstance;
 
     beforeEach(() => {
         workspaceRoot = 'workspaceRoot';
@@ -18,39 +19,30 @@ describe('buildProjectWithCMake', () => {
             release: false,
         };
         runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
-        checkCommandExistsMock = jest.spyOn(
-            checkCommandExistsModule,
-            'checkCommandExists',
-        );
+        getCmakeMock = jest.spyOn(getCmakeModule, 'getCmake');
     });
 
     afterEach(() => {
         jest.restoreAllMocks();
     });
 
-    it('should call checkCommandExists with "make"', () => {
-        runCommandMock.mockReturnValue({ success: true });
-        buildProjectWithCMake(workspaceRoot, projectRoot, options);
-        expect(checkCommandExistsMock).toHaveBeenCalledWith('cmake');
-    });
-
     it('should error if cmake is not installed', () => {
-        checkCommandExistsMock.mockImplementation(() => {
+        getCmakeMock.mockImplementation(() => {
             throw new Error();
         });
         expect(() =>
             buildProjectWithCMake(workspaceRoot, projectRoot, options),
         ).toThrowError();
-        expect(checkCommandExistsMock).toHaveBeenCalledWith('cmake');
         expect(runCommandMock).not.toHaveBeenCalled();
     });
 
     it('should call runCommand with the correct arguments', () => {
         options.release = true;
         runCommandMock.mockReturnValue({ success: true });
+        getCmakeMock.mockReturnValue(LINUX_CMAKE);
         buildProjectWithCMake(workspaceRoot, projectRoot, options);
         expect(runCommandMock).toHaveBeenCalledWith(
-            'cmake',
+            LINUX_CMAKE,
             '--build',
             `${workspaceRoot}/dist/${projectRoot}`,
             '--config=Release',

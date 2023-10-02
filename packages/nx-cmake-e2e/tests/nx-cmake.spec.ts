@@ -39,7 +39,7 @@ describe(plugin, () => {
 
             beforeEach(() => {
                 projectName = 'nx-cmake-test-c';
-                args = '--output-style=stream';
+                args = '--output-style=stream --verbose';
                 cmd = `nx ${executorName} ${projectName} ${args}`;
             });
 
@@ -288,6 +288,7 @@ describe(plugin, () => {
     });
 
     describe('executors', () => {
+        let args: string;
         testExecutor('cmake');
         testExecutor('fmt');
         testExecutor('lint');
@@ -299,7 +300,8 @@ describe(plugin, () => {
 
             beforeEach(() => {
                 projectName = 'nx-cmake-test-c';
-                cmd = `nx execute ${projectName} --output-style=stream`;
+                args = '--output-style=stream --verbose';
+                cmd = `nx execute ${projectName} ${args}`;
             });
 
             it('should run nx-cmake:execute successfully', () => {
@@ -315,7 +317,8 @@ describe(plugin, () => {
 
             beforeEach(() => {
                 projectName = 'testnx-cmake-test-c';
-                cmd = `nx test ${projectName} --output-style=stream`;
+                args = '--output-style=stream --verbose';
+                cmd = `nx test ${projectName} ${args}`;
             });
 
             it('should run nx-cmake:test successfully', () => {
@@ -331,7 +334,8 @@ describe(plugin, () => {
 
             beforeEach(() => {
                 projectName = 'nx-cmake-test-c';
-                cmd = `nx debug ${projectName} --output-style=stream --args=-ex=r,-ex=q`;
+                args = '--output-style=stream --verbose';
+                cmd = `nx debug ${projectName} ${args} --args=-ex=r,-ex=q`;
             });
 
             it('should run nx-cmake:debug successfully', () => {

@@ -1,17 +1,17 @@
 import type { BuildExecutorSchema } from '../../schema';
 import { runCommand } from '../../../../utils/commandUtils/runCommand/runCommand';
-import { checkCommandExists } from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
+import { getCmake } from '../../../cmake/utils/getCmake/getCmake';
 
 export const buildProjectWithCMake = (
     workspaceRoot: string,
     projectRoot: string,
     options: BuildExecutorSchema,
 ): boolean => {
-    const buildCommand = checkCommandExists('cmake');
+    const cmake = getCmake();
     const { args, release } = options;
     const config = release ? 'Release' : 'Debug';
     const { success } = runCommand(
-        buildCommand,
+        cmake,
         '--build',
         `${workspaceRoot}/dist/${projectRoot}`,
         `--config=${config}`,

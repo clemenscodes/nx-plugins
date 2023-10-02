@@ -18,7 +18,6 @@ describe('getCmakeCommandArguments', () => {
             args: [],
             release: false,
         };
-
         isWindowsMock = jest.spyOn(isWindowsModule, 'isWindows');
         getCompilerMock = jest.spyOn(getCompilerModule, 'getCompiler');
     });
