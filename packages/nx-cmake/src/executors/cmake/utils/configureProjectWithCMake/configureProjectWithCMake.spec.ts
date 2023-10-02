@@ -1,6 +1,6 @@
 import type { CmakeExecutorSchema } from '../../schema';
 import { configureProjectWithCMake } from './configureProjectWithCMake';
-import { LINUX_CMAKE } from '../../../../config/compiler';
+import { LINUX_CMAKE } from '../../../../config/programs';
 import * as runCommandModule from '../../../../utils/commandUtils/runCommand/runCommand';
 import * as checkCommandExistsModule from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
 import * as getCmakeModule from '../getCmake/getCmake';

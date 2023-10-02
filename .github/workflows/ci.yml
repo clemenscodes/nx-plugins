@@ -47,7 +47,6 @@ jobs:
                   which ctest
                   which clang-format
                   which clang-tidy
-                  which nasm
                   which node
 
             - name: Debug paths (windows)
@@ -59,7 +58,6 @@ jobs:
                   where.exe ctest
                   where.exe clang-format
                   where.exe clang-tidy
-                  where.exe nasm
                   where.exe node
 
             - name: Derive SHAs

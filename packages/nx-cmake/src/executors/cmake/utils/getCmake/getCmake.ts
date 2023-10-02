@@ -4,7 +4,7 @@ import {
     DARWIN_CMAKE,
     WINDOWS_CMAKE,
     LINUX_CMAKE,
-} from '../../../../config/compiler';
+} from '../../../../config/programs';
 
 export const getCmake = (): string => {
     if (isDarwin(process.platform)) {

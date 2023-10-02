@@ -1,6 +1,6 @@
 import { CmakeExecutorSchema } from './../../schema.d';
 import { getCmakeCommandArguments } from './getCmakeCommandArguments';
-import { LINUX_GCC } from '../../../../config/compiler';
+import { LINUX_GCC } from '../../../../config/programs';
 import * as isWindowsModule from '../../../../utils/pluginUtils/isWindows/isWindows';
 import * as getCompilerModule from '../../../../utils/pluginUtils/getCompiler/getCompiler';
 

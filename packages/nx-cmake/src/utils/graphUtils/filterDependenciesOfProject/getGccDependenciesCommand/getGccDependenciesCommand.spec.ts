@@ -4,7 +4,7 @@ import {
     DARWIN_GCC,
     LINUX_GCC,
     WINDOWS_GCC,
-} from '../../../../config/compiler';
+} from '../../../../config/programs';
 import * as isWindowsModule from '../../../pluginUtils/isWindows/isWindows';
 import * as isDarwinModule from '../../../pluginUtils/isDarwin/isDarwin';
 

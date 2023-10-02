@@ -5,7 +5,7 @@ import {
     DARWIN_CMAKE,
     WINDOWS_CMAKE,
     LINUX_CMAKE,
-} from '../../../../config/compiler';
+} from '../../../../config/programs';
 
 describe('getCmake', () => {
     let isWindowsMock: jest.SpyInstance;
