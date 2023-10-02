@@ -262,7 +262,15 @@ jobs:
             - name: Start Agents
               if: needs.agents.result != 'failure' &&
                   needs.agents.result != 'cancelled' &&
-                  needs.agents.result != 'skipped'
+                  needs.agents.result != 'skipped' &&
+                  matrix.os != 'windows-latest'
+              run: npx nx-cloud start-ci-run --stop-agents-after=e2e
+
+            - name: Start Agents
+              if: needs.win_agents.result != 'failure' &&
+                  needs.win_agents.result != 'cancelled' &&
+                  needs.win_agents.result != 'skipped' &&
+                  matrix.os == 'windows-latest'
               run: npx nx-cloud start-ci-run --stop-agents-after=e2e
 
             - name: Run Agents
@@ -283,10 +291,10 @@ jobs:
                       -t build lint test e2e
 
             - name: Run Agents
-              id: agents
-              if: needs.agents.result != 'failure' &&
-                  needs.agents.result != 'cancelled' &&
-                  needs.agents.result != 'skipped' &&
+              id: win_agents
+              if: needs.win_agents.result != 'failure' &&
+                  needs.win_agents.result != 'cancelled' &&
+                  needs.win_agents.result != 'skipped' &&
                   matrix.os == 'windows-latest'
               run: |
                   pnpm nx affected ^
