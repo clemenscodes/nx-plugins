@@ -144,12 +144,12 @@ jobs:
               if: matrix.os == 'ubuntu-latest'
               run: |
                   sudo apt-get update -y
-                  sudo apt-get install gdb -y
+                  sudo apt-get install gdb nasm -y
 
             - name: Install clang-tidy clang-format and gdb(macos-latest)
               if: matrix.os == 'macos-latest'
               run: |
-                  brew install llvm gdb
+                  brew install llvm gdb nasm
                   ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
 
@@ -162,13 +162,13 @@ jobs:
               if: matrix.os == 'windows-latest'
               shell: msys2 {0}
               run: |
-                  pacman -S \
-                    mingw-w64-ucrt-x86_64-gcc \
-                    mingw-w64-ucrt-x86_64-make \
-                    mingw-w64-ucrt-x86_64-cmake \
-                    mingw-w64-ucrt-x86_64-clang \
-                    mingw-w64-ucrt-x86_64-clang-tools-extra \
-                    mingw-w64-ucrt-x86_64-gdb \
+                  pacman -S ^
+                    mingw-w64-ucrt-x86_64-gcc ^
+                    mingw-w64-ucrt-x86_64-make ^
+                    mingw-w64-ucrt-x86_64-cmake ^
+                    mingw-w64-ucrt-x86_64-clang ^
+                    mingw-w64-ucrt-x86_64-clang-tools-extra ^
+                    mingw-w64-ucrt-x86_64-gdb ^
                     mingw-w64-ucrt-x86_64-nasm
 
             - name: Run Agent
@@ -232,12 +232,12 @@ jobs:
               if: matrix.os == 'ubuntu-latest'
               run: |
                   sudo apt-get update -y
-                  sudo apt-get install gdb -y
+                  sudo apt-get install gdb nasm -y
 
             - name: Install clang-tidy clang-format and gdb (macos-latest)
               if: matrix.os == 'macos-latest'
               run: |
-                  brew install llvm gdb
+                  brew install llvm gdb nasm
                   ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
 
@@ -250,13 +250,13 @@ jobs:
               if: matrix.os == 'windows-latest'
               shell: msys2 {0}
               run: |
-                  pacman -S \
-                    mingw-w64-ucrt-x86_64-gcc \
-                    mingw-w64-ucrt-x86_64-make \
-                    mingw-w64-ucrt-x86_64-cmake \
-                    mingw-w64-ucrt-x86_64-clang \
-                    mingw-w64-ucrt-x86_64-clang-tools-extra \
-                    mingw-w64-ucrt-x86_64-gdb \
+                  pacman -S ^
+                    mingw-w64-ucrt-x86_64-gcc ^
+                    mingw-w64-ucrt-x86_64-make ^
+                    mingw-w64-ucrt-x86_64-cmake ^
+                    mingw-w64-ucrt-x86_64-clang ^
+                    mingw-w64-ucrt-x86_64-clang-tools-extra ^
+                    mingw-w64-ucrt-x86_64-gdb ^
                     mingw-w64-ucrt-x86_64-nasm
 
             - name: Start Agents
@@ -269,8 +269,35 @@ jobs:
               id: agents
               if: needs.agents.result != 'failure' &&
                   needs.agents.result != 'cancelled' &&
-                  needs.agents.result != 'skipped'
-              run: pnpm nx affected --nx-bail --base=$NX_BASE --head=$NX_HEAD --configuration=ci --output-style=stream --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT --no-cloud -t build lint test e2e
+                  needs.agents.result != 'skipped' &&
+                  matrix.os != 'windows-latest'
+              run: |
+                  pnpm nx affected \
+                      --nx-bail \
+                      --base=$NX_BASE \
+                      --head=$NX_HEAD \
+                      --configuration=ci \
+                      --output-style=stream \
+                      --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT \
+                      --no-cloud \
+                      -t build lint test e2e
+
+            - name: Run Agents
+              id: agents
+              if: needs.agents.result != 'failure' &&
+                  needs.agents.result != 'cancelled' &&
+                  needs.agents.result != 'skipped' &&
+                  matrix.os == 'windows-latest'
+              run: |
+                  pnpm nx affected ^
+                      --nx-bail ^
+                      --base=$NX_BASE ^
+                      --head=$NX_HEAD ^
+                      --configuration=ci ^
+                      --output-style=stream ^
+                      --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT ^
+                      --no-cloud ^
+                      -t build lint test e2e
 
             - name: Stop Agents
               if: always()
