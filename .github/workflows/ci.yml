@@ -153,24 +153,21 @@ jobs:
                   ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
 
-            - name: Install MSYS2 (windows-latest)
-              if: matrix.os == 'windows-latest'
-              run: |
-                  choco install msys2
-
             - name: Install MSYS2 tools (windows-latest)
               if: matrix.os == 'windows-latest'
-              env:
-                  MSYSTEM: UCRT64
-              run: |
-                  C:\tools\msys64\usr\bin\pacman.exe -S `
-                    mingw-w64-ucrt-x86_64-gcc `
-                    mingw-w64-ucrt-x86_64-make `
-                    mingw-w64-ucrt-x86_64-cmake `
-                    mingw-w64-ucrt-x86_64-clang `
-                    mingw-w64-ucrt-x86_64-clang-tools-extra `
-                    mingw-w64-ucrt-x86_64-gdb `
-                    mingw-w64-ucrt-x86_64-nasm `
+              uses: msys2/setup-msys2@v2
+              with:
+                  msystem: UCRT64
+                  location: C:\tools
+                  update: true
+                  install: >-
+                      mingw-w64-ucrt-x86_64-gcc
+                      mingw-w64-ucrt-x86_64-make
+                      mingw-w64-ucrt-x86_64-cmake
+                      mingw-w64-ucrt-x86_64-clang
+                      mingw-w64-ucrt-x86_64-clang-tools-extra
+                      mingw-w64-ucrt-x86_64-gdb
+                      mingw-w64-ucrt-x86_64-nasm
 
             - name: Run Agent
               run: npx nx-cloud start-agent
@@ -242,24 +239,21 @@ jobs:
                   ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
 
-            - name: Install MSYS2 (windows-latest)
-              if: matrix.os == 'windows-latest'
-              run: |
-                  choco install msys2
-
             - name: Install MSYS2 tools (windows-latest)
               if: matrix.os == 'windows-latest'
-              env:
-                  MSYSTEM: UCRT64
-              run: |
-                  C:\tools\msys64\usr\bin\pacman.exe -S `
-                    mingw-w64-ucrt-x86_64-gcc `
-                    mingw-w64-ucrt-x86_64-make `
-                    mingw-w64-ucrt-x86_64-cmake `
-                    mingw-w64-ucrt-x86_64-clang `
-                    mingw-w64-ucrt-x86_64-clang-tools-extra `
-                    mingw-w64-ucrt-x86_64-gdb `
-                    mingw-w64-ucrt-x86_64-nasm `
+              uses: msys2/setup-msys2@v2
+              with:
+                  msystem: UCRT64
+                  location: C:\tools
+                  update: true
+                  install: >-
+                      mingw-w64-ucrt-x86_64-gcc
+                      mingw-w64-ucrt-x86_64-make
+                      mingw-w64-ucrt-x86_64-cmake
+                      mingw-w64-ucrt-x86_64-clang
+                      mingw-w64-ucrt-x86_64-clang-tools-extra
+                      mingw-w64-ucrt-x86_64-gdb
+                      mingw-w64-ucrt-x86_64-nasm
 
             - name: Start Agents
               if: needs.agents.result != 'failure' &&
