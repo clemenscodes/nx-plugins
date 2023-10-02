@@ -72,7 +72,7 @@ describe('lintFilesWithClangTidy', () => {
 
     it('should return true if all files were successfully linted', async () => {
         getLintArgumentsMock.mockResolvedValue(lintArgsMock);
-        checkCommandExistsMock.mockReturnValue(LINUX_CLANG_TIDY)
+        checkCommandExistsMock.mockReturnValue(LINUX_CLANG_TIDY);
         getProjectFilesMock.mockReturnValue(sourceFilesMock);
         runCommandMock.mockReturnValue({ success: true });
         const result = await lintFilesWithClangTidy(
@@ -86,7 +86,7 @@ describe('lintFilesWithClangTidy', () => {
     it('should return false if not all files were successfully linted', async () => {
         getLintArgumentsMock.mockResolvedValue(lintArgsMock);
         getProjectFilesMock.mockReturnValue(sourceFilesMock);
-        checkCommandExistsMock.mockReturnValue(LINUX_CLANG_TIDY)
+        checkCommandExistsMock.mockReturnValue(LINUX_CLANG_TIDY);
         runCommandMock.mockReturnValue({ success: false });
         const result = await lintFilesWithClangTidy(
             workspaceRoot,

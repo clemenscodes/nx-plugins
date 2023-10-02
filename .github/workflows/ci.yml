@@ -173,19 +173,23 @@ jobs:
                   ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
 
-            # - name: Upgrade MinGW (windows-latest)
-            #   if: matrix.os == 'windows-latest'
-            #   run: |
-            #       choco uninstall mingw
-            #       choco install mingw
+            - name: Install MSYS2 (windows-latest)
+              if: matrix.os == 'windows-latest'
+              run: |
+                  choco install msys2
 
-            # - name: Install MSYS2 (windows-latest)
-            #   if: matrix.os == 'windows-latest'
-            #   uses: msys2/setup-msys2@v2
-            #   with:
-            #       msystem: UCRT64
-            #       update: true
-            #       install: mingw-w64-ucrt-x86_64-gcc
+            - name: Install MSYS2 tools (windows-latest)
+              if: matrix.os == 'windows-latest'
+              shell: msys2 {0}
+              run: |
+                  pacman -S \
+                    mingw-w64-ucrt-x86_64-gcc \
+                    mingw-w64-ucrt-x86_64-make \
+                    mingw-w64-ucrt-x86_64-cmake \
+                    mingw-w64-ucrt-x86_64-clang \
+                    mingw-w64-ucrt-x86_64-clang-tools-extra \
+                    mingw-w64-ucrt-x86_64-gdb \
+                    mingw-w64-ucrt-x86_64-nasm
 
             - name: Run Agent
               run: npx nx-cloud start-agent
@@ -257,19 +261,23 @@ jobs:
                   ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
 
-            # - name: Upgrade MinGW (windows-latest)
-            #   if: matrix.os == 'windows-latest'
-            #   run: |
-            #       choco uninstall mingw
-            #       choco install mingw
+            - name: Install MSYS2 (windows-latest)
+              if: matrix.os == 'windows-latest'
+              run: |
+                  choco install msys2
 
-            # - name: Install MSYS2 (windows-latest)
-            #   if: matrix.os == 'windows-latest'
-            #   uses: msys2/setup-msys2@v2
-            #   with:
-            #       msystem: UCRT64
-            #       update: true
-            #       install: mingw-w64-ucrt-x86_64-gcc
+            - name: Install MSYS2 tools (windows-latest)
+              if: matrix.os == 'windows-latest'
+              shell: msys2 {0}
+              run: |
+                  pacman -S \
+                    mingw-w64-ucrt-x86_64-gcc \
+                    mingw-w64-ucrt-x86_64-make \
+                    mingw-w64-ucrt-x86_64-cmake \
+                    mingw-w64-ucrt-x86_64-clang \
+                    mingw-w64-ucrt-x86_64-clang-tools-extra \
+                    mingw-w64-ucrt-x86_64-gdb \
+                    mingw-w64-ucrt-x86_64-nasm
 
             - name: Start Agents
               if: needs.agents.result != 'failure' &&
