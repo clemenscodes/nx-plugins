@@ -140,20 +140,20 @@ jobs:
             - name: Install dependencies
               run: pnpm install --no-frozen-lockfile
 
-            - name: Install gdb (ubuntu-latest)
+            - name: Install linux (ubuntu-latest)
               if: matrix.os == 'ubuntu-latest'
               run: |
                   sudo apt-get update -y
                   sudo apt-get install gdb nasm -y
 
-            - name: Install clang-tidy clang-format and gdb(macos-latest)
+            - name: Install macos dependencies (macos-latest)
               if: matrix.os == 'macos-latest'
               run: |
                   brew install llvm gdb nasm
                   ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
 
-            - name: Install MSYS2 tools (windows-latest)
+            - name: Install windows dependencies (windows-latest)
               if: matrix.os == 'windows-latest'
               uses: msys2/setup-msys2@v2
               with:
@@ -226,20 +226,20 @@ jobs:
             - name: Install dependencies
               run: pnpm install --no-frozen-lockfile
 
-            - name: Install gdb (ubuntu-latest)
+            - name: Install linux (ubuntu-latest)
               if: matrix.os == 'ubuntu-latest'
               run: |
                   sudo apt-get update -y
                   sudo apt-get install gdb nasm -y
 
-            - name: Install clang-tidy clang-format and gdb (macos-latest)
+            - name: Install macos dependencies (macos-latest)
               if: matrix.os == 'macos-latest'
               run: |
                   brew install llvm gdb nasm
                   ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
 
-            - name: Install MSYS2 tools (windows-latest)
+            - name: Install windows dependencies (windows-latest)
               if: matrix.os == 'windows-latest'
               uses: msys2/setup-msys2@v2
               with:
@@ -293,14 +293,14 @@ jobs:
                   needs.win_agents.result != 'skipped' &&
                   matrix.os == 'windows-latest'
               run: |
-                  pnpm nx affected ^
-                      --nx-bail ^
-                      --base=$NX_BASE ^
-                      --head=$NX_HEAD ^
-                      --configuration=ci ^
-                      --output-style=stream ^
-                      --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT ^
-                      --no-cloud ^
+                  pnpm nx affected `
+                      --nx-bail `
+                      --base=$NX_BASE `
+                      --head=$NX_HEAD `
+                      --configuration=ci `
+                      --output-style=stream `
+                      --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT `
+                      --no-cloud `
                       -t build lint test e2e
 
             - name: Stop Agents
