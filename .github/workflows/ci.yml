@@ -41,6 +41,11 @@ jobs:
             - name: Derive SHAs
               uses: nrwl/nx-set-shas@v3
 
+            - name: Install Node
+              uses: actions/setup-node@v3
+              with:
+                  node-version: lts/*
+
             - name: Install pnpm
               uses: pnpm/action-setup@v2
               id: pnpm-install
@@ -48,11 +53,22 @@ jobs:
                   version: latest
                   run_install: false
 
-            - name: Install Node
-              uses: actions/setup-node@v3
+            - name: Get pnpm store directory
+              id: pnpm-cache
+              shell: bash
+              run: |
+                  echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+            - name: Setup pnpm cache
+              uses: actions/cache@v3
+              id: cache
               with:
-                  node-version: lts/*
-                  cache: 'pnpm'
+                  path: |
+                      ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+                      node_modules/
+                  key: ${{ matrix.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  restore-keys: |
+                      ${{ matrix.os }}-pnpm-store-
 
             - name: Install dependencies
               if: steps.cache.outputs.cache-hit != 'true'
@@ -111,19 +127,6 @@ jobs:
             - name: Derive SHAs
               uses: nrwl/nx-set-shas@v3
 
-            - name: Install pnpm
-              uses: pnpm/action-setup@v2
-              id: pnpm-install
-              with:
-                  version: latest
-                  run_install: false
-
-            - name: Install Node
-              uses: actions/setup-node@v3
-              with:
-                  node-version: lts/*
-                  cache: 'pnpm'
-
             - name: Nx cache
               uses: actions/cache/restore@v3
               id: nx_cache
@@ -133,7 +136,46 @@ jobs:
                   restore-keys: |
                       ${{ matrix.os }}-nx-cache
 
+            - name: Install Node
+              uses: actions/setup-node@v3
+              with:
+                  node-version: lts/*
+
+            - name: Install pnpm
+              uses: pnpm/action-setup@v2
+              id: pnpm-install
+              with:
+                  version: latest
+                  run_install: false
+
+            - name: Get pnpm store directory
+              id: pnpm-cache
+              shell: bash
+              run: |
+                  echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+            - name: Restore pnpm cache
+              uses: actions/cache/restore@v3
+              id: cache
+              with:
+                  path: |
+                      ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+                      node_modules/
+                  key: ${{ matrix.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  restore-keys: |
+                      ${{ matrix.os }}-pnpm-store-
+
+            - name: Restore Nx cache
+              uses: actions/cache/restore@v3
+              id: nx_cache
+              with:
+                  path: ${{ env.NX_CACHE_DIRECTORY }}
+                  key: ${{ matrix.os }}-nx-cache-${{ hashFiles('node_modules/.cache/nx/**') }}
+                  restore-keys: |
+                      ${{ matrix.os }}-nx-cache
+
             - name: Install dependencies
+              if: steps.cache.outputs.cache-hit != 'true'
               run: pnpm install --no-frozen-lockfile
 
             - name: Install linux dependencies (ubuntu-latest)
@@ -150,7 +192,6 @@ jobs:
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
 
             - name: Run Agent (unix)
-              if: matrix.os != 'windows-latest'
               run: npx nx-cloud start-agent
 
     main:
@@ -183,6 +224,11 @@ jobs:
             - name: Derive SHAs
               uses: nrwl/nx-set-shas@v3
 
+            - name: Install Node
+              uses: actions/setup-node@v3
+              with:
+                  node-version: lts/*
+
             - name: Install pnpm
               uses: pnpm/action-setup@v2
               id: pnpm-install
@@ -190,8 +236,25 @@ jobs:
                   version: latest
                   run_install: false
 
-            - name: Nx cache
-              uses: actions/cache@v3
+            - name: Get pnpm store directory
+              id: pnpm-cache
+              shell: bash
+              run: |
+                  echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+            - name: Restore pnpm cache
+              uses: actions/cache/restore@v3
+              id: cache
+              with:
+                  path: |
+                      ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+                      node_modules/
+                  key: ${{ matrix.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  restore-keys: |
+                      ${{ matrix.os }}-pnpm-store-
+
+            - name: Restore Nx cache
+              uses: actions/cache/restore@v3
               id: nx_cache
               with:
                   path: ${{ env.NX_CACHE_DIRECTORY }}
@@ -199,12 +262,8 @@ jobs:
                   restore-keys: |
                       ${{ matrix.os }}-nx-cache
 
-            - name: Install Node
-              uses: actions/setup-node@v3
-              with:
-                  node-version: lts/*
-
             - name: Install dependencies
+              if: steps.cache.outputs.cache-hit != 'true'
               run: pnpm install --no-frozen-lockfile
 
             - name: Install linux dependencies (ubuntu-latest)
@@ -223,13 +282,14 @@ jobs:
             - name: Install MSYS2 (windows-latest)
               if: matrix.os == 'windows-latest'
               run: |
-                  choco install msys2
-                  Add-Content $env:GITHUB_PATH "C:\tools\msys64"
+                  Add-Content $env:GITHUB_PATH "C:\msys64"
+                  Add-Content $env:GITHUB_PATH "C:\msys64\usr\bin"
+                  Add-Content $env:GITHUB_PATH "C:\msys64\ucrt64\bin"
 
             - name: Install windows dependencies (windows-latest)
               if: matrix.os == 'windows-latest'
               run: |
-                  C:\tools\msys64\usr\bin\pacman.exe -S --noconfirm `
+                  pacman -S --noconfirm `
                     mingw-w64-ucrt-x86_64-toolchain `
                     mingw-w64-ucrt-x86_64-gcc `
                     mingw-w64-ucrt-x86_64-make `
@@ -238,21 +298,6 @@ jobs:
                     mingw-w64-ucrt-x86_64-clang-tools-extra `
                     mingw-w64-ucrt-x86_64-gdb `
                     mingw-w64-ucrt-x86_64-nasm
-                  Add-Content $env:GITHUB_PATH "C:\tools\msys64\ucrt64\bin"
-
-            - name: Debug windows dependencies (windows-latest)
-              if: matrix.os == 'windows-latest'
-              shell: powershell
-              run: |
-                  where.exe gcc
-                  where.exe make
-                  where.exe cmake
-                  where.exe ctest
-                  where.exe gdb
-                  where.exe nasm
-                  where.exe clang-format
-                  where.exe clang-tidy
-                  $env:PATH -split ';'
 
             - name: Start Agents (unix)
               if: needs.agents.result != 'failure' &&

@@ -18,7 +18,7 @@ export const DARWIN_NASM = '/usr/local/bin/nasm';
 export const DARWIN_CLANG_TIDY = '/usr/local/bin/clang-tidy';
 export const DARWIN_CLANG_FORMAT = '/usr/local/bin/clang-format';
 
-export const WINDOWS_MSYS2_BASE_PATH = `C:/tools/msys64`;
+export const WINDOWS_MSYS2_BASE_PATH = `C:/msys64`;
 export const WINDOWS_UCRT64_PATH = `${WINDOWS_MSYS2_BASE_PATH}/ucrt64`;
 export const WINDOWS_UCRT64_BIN_PATH = `${WINDOWS_UCRT64_PATH}/bin`;
 
