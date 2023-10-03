@@ -24,8 +24,8 @@ export const WINDOWS_UCRT64_BIN_PATH = `${WINDOWS_UCRT64_PATH}/bin`;
 
 export const WINDOWS_GCC = `${WINDOWS_UCRT64_BIN_PATH}/gcc.exe`;
 export const WINDOWS_MAKE = `${WINDOWS_UCRT64_BIN_PATH}/mingw32-make.exe`;
-export const WINDOWS_CMAKE = `cmake`;
-export const WINDOWS_CTEST = `ctest`;
+export const WINDOWS_CMAKE = `${WINDOWS_UCRT64_BIN_PATH}/cmake.exe`;
+export const WINDOWS_CTEST = `${WINDOWS_UCRT64_BIN_PATH}/ctest.exe`;
 export const WINDOWS_GDB = `${WINDOWS_UCRT64_BIN_PATH}/gdb.exe`;
 export const WINDOWS_NASM = `${WINDOWS_UCRT64_BIN_PATH}/nasm.exe`;
 export const WINDOWS_CLANG_FORMAT = `${WINDOWS_UCRT64_BIN_PATH}/clang-format.exe`;
