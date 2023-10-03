@@ -290,6 +290,7 @@ jobs:
                   where.exe nasm
                   where.exe clang-format
                   where.exe clang-tidy
+                  $env:PATH -split ';'
 
             - name: Start Agents (unix)
               if: needs.agents.result != 'failure' &&
