@@ -262,12 +262,12 @@ jobs:
               if: matrix.os == 'ubuntu-latest'
               run: |
                   sudo apt-get update -y
-                  sudo apt-get install gdb nasm -y
+                  sudo apt-get install gdb -y
 
             - name: Install macos dependencies (macos-latest)
               if: matrix.os == 'macos-latest'
               run: |
-                  brew install llvm gdb nasm
+                  brew install llvm gdb
                   ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
 
@@ -279,17 +279,19 @@ jobs:
                   Add-Content $env:GITHUB_PATH "C:\msys64\ucrt64\bin"
 
             - name: Install windows dependencies (windows-latest)
+              uses: msys2/setup-msys2@v2
               if: matrix.os == 'windows-latest'
-              run: |
-                  pacman -S --noconfirm `
-                    mingw-w64-ucrt-x86_64-toolchain `
-                    mingw-w64-ucrt-x86_64-gcc `
-                    mingw-w64-ucrt-x86_64-make `
-                    mingw-w64-ucrt-x86_64-cmake `
-                    mingw-w64-ucrt-x86_64-clang `
-                    mingw-w64-ucrt-x86_64-clang-tools-extra `
-                    mingw-w64-ucrt-x86_64-gdb `
-                    mingw-w64-ucrt-x86_64-nasm
+              with:
+                  msystem: UCRT64
+                  update: true
+                  release: false
+                  pacboy: >-
+                    gcc:u
+                    make:u
+                    cmake:u
+                    clang:u
+                    clang-tools-extra:u
+                    gdb:u
 
             - name: Start Agents (unix)
               if: needs.agents.result != 'failure' &&
