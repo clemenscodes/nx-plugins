@@ -1,4 +1,4 @@
-# nx-cmake  ![GitHub](https://img.shields.io/github/license/clemenscodes/nx-plugins) [![codecov](https://codecov.io/github/clemenscodes/nx-plugins/graph/badge.svg?token=5053DT3DIF)](https://codecov.io/github/clemenscodes/nx-plugins) ![GitHub package.json version (subfolder of monorepo)](https://img.shields.io/github/package-json/v/clemenscodes/nx-plugins?filename=packages%2Fnx-cmake%2Fpackage.json)
+# nx-cmake  ![GitHub](https://img.shields.io/github/license/clemenscodes/nx-plugins) [![codecov](https://codecov.io/github/clemenscodes/nx-plugins/graph/badge.svg?token=5053DT3DIF)](https://codecov.io/github/clemenscodes/nx-plugins) ![GitHub package.json version (subfolder of monorepo)](https://img.shields.io/github/package-json/v/clemenscodes/nx-plugins?filename=packages%2Fnx-cmake%2Fpackage.json) [![CI](https://github.com/clemenscodes/nx-plugins/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/clemenscodes/nx-plugins/actions/workflows/ci.yml)
 
 ## Motivation
 
@@ -51,19 +51,31 @@ This allows for efficient caching mechanisms and parallelization of tasks.
 
 ### Prerequisites
 
-NOTE: Windows is not natively supported. Using WSL2 and installing the dependencies should work though.
-
 The following tools need to be installed for this plugin to work correctly:
 
-- nx 16.9+ (this plugin uses the latest Nx v2 plugin API)
-- node
-- gcc
-- cmake
-- make
+- nx v16.9+ (this plugin uses the latest Nx v2 plugin API)
+- node v18.18+
+- cmake v3.21+
 - ctest
+- make
+- gcc v13+
+- gdb
 - clang-format
 - clang-tidy
-- gdb
+
+#### Windows
+
+NOTE: It is necessary to install a MinGW-w64-ucrt-posix toolchain.
+
+Using chocolatey:
+
+```shell
+choco install mingw
+```
+
+Alternatively, the latest version can also be downloaded from [winlibs](https://winlibs.com).
+
+The recommended release can be downloaded [here](https://github.com/brechtsanders/winlibs_mingw/releases/download/13.2.0-16.0.6-11.0.0-ucrt-r1/winlibs-x86_64-posix-seh-gcc-13.2.0-llvm-16.0.6-mingw-w64ucrt-11.0.0-r1.zip).
 
 ### Installation
 
@@ -193,6 +205,9 @@ All the executors support these additional properties:
 > Configure a C or C++ library with CMake
 >
 > ```shell
+>
+> --release (Configure in release mode) default: false
+>
 > nx cmake <project>
 > ```
 
@@ -201,6 +216,9 @@ All the executors support these additional properties:
 > Build a C or C++ library with Make
 >
 > ```shell
+>
+> --release (Build in release mode) default: false
+>
 > nx build <project>
 > ```
 
@@ -229,6 +247,9 @@ All the executors support these additional properties:
 > Test a C library using CMocka or C++ library using googletest
 >
 > ```shell
+>
+> --release (Test in release mode) default: false
+>
 > nx test <testproject>
 > ```
 
@@ -237,6 +258,9 @@ All the executors support these additional properties:
 > Execute a C or C++ binary
 >
 > ```shell
+>
+> --release (Execute in release mode) default: false
+>
 > nx execute <binaryproject>
 > ```
 
@@ -245,6 +269,9 @@ All the executors support these additional properties:
 > Debug a C or C++ project using gdb
 >
 > ```shell
+>
+> --release (Debug in release mode) default: false
+>
 > nx debug <binaryproject>
 > ```
 

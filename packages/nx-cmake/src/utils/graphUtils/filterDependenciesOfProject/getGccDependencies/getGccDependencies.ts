@@ -1,6 +1,7 @@
 import { executeCommand } from '../../../commandUtils/executeCommand/executeCommand';
 import { detectTestFramework } from '../detectTestFramework/detectTestFramework';
 import { installTestFramework } from '../installTestFramework/installTestFramework';
+import { logger } from '../../../pluginUtils/logger/logger';
 
 export const getGccDependencies = (
     cmd: string,
@@ -18,7 +19,7 @@ export const getGccDependencies = (
         if (detectTestFramework(message)) {
             return installTestFramework(workspaceRoot, projectRoot, cmd);
         }
-
+        logger(JSON.stringify(error));
         throw error;
     }
 };

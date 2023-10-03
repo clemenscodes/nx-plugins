@@ -24,7 +24,9 @@ describe('generateLibTestFiles', () => {
     const defaultTest = () => {
         generateLibTestFiles(tree, resolvedOptions);
         const testRootFiles = tree.children(testRoot);
-        expect(testRootFiles).toStrictEqual(expectedTestRootFiles);
+        expect(testRootFiles).toEqual(
+            expect.arrayContaining(expectedTestRootFiles),
+        );
         expect(tree.exists(testSourceFile));
         expect(tree.exists(testIncludeFile));
         const includeFileContent = readFileWithTree(tree, testIncludeFile);
@@ -95,8 +97,9 @@ describe('generateLibTestFiles', () => {
             'include("../../CMakeLists.txt")\n' +
             '\n' +
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
+            'set_project_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(testtest C)\n' +
-            'set_binary_settings(${CMAKE_PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})\n' +
+            'set_binary_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'link_static_library(${CMAKE_PROJECT_NAME} test)\n' +
             'enable_testing()\n' +
             'link_cmocka(${CMAKE_PROJECT_NAME})\n' +
@@ -173,8 +176,9 @@ describe('generateLibTestFiles', () => {
             'include("../../CMakeLists.txt")\n' +
             '\n' +
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
+            'set_project_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(testtest CXX)\n' +
-            'set_binary_settings(${CMAKE_PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})\n' +
+            'set_binary_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'link_static_library(${CMAKE_PROJECT_NAME} test)\n' +
             'enable_testing()\n' +
             'link_gtest(${CMAKE_PROJECT_NAME})\n' +

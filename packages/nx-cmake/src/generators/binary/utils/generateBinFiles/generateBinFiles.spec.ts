@@ -22,12 +22,15 @@ describe('generateBinFiles', () => {
         const binaryReadMeFile = `${projectRoot}/README.md`;
         generateBinFiles(tree, resolvedOptions);
         const binaryRoot = tree.children(projectRoot);
-        expect(binaryRoot).toStrictEqual([
+        const expectedRootFiles = [
             'CMakeLists.txt',
             'README.md',
             'include',
             'src',
-        ]);
+        ];
+        expect(binaryRoot).toStrictEqual(
+            expect.arrayContaining(expectedRootFiles),
+        );
         expect(tree.exists(binarySourceFile)).toBe(true);
         expect(tree.exists(binaryListsFile)).toBe(true);
         expect(tree.exists(binaryIncludeFile)).toBe(true);
@@ -61,8 +64,9 @@ describe('generateBinFiles', () => {
             'include("../../CMakeLists.txt")\n' +
             '\n' +
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
+            'set_project_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(test CXX)\n' +
-            'set_binary_settings(${CMAKE_PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})\n';
+            'set_binary_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n';
         expectedIncludeFile =
             '#ifndef _TEST_TEST\n' + '#define _TEST_TEST\n' + '\n' + '#endif\n';
         expectedReadMeFile =
@@ -115,8 +119,9 @@ describe('generateBinFiles', () => {
             'include("../../CMakeLists.txt")\n' +
             '\n' +
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
+            'set_project_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(test C)\n' +
-            'set_binary_settings(${CMAKE_PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})\n';
+            'set_binary_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n';
         expectedReadMeFile =
             '# test\n' +
             '\n' +

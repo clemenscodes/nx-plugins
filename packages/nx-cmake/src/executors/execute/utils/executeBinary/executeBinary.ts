@@ -8,13 +8,14 @@ export const executeBinary = (
     projectName: string,
     options: ExecuteExecutorSchema,
 ): boolean => {
-    const bin = `${workspaceRoot}/dist/${projectRoot}/${projectName}`;
+    const { args, release } = options;
+    const config = release ? 'Release' : 'Debug';
+    const bin = `${workspaceRoot}/dist/${projectRoot}/${config}/${projectName}`;
     if (!fileExists(bin)) {
         throw new Error(
             `The binary of ${projectName} was not found and cound not be executed.`,
         );
     }
-    const { args } = options;
     const { success } = runCommand(bin, ...args);
     return success;
 };

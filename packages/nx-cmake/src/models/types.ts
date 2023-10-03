@@ -47,6 +47,7 @@ export type BaseOptions = {
 
 export type ExecutorBaseOptions = {
     args: string[];
+    release: boolean;
 };
 
 export type Deps = {

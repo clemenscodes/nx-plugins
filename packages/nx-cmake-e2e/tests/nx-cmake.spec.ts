@@ -11,7 +11,9 @@ export type Graph = {
     };
 };
 
-describe('nx-cmake', () => {
+const plugin = 'nx-cmake';
+
+describe(plugin, () => {
     let projectDirectory: string;
 
     const execCmd = (cmd: string) => {
@@ -30,14 +32,14 @@ describe('nx-cmake', () => {
     };
 
     const testExecutor = (executorName: string) => {
-        describe(`nx-cmake:${executorName}`, () => {
+        describe(`${plugin}:${executorName}`, () => {
             let projectName: string;
             let cmd: string;
             let args: string;
 
             beforeEach(() => {
                 projectName = 'nx-cmake-test-c';
-                args = '--output-style=stream';
+                args = '--output-style=stream --verbose';
                 cmd = `nx ${executorName} ${projectName} ${args}`;
             });
 
@@ -60,7 +62,7 @@ describe('nx-cmake', () => {
 
         // The plugin has been built and published to a local registry in the jest globalSetup
         // Install the plugin built with the latest source code into the test repo
-        execCmd('npm install nx-cmake@e2e');
+        execCmd(`npm install ${plugin}@e2e`);
     });
 
     afterAll(() => {
@@ -73,15 +75,15 @@ describe('nx-cmake', () => {
 
     it('should be installed', () => {
         // npm ls will fail if the package is not installed properly
-        execCmd('npm ls nx-cmake');
+        execCmd(`npm ls ${plugin}`);
     });
 
     describe('generators', () => {
         let projectName: string;
 
-        describe('nx-cmake:init', () => {
+        describe(`nx-cmake:init`, () => {
             it('should initialize', async () => {
-                const cmd = 'nx g nx-cmake:init --no-interactive';
+                const cmd = `nx g nx-cmake:init --no-interactive`;
                 execCmd(cmd);
             });
         });
@@ -133,7 +135,7 @@ describe('nx-cmake', () => {
 
             describe('nx-cmake:link', () => {
                 it('should link C library', async () => {
-                    const cmd = `nx g nx-cmake:link --source=lib${projectName} --target=lib${projectName}-lib --no-interactive`;
+                    const cmd = `nx g nx-cmake:link --source=lib${projectName} --target=lib${projectName}-lib --link=static --no-interactive`;
                     execCmd(cmd);
                 });
             });
@@ -200,7 +202,7 @@ describe('nx-cmake', () => {
             describe('nx-cmake:lib', () => {
                 it('should generate C++ library', async () => {
                     projectName += '-lib';
-                    const cmd = `nx g nx-cmake:lib --name=${projectName} --language=C++ --no-interactive`;
+                    const cmd = `nx g ${plugin}:lib --name=${projectName} --language=C++ --no-interactive`;
                     execCmd(cmd);
                 });
             });
@@ -232,7 +234,7 @@ describe('nx-cmake', () => {
 
             describe('nx-cmake:link', () => {
                 it('should link C++ library', async () => {
-                    const cmd = `nx g nx-cmake:link --source=lib${projectName} --target=lib${projectName}-lib --no-interactive`;
+                    const cmd = `nx g nx-cmake:link --source=lib${projectName} --target=lib${projectName}-lib --link=static --no-interactive`;
                     execCmd(cmd);
                 });
             });
@@ -286,6 +288,7 @@ describe('nx-cmake', () => {
     });
 
     describe('executors', () => {
+        let args: string;
         testExecutor('cmake');
         testExecutor('fmt');
         testExecutor('lint');
@@ -297,7 +300,8 @@ describe('nx-cmake', () => {
 
             beforeEach(() => {
                 projectName = 'nx-cmake-test-c';
-                cmd = `nx execute ${projectName} --output-style=stream`;
+                args = '--output-style=stream --verbose';
+                cmd = `nx execute ${projectName} ${args}`;
             });
 
             it('should run nx-cmake:execute successfully', () => {
@@ -313,7 +317,8 @@ describe('nx-cmake', () => {
 
             beforeEach(() => {
                 projectName = 'testnx-cmake-test-c';
-                cmd = `nx test ${projectName} --output-style=stream`;
+                args = '--output-style=stream --verbose';
+                cmd = `nx test ${projectName} ${args}`;
             });
 
             it('should run nx-cmake:test successfully', () => {
@@ -329,7 +334,8 @@ describe('nx-cmake', () => {
 
             beforeEach(() => {
                 projectName = 'nx-cmake-test-c';
-                cmd = `nx debug ${projectName} --output-style=stream --args=-ex=r,-ex=q`;
+                args = '--output-style=stream --verbose';
+                cmd = `nx debug ${projectName} ${args} --args=-ex=r,-ex=q`;
             });
 
             it('should run nx-cmake:debug successfully', () => {
@@ -359,7 +365,7 @@ function createTestProject() {
     });
 
     execSync(
-        `npx --yes create-nx-workspace@latest ${projectName} --preset=nx-cmake --no-nxCloud --no-interactive`,
+        `npx --yes create-nx-workspace@latest ${projectName} --preset=${plugin} --no-nxCloud --no-interactive`,
         {
             cwd: dirname(projectDirectory),
             stdio: 'inherit',

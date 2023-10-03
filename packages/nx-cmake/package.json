@@ -24,7 +24,7 @@
     "repository": {
         "directory": "packages/nx-cmake",
         "type": "git",
-        "url": "https://github.com/clemenscodes/nx-plugins/tree/main/packages/nx-cmake"
+        "url": "git+https://github.com/clemenscodes/nx-plugins.git#main"
     },
     "bugs": {
         "url": "https://github.com/clemenscodes/nx-plugins/issues/new",

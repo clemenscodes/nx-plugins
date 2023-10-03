@@ -1,13 +1,17 @@
 import { output } from '@nx/devkit';
 import { execSync } from 'child_process';
 import { logger } from '../../pluginUtils/logger/logger';
+import { getCompiler } from '../../pluginUtils/getCompiler/getCompiler';
 
 export const runCommand = (
     command: string,
     ...args: string[]
 ): { success: boolean } => {
-    process.env.FORCE_COLOR = 'true';
     const cmd = args.length > 0 ? `${command} ${args.join(' ')}` : command;
+    const cc = getCompiler();
+    process.env.FORCE_COLOR = 'true';
+    process.env.CC = cc;
+    process.env.CXX = cc;
     logger(`Executing: ${cmd}`);
     try {
         execSync(cmd, {

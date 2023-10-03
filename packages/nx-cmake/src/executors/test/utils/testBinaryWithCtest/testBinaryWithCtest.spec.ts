@@ -15,6 +15,7 @@ describe('buildProjectWithMake', () => {
         projectRoot = 'projectRoot';
         options = {
             args: [],
+            release: false,
         };
 
         runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
@@ -35,6 +36,8 @@ describe('buildProjectWithMake', () => {
         expect(checkCommandExistsMock).toHaveBeenCalledWith('ctest');
         expect(runCommandMock).toHaveBeenCalledWith(
             'ctest',
+            '-C Debug',
+            '--output-on-failure',
             '--test-dir',
             `${workspaceRoot}/dist/${projectRoot}`,
             ...options.args,
@@ -61,6 +64,8 @@ describe('buildProjectWithMake', () => {
         expect(checkCommandExistsMock).toHaveBeenCalledWith('ctest');
         expect(runCommandMock).toHaveBeenCalledWith(
             'ctest',
+            '-C Debug',
+            '--output-on-failure',
             '--test-dir',
             `${workspaceRoot}/dist/${projectRoot}`,
             '-ex',
@@ -78,6 +83,8 @@ describe('buildProjectWithMake', () => {
         expect(checkCommandExistsMock).toHaveBeenCalledWith('ctest');
         expect(runCommandMock).toHaveBeenCalledWith(
             'ctest',
+            '-C Debug',
+            '--output-on-failure',
             '--test-dir',
             `${workspaceRoot}/dist/${projectRoot}`,
             ...options.args,

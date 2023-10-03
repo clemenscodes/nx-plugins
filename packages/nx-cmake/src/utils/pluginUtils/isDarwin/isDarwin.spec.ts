@@ -1,18 +1,18 @@
-import { checkOs } from './checkOs';
+import { isDarwin } from './isDarwin';
 
 describe('checkOs', () => {
     it('linux should be valid platform', () => {
-        const isValidPlatform = checkOs('linux');
-        expect(isValidPlatform).toBe(true);
+        const isValidPlatform = isDarwin('linux');
+        expect(isValidPlatform).toBe(false);
     });
 
     it('macos should be valid platform', () => {
-        const isValidPlatform = checkOs('darwin');
+        const isValidPlatform = isDarwin('darwin');
         expect(isValidPlatform).toBe(true);
     });
 
     it('windows should not be valid platform', () => {
-        const isValidPlatform = checkOs('win32');
+        const isValidPlatform = isDarwin('win32');
         expect(isValidPlatform).toBe(false);
     });
 });

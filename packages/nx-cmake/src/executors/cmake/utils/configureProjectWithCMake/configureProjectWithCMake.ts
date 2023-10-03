@@ -1,21 +1,19 @@
 import type { CmakeExecutorSchema } from '../../schema';
 import { runCommand } from '../../../../utils/commandUtils/runCommand/runCommand';
-import { checkCommandExists } from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
+import { getCmakeCommandArguments } from '../getCmakeCommandArguments/getCmakeCommandArguments';
+import { getCmake } from '../getCmake/getCmake';
 
 export const configureProjectWithCMake = (
     workspaceRoot: string,
     projectRoot: string,
     options: CmakeExecutorSchema,
 ): boolean => {
-    const cmakeCommand = checkCommandExists('cmake');
-    const { release, args } = options;
-    const { success } = runCommand(
-        cmakeCommand,
-        '-S',
-        `${workspaceRoot}/${projectRoot}`,
-        `${workspaceRoot}/dist/${projectRoot}`,
-        `-DCMAKE_BUILD_TYPE=${release ? 'Release' : 'Debug'}`,
-        ...args,
+    const cmake = getCmake();
+    const cmakeArguments = getCmakeCommandArguments(
+        workspaceRoot,
+        projectRoot,
+        options,
     );
+    const { success } = runCommand(cmake, ...cmakeArguments);
     return success;
 };

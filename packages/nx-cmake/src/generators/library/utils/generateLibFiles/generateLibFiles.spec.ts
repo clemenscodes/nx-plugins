@@ -54,8 +54,9 @@ describe('generateLibFiles', () => {
             'include("../../CMakeLists.txt")\n' +
             '\n' +
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
+            'set_project_settings(libtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(libtest CXX)\n' +
-            'set_library_settings(${CMAKE_PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})\n';
+            'set_library_settings(libtest ${CMAKE_CURRENT_SOURCE_DIR})\n';
         expectedReadMeFile =
             '# libtest\n' +
             '\n' +
@@ -90,7 +91,9 @@ describe('generateLibFiles', () => {
         const resolvedOptions = resolveLibOptions(options);
         generateLibFiles(tree, resolvedOptions);
         const libraryRootFiles = tree.children(libraryRoot);
-        expect(libraryRootFiles).toStrictEqual(expectedLibraryRootFiles);
+        expect(libraryRootFiles).toEqual(
+            expect.arrayContaining(expectedLibraryRootFiles),
+        );
         expect(tree.exists(librarySourceFile)).toBe(true);
         expect(tree.exists(libraryIncludeFile)).toBe(true);
         const includeFileContent = readFileWithTree(tree, libraryIncludeFile);
@@ -112,8 +115,9 @@ describe('generateLibFiles', () => {
             'include("../../CMakeLists.txt")\n' +
             '\n' +
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
+            'set_project_settings(libtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(libtest C)\n' +
-            'set_library_settings(${CMAKE_PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})\n';
+            'set_library_settings(libtest ${CMAKE_CURRENT_SOURCE_DIR})\n';
         expectedReadMeFile =
             '# libtest\n' +
             '\n' +

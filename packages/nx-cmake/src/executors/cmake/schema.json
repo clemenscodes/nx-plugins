@@ -10,9 +10,9 @@
             "type": "array"
         },
         "release": {
+            "description": "Whether to build in release mode",
             "type": "boolean",
-            "default": false,
-            "description": "Whether to build in release mode"
+            "default": false
         }
     },
     "outputCapture": "direct-nodejs",

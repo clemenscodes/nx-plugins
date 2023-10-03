@@ -1,5 +1,6 @@
 import { getConfigFile } from './getConfigFile';
 import * as fileExistsModule from '../fileExists/fileExists';
+import { join } from 'path';
 
 describe('getConfigFile', () => {
     let workspaceRoot: string;
@@ -25,7 +26,8 @@ describe('getConfigFile', () => {
             projectRoot,
             configFile,
         );
-        expect(result).toBe('/workspace/project/.clang-format');
+        const expectedPath = join(workspaceRoot, projectRoot, configFile);
+        expect(result).toBe(expectedPath);
     });
 
     it('should return config file from root if in project it does not exist', async () => {
@@ -36,7 +38,8 @@ describe('getConfigFile', () => {
             projectRoot,
             configFile,
         );
-        expect(result).toBe('/workspace/.clang-format');
+        const expectedPath = join(workspaceRoot, configFile);
+        expect(result).toBe(expectedPath);
     });
 
     it('should error if config file does not exist', async () => {

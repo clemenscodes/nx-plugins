@@ -25,8 +25,9 @@ describe('writeFileWithTree', () => {
             'include("../../CMakeLists.txt")\n' +
             '\n' +
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
+            'set_project_settings(liblink ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(liblink CXX)\n' +
-            'set_library_settings(${CMAKE_PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})\n';
+            'set_library_settings(liblink ${CMAKE_CURRENT_SOURCE_DIR})\n';
     });
 
     it('should read the file correctly', () => {

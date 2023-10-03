@@ -9,7 +9,15 @@ export const testBinaryWithCtest = (
 ): boolean => {
     const testCommand = checkCommandExists('ctest');
     const testBin = `${workspaceRoot}/dist/${projectRoot}`;
-    const { args } = options;
-    const { success } = runCommand(testCommand, '--test-dir', testBin, ...args);
+    const { args, release } = options;
+    const config = release ? 'Release' : 'Debug';
+    const { success } = runCommand(
+        testCommand,
+        `-C ${config}`,
+        '--output-on-failure',
+        '--test-dir',
+        testBin,
+        ...args,
+    );
     return success;
 };

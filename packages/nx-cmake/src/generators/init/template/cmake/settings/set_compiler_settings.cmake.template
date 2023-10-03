@@ -1,5 +1,5 @@
 function(set_c_flags)
-    if (CMAKE_C_COMPILER_ID MATCHES "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "GNU")
+    if (CMAKE_C_COMPILER_ID STREQUAL "GNU")
         string(CONCAT FLAGS
         " -Wall"
         " -Wextra"
@@ -9,6 +9,9 @@ function(set_c_flags)
         " -MP"
         )
         set(CMAKE_C_FLAGS ${FLAGS} CACHE INTERNAL "")
+    else()
+        message(FATAL_ERROR "Not using gcc, but only gcc is supported. compiler id: ${CMAKE_C_COMPILER_ID}")
+        return()
     endif ()
 endfunction()
 
@@ -24,12 +27,19 @@ function(set_cxx_flags)
         " -std=c++17"
         )
         set(CMAKE_CXX_FLAGS ${FLAGS} CACHE INTERNAL "")
+    else()
+        message(FATAL_ERROR "Not using gcc, but only gcc is supported. compiler id: ${CMAKE_CXX_COMPILER_ID}")
+        return()
     endif ()
 endfunction()
 
 function(set_compiler_settings)
-    set_c_flags()
-    set_cxx_flags()
+    if(CMAKE_C_COMPILER_ID)
+        set_c_flags()
+    endif()
+    if(CMAKE_CXX_COMPILER_ID)
+        set_cxx_flags()
+    endif()
     set(CMAKE_EXE_LINKER_FLAGS    "-Wl,--as-needed ${CMAKE_EXE_LINKER_FLAGS}")
     set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--as-needed ${CMAKE_SHARED_LINKER_FLAGS}")
 endfunction()

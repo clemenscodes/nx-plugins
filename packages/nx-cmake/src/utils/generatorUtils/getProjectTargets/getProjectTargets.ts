@@ -3,12 +3,14 @@ import { PLUGIN_NAME } from '../../../config/pluginName';
 import { CProjectType } from '../../../models/types';
 
 export const defaultConfiguration = {
-    defaultConfiguration: 'development',
+    defaultConfiguration: 'debug',
     configurations: {
-        development: {
+        debug: {
+            release: false,
             args: [],
         },
-        production: {
+        release: {
+            release: true,
             args: [],
         },
     },
@@ -16,17 +18,12 @@ export const defaultConfiguration = {
 
 export const cmakeTarget = {
     executor: `${PLUGIN_NAME}:cmake`,
-    defaultConfiguration: 'development',
-    configurations: {
-        development: {
-            release: false,
-            args: [],
-        },
-        production: {
-            release: true,
-            args: [],
-        },
-    },
+    ...defaultConfiguration,
+};
+
+export const buildTarget = {
+    executor: `${PLUGIN_NAME}:build`,
+    ...defaultConfiguration,
 };
 
 export const executeTarget = {
@@ -44,19 +41,11 @@ export const testTarget = {
     ...defaultConfiguration,
 };
 
-export const buildTarget = {
-    executor: `${PLUGIN_NAME}:build`,
-    ...defaultConfiguration,
-};
-
 export const lintTarget = {
     executor: `${PLUGIN_NAME}:lint`,
-    defaultConfiguration: 'development',
+    defaultConfiguration: 'local',
     configurations: {
-        development: {
-            args: [],
-        },
-        production: {
+        local: {
             args: [],
         },
         ci: {
@@ -67,14 +56,9 @@ export const lintTarget = {
 
 export const fmtTarget = {
     executor: `${PLUGIN_NAME}:format`,
-    defaultConfiguration: 'development',
+    defaultConfiguration: 'local',
     configurations: {
-        development: {
-            args: [],
-            verbose: true,
-            editFilesInPlace: true,
-        },
-        production: {
+        local: {
             args: [],
             verbose: true,
             editFilesInPlace: true,
