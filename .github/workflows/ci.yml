@@ -286,12 +286,12 @@ jobs:
                   update: true
                   release: false
                   pacboy: >-
-                    gcc:u
-                    make:u
-                    cmake:u
-                    clang:u
-                    clang-tools-extra:u
-                    gdb:u
+                      gcc:u
+                      make:u
+                      cmake:u
+                      clang:u
+                      clang-tools-extra:u
+                      gdb:u
 
             - name: Start Agents (unix)
               if: needs.agents.result != 'failure' &&
