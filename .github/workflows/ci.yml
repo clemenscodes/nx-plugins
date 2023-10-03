@@ -92,7 +92,6 @@ jobs:
                 os:
                     - ubuntu-latest
                     - macos-latest
-                    - windows-latest
                 agent:
                     - ${{ fromJson(needs.set-agents.outputs.matrix) }}
         steps:
@@ -150,54 +149,14 @@ jobs:
                   ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
                   ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
 
-            - name: Install MSYS2 (windows-latest)
-              if: matrix.os == 'windows-latest'
-              shell: powershell
-              run: |
-                  choco install msys2
-                  Add-Content $env:GITHUB_PATH "C:\tools\msys64"
-
-            - name: Install windows dependencies (windows-latest)
-              if: matrix.os == 'windows-latest'
-              shell: powershell
-              run: |
-                  C:\tools\msys64\usr\bin\pacman.exe -S --noconfirm `
-                    mingw-w64-ucrt-x86_64-toolchain `
-                    mingw-w64-ucrt-x86_64-gcc `
-                    mingw-w64-ucrt-x86_64-make `
-                    mingw-w64-ucrt-x86_64-cmake `
-                    mingw-w64-ucrt-x86_64-clang `
-                    mingw-w64-ucrt-x86_64-clang-tools-extra `
-                    mingw-w64-ucrt-x86_64-gdb `
-                    mingw-w64-ucrt-x86_64-nasm
-                  Add-Content $env:GITHUB_PATH "C:\tools\msys64\ucrt64\bin"
-
-            - name: Debug windows dependencies (windows-latest)
-              if: matrix.os == 'windows-latest'
-              shell: powershell
-              run: |
-                  where.exe gcc
-                  where.exe make
-                  where.exe cmake
-                  where.exe ctest
-                  where.exe gdb
-                  where.exe nasm
-                  where.exe clang-format
-                  where.exe clang-tidy
-                  $env:PATH -split ';'
-
             - name: Run Agent (unix)
               if: matrix.os != 'windows-latest'
               run: npx nx-cloud start-agent
 
-            - name: Run Agent (windows)
-              if: matrix.os == 'windows-latest'
-              shell: powershell
-              run: npx nx-cloud start-agent
     main:
         strategy:
             matrix:
-                os: [ubuntu-latest, macos-latest]
+                os: [windows-latest, ubuntu-latest, macos-latest]
             fail-fast: false
         name: Main Job [${{ matrix.os }}]
         env:
@@ -302,13 +261,6 @@ jobs:
                   matrix.os != 'windows-latest'
               run: npx nx-cloud start-ci-run --stop-agents-after=e2e
 
-            - name: Start Agents (windows)
-              if: needs.win_agents.result != 'failure' &&
-                  needs.win_agents.result != 'cancelled' &&
-                  needs.win_agents.result != 'skipped' &&
-                  matrix.os == 'windows-latest'
-              run: npx nx-cloud start-ci-run --stop-agents-after=e2e
-
             - name: Run Agents (unix)
               id: agents
               if: needs.agents.result != 'failure' &&
@@ -326,12 +278,8 @@ jobs:
                       --no-cloud \
                       -t build lint test e2e
 
-            - name: Run Agents (windows)
-              id: win_agents
-              if: needs.win_agents.result != 'failure' &&
-                  needs.win_agents.result != 'cancelled' &&
-                  needs.win_agents.result != 'skipped' &&
-                  matrix.os == 'windows-latest'
+            - name: Run tests (windows)
+              if: matrix.os == 'windows-latest'
               run: |
                   pnpm nx affected `
                       --nx-bail `
