@@ -170,6 +170,7 @@ jobs:
                     mingw-w64-ucrt-x86_64-clang `
                     mingw-w64-ucrt-x86_64-clang-tools-extra `
                     mingw-w64-ucrt-x86_64-gdb `
+                    mingw-w64-ucrt-x86_64-toolchain `
                     mingw-w64-ucrt-x86_64-nasm
 
             - name: Debug windows dependencies (windows-latest)
@@ -276,6 +277,7 @@ jobs:
                     mingw-w64-ucrt-x86_64-clang `
                     mingw-w64-ucrt-x86_64-clang-tools-extra `
                     mingw-w64-ucrt-x86_64-gdb `
+                    mingw-w64-ucrt-x86_64-toolchain `
                     mingw-w64-ucrt-x86_64-nasm
 
             - name: Debug windows dependencies (windows-latest)
