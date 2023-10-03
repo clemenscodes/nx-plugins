@@ -155,6 +155,7 @@ jobs:
 
             - name: Install MSYS2 (windows-latest)
               if: matrix.os == 'windows-latest'
+              shell: powershell
               run: |
                   choco install msys2
                   Add-Content $env:GITHUB_PATH "C:\tools\msys64"
