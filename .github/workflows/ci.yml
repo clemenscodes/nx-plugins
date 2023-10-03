@@ -156,8 +156,8 @@ jobs:
             - name: Install MSYS2 (windows-latest)
               if: matrix.os == 'windows-latest'
               run: |
-                  choco uninstall mingw
                   choco install msys2
+                  Add-Content $env:GITHUB_PATH "C:\tools\msys64"
 
             - name: Install windows dependencies (windows-latest)
               if: matrix.os == 'windows-latest'
@@ -264,8 +264,8 @@ jobs:
             - name: Install MSYS2 (windows-latest)
               if: matrix.os == 'windows-latest'
               run: |
-                  choco uninstall mingw
                   choco install msys2
+                  Add-Content $env:GITHUB_PATH "C:\tools\msys64"
 
             - name: Install windows dependencies (windows-latest)
               if: matrix.os == 'windows-latest'
