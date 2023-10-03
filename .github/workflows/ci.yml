@@ -320,11 +320,11 @@ jobs:
               run: |
                   pnpm nx affected `
                       --nx-bail `
-                      --base=$NX_BASE `
-                      --head=$NX_HEAD `
+                      --base=$env:NX_BASE `
+                      --head=$env:NX_HEAD `
                       --configuration=ci `
                       --output-style=stream `
-                      --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT `
+                      --parallel=$env:NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT `
                       --no-cloud `
                       -t build lint test e2e
 
