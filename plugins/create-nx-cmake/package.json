@@ -1,0 +1,13 @@
+{
+    "name": "create-nx-cmake",
+    "version": "0.0.1",
+    "dependencies": {
+        "create-nx-workspace": "16.9.1"
+    },
+    "type": "commonjs",
+    "main": "./src/index.js",
+    "typings": "./src/index.d.ts",
+    "bin": {
+        "create-nx-cmake": "./bin/index.js"
+    }
+}

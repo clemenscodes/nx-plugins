@@ -1,0 +1,37 @@
+{
+    "name": "e2e-create-nx-cmake",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "application",
+    "sourceRoot": "e2e/e2e-create-nx-cmake/tests",
+    "targets": {
+        "e2e": {
+            "dependsOn": ["^build"],
+            "executor": "@nx/jest:jest",
+            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+            "options": {
+                "jestConfig": "e2e/e2e-create-nx-cmake/jest.config.ts",
+                "passWithNoTests": true,
+                "runInBand": true
+            },
+            "configurations": {
+                "ci": {
+                    "ci": true,
+                    "codeCoverage": true
+                }
+            }
+        },
+        "lint": {
+            "executor": "@nx/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["e2e/e2e-create-nx-cmake/**/*.ts"]
+            },
+            "configurations": {
+                "ci": {
+                    "maxWarnings": 0
+                }
+            }
+        }
+    },
+    "implicitDependencies": ["nx-cmake"]
+}

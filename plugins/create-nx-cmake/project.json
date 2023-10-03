@@ -1,0 +1,82 @@
+{
+    "name": "create-nx-cmake",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "plugins/create-nx-cmake/bin",
+    "projectType": "library",
+    "targets": {
+        "build": {
+            "executor": "@nx/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/plugins/create-nx-cmake",
+                "main": "plugins/create-nx-cmake/bin/index.ts",
+                "tsConfig": "plugins/create-nx-cmake/tsconfig.lib.json",
+                "assets": ["plugins/create-nx-cmake/*.md"]
+            },
+            "configurations": {
+                "ci": {}
+            }
+        },
+        "publish": {
+            "command": "node tools/scripts/publish.mjs create-nx-cmake {args.ver} {args.tag}",
+            "dependsOn": ["build"]
+        },
+        "lint": {
+            "executor": "@nx/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": [
+                    "plugins/create-nx-cmake/**/*.ts",
+                    "plugins/create-nx-cmake/package.json"
+                ]
+            },
+            "configurations": {
+                "ci": {
+                    "maxWarnings": 0
+                }
+            }
+        },
+        "test": {
+            "executor": "@nx/jest:jest",
+            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+            "options": {
+                "jestConfig": "plugins/create-nx-cmake/jest.config.ts",
+                "passWithNoTests": true
+            },
+            "configurations": {
+                "ci": {
+                    "ci": true,
+                    "silent": true,
+                    "coverageReporters": ["lcov"],
+                    "codeCoverage": true
+                }
+            }
+        },
+        "version": {
+            "executor": "@jscutlery/semver:version",
+            "options": {
+                "preset": "conventional",
+                "syncVersions": true,
+                "tagPrefix": "create-nx-cmake-",
+                "allowEmptyRelease": false,
+                "skipCommitTypes": [
+                    "chore",
+                    "build",
+                    "ci",
+                    "docs",
+                    "refactor",
+                    "test"
+                ],
+                "noVerify": true,
+                "skipRootChangelog": true,
+                "changelogHeader": "# Changelog (create-nx-cmake)\n",
+                "push": false,
+                "commitMessageFormat": "chore({projectName}): release version ${version} [skip ci]",
+                "remote": "origin",
+                "baseBranch": "main"
+            }
+        }
+    },
+    "tags": [],
+    "implicitDependencies": ["nx-cmake"]
+}
