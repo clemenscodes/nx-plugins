@@ -3,6 +3,14 @@
     "version": "0.3.9",
     "license": "MIT",
     "scripts": {
+        "lint": "pnpm nx affected -t lint --output-style=stream",
+        "build": "pnpm nx affected -t build --output-style=stream",
+        "test": "pnpm nx affected -t test --output-style=stream",
+        "e2e": "pnpm nx affected  -t e2e --output-style=stream",
+        "lint:all": "pnpm nx run-many -t lint --output-style=stream",
+        "build:all": "pnpm nx run-many -t build --output-style=stream",
+        "test:all": "pnpm nx run-many -t test --output-style=stream",
+        "e2e:all": "pnpm nx run-many -t e2e --output-style=stream",
         "prepare": "husky install"
     },
     "private": true,
