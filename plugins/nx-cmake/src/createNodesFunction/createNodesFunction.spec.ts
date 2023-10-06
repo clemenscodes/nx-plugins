@@ -1,7 +1,7 @@
 import type { CreateNodesContext, ProjectConfiguration } from '@nx/devkit';
-import type { C } from '../models/types';
+import type { C } from '@/types';
 import { createNodesFunction } from './createNodesFunction';
-import { CProjectType } from '../models/types';
+import { CProjectType } from '@/types';
 import * as getProjectTypeModule from '../utils/generatorUtils/getProjectTypeAndVariant/getProjectTypeAndVariant';
 import * as getProjectConfigurationModule from './../utils/generatorUtils/getProjectConfiguration/getProjectConfiguration';
 

@@ -1,11 +1,7 @@
 import * as isDarwinModule from '../../../../utils/pluginUtils/isDarwin/isDarwin';
 import * as isWindowsModule from '../../../../utils/pluginUtils/isWindows/isWindows';
 import { getCmake } from './getCmake';
-import {
-    DARWIN_CMAKE,
-    WINDOWS_CMAKE,
-    LINUX_CMAKE,
-} from '../../../../config/programs';
+import { DARWIN_CMAKE, WINDOWS_CMAKE, LINUX_CMAKE } from '@/config';
 
 describe('getCmake', () => {
     let isWindowsMock: jest.SpyInstance;

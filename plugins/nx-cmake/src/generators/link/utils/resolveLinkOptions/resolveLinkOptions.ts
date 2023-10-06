@@ -2,7 +2,7 @@ import type { Tree } from '@nx/devkit';
 import type { LinkGeneratorSchema, LinkSchema } from '../../schema';
 import { readProjectConfiguration } from '@nx/devkit';
 import { getProjectTypeWithTree } from '../../../../utils/generatorUtils/getProjectTypeWithTree/getProjectTypeWithTree';
-import { CProjectType } from '../../../../models/types';
+import { CProjectType } from '@/types';
 
 export const resolveLinkOptions = (
     tree: Tree,

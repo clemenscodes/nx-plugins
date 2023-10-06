@@ -1,4 +1,4 @@
-import type { Graph } from '../../../../models/types';
+import type { Graph } from '@/types';
 import { reduceGraph } from './reduceGraph';
 
 describe('reduceGraph', () => {

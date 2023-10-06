@@ -1,6 +1,6 @@
 import type { ProjectConfiguration } from '@nx/devkit';
-import { PLUGIN_NAME } from '../../../config/pluginName';
-import { CProjectType } from '../../../models/types';
+import { PLUGIN_NAME } from '@/config';
+import { CProjectType } from '@/types';
 
 export const defaultConfiguration = {
     defaultConfiguration: 'debug',

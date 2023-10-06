@@ -1,4 +1,4 @@
-import type { BaseOptions } from './../../../models/types';
+import type { BaseOptions } from '@/types';
 import { resolveOptions } from './resolveOptions';
 
 describe('resolveOptions', () => {

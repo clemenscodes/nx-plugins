@@ -1,6 +1,6 @@
 import type { Tree } from '@nx/devkit';
 import { readProjectConfiguration } from '@nx/devkit';
-import { CProjectType } from '../../../models/types';
+import { CProjectType } from '@/types';
 import { getProjectTypeFromConfig } from '../getProjectTypeFromConfig/getProjectTypeFromConfig';
 
 export const getProjectTypeWithTree = (

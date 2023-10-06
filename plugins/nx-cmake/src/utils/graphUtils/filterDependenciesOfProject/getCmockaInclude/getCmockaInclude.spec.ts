@@ -1,4 +1,4 @@
-import type { WorkspaceLayout } from '../../../../models/types';
+import type { WorkspaceLayout } from '@/types';
 import { getCmockaInclude } from './getCmockaInclude';
 
 describe('getCmockaInclude', () => {

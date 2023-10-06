@@ -1,5 +1,5 @@
-import type { C } from '../../../models/types';
-import { CProjectType } from '../../../models/types';
+import type { C } from '@/types';
+import { CProjectType } from '@/types';
 import { getProjectTypeFromConfigFileContent } from './getProjectTypeFromConfigFileContent/getProjectFileFromConfigFileContent';
 import { readProjectFile } from './readProjectFile/readProjectFile';
 import { getLanguageVariant } from './getLanguageVariant/getLanguageVariant';

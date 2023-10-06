@@ -1,5 +1,5 @@
 import { readFileSync } from 'fs';
-import { PROJECT_FILE } from '../../../../config/projectFilePattern';
+import { PROJECT_FILE } from '@/config';
 
 export const readProjectFile = (projectFile: string): string => {
     if (!projectFile.endsWith(PROJECT_FILE)) {

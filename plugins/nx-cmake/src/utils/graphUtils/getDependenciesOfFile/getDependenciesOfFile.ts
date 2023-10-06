@@ -1,5 +1,5 @@
 import type { RawProjectGraphDependency } from '@nx/devkit';
-import type { FilteredProject } from '../../../models/types';
+import type { FilteredProject } from '@/types';
 import { DependencyType } from '@nx/devkit';
 import { getProjectFromFile } from '../../generatorUtils/getProjectFromFile/getProjectFromFile';
 

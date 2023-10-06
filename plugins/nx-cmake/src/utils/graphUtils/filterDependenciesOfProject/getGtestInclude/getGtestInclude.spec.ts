@@ -1,4 +1,4 @@
-import type { WorkspaceLayout } from '../../../../models/types';
+import type { WorkspaceLayout } from '@/types';
 import { getGtestInclude } from './getGtestInclude';
 
 describe('getGtestInclude', () => {

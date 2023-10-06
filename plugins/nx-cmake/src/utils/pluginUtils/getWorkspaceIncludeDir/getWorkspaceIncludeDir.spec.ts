@@ -1,4 +1,4 @@
-import type { NxCmakePluginConfig } from '../../../models/types';
+import type { NxCmakePluginConfig } from '@/types';
 import { getWorkspaceIncludeDir } from './getWorkspaceIncludeDir';
 import * as getPluginConfigModule from '../getPluginConfig/getPluginConfig';
 

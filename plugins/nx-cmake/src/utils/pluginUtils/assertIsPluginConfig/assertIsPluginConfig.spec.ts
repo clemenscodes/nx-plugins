@@ -1,4 +1,4 @@
-import type { NxCmakePluginConfig } from '../../../models/types';
+import type { NxCmakePluginConfig } from '@/types';
 import { assertIsPluginConfig } from './assertIsPluginConfig';
 
 describe('assertIsPluginConfig', () => {

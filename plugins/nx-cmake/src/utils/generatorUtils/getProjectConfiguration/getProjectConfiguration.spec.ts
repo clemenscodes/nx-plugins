@@ -1,7 +1,7 @@
-import type { C } from '../../../models/types';
+import type { C } from '@/types';
 import { getProjectConfiguration } from './getProjectConfiguration';
-import { CProjectType } from '../../../models/types';
-import { PLUGIN_NAME } from '../../../config/pluginName';
+import { CProjectType } from '@/types';
+import { PLUGIN_NAME } from '@/config';
 import {
     defaultTargets,
     appTargets,

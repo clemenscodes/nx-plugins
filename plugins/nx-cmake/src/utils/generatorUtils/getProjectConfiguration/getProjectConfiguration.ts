@@ -1,7 +1,7 @@
 import type { ProjectConfiguration } from '@nx/devkit';
-import type { C } from '../../../models/types';
+import type { C } from '@/types';
+import { CProjectType } from '@/types';
 import { getProjectConfigurationType } from '../getProjectConfigurationType/getProjectConfigurationType';
-import { CProjectType } from '../../../models/types';
 import { getProjectName } from '../getProjectName/getProjectName';
 import { getProjectTargets } from '../getProjectTargets/getProjectTargets';
 import { getProjectTags } from '../getProjectTags/getProjectTags';

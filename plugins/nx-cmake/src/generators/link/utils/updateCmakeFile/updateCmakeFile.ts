@@ -1,7 +1,7 @@
 import type { Tree } from '@nx/devkit';
 import type { LinkSchema } from '../../schema';
-import type { Link } from '../../../../models/types';
-import { PROJECT_FILE } from '../../../../config/projectFilePattern';
+import type { Link } from '@/types';
+import { PROJECT_FILE } from '@/config';
 import { trimLib } from '../../../../utils/generatorUtils/trimLib/trimLib';
 import { writeFileWithTree } from '../../../../utils/generatorUtils/writeFileWithTree/writeFileWithTree';
 import { readFileWithTree } from '../../../../utils/generatorUtils/readFileWithTree/readFileWithTree';

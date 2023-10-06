@@ -1,7 +1,4 @@
-import {
-    REQUIRED_MAJOR_NX_VERSION,
-    REQUIRED_MINOR_NX_VERSION,
-} from '../../../config/version';
+import { REQUIRED_MAJOR_NX_VERSION, REQUIRED_MINOR_NX_VERSION } from '@/config';
 
 export const checkNxVersion = (version: string): boolean => {
     const [major, minor, patch] = version

@@ -1,4 +1,4 @@
-import type { C } from '../../../../models/types';
+import type { C } from '@/types';
 import { getLanguageVariant } from './getLanguageVariant';
 
 describe('getLanguageVariantFromConfigFileContent', () => {

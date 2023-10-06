@@ -3,7 +3,7 @@ import type {
     ProjectConfiguration,
 } from '@nx/devkit';
 import { filterProjects } from './filterProjects';
-import { CProjectType } from '../../../models/types';
+import { CProjectType } from '@/types';
 import { getProjectConfiguration } from '../../generatorUtils/getProjectConfiguration/getProjectConfiguration';
 
 describe('filterProjects', () => {

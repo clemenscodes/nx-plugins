@@ -2,7 +2,7 @@ import type { BinGeneratorSchema, BinSchema } from '../../schema';
 import type { LinkGeneratorSchema } from '../../../link/schema';
 import { resolveOptions } from '../../../../utils/generatorUtils/resolveOptions/resolveOptions';
 import { getProjectRoot } from '../../../../utils/generatorUtils/getProjectRoot/getProjectRoot';
-import { CProjectType } from '../../../../models/types';
+import { CProjectType } from '@/types';
 import { getLibName } from '../../../library/utils/getLibName/getLibName';
 import { offsetFromRoot } from '@nx/devkit';
 

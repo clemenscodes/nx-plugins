@@ -3,7 +3,7 @@ import type {
     ProjectFileMap,
     RawProjectGraphDependency,
 } from '@nx/devkit';
-import type { FilteredProject } from '../../../models/types';
+import type { FilteredProject } from '@/types';
 import { filterDependenciesOfProject } from '../filterDependenciesOfProject/filterDependenciesOfProject';
 
 export const getDependencies = (

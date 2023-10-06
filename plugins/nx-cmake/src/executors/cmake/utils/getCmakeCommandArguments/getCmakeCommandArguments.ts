@@ -1,7 +1,7 @@
 import { CmakeExecutorSchema } from '../../schema';
 import { getCompiler } from '../../../../utils/pluginUtils/getCompiler/getCompiler';
 import { isWindows } from '../../../../utils/pluginUtils/isWindows/isWindows';
-import { WINDOWS_MAKE } from '../../../../config/programs';
+import { WINDOWS_MAKE } from '@/config';
 
 export const getCmakeCommandArguments = (
     workspaceRoot: string,

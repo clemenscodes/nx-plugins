@@ -1,4 +1,4 @@
-import type { WorkspaceLayout } from '../../../../models/types';
+import type { WorkspaceLayout } from '@/types';
 
 export const getGtestInclude = (workspaceLayout: WorkspaceLayout): string => {
     const { libsDir } = workspaceLayout;

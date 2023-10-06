@@ -1,5 +1,5 @@
 import { getPluginConfig } from '../getPluginConfig/getPluginConfig';
-import { NxCmakePluginConfig } from '../../../models/types';
+import { NxCmakePluginConfig } from '@/types';
 
 export const getWorkspaceIncludeDir =
     (): NxCmakePluginConfig['globalIncludeDir'] => {

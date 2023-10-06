@@ -1,4 +1,4 @@
-import type { WorkspaceLayout } from './../../../../models/types';
+import type { WorkspaceLayout } from '@/types';
 import type { NxJsonConfiguration } from '@nx/devkit';
 import type { InitGeneratorSchema } from '../../schema';
 import { setWorkspaceLayout } from './setWorkspaceLayout';

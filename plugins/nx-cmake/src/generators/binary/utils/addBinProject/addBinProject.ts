@@ -2,7 +2,7 @@ import type { Tree } from '@nx/devkit';
 import type { BinSchema } from '../../schema';
 import { addProjectConfiguration } from '@nx/devkit';
 import { getProjectTargets } from '../../../../utils/generatorUtils/getProjectTargets/getProjectTargets';
-import { CProjectType } from '../../../../models/types';
+import { CProjectType } from '@/types';
 
 export const addBinProject = (tree: Tree, options: BinSchema) => {
     const { name, projectRoot, languageExtension } = options;

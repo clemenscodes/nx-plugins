@@ -1,7 +1,7 @@
 import type { ProjectFileMap, RawProjectGraphDependency } from '@nx/devkit';
-import type { FilteredProject, WorkspaceLayout } from '../../../models/types';
+import type { FilteredProject, WorkspaceLayout } from '@/types';
 import { DependencyType } from '@nx/devkit';
-import { CProjectType } from '../../../models/types';
+import { CProjectType } from '@/types';
 import { getDependencies } from './getDependencies';
 import * as filterDependenciesOfProjectModule from '../filterDependenciesOfProject/filterDependenciesOfProject';
 

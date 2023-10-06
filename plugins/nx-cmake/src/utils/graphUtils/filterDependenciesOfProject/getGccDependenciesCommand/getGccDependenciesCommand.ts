@@ -1,9 +1,9 @@
-import type { CTag, WorkspaceLayout } from '../../../../models/types';
+import type { CTag, WorkspaceLayout } from '@/types';
+import { LINUX_GCC, DARWIN_GCC } from '@/config';
 import { getCmockaInclude } from '../getCmockaInclude/getCmockaInclude';
 import { getGtestInclude } from '../getGtestInclude/getGtestInclude';
 import { getWorkspaceIncludeDir } from '../../../pluginUtils/getWorkspaceIncludeDir/getWorkspaceIncludeDir';
 import { isDarwin } from '../../../pluginUtils/isDarwin/isDarwin';
-import { LINUX_GCC, DARWIN_GCC } from '../../../../config/programs';
 
 export const getGccDependenciesCommand = (
     fileName: string,

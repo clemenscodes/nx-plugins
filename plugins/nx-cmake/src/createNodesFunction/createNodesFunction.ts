@@ -1,5 +1,5 @@
 import type { CreateNodesFunction } from '@nx/devkit';
-import { PROJECT_FILE } from '../config/projectFilePattern';
+import { PROJECT_FILE } from '@/config';
 import { getProjectTypeAndVariant } from '../utils/generatorUtils/getProjectTypeAndVariant/getProjectTypeAndVariant';
 import { getProjectConfiguration } from '../utils/generatorUtils/getProjectConfiguration/getProjectConfiguration';
 

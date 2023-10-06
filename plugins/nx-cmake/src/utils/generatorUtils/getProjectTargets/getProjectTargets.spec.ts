@@ -1,4 +1,4 @@
-import { CProjectType } from '../../../models/types';
+import { CProjectType } from '@/types';
 import {
     debugTarget,
     defaultTargets,

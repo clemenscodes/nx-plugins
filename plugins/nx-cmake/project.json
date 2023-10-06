@@ -10,6 +10,7 @@
             "options": {
                 "outputPath": "dist/plugins/nx-cmake",
                 "main": "plugins/nx-cmake/src/index.ts",
+                "external": "none",
                 "tsConfig": "plugins/nx-cmake/tsconfig.lib.json",
                 "assets": [
                     "plugins/nx-cmake/*.md",

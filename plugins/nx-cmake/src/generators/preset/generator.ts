@@ -7,7 +7,7 @@ import {
 import type { InitGeneratorSchema } from '../init/schema';
 import initGenerator from '../init/generator';
 import { generateReadMe } from './utils/generateReadMe/generateReadMe';
-import { PLUGIN_NAME } from '../../config/pluginName';
+import { PLUGIN_NAME } from '@/config';
 
 export async function presetGenerator(tree: Tree) {
     const initOptions: InitGeneratorSchema = {

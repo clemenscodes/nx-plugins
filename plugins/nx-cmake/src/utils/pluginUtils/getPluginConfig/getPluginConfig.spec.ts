@@ -1,5 +1,5 @@
 import type { NxJsonConfiguration } from '@nx/devkit';
-import { PLUGIN_NAME } from '../../../config/pluginName';
+import { PLUGIN_NAME } from '@/config';
 import { getPluginConfig } from './getPluginConfig';
 import * as getNxJsonConfigurationModule from '../../generatorUtils/getNxJsonConfiguration/getNxJsonConfiguration';
 

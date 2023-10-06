@@ -1,5 +1,5 @@
 import type { RawProjectGraphDependency } from '@nx/devkit';
-import type { Graph } from '../../../../models/types';
+import type { Graph } from '@/types';
 import { DependencyType } from '@nx/devkit';
 import { reduceDependencies } from './reduceDependencies';
 

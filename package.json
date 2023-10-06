@@ -16,7 +16,8 @@
         "lint:ci": "pnpm nx affected -t lint --output-style=stream --configuration=ci",
         "build:ci": "pnpm nx affected -t build --output-style=stream --configuration=ci",
         "test:ci": "pnpm nx affected -t test --output-style=stream --configuration=ci",
-        "e2e:ci": "pnpm nx affected  -t e2e --output-style=stream --configuration=ci",
+        "e2e:ci": "pnpm nx affected  -t e2e --output-style=stream --configuration=ci --parallel=1",
+        "ci": "pnpm fmt:check && pnpm lint:ci && pnpm build:ci && pnpm test:ci && pnpm e2e:ci",
         "prepare": "husky install"
     },
     "private": true,

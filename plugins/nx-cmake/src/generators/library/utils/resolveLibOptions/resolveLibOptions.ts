@@ -8,7 +8,7 @@ import { getTestName } from '../getTestName/getTestName';
 import { getTestSetup } from '../getTestSetup/getTestSetup';
 import { resolveOptions } from '../../../../utils/generatorUtils/resolveOptions/resolveOptions';
 import { getProjectRoot } from '../../../../utils/generatorUtils/getProjectRoot/getProjectRoot';
-import { CProjectType } from '../../../../models/types';
+import { CProjectType } from '@/types';
 
 export const resolveLibOptions = (options: LibGeneratorSchema): LibOptions => {
     const resolvedOptions = resolveOptions<LibGeneratorSchema, LibOptions>(

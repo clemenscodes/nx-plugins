@@ -1,5 +1,5 @@
-import type { FilteredProject } from '../../../models/types';
-import { CProjectType } from '../../../models/types';
+import type { FilteredProject } from '@/types';
+import { CProjectType } from '@/types';
 import { getProjectFromFile } from './getProjectFromFile';
 
 describe('getProjectFromFile', () => {

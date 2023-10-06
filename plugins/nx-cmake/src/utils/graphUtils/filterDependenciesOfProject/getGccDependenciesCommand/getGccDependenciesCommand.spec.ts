@@ -1,6 +1,6 @@
-import type { CTag, WorkspaceLayout } from '../../../../models/types';
+import type { CTag, WorkspaceLayout } from '@/types';
 import { getGccDependenciesCommand } from './getGccDependenciesCommand';
-import { LINUX_GCC, DARWIN_GCC } from '../../../../config/programs';
+import { LINUX_GCC, DARWIN_GCC } from '@/config';
 import * as isWindowsModule from '../../../pluginUtils/isWindows/isWindows';
 import * as isDarwinModule from '../../../pluginUtils/isDarwin/isDarwin';
 

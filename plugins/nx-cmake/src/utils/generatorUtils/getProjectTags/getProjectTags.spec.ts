@@ -1,6 +1,6 @@
-import { CProjectType } from '../../../models/types';
+import { CProjectType } from '@/types';
 import { getProjectTags } from './getProjectTags';
-import { PLUGIN_NAME } from '../../../config/pluginName';
+import { PLUGIN_NAME } from '@/config';
 
 describe('getProjectTags', () => {
     it('should get project tags for app', () => {

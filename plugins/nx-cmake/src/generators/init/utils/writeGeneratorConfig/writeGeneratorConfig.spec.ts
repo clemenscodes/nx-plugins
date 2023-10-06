@@ -1,10 +1,7 @@
-import type {
-    NxCmakeGeneratorConfig,
-    PluginGeneratorConfig,
-} from '../../../../models/types';
+import type { NxCmakeGeneratorConfig, PluginGeneratorConfig } from '@/types';
 import type { NxJsonConfiguration } from '@nx/devkit';
 import type { InitGeneratorSchema } from '../../schema';
-import { PLUGIN_NAME } from '../../../../config/pluginName';
+import { PLUGIN_NAME } from '@/config';
 import { writeGeneratorConfig } from './writeGeneratorConfig';
 
 describe('writeGeneratorConfig', () => {

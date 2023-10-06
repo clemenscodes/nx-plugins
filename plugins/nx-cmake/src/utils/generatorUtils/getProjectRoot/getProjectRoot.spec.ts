@@ -1,5 +1,5 @@
 import { getProjectRoot } from './getProjectRoot';
-import { CProjectType } from '../../../models/types';
+import { CProjectType } from '@/types';
 import * as workspaceLayoutModule from '../getWorkspaceLayout/getWorkspaceLayout';
 
 describe('getProjectRoot', () => {

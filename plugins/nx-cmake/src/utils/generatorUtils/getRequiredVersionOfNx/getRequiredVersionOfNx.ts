@@ -2,7 +2,7 @@ import {
     REQUIRED_MAJOR_NX_VERSION,
     REQUIRED_MINOR_NX_VERSION,
     REQUIRED_PATCH_NX_VERSION,
-} from '../../../config/version';
+} from '@/config';
 
 export const getRequiredVersionOfNx = (): string => {
     const requiredVersionOfNx = [

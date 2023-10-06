@@ -1,6 +1,6 @@
 import type { NxJsonConfiguration } from '@nx/devkit';
 import { addCmakePlugin } from './addCmakePlugin';
-import { PLUGIN_NAME } from '../../../../config/pluginName';
+import { PLUGIN_NAME } from '@/config';
 
 describe('addCmakePlugin', () => {
     let updatedNxJson: NxJsonConfiguration;

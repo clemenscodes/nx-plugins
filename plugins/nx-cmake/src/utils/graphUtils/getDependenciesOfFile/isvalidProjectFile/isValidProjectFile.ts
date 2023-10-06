@@ -1,4 +1,4 @@
-import type { CTag } from '../../../../models/types';
+import type { CTag } from '@/types';
 import { hasValidExtension } from '../hasValidExtension/hasValidExtension';
 
 export const isValidProjectFile = (file: string, tag: CTag) => {
