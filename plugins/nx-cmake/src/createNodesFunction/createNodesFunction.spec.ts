@@ -2,8 +2,8 @@ import type { CreateNodesContext, ProjectConfiguration } from '@nx/devkit';
 import type { C } from '@/types';
 import { createNodesFunction } from './createNodesFunction';
 import { CProjectType } from '@/types';
-import * as getProjectTypeModule from '../utils/generatorUtils/getProjectTypeAndVariant/getProjectTypeAndVariant';
-import * as getProjectConfigurationModule from './../utils/generatorUtils/getProjectConfiguration/getProjectConfiguration';
+import * as getProjectTypeModule from '@/utils/lib/getProjectTypeAndVariant/getProjectTypeAndVariant';
+import * as getProjectConfigurationModule from '@/utils/lib/getProjectConfiguration/getProjectConfiguration';
 
 describe('createNodesFunction', () => {
     let mockGetProjectType: jest.SpyInstance;

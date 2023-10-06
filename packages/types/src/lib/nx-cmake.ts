@@ -64,7 +64,9 @@ export type FilteredProject = {
     tag: CTag;
 };
 
-export type WorkspaceLayout = NxJsonConfiguration['workspaceLayout'];
+export type WorkspaceLayout = Required<
+    NonNullable<NxJsonConfiguration['workspaceLayout']>
+>;
 
 export type Graph = Record<string, Set<string>>;
 
@@ -88,3 +90,48 @@ export enum CProjectType {
     Lib,
     Test,
 }
+
+export type GoogleTestInclude = 'include(GoogleTest)' | '';
+
+export type LibGeneratorSchema = BaseOptions & {
+    generateTests: boolean;
+};
+
+export type LibOptions = Required<LibGeneratorSchema> & {
+    testLib: 'gtest' | 'cmocka';
+    setupTests: string;
+    projectRoot: string;
+    libName: string;
+    testName: string;
+    includeGoogleTest: GoogleTestInclude;
+    baseTest: string;
+};
+
+export type BinGeneratorSchema = BaseOptions & {
+    generateTests: boolean;
+};
+
+export type BinSchema = Required<BinGeneratorSchema> & {
+    projectRoot: string;
+    linkOptions: LinkGeneratorSchema;
+};
+
+export type LinkGeneratorSchema = {
+    source: string;
+    target: string;
+    link: Link;
+};
+
+export type LinkSchema = LinkGeneratorSchema & {
+    sourceProjectRoot: string;
+};
+
+export type InitGeneratorSchema = {
+    language: C;
+    cmakeConfigDir: string;
+    globalIncludeDir: string;
+    appsDir: WorkspaceLayout['appsDir'];
+    libsDir: WorkspaceLayout['libsDir'];
+    addClangPreset: boolean;
+    skipFormat: boolean;
+};

@@ -1,6 +1,6 @@
 import type { ExecutorContext } from '@nx/devkit';
 import type { DebugExecutorSchema } from './schema';
-import { trimLib } from '../../utils/generatorUtils/trimLib/trimLib';
+import { trimLib } from '@/utils';
 import { debugBinaryWithGdb } from './utils/debugBinaryWithGdb/debugBinaryWithGdb';
 
 export default async function* runExecutor(

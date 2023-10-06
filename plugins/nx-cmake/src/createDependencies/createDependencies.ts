@@ -3,10 +3,12 @@ import type {
     CreateDependenciesContext,
     RawProjectGraphDependency,
 } from '@nx/devkit';
-import { filterProjects } from '../utils/graphUtils/filterProjects/filterProjects';
-import { getDependencies } from '../utils/graphUtils/getDependencies/getDependencies';
-import { reduceDependenciesTransitively } from '../utils/graphUtils/reduceDependenciesTransitively/reduceDependenciesTransitively';
-import { filterFilesToProcess } from '../utils/graphUtils/filterFilesToProcess/filterFilesToProcess';
+import {
+    filterFilesToProcess,
+    reduceDependenciesTransitively,
+    getDependencies,
+    filterProjects,
+} from '@/graph';
 
 export const createDependencies: CreateDependencies = (
     context: CreateDependenciesContext,
@@ -14,6 +16,7 @@ export const createDependencies: CreateDependencies = (
     const { projects, nxJsonConfiguration, filesToProcess } = context;
     const { projectFileMap } = filesToProcess;
     const { workspaceLayout } = nxJsonConfiguration;
+    const { libsDir } = workspaceLayout;
     if (Object.keys(filesToProcess).length === 0) {
         return [];
     }
@@ -26,7 +29,7 @@ export const createDependencies: CreateDependencies = (
         return [];
     }
     const deps = getDependencies(
-        workspaceLayout,
+        libsDir,
         filteredProjects,
         filteredFilesToProcess,
     );

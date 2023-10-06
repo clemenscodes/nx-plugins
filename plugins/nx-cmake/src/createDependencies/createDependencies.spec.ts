@@ -4,7 +4,7 @@ import type {
 } from '@nx/devkit';
 import { DependencyType } from '@nx/devkit';
 import { createDependencies } from './createDependencies';
-import * as getDependenciesModule from '../utils/graphUtils/getDependencies/getDependencies';
+import * as getDependenciesModule from '@/graph/lib/getDependencies/getDependencies';
 
 describe('createDependencies', () => {
     let mockGetDependencies: jest.SpyInstance;

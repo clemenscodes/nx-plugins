@@ -26,6 +26,7 @@
                             "@/types",
                             "@/command",
                             "@/file",
+                            "@/graph",
                             "@/utils"
                         ],
                         "includeTransitiveDependencies": true

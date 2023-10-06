@@ -12,7 +12,13 @@
                 "outputPath": "dist/packages/utils",
                 "main": "packages/utils/src/index.ts",
                 "tsConfig": "packages/utils/tsconfig.lib.json",
-                "assets": []
+                "assets": [
+                    {
+                        "input": "./packages/utils/src",
+                        "glob": "**/!(*.ts)",
+                        "output": "./src"
+                    }
+                ]
             },
             "configurations": {
                 "ci": {}

@@ -1,6 +1,6 @@
 import type { DebugExecutorSchema } from '../../schema';
 import { runCommand, checkCommandExists } from '@/command';
-import { trimLib } from '../../../../utils/generatorUtils/trimLib/trimLib';
+import { trimLib } from '@/utils';
 
 export const debugBinaryWithGdb = (
     workspaceRoot: string,
