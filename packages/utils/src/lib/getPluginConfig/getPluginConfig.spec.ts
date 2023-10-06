@@ -1,7 +1,7 @@
 import type { NxJsonConfiguration } from '@nx/devkit';
 import { PLUGIN_NAME } from '@/config';
 import { getPluginConfig } from './getPluginConfig';
-import * as getNxJsonConfigurationModule from '../../generatorUtils/getNxJsonConfiguration/getNxJsonConfiguration';
+import * as getNxJsonConfigurationModule from '../getNxJsonConfiguration/getNxJsonConfiguration';
 
 describe('getPluginConfig', () => {
     let mockNxJsonConfig: NxJsonConfiguration;
@@ -30,9 +30,9 @@ describe('getPluginConfig', () => {
     it('should return the plugin config when it exists in nx.json', () => {
         getNxJsonConfigurationSpy.mockReturnValue(mockNxJsonConfig);
         const pluginConfig = getPluginConfig();
-        expect(pluginConfig).toEqual(
-            mockNxJsonConfig.pluginsConfig[PLUGIN_NAME],
-        );
+        const expectedPluginsConfig = mockNxJsonConfig.pluginsConfig;
+        const expectedPluginConfig = expectedPluginsConfig?.[PLUGIN_NAME];
+        expect(pluginConfig).toEqual(expectedPluginConfig);
     });
 
     it('should return default config if the plugin config is missing in nx.json', () => {

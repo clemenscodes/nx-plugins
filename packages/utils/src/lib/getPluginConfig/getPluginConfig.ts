@@ -1,7 +1,7 @@
 import type { NxCmakePluginConfig } from '@/types';
-import { getNxJsonConfiguration } from '../../generatorUtils/getNxJsonConfiguration/getNxJsonConfiguration';
 import { PLUGIN_NAME } from '@/config';
 import { assertIsPluginConfig } from '../assertIsPluginConfig/assertIsPluginConfig';
+import { getNxJsonConfiguration } from '../getNxJsonConfiguration/getNxJsonConfiguration';
 
 export const getPluginConfig = (): NxCmakePluginConfig => {
     const defaultPluginConfig: NxCmakePluginConfig = {

@@ -5,7 +5,7 @@ import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import libGenerator from '../library/generator';
 import linkGenerator from './generator';
 import * as devkit from '@nx/devkit';
-import { normalizeLineEndings } from '../../utils/testUtils/normalizeLineEndings/normalizeLineEndings';
+import { normalizeLineEndings } from '@/utils';
 import { readFileWithTree } from '../../utils/generatorUtils/readFileWithTree/readFileWithTree';
 
 describe('link generator', () => {

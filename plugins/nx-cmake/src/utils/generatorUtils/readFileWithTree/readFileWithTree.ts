@@ -1,5 +1,5 @@
 import type { Tree } from '@nx/devkit';
-import { normalizeLineEndings } from '../../testUtils/normalizeLineEndings/normalizeLineEndings';
+import { normalizeLineEndings } from '@/utils';
 
 export const readFileWithTree = (tree: Tree, file: string): string => {
     const fileContent = tree.read(file, 'utf-8');

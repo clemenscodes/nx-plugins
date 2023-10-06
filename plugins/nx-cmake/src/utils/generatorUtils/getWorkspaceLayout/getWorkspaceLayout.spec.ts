@@ -1,6 +1,6 @@
 import type { NxJsonConfiguration } from '@nx/devkit';
 import { getWorkspaceLayout } from './getWorkspaceLayout';
-import * as getNxJsonConfigurationModule from '../getNxJsonConfiguration/getNxJsonConfiguration';
+import * as getNxJsonConfigurationModule from '@/utils/lib/getNxJsonConfiguration/getNxJsonConfiguration';
 import * as workspaceLayoutModule from '@nx/devkit';
 
 describe('getWorkspaceLayout', () => {

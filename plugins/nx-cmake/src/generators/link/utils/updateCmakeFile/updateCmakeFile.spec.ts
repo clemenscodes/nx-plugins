@@ -5,7 +5,7 @@ import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { readFileWithTree } from '../../../../utils/generatorUtils/readFileWithTree/readFileWithTree';
 import libGenerator from '../../../library/generator';
 import * as devkit from '@nx/devkit';
-import { normalizeLineEndings } from '../../../../utils/testUtils/normalizeLineEndings/normalizeLineEndings';
+import { normalizeLineEndings } from '@/utils';
 import {
     getCmakeLink,
     getSourceCmakeFile,

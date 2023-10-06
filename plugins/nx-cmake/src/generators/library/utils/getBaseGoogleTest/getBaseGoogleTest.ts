@@ -1,4 +1,4 @@
-import { snakeCaseToCamelCase } from '../../../../utils/pluginUtils/snakeCaseToCamelCase/snakeCaseToCamelCase';
+import { snakeCaseToCamelCase } from '@/utils';
 
 export const getBaseGoogleTest = (libName: string, projectName: string) => {
     const snakeCaseProjectName = projectName.replace(/-/g, '_').toLowerCase();

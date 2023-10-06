@@ -53,15 +53,15 @@ This allows for efficient caching mechanisms and parallelization of tasks.
 
 The following tools need to be installed for this plugin to work correctly:
 
--   nx v16.9+ (this plugin uses the latest Nx v2 plugin API)
--   node v18.18+
--   cmake v3.21+
--   ctest
--   make
--   gcc v13+
--   gdb
--   clang-format
--   clang-tidy
+- nx v16.9+ (this plugin uses the latest Nx v2 plugin API)
+- node v18.18+
+- cmake v3.21+
+- ctest
+- make
+- gcc v13+
+- gdb
+- clang-format
+- clang-tidy
 
 #### Windows
 
@@ -198,7 +198,7 @@ In general, settings in nx.json have higher precedence.
 
 All the executors support these additional properties:
 
--   args (Optional arguments which will be forwarded to the underlying command) [array]
+- args (Optional arguments which will be forwarded to the underlying command) [array]
 
 ### `nx-cmake:cmake`
 

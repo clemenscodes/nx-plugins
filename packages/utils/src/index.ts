@@ -1,3 +1,9 @@
+export { getNxJsonConfiguration } from './lib/getNxJsonConfiguration/getNxJsonConfiguration';
+export { assertIsPluginConfig } from './lib/assertIsPluginConfig/assertIsPluginConfig';
+export { getPluginConfig } from './lib/getPluginConfig/getPluginConfig';
+export { getWorkspaceIncludeDir } from './lib/getWorkspaceIncludeDir/getWorkspaceIncludeDir';
+export { normalizeLineEndings } from './lib/normalizeLineEndings/normalizeLineEndings';
+export { snakeCaseToCamelCase } from './lib/snakeCaseToCamelCase/snakeCaseToCamelCase';
 export { getCompiler } from './lib/getCompiler/getCompiler';
 export { isDarwin } from './lib/isDarwin/isDarwin';
 export { logger } from './lib/logger/logger';
