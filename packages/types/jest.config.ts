@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-    displayName: '@/file',
+    displayName: '@/types',
     preset: '../../jest.preset.js',
     testEnvironment: 'node',
     transform: {
@@ -10,5 +10,5 @@ export default {
         ],
     },
     moduleFileExtensions: ['ts', 'js', 'html'],
-    coverageDirectory: '../../coverage/packages/file',
+    coverageDirectory: '../../coverage/packages/types',
 };

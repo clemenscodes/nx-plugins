@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-    displayName: 'graph',
+    displayName: '@/graph',
     preset: '../../jest.preset.js',
     testEnvironment: 'node',
     transform: {

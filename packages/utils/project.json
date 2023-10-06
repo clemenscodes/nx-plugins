@@ -1,6 +1,7 @@
 {
-    "name": "utils",
+    "name": "@/utils",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "root": "packages/utils",
     "sourceRoot": "packages/utils/src",
     "projectType": "library",
     "targets": {
@@ -9,9 +10,13 @@
             "outputs": ["{options.outputPath}"],
             "options": {
                 "outputPath": "dist/packages/utils",
+                "rootDir": "packages/utils/src",
                 "main": "packages/utils/src/index.ts",
                 "tsConfig": "packages/utils/tsconfig.lib.json",
                 "assets": []
+            },
+            "configurations": {
+                "ci": {}
             }
         },
         "lint": {
@@ -22,6 +27,11 @@
                     "packages/utils/**/*.ts",
                     "packages/utils/package.json"
                 ]
+            },
+            "configurations": {
+                "ci": {
+                    "maxWarnings": 0
+                }
             }
         },
         "test": {

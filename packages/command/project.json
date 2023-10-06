@@ -1,6 +1,7 @@
 {
-    "name": "command",
+    "name": "@/command",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "root": "packages/command",
     "sourceRoot": "packages/command/src",
     "projectType": "library",
     "targets": {
@@ -9,9 +10,13 @@
             "outputs": ["{options.outputPath}"],
             "options": {
                 "outputPath": "dist/packages/command",
+                "rootDir": "packages/command/src",
                 "main": "packages/command/src/index.ts",
                 "tsConfig": "packages/command/tsconfig.lib.json",
                 "assets": []
+            },
+            "configurations": {
+                "ci": {}
             }
         },
         "lint": {
@@ -22,6 +27,11 @@
                     "packages/command/**/*.ts",
                     "packages/command/package.json"
                 ]
+            },
+            "configurations": {
+                "ci": {
+                    "maxWarnings": 0
+                }
             }
         },
         "test": {

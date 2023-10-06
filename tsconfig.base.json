@@ -15,10 +15,18 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
-            "@command": ["packages/command/src/index.ts"],
-            "@file": ["packages/file/src/index.ts"],
-            "@graph": ["packages/graph/src/index.ts"],
-            "@utils": ["packages/utils/src/index.ts"],
+            "@/command": ["packages/command/src/index.ts"],
+            "@/command/*": ["packages/command/src/*.ts"],
+            "@/config": ["packages/config/src/index.ts"],
+            "@/config/*": ["packages/config/src/*.ts"],
+            "@/file": ["packages/file/src/index.ts"],
+            "@/file/*": ["packages/file/src/*.ts"],
+            "@/graph": ["packages/graph/src/index.ts"],
+            "@/graph/*": ["packages/graph/src/*.ts"],
+            "@/types": ["packages/types/src/index.ts"],
+            "@/types/*": ["packages/types/src/*.ts"],
+            "@/utils": ["packages/utils/src/index.ts"],
+            "@/utils/*": ["packages/utils/src/*.ts"],
             "nx-cmake": ["plugins/nx-cmake/src/index.ts"]
         }
     },
