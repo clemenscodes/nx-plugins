@@ -1,6 +1,6 @@
 import type { ExecuteExecutorSchema } from '../../schema';
 import { runCommand } from '@/command';
-import { fileExists } from '../../../../utils/fileUtils/fileExists/fileExists';
+import { fileExists } from '@/file';
 
 export const executeBinary = (
     workspaceRoot: string,

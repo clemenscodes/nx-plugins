@@ -1,4 +1,4 @@
-import { getConfigFile } from '../../../../../utils/fileUtils/getConfigFile/getConfigFile';
+import { getConfigFile } from '@/file';
 
 export const getStyleArgument = async (
     workspaceRoot: string,

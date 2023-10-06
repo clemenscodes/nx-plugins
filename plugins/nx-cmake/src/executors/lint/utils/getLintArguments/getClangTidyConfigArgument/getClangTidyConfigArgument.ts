@@ -1,4 +1,4 @@
-import { getConfigFile } from '../../../../../utils/fileUtils/getConfigFile/getConfigFile';
+import { getConfigFile } from '@/file';
 
 export const getClangTidyConfigArgument = async (
     workspaceRoot: string,

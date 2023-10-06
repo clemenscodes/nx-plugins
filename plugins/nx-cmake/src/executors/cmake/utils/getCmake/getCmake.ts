@@ -1,5 +1,5 @@
 import { isDarwin, isWindows } from '@/utils';
-import { fileExists } from '../../../../utils/fileUtils/fileExists/fileExists';
+import { fileExists } from '@/file';
 import { DARWIN_CMAKE, WINDOWS_CMAKE, LINUX_CMAKE } from '@/config';
 
 export const getCmake = (): string => {

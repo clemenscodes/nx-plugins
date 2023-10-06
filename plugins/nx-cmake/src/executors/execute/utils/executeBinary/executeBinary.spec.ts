@@ -1,7 +1,7 @@
 import type { ExecuteExecutorSchema } from '../../schema';
 import { executeBinary } from './executeBinary';
 import * as runCommandModule from '@/command/lib/runCommand/runCommand';
-import * as fileExistsModule from '../../../../utils/fileUtils/fileExists/fileExists';
+import * as fileExistsModule from '@/file/lib/fileExists/fileExists';
 
 describe('executeBinary', () => {
     let workspaceRoot: string;

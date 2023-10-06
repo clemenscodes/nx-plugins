@@ -1,5 +1,5 @@
 import { getStyleArgument } from './getStyleArgument';
-import * as getConfigFileModule from '../../../../../utils/fileUtils/getConfigFile/getConfigFile';
+import * as getConfigFileModule from '@/file/lib/getConfigFile/getConfigFile';
 
 describe('getStyleArgument', () => {
     let workspaceRoot: string;

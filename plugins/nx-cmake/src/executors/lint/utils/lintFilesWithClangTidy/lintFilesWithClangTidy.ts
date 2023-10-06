@@ -1,6 +1,5 @@
 import type { LintExecutorSchema } from '../../schema';
-import { getProjectFiles } from '../../../../utils/fileUtils/getProjectFiles/getProjectFiles';
-import { filterSourceFiles } from '../../../../utils/fileUtils/filterSourceFiles/filterSourceFiles';
+import { getProjectFiles, filterSourceFiles } from '@/file';
 import { runCommand, checkCommandExists } from '@/command';
 import { getLintArguments } from '../getLintArguments/getLintArguments';
 

@@ -1,7 +1,6 @@
 import type { FormatExecutorSchema } from '../../schema';
 import { getFormatArguments } from '../getFormatArguments/getFormatArguments';
-import { getProjectFiles } from '../../../../utils/fileUtils/getProjectFiles/getProjectFiles';
-import { filterSourceFiles } from '../../../../utils/fileUtils/filterSourceFiles/filterSourceFiles';
+import { getProjectFiles, filterSourceFiles } from '@/file';
 import { checkCommandExists, executeCommandForFiles } from '@/command';
 
 export const formatFilesWithClangFormat = async (

@@ -1,5 +1,5 @@
 import { getClangTidyConfigArgument } from './getClangTidyConfigArgument';
-import * as getConfigFileModule from '../../../../../utils/fileUtils/getConfigFile/getConfigFile';
+import * as getConfigFileModule from '@/file/lib/getConfigFile/getConfigFile';
 
 describe('getClangTidyConfigArgument', () => {
     let workspaceRoot: string;

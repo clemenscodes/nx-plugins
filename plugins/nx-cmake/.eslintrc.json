@@ -25,8 +25,10 @@
                             "@/config",
                             "@/types",
                             "@/command",
+                            "@/file",
                             "@/utils"
-                        ]
+                        ],
+                        "includeTransitiveDependencies": true
                     }
                 ]
             }

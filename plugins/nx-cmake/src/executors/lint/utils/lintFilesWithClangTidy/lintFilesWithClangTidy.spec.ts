@@ -1,7 +1,7 @@
 import type { LintExecutorSchema } from '../../schema';
 import { lintFilesWithClangTidy } from './lintFilesWithClangTidy';
 import { LINUX_CLANG_TIDY } from '@/config';
-import * as getProjectFilesModule from '../../../../utils/fileUtils/getProjectFiles/getProjectFiles';
+import * as getProjectFilesModule from '@/file/lib/getProjectFiles/getProjectFiles';
 import * as checkCommandExistsModule from '@/command/lib/checkCommandExists/checkCommandExists';
 import * as runCommandModule from '@/command/lib/runCommand/runCommand';
 import * as getLintArgumentsModule from '../getLintArguments/getLintArguments';
