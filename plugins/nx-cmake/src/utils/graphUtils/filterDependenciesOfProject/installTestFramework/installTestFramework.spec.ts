@@ -1,6 +1,6 @@
 import { installTestFramework } from './installTestFramework';
-import * as executeCommandModule from '../../../commandUtils/executeCommand/executeCommand';
-import * as runCommandModule from '../../../commandUtils/runCommand/runCommand';
+import * as executeCommandModule from '@/command/lib/executeCommand/executeCommand';
+import * as runCommandModule from '@/command/lib/runCommand/runCommand';
 
 describe('installTestFramework', () => {
     let runCommandSpy: jest.SpyInstance;

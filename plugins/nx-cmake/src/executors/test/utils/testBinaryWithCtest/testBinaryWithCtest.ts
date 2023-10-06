@@ -1,6 +1,5 @@
 import type { TestExecutorSchema } from '../../schema';
-import { runCommand } from '../../../../utils/commandUtils/runCommand/runCommand';
-import { checkCommandExists } from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
+import { runCommand, checkCommandExists } from '@/command';
 
 export const testBinaryWithCtest = (
     workspaceRoot: string,

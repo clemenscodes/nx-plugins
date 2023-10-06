@@ -1,7 +1,7 @@
-import { executeCommand } from '../../../commandUtils/executeCommand/executeCommand';
+import { logger } from '@/utils';
+import { executeCommand } from '@/command';
 import { detectTestFramework } from '../detectTestFramework/detectTestFramework';
 import { installTestFramework } from '../installTestFramework/installTestFramework';
-import { logger } from '../../../pluginUtils/logger/logger';
 
 export const getGccDependencies = (
     cmd: string,

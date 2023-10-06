@@ -2,8 +2,8 @@ import type { LintExecutorSchema } from '../../schema';
 import { lintFilesWithClangTidy } from './lintFilesWithClangTidy';
 import { LINUX_CLANG_TIDY } from '@/config';
 import * as getProjectFilesModule from '../../../../utils/fileUtils/getProjectFiles/getProjectFiles';
-import * as checkCommandExistsModule from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
-import * as runCommandModule from '../../../../utils/commandUtils/runCommand/runCommand';
+import * as checkCommandExistsModule from '@/command/lib/checkCommandExists/checkCommandExists';
+import * as runCommandModule from '@/command/lib/runCommand/runCommand';
 import * as getLintArgumentsModule from '../getLintArguments/getLintArguments';
 
 describe('lintFilesWithClangTidy', () => {

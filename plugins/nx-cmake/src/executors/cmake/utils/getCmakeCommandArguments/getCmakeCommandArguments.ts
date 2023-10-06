@@ -1,6 +1,5 @@
 import { CmakeExecutorSchema } from '../../schema';
-import { getCompiler } from '../../../../utils/pluginUtils/getCompiler/getCompiler';
-import { isWindows } from '../../../../utils/pluginUtils/isWindows/isWindows';
+import { getCompiler, isWindows } from '@/utils';
 import { WINDOWS_MAKE } from '@/config';
 
 export const getCmakeCommandArguments = (

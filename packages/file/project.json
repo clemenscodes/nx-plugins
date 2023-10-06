@@ -10,7 +10,6 @@
             "outputs": ["{options.outputPath}"],
             "options": {
                 "outputPath": "dist/packages/file",
-                "rootDir": "packages/file/src",
                 "main": "packages/file/src/index.ts",
                 "tsConfig": "packages/file/tsconfig.lib.json",
                 "assets": []

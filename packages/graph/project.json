@@ -10,7 +10,6 @@
             "outputs": ["{options.outputPath}"],
             "options": {
                 "outputPath": "dist/packages/graph",
-                "rootDir": "packages/graph/src",
                 "main": "packages/graph/src/index.ts",
                 "tsConfig": "packages/graph/tsconfig.lib.json",
                 "assets": []

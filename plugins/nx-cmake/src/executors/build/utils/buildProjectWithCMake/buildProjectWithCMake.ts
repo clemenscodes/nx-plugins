@@ -1,5 +1,5 @@
 import type { BuildExecutorSchema } from '../../schema';
-import { runCommand } from '../../../../utils/commandUtils/runCommand/runCommand';
+import { runCommand } from '@/command';
 import { getCmake } from '../../../cmake/utils/getCmake/getCmake';
 
 export const buildProjectWithCMake = (

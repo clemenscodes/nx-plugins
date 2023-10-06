@@ -1,7 +1,7 @@
 import type { TestExecutorSchema } from '../../schema';
 import { testBinaryWithCtest } from './testBinaryWithCtest';
-import * as runCommandModule from '../../../../utils/commandUtils/runCommand/runCommand';
-import * as checkCommandExistsModule from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
+import * as runCommandModule from '@/command/lib/runCommand/runCommand';
+import * as checkCommandExistsModule from '@/command/lib/checkCommandExists/checkCommandExists';
 
 describe('buildProjectWithMake', () => {
     let workspaceRoot: string;

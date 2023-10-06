@@ -123,6 +123,9 @@ importers:
 
   packages/command:
     dependencies:
+      '@nx/devkit':
+        specifier: 16.10.0
+        version: 16.10.0(nx@16.10.0)
       tslib:
         specifier: ^2.3.0
         version: 2.6.2
@@ -156,6 +159,9 @@ importers:
 
   packages/utils:
     dependencies:
+      '@nx/devkit':
+        specifier: 16.10.0
+        version: 16.10.0(nx@16.10.0)
       tslib:
         specifier: ^2.3.0
         version: 2.6.2

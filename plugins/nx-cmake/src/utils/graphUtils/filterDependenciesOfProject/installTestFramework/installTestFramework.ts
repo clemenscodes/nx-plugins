@@ -1,5 +1,4 @@
-import { runCommand } from '../../../commandUtils/runCommand/runCommand';
-import { executeCommand } from '../../../commandUtils/executeCommand/executeCommand';
+import { runCommand, executeCommand } from '@/command';
 
 export const installTestFramework = (
     workspaceRoot: string,

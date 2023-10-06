@@ -2,8 +2,7 @@ import type { FormatExecutorSchema } from '../../schema';
 import { getFormatArguments } from '../getFormatArguments/getFormatArguments';
 import { getProjectFiles } from '../../../../utils/fileUtils/getProjectFiles/getProjectFiles';
 import { filterSourceFiles } from '../../../../utils/fileUtils/filterSourceFiles/filterSourceFiles';
-import { checkCommandExists } from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
-import { executeCommandForFiles } from '../../../../utils/commandUtils/executeCommandForFiles/executeCommandForFiles';
+import { checkCommandExists, executeCommandForFiles } from '@/command';
 
 export const formatFilesWithClangFormat = async (
     workspaceRoot: string,

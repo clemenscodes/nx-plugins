@@ -1,5 +1,5 @@
 import type { ExecuteExecutorSchema } from '../../schema';
-import { runCommand } from '../../../../utils/commandUtils/runCommand/runCommand';
+import { runCommand } from '@/command';
 import { fileExists } from '../../../../utils/fileUtils/fileExists/fileExists';
 
 export const executeBinary = (

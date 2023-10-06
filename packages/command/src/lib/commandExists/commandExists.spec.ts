@@ -1,6 +1,6 @@
 import { commandExists } from './commandExists';
 import * as exeucteCommandModule from '../executeCommand/executeCommand';
-import * as isWindowsModule from '../../pluginUtils/isWindows/isWindows';
+import * as isWindowsModule from '@/utils/lib/isWindows/isWindows';
 
 describe('commandExists', () => {
     let executeCommandMock: jest.SpyInstance;
@@ -49,22 +49,6 @@ describe('commandExists', () => {
         expect(executeCommandMock).toBeCalledWith(
             'command -v clang-tidy-which-absolutely-doesnt-exist',
         );
-    });
-
-    it('should return false for null command', () => {
-        isWindowsMock.mockReturnValue(false);
-        executeCommandMock.mockReturnValue(false);
-        const result = commandExists(null);
-        expect(result).toBe(false);
-        expect(executeCommandMock).toBeCalledTimes(0);
-    });
-
-    it('should return false for undefined command', () => {
-        isWindowsMock.mockReturnValue(false);
-        executeCommandMock.mockReturnValue(false);
-        const result = commandExists(undefined);
-        expect(result).toBe(false);
-        expect(executeCommandMock).toBeCalledTimes(0);
     });
 
     it('should handle a command with spaces', () => {

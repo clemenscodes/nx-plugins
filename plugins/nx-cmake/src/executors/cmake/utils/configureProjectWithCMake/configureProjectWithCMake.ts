@@ -1,5 +1,5 @@
 import type { CmakeExecutorSchema } from '../../schema';
-import { runCommand } from '../../../../utils/commandUtils/runCommand/runCommand';
+import { runCommand } from '@/command';
 import { getCmakeCommandArguments } from '../getCmakeCommandArguments/getCmakeCommandArguments';
 import { getCmake } from '../getCmake/getCmake';
 

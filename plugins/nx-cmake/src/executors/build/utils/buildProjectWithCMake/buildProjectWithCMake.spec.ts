@@ -1,6 +1,6 @@
 import type { BuildExecutorSchema } from '../../schema';
 import { buildProjectWithCMake } from './buildProjectWithCMake';
-import * as runCommandModule from '../../../../utils/commandUtils/runCommand/runCommand';
+import * as runCommandModule from '@/command/lib/runCommand/runCommand';
 import * as getCmakeModule from '../../../cmake/utils/getCmake/getCmake';
 import { LINUX_CMAKE } from '@/config';
 

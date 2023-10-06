@@ -1,13 +1,13 @@
-import { isWindows } from '../../pluginUtils/isWindows/isWindows';
+import { isWindows } from '@/utils';
 import { executeCommand } from '../executeCommand/executeCommand';
 
-export const checkCommandExistsWindows = (command: string): boolean => {
+const checkCommandExistsWindows = (command: string): boolean => {
     const cmd = `where.exe ${command}`;
     const output = executeCommand(cmd);
     return !!output;
 };
 
-export const checkCommandExistsUnix = (command: string): boolean => {
+const checkCommandExistsUnix = (command: string): boolean => {
     const cmd = `command -v ${command}`;
     const output = executeCommand(cmd);
     return !!output;

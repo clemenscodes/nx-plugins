@@ -3,7 +3,7 @@ import { LINUX_GCC, DARWIN_GCC } from '@/config';
 import { getCmockaInclude } from '../getCmockaInclude/getCmockaInclude';
 import { getGtestInclude } from '../getGtestInclude/getGtestInclude';
 import { getWorkspaceIncludeDir } from '../../../pluginUtils/getWorkspaceIncludeDir/getWorkspaceIncludeDir';
-import { isDarwin } from '../../../pluginUtils/isDarwin/isDarwin';
+import { isDarwin } from '@/utils';
 
 export const getGccDependenciesCommand = (
     fileName: string,

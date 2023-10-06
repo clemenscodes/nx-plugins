@@ -1,5 +1,4 @@
-import { isDarwin } from '../../../../utils/pluginUtils/isDarwin/isDarwin';
-import { isWindows } from '../../../../utils/pluginUtils/isWindows/isWindows';
+import { isDarwin, isWindows } from '@/utils';
 import { fileExists } from '../../../../utils/fileUtils/fileExists/fileExists';
 import { DARWIN_CMAKE, WINDOWS_CMAKE, LINUX_CMAKE } from '@/config';
 

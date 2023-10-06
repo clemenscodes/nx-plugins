@@ -1,8 +1,8 @@
 import type { FormatExecutorSchema } from '../../schema';
 import { formatFilesWithClangFormat } from './formatFilesWithClangFormat';
 import * as getProjectFilesModule from '../../../../utils/fileUtils/getProjectFiles/getProjectFiles';
-import * as checkCommandExistsModule from '../../../../utils/commandUtils/checkCommandExists/checkCommandExists';
-import * as executeCommandForFilesModule from '../../../../utils/commandUtils/executeCommandForFiles/executeCommandForFiles';
+import * as checkCommandExistsModule from '@/command/lib/checkCommandExists/checkCommandExists';
+import * as executeCommandForFilesModule from '@/command/lib/executeCommandForFiles/executeCommandForFiles';
 import * as getFormatArgumentsModule from '../getFormatArguments/getFormatArguments';
 
 describe('formatFilesWithClangFormat', () => {

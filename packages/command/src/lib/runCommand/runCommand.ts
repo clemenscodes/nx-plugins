@@ -1,7 +1,6 @@
+import { getCompiler, logger } from '@/utils';
 import { output } from '@nx/devkit';
-import { execSync } from 'child_process';
-import { logger } from '../../pluginUtils/logger/logger';
-import { getCompiler } from '../../pluginUtils/getCompiler/getCompiler';
+import { SpawnSyncReturns, execSync } from 'child_process';
 
 export const runCommand = (
     command: string,
@@ -9,9 +8,9 @@ export const runCommand = (
 ): { success: boolean } => {
     const cmd = args.length > 0 ? `${command} ${args.join(' ')}` : command;
     const cc = getCompiler();
-    process.env.FORCE_COLOR = 'true';
-    process.env.CC = cc;
-    process.env.CXX = cc;
+    process.env['FORCE_COLOR'] = 'true';
+    process.env['CC'] = cc;
+    process.env['CXX'] = cc;
     logger(`Executing: ${cmd}`);
     try {
         execSync(cmd, {
@@ -21,13 +20,15 @@ export const runCommand = (
         return { success: true };
     } catch (e) {
         if (
+            e &&
             typeof e === 'object' &&
             'stderr' in e &&
             'status' in e &&
             'pid' in e &&
             'signal' in e
         ) {
-            const { stderr, signal, pid, status } = e;
+            const { stderr, signal, pid, status } =
+                e as SpawnSyncReturns<string>;
             if (signal && pid) {
                 output.error({
                     title: `[${signal}]: Killed ${cmd} (PID: ${pid})`,
