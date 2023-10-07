@@ -1,5 +1,5 @@
 import { getProjectName } from './getProjectName';
-import { CProjectType } from '@/types';
+import { CProjectType } from '@/config';
 
 describe('getProjectName', () => {
     it('should return the project name for an App project', () => {

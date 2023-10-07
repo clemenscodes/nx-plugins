@@ -1,4 +1,4 @@
-import type { BinGeneratorSchema, BinSchema } from '@/types';
+import type { BinGeneratorSchema, BinSchema } from '@/config';
 import { resolveBinOptions } from './resolveBinOptions';
 
 describe('resolveBinOptions ', () => {

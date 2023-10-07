@@ -1,4 +1,4 @@
-import type { GoogleTestInclude, C } from '@/types';
+import type { GoogleTestInclude, C } from '@/config';
 
 export const getGoogleTestInclude = (
     generateTests: boolean,

@@ -1,4 +1,4 @@
-import type { LibGeneratorSchema, LibOptions } from '@/types';
+import type { LibGeneratorSchema, LibOptions } from '@/config';
 import { resolveLibOptions } from './resolveLibOptions';
 
 describe('resolveLibOptions', () => {

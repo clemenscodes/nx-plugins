@@ -1,5 +1,5 @@
 import type { RawProjectGraphDependency } from '@nx/devkit';
-import type { Graph } from '@/types';
+import type { Graph } from '@/config';
 
 export const reduceDependencies = (
     graph: Graph,

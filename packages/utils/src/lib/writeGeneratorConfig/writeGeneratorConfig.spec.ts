@@ -2,7 +2,7 @@ import type {
     InitGeneratorSchema,
     NxCmakeGeneratorConfig,
     PluginGeneratorConfig,
-} from '@/types';
+} from '@/config';
 import type { NxJsonConfiguration } from '@nx/devkit';
 import { PLUGIN_NAME } from '@/config';
 import { writeGeneratorConfig } from './writeGeneratorConfig';

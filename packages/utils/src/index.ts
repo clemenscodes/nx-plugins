@@ -65,7 +65,7 @@ export { getPluginConfig } from './lib/getPluginConfig/getPluginConfig';
 export { getWorkspaceIncludeDir } from './lib/getWorkspaceIncludeDir/getWorkspaceIncludeDir';
 export { normalizeLineEndings } from './lib/normalizeLineEndings/normalizeLineEndings';
 export { snakeCaseToCamelCase } from './lib/snakeCaseToCamelCase/snakeCaseToCamelCase';
-export { getCompiler } from './lib/getCompiler/getCompiler';
+export { getGcc } from './lib/getGcc/getGcc';
 export { isDarwin } from './lib/isDarwin/isDarwin';
 export { logger } from './lib/logger/logger';
 export { isWindows } from './lib/isWindows/isWindows';

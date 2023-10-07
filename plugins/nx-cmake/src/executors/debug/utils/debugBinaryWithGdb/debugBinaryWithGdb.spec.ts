@@ -1,11 +1,12 @@
 import type { DebugExecutorSchema } from '../../schema';
-import { DARWIN_GDB, LINUX_GDB, WINDOWS_GDB } from '@/config';
+import { GDB, LINUX_GDB } from '@/config';
 import { debugBinaryWithGdb } from './debugBinaryWithGdb';
 import * as runCommandModule from '@/command/lib/runCommand/runCommand';
 import * as checkCommandExistsModule from '@/command/lib/checkCommandExists/checkCommandExists';
 import * as fileExistsModule from '@/file/lib/fileExists/fileExists';
 import * as isDarwinModule from '@/utils/lib/isDarwin/isDarwin';
 import * as isWindowsModule from '@/utils/lib/isWindows/isWindows';
+import * as getGdbModule from '../getGdb/getGdb';
 
 describe('debugBinaryWithGdb', () => {
     let workspaceRoot: string;
@@ -16,6 +17,7 @@ describe('debugBinaryWithGdb', () => {
     let checkCommandExistsMock: jest.SpyInstance;
     let isWindowsMock: jest.SpyInstance;
     let isDarwinMock: jest.SpyInstance;
+    let getGdbReturnMock: string;
 
     beforeEach(() => {
         workspaceRoot = '/workspace';
@@ -25,12 +27,13 @@ describe('debugBinaryWithGdb', () => {
             args: [],
             release: false,
         };
-
+        getGdbReturnMock = LINUX_GDB[0];
+        jest.spyOn(fileExistsModule, 'fileExists').mockReturnValue(true);
+        jest.spyOn(getGdbModule, 'getGdb').mockReturnValue(getGdbReturnMock);
         runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
         checkCommandExistsMock = jest
             .spyOn(checkCommandExistsModule, 'checkCommandExists')
             .mockImplementation(jest.fn());
-        jest.spyOn(fileExistsModule, 'fileExists').mockReturnValue(true);
         isWindowsMock = jest
             .spyOn(isWindowsModule, 'isWindows')
             .mockReturnValue(false);
@@ -51,9 +54,9 @@ describe('debugBinaryWithGdb', () => {
             projectName,
             options,
         );
-        expect(checkCommandExistsMock).toHaveBeenCalledWith('gdb');
+        expect(checkCommandExistsMock).toHaveBeenCalledWith(GDB);
         expect(runCommandMock).toHaveBeenCalledWith(
-            LINUX_GDB,
+            getGdbReturnMock,
             `${workspaceRoot}/dist/${projectRoot}/${projectName}`,
             ...options.args,
         );
@@ -72,7 +75,7 @@ describe('debugBinaryWithGdb', () => {
                 options,
             ),
         ).toThrowError();
-        expect(checkCommandExistsMock).toHaveBeenCalledWith('gdb');
+        expect(checkCommandExistsMock).toHaveBeenCalledWith(GDB);
         expect(runCommandMock).not.toHaveBeenCalled();
     });
 
@@ -86,9 +89,9 @@ describe('debugBinaryWithGdb', () => {
             projectName,
             options,
         );
-        expect(checkCommandExistsMock).toHaveBeenCalledWith('gdb');
+        expect(checkCommandExistsMock).toHaveBeenCalledWith(GDB);
         expect(runCommandMock).toHaveBeenCalledWith(
-            DARWIN_GDB,
+            getGdbReturnMock,
             `${workspaceRoot}/dist/${projectRoot}/${projectName}`,
             '-ex',
             'run',
@@ -107,9 +110,9 @@ describe('debugBinaryWithGdb', () => {
             projectName,
             options,
         );
-        expect(checkCommandExistsMock).toHaveBeenCalledWith('gdb');
+        expect(checkCommandExistsMock).toHaveBeenCalledWith(GDB);
         expect(runCommandMock).toHaveBeenCalledWith(
-            WINDOWS_GDB,
+            getGdbReturnMock,
             `${workspaceRoot}/dist/${projectRoot}/${projectName}`,
             ...options.args,
         );

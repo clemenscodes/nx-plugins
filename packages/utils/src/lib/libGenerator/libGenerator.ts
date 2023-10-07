@@ -1,5 +1,5 @@
 import type { Tree } from '@nx/devkit';
-import type { LibGeneratorSchema } from '@/types';
+import type { LibGeneratorSchema } from '@/config';
 import { addLibProjectConfig } from '../addLibProjectConfig/addLibProjectConfig';
 import { addTestProjectConfig } from '../addTestProjectConfig/addTestProjectConfig';
 import { generateLibFiles } from '../generateLibFiles/generateLibFiles';

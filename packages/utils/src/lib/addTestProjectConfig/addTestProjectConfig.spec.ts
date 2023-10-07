@@ -1,5 +1,5 @@
 import type { ProjectConfiguration, Tree } from '@nx/devkit';
-import type { LibGeneratorSchema, LibOptions } from '@/types';
+import type { LibGeneratorSchema, LibOptions } from '@/config';
 import { readProjectConfiguration } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { addTestProjectConfig } from './addTestProjectConfig';

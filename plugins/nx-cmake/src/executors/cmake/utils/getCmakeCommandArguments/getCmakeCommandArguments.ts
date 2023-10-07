@@ -1,5 +1,5 @@
 import { CmakeExecutorSchema } from '../../schema';
-import { getCompiler, isWindows } from '@/utils';
+import { getGcc, isWindows } from '@/utils';
 import { WINDOWS_MAKE } from '@/config';
 
 export const getCmakeCommandArguments = (
@@ -8,7 +8,7 @@ export const getCmakeCommandArguments = (
     options: CmakeExecutorSchema,
 ): string[] => {
     const { release, args } = options;
-    const cc = getCompiler();
+    const gcc = getGcc();
     const cmakeArguments = [
         '-S',
         `${workspaceRoot}/${projectRoot}`,
@@ -19,8 +19,8 @@ export const getCmakeCommandArguments = (
         ...(isWindows(process.platform)
             ? [`-DCMAKE_MAKE_PROGRAM=${WINDOWS_MAKE}`]
             : []),
-        `-DCMAKE_C_COMPILER=${cc}`,
-        `-DCMAKE_CXX_COMPILER=${cc}`,
+        `-DCMAKE_C_COMPILER=${gcc}`,
+        `-DCMAKE_CXX_COMPILER=${gcc}`,
         `-DCMAKE_BUILD_TYPE=${release ? 'Release' : 'Debug'}`,
         ...args,
     ];

@@ -1,6 +1,6 @@
-import type { C } from '@/types';
+import type { C } from '@/config';
 import { getProjectConfiguration } from './getProjectConfiguration';
-import { CProjectType } from '@/types';
+import { CProjectType } from '@/config';
 import { PLUGIN_NAME } from '@/config';
 import {
     defaultTargets,

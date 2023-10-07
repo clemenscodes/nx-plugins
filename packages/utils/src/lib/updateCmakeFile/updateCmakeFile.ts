@@ -1,5 +1,5 @@
 import type { Tree } from '@nx/devkit';
-import type { LinkSchema, Link } from '@/types';
+import type { LinkSchema, Link } from '@/config';
 import { PROJECT_FILE } from '@/config';
 import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
 import { trimLib } from '../trimLib/trimLib';

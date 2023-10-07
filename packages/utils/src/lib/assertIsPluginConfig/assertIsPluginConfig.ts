@@ -1,4 +1,4 @@
-import type { NxCmakePluginConfig } from '@/types';
+import type { NxCmakePluginConfig } from '@/config';
 
 export function assertIsPluginConfig(
     data: unknown,

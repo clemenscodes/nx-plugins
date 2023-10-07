@@ -1,7 +1,7 @@
 import type { Tree } from '@nx/devkit';
-import type { LibOptions } from '@/types';
+import type { LibOptions } from '@/config';
 import { addProjectConfiguration } from '@nx/devkit';
-import { CProjectType } from '@/types';
+import { CProjectType } from '@/config';
 import { getProjectTargets } from '../getProjectTargets/getProjectTargets';
 
 export const addLibProjectConfig = (

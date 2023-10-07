@@ -1,5 +1,5 @@
 import type { Tree } from '@nx/devkit';
-import type { BinGeneratorSchema } from '@/types';
+import type { BinGeneratorSchema } from '@/config';
 import { readProjectConfiguration } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { binGenerator } from './binGenerator';

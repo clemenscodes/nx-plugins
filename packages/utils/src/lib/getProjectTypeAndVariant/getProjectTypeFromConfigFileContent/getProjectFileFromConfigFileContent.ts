@@ -1,4 +1,4 @@
-import { CProjectType } from '@/types';
+import { CProjectType } from '@/config';
 
 export const getProjectTypeFromConfigFileContent = (
     content: string,

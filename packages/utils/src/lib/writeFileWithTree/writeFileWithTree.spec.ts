@@ -1,5 +1,5 @@
 import type { Tree } from '@nx/devkit';
-import type { LibGeneratorSchema } from '@/types';
+import type { LibGeneratorSchema } from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { writeFileWithTree } from './writeFileWithTree';
 import { libGenerator } from '../libGenerator/libGenerator';

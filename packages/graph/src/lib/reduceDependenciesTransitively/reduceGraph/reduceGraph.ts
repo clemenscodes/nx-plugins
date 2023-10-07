@@ -1,4 +1,4 @@
-import type { Graph } from '@/types';
+import type { Graph } from '@/config';
 
 export const reduceGraph = (graph: Graph): Graph => {
     const result: Graph = {};

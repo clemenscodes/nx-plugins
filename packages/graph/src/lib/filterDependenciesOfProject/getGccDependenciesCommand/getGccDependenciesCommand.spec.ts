@@ -1,8 +1,9 @@
-import type { CTag } from '@/types';
+import type { CTag } from '@/config';
+import { LINUX_GCC } from '@/config';
 import { getGccDependenciesCommand } from './getGccDependenciesCommand';
-import { LINUX_GCC, DARWIN_GCC } from '@/config';
 import * as isWindowsModule from '@/utils/lib/isWindows/isWindows';
 import * as isDarwinModule from '@/utils/lib/isDarwin/isDarwin';
+import * as getGccModule from '@/utils/lib/getGcc/getGcc';
 
 describe('getGccDependenciesCommand', () => {
     let fileName: string;
@@ -23,6 +24,7 @@ describe('getGccDependenciesCommand', () => {
         isDarwinMock = jest
             .spyOn(isDarwinModule, 'isDarwin')
             .mockReturnValue(false);
+        jest.spyOn(getGccModule, 'getGcc').mockReturnValue(LINUX_GCC[0]);
     });
 
     afterEach(() => {
@@ -36,7 +38,7 @@ describe('getGccDependenciesCommand', () => {
             libsDir,
             tag,
         );
-        const expectedCmd = `${LINUX_GCC} -x c -MM ${fileName} -I projectA -I projectA/include -I projectA/src -I libs -I include -I dist/libs/gtest/googletest-src/googletest/include -I dist/libs/cmocka/cmocka-src/include`;
+        const expectedCmd = `${LINUX_GCC[0]} -x c -MM ${fileName} -I projectA -I projectA/include -I projectA/src -I libs -I include -I dist/libs/gtest/googletest-src/googletest/include -I dist/libs/cmocka/cmocka-src/include`;
         expect(result).toBe(expectedCmd);
     });
 
@@ -49,7 +51,7 @@ describe('getGccDependenciesCommand', () => {
             libsDir,
             tag,
         );
-        const expectedCmd = `${DARWIN_GCC} -x c++ -MM ${fileName} -I projectA -I projectA/include -I projectA/src -I libs -I include -I dist/libs/gtest/googletest-src/googletest/include -I dist/libs/cmocka/cmocka-src/include`;
+        const expectedCmd = `${LINUX_GCC[0]} -x c++ -MM ${fileName} -I projectA -I projectA/include -I projectA/src -I libs -I include -I dist/libs/gtest/googletest-src/googletest/include -I dist/libs/cmocka/cmocka-src/include`;
         expect(result).toBe(expectedCmd);
     });
 
@@ -62,7 +64,7 @@ describe('getGccDependenciesCommand', () => {
             libsDir,
             tag,
         );
-        const expectedCmd = `${LINUX_GCC} -x c++ -MM ${fileName} -I projectA -I projectA/include -I projectA/src -I libs -I include -I dist/libs/gtest/googletest-src/googletest/include -I dist/libs/cmocka/cmocka-src/include`;
+        const expectedCmd = `${LINUX_GCC[0]} -x c++ -MM ${fileName} -I projectA -I projectA/include -I projectA/src -I libs -I include -I dist/libs/gtest/googletest-src/googletest/include -I dist/libs/cmocka/cmocka-src/include`;
         expect(result).toBe(expectedCmd);
     });
 });

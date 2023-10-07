@@ -1,4 +1,4 @@
-import type { Graph } from '@/types';
+import type { Graph } from '@/config';
 import { reduceGraph } from './reduceGraph';
 
 describe('reduceGraph', () => {

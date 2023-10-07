@@ -1,8 +1,8 @@
-import type { BinGeneratorSchema } from '@/types';
+import type { BinGeneratorSchema } from '@/config';
 import type { Tree } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { getProjectTypeWithTree } from './getProjectTypeWithTree';
-import { CProjectType } from '@/types';
+import { CProjectType } from '@/config';
 import { binGenerator } from '../binGenerator/binGenerator';
 import * as devkit from '@nx/devkit';
 

@@ -1,3 +1,3 @@
-import type { ExecutorBaseOptions } from '@/types';
+import type { ExecutorBaseOptions } from '@/config';
 
 export type BuildExecutorSchema = ExecutorBaseOptions;

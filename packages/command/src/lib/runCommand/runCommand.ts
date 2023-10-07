@@ -1,4 +1,4 @@
-import { getCompiler, logger } from '@/utils';
+import { getGcc, logger } from '@/utils';
 import { output } from '@nx/devkit';
 import { SpawnSyncReturns, execSync } from 'child_process';
 
@@ -7,10 +7,10 @@ export const runCommand = (
     ...args: string[]
 ): { success: boolean } => {
     const cmd = args.length > 0 ? `${command} ${args.join(' ')}` : command;
-    const cc = getCompiler();
+    const gcc = getGcc();
+    process.env['CC'] = gcc;
+    process.env['CXX'] = gcc;
     process.env['FORCE_COLOR'] = 'true';
-    process.env['CC'] = cc;
-    process.env['CXX'] = cc;
     logger(`Executing: ${cmd}`);
     try {
         execSync(cmd, {

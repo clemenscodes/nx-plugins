@@ -1,5 +1,5 @@
 import type { Tree } from '@nx/devkit';
-import type { LibGeneratorSchema, LinkGeneratorSchema } from '@/types';
+import type { LibGeneratorSchema, LinkGeneratorSchema } from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
 import { normalizeLineEndings } from '../normalizeLineEndings/normalizeLineEndings';

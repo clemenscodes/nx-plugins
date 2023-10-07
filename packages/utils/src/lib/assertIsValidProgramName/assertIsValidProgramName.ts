@@ -1,4 +1,4 @@
-import { Program } from '@/types';
+import type { Program } from '@/config';
 
 export function assertIsValidProgramName(
     program: Program,
@@ -16,9 +16,9 @@ export function assertIsValidProgramName(
             break;
         case 'gdb':
             break;
-        case 'clangTidy':
+        case 'clang-tidy':
             break;
-        case 'clangFormat':
+        case 'clang-format':
             break;
         default:
             throw new Error(`${program} is not a valid program`);

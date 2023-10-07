@@ -1,4 +1,4 @@
-import type { WorkspaceLayout } from '@/types';
+import type { WorkspaceLayout } from '@/config';
 import { workspaceLayout } from '@nx/devkit';
 import { getNxJsonConfiguration } from '../getNxJsonConfiguration/getNxJsonConfiguration';
 

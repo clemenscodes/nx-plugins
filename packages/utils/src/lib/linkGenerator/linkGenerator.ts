@@ -1,4 +1,4 @@
-import type { LinkGeneratorSchema } from '@/types';
+import type { LinkGeneratorSchema } from '@/config';
 import type { Tree } from '@nx/devkit';
 import { resolveLinkOptions } from '../resolveLinkOptions/resolveLinkOptions';
 import { updateCmakeFile } from '../updateCmakeFile/updateCmakeFile';

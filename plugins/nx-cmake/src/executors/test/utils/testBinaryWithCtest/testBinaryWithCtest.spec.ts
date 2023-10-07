@@ -1,11 +1,12 @@
 import type { TestExecutorSchema } from '../../schema';
-import { DARWIN_CTEST, LINUX_CTEST, WINDOWS_CTEST } from '@/config';
+import { LINUX_CTEST } from '@/config';
 import { testBinaryWithCtest } from './testBinaryWithCtest';
 import * as runCommandModule from '@/command/lib/runCommand/runCommand';
 import * as checkCommandExistsModule from '@/command/lib/checkCommandExists/checkCommandExists';
 import * as fileExistsModule from '@/file/lib/fileExists/fileExists';
 import * as isDarwinModule from '@/utils/lib/isDarwin/isDarwin';
 import * as isWindowsModule from '@/utils/lib/isWindows/isWindows';
+import * as getCtestModule from '../getCtest/getCtest';
 
 describe('buildProjectWithMake', () => {
     let workspaceRoot: string;
@@ -26,6 +27,7 @@ describe('buildProjectWithMake', () => {
         };
         runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
         jest.spyOn(fileExistsModule, 'fileExists').mockReturnValue(true);
+        jest.spyOn(getCtestModule, 'getCtest').mockReturnValue(LINUX_CTEST[0]);
         checkCommandExistsMock = jest
             .spyOn(checkCommandExistsModule, 'checkCommandExists')
             .mockImplementation(jest.fn());
@@ -46,7 +48,7 @@ describe('buildProjectWithMake', () => {
         const result = testBinaryWithCtest(workspaceRoot, projectRoot, options);
         expect(checkCommandExistsMock).toHaveBeenCalledWith('ctest');
         expect(runCommandMock).toHaveBeenCalledWith(
-            LINUX_CTEST,
+            LINUX_CTEST[0],
             '-C Debug',
             '--output-on-failure',
             `--test-dir=${workspaceRoot}/dist/${projectRoot}`,
@@ -73,7 +75,7 @@ describe('buildProjectWithMake', () => {
         const result = testBinaryWithCtest(workspaceRoot, projectRoot, options);
         expect(checkCommandExistsMock).toHaveBeenCalledWith('ctest');
         expect(runCommandMock).toHaveBeenCalledWith(
-            DARWIN_CTEST,
+            LINUX_CTEST[0],
             '-C Debug',
             '--output-on-failure',
             `--test-dir=${workspaceRoot}/dist/${projectRoot}`,
@@ -92,7 +94,7 @@ describe('buildProjectWithMake', () => {
         const result = testBinaryWithCtest(workspaceRoot, projectRoot, options);
         expect(checkCommandExistsMock).toHaveBeenCalledWith('ctest');
         expect(runCommandMock).toHaveBeenCalledWith(
-            WINDOWS_CTEST,
+            LINUX_CTEST[0],
             '-C Debug',
             `--test-dir=${workspaceRoot}/dist/${projectRoot}`,
             ...options.args,

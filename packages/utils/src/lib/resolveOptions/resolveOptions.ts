@@ -1,8 +1,8 @@
-import type { BaseOptions } from '@/types';
+import type { BaseOptions } from '@/config';
 import { getCMakeC } from '../getCmakeC/getCMakeC';
 import { getLanguageExtension } from '../getLanguageExtension/getLanguageExtension';
 import { getProjectRoot } from '../getProjectRoot/getProjectRoot';
-import { CProjectType } from '@/types';
+import { CProjectType } from '@/config';
 import { names, offsetFromRoot } from '@nx/devkit';
 
 export const resolveOptions = <T extends BaseOptions, K extends Required<T>>(

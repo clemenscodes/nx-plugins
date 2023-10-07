@@ -1,10 +1,6 @@
 import type { LintExecutorSchema } from '../../schema';
 import { lintFilesWithClangTidy } from './lintFilesWithClangTidy';
-import {
-    DARWIN_CLANG_TIDY,
-    LINUX_CLANG_TIDY,
-    WINDOWS_CLANG_TIDY,
-} from '@/config';
+import { CLANG_TIDY, LINUX_GCC } from '@/config';
 import * as getProjectFilesModule from '@/file/lib/getProjectFiles/getProjectFiles';
 import * as checkCommandExistsModule from '@/command/lib/checkCommandExists/checkCommandExists';
 import * as runCommandModule from '@/command/lib/runCommand/runCommand';
@@ -12,6 +8,7 @@ import * as getLintArgumentsModule from '../getLintArguments/getLintArguments';
 import * as fileExistsModule from '@/file/lib/fileExists/fileExists';
 import * as isDarwinModule from '@/utils/lib/isDarwin/isDarwin';
 import * as isWindowsModule from '@/utils/lib/isWindows/isWindows';
+import * as getClangTidyModule from '../getClangTidy/getClangTidy';
 
 describe('lintFilesWithClangTidy', () => {
     let workspaceRoot: string;
@@ -23,6 +20,7 @@ describe('lintFilesWithClangTidy', () => {
     let runCommandMock: jest.SpyInstance;
     let isWindowsMock: jest.SpyInstance;
     let isDarwinMock: jest.SpyInstance;
+    let clangTidyMock: string;
     let lintArgsMock: string[];
     let sourceFilesMock: string[];
 
@@ -51,6 +49,10 @@ describe('lintFilesWithClangTidy', () => {
             .spyOn(isDarwinModule, 'isDarwin')
             .mockReturnValue(false);
         jest.spyOn(fileExistsModule, 'fileExists').mockReturnValue(true);
+        clangTidyMock = LINUX_GCC[0];
+        jest.spyOn(getClangTidyModule, 'getClangTidy').mockReturnValue(
+            clangTidyMock,
+        );
         runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
         lintArgsMock = ['--config-file=your_config_file', '-p=your_build_path'];
         sourceFilesMock = ['/path/to/file1.cpp', '/path/to/file2.cpp'];
@@ -74,9 +76,9 @@ describe('lintFilesWithClangTidy', () => {
             workspaceRoot,
             projectRoot,
         );
-        expect(checkCommandExistsMock).toHaveBeenCalledWith('clang-tidy');
+        expect(checkCommandExistsMock).toHaveBeenCalledWith(CLANG_TIDY);
         expect(runCommandMock).toHaveBeenCalledWith(
-            LINUX_CLANG_TIDY,
+            clangTidyMock,
             ...lintArgsMock,
             ...sourceFilesMock,
         );
@@ -93,7 +95,7 @@ describe('lintFilesWithClangTidy', () => {
             options,
         );
         expect(runCommandMock).toHaveBeenCalledWith(
-            DARWIN_CLANG_TIDY,
+            clangTidyMock,
             ...lintArgsMock,
             ...sourceFilesMock,
         );
@@ -111,7 +113,7 @@ describe('lintFilesWithClangTidy', () => {
             options,
         );
         expect(runCommandMock).toHaveBeenCalledWith(
-            WINDOWS_CLANG_TIDY,
+            clangTidyMock,
             ...lintArgsMock,
             ...sourceFilesMock,
         );

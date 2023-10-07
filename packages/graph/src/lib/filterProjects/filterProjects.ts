@@ -1,5 +1,5 @@
 import type { CreateDependenciesContext } from '@nx/devkit';
-import type { FilteredProject } from '@/types';
+import type { FilteredProject } from '@/config';
 import { getProjectTypeFromConfig } from '@/utils';
 import { getTag } from './getTag/getTag';
 import { isC } from './isC/isC';

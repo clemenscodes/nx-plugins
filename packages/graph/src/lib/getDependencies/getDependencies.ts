@@ -1,5 +1,5 @@
 import type { ProjectFileMap, RawProjectGraphDependency } from '@nx/devkit';
-import type { FilteredProject } from '@/types';
+import type { FilteredProject } from '@/config';
 import { filterDependenciesOfProject } from '../filterDependenciesOfProject/filterDependenciesOfProject';
 
 export const getDependencies = (

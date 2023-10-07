@@ -1,6 +1,6 @@
 import type { ProjectConfiguration } from '@nx/devkit';
-import type { C } from '@/types';
-import { CProjectType } from '@/types';
+import type { C } from '@/config';
+import { CProjectType } from '@/config';
 import { PLUGIN_NAME } from '@/config';
 import { getLanguageExtension } from '../getLanguageExtension/getLanguageExtension';
 

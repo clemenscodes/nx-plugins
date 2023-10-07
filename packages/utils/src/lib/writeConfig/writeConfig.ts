@@ -3,7 +3,7 @@ import type {
     InitGeneratorSchema,
     PluginConfig,
     NxCmakePluginConfig,
-} from '@/types';
+} from '@/config';
 import { PLUGIN_NAME } from '@/config';
 
 export const writeConfig = (

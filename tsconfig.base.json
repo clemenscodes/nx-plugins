@@ -24,8 +24,6 @@
             "@/graph": ["packages/graph/src/index.ts"],
             "@/graph/*": ["packages/graph/src/*.ts"],
             "@/testing": ["packages/testing/src/index.ts"],
-            "@/types": ["packages/types/src/index.ts"],
-            "@/types/*": ["packages/types/src/*.ts"],
             "@/utils": ["packages/utils/src/index.ts"],
             "@/utils/*": ["packages/utils/src/*.ts"],
             "nx-cmake": ["plugins/nx-cmake/src/index.ts"]

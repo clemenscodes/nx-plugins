@@ -1,5 +1,5 @@
 import type { Tree } from '@nx/devkit';
-import type { InitGeneratorSchema } from '@/types';
+import type { InitGeneratorSchema } from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { generateCmakeConfigFiles } from './generateCmakeConfigFiles';
 import { readFileWithTree } from '../readFileWithTree/readFileWithTree';

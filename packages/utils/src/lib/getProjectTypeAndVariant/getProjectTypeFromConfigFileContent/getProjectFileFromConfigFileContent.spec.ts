@@ -1,4 +1,4 @@
-import { CProjectType } from '@/types';
+import { CProjectType } from '@/config';
 import { getProjectTypeFromConfigFileContent } from './getProjectFileFromConfigFileContent';
 
 describe('getProjectTypeFromConfigFileContent', () => {

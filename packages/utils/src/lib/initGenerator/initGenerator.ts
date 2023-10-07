@@ -1,4 +1,4 @@
-import type { InitGeneratorSchema } from '@/types';
+import type { InitGeneratorSchema } from '@/config';
 import type { Tree } from '@nx/devkit';
 import { checkNxVersion } from '../checkNxVersion/checkNxVersion';
 import { generateClangPreset } from '../generateClangPreset/generateClangPreset';

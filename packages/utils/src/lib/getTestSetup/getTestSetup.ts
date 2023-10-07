@@ -1,4 +1,4 @@
-import type { C } from '@/types';
+import type { C } from '@/config';
 
 export const getTestSetup = (
     generateTests: boolean,

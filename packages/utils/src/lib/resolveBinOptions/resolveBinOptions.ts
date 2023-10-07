@@ -2,8 +2,8 @@ import type {
     LinkGeneratorSchema,
     BinGeneratorSchema,
     BinSchema,
-} from '@/types';
-import { CProjectType } from '@/types';
+} from '@/config';
+import { CProjectType } from '@/config';
 import { offsetFromRoot } from '@nx/devkit';
 import { getLibName } from '../getLibName/getLibName';
 import { getProjectRoot } from '../getProjectRoot/getProjectRoot';

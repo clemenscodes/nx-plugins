@@ -4,7 +4,7 @@ import type {
     LibGeneratorSchema,
     LinkGeneratorSchema,
     LinkSchema,
-} from '@/types';
+} from '@/config';
 import { resolveLinkOptions } from './resolveLinkOptions';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { libGenerator } from '../libGenerator/libGenerator';

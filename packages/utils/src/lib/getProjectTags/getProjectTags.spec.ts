@@ -1,4 +1,4 @@
-import { CProjectType } from '@/types';
+import { CProjectType } from '@/config';
 import { getProjectTags } from './getProjectTags';
 import { PLUGIN_NAME } from '@/config';
 

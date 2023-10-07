@@ -1,5 +1,5 @@
 import type { Tree } from '@nx/devkit';
-import type { BinSchema } from '@/types';
+import type { BinSchema } from '@/config';
 import { generateFiles } from '@nx/devkit';
 import { join } from 'path';
 

@@ -1,5 +1,5 @@
 import type { Tree } from '@nx/devkit';
-import type { BinGeneratorSchema } from '@/types';
+import type { BinGeneratorSchema } from '@/config';
 import { formatFiles } from '@nx/devkit';
 import { addBinProject } from '../addBinProject/addBinProject';
 import { generateBinFiles } from '../generateBinFiles/generateBinFiles';

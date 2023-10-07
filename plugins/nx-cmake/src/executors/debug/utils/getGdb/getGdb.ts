@@ -1,6 +1,7 @@
+import { GDB } from '@/config';
 import { getProgram } from '@/utils';
 
 export const getGdb = (): string => {
-    const program = getProgram('gdb');
+    const program = getProgram(GDB);
     return program;
 };

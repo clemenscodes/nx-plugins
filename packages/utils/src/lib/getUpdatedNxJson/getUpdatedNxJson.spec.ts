@@ -1,4 +1,4 @@
-import type { InitGeneratorSchema } from '@/types';
+import type { InitGeneratorSchema } from '@/config';
 import type { NxJsonConfiguration } from '@nx/devkit';
 import { getUpdatedNxJson } from './getUpdatedNxJson';
 

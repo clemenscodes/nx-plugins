@@ -1,4 +1,4 @@
-import type { CTag } from '@/types';
+import type { CTag } from '@/config';
 
 export const hasValidExtension = (file: string, tag: CTag): boolean => {
     const isCFile = file.endsWith('.c');

@@ -1,8 +1,7 @@
-import type { CTag } from '@/types';
-import { LINUX_GCC, DARWIN_GCC } from '@/config';
+import type { CTag } from '@/config';
 import { getCmockaInclude } from '../getCmockaInclude/getCmockaInclude';
 import { getGtestInclude } from '../getGtestInclude/getGtestInclude';
-import { getWorkspaceIncludeDir, isDarwin } from '@/utils';
+import { getGcc, getWorkspaceIncludeDir } from '@/utils';
 
 export const getGccDependenciesCommand = (
     fileName: string,
@@ -14,9 +13,9 @@ export const getGccDependenciesCommand = (
     const gtestInclude = getGtestInclude(libsDir);
     const cmockaInclude = getCmockaInclude(libsDir);
     const language = tag === 'cpp' ? 'c++' : 'c';
-    const cc = isDarwin(process.platform) ? DARWIN_GCC : LINUX_GCC;
+    const gcc = getGcc();
     const cmd =
-        `${cc} -x ${language} -MM ${fileName}` +
+        `${gcc} -x ${language} -MM ${fileName}` +
         ` -I ${projectRoot}` +
         ` -I ${projectRoot}/include` +
         ` -I ${projectRoot}/src` +

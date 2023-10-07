@@ -1,10 +1,6 @@
 import type { FormatExecutorSchema } from '../../schema';
+import { LINUX_CLANG_FORMAT } from '@/config';
 import { formatFilesWithClangFormat } from './formatFilesWithClangFormat';
-import {
-    DARWIN_CLANG_FORMAT,
-    WINDOWS_CLANG_FORMAT,
-    LINUX_CLANG_FORMAT,
-} from '@/config';
 import * as getProjectFilesModule from '@/file/lib/getProjectFiles/getProjectFiles';
 import * as checkCommandExistsModule from '@/command/lib/checkCommandExists/checkCommandExists';
 import * as executeCommandForFilesModule from '@/command/lib/executeCommandForFiles/executeCommandForFiles';
@@ -12,6 +8,7 @@ import * as getFormatArgumentsModule from '../getFormatArguments/getFormatArgume
 import * as fileExistsModule from '@/file/lib/fileExists/fileExists';
 import * as isDarwinModule from '@/utils/lib/isDarwin/isDarwin';
 import * as isWindowsModule from '@/utils/lib/isWindows/isWindows';
+import * as getClangFormatModule from '../getClangFormat/getClangFormat';
 
 describe('formatFilesWithClangFormat', () => {
     let workspaceRoot: string;
@@ -56,6 +53,9 @@ describe('formatFilesWithClangFormat', () => {
             .spyOn(isDarwinModule, 'isDarwin')
             .mockReturnValue(false);
         jest.spyOn(fileExistsModule, 'fileExists').mockReturnValue(true);
+        jest.spyOn(getClangFormatModule, 'getClangFormat').mockReturnValue(
+            LINUX_CLANG_FORMAT[0],
+        );
         formatArgs = ['--style=file:/path/to/.clang-format', '--verbose', '-i'];
         sourceFiles = ['/path/to/file1.cpp', '/path/to/file2.cpp'];
     });
@@ -80,7 +80,7 @@ describe('formatFilesWithClangFormat', () => {
         );
         expect(checkCommandExistsMock).toHaveBeenCalledWith('clang-format');
         expect(executeCommandForFilesMock).toHaveBeenCalledWith(
-            LINUX_CLANG_FORMAT,
+            LINUX_CLANG_FORMAT[0],
             formatArgs,
             sourceFiles,
         );
@@ -97,7 +97,7 @@ describe('formatFilesWithClangFormat', () => {
             options,
         );
         expect(executeCommandForFilesMock).toHaveBeenCalledWith(
-            WINDOWS_CLANG_FORMAT,
+            LINUX_CLANG_FORMAT[0],
             formatArgs,
             sourceFiles,
         );
@@ -115,7 +115,7 @@ describe('formatFilesWithClangFormat', () => {
             options,
         );
         expect(executeCommandForFilesMock).toHaveBeenCalledWith(
-            DARWIN_CLANG_FORMAT,
+            LINUX_CLANG_FORMAT[0],
             formatArgs,
             sourceFiles,
         );

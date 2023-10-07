@@ -1,4 +1,4 @@
-import type { C } from '@/types';
+import type { C } from '@/config';
 import { getBaseCmockaTest } from '../getBaseCmockaTest/getBaseCmockaTest';
 import { getBaseGoogleTest } from '../getBaseGoogleTest/getBaseGoogleTest';
 

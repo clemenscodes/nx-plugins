@@ -1,5 +1,5 @@
 import { getProjectConfigurationType } from './getProjectConfigurationType';
-import { CProjectType } from '@/types';
+import { CProjectType } from '@/config';
 
 describe('getProjectConfigurationType', () => {
     it('should return "library" for CProjectType.Lib', () => {

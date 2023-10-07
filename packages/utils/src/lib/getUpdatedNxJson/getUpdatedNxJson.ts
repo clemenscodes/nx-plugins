@@ -1,5 +1,5 @@
 import type { NxJsonConfiguration } from '@nx/devkit';
-import type { InitGeneratorSchema } from '@/types';
+import type { InitGeneratorSchema } from '@/config';
 import { addTargetDefaults } from '../addTargetDefaults/addTargetDefaults';
 import { addCacheableTargets } from '../addCacheableTargets/addCacheableTargets';
 import { addCmakeNamedInput } from '../addCmakeNamedInput/addCmakeNamedInput';

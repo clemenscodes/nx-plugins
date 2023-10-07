@@ -1,3 +1,8 @@
+import type { Program, Programs } from './nx-cmake.types';
+import { mapDarwinGcc } from './mapDarwinGcc/mapDarwinGcc';
+import { mapLinuxProgram } from './mapLinuxProgram/mapLinuxProgram';
+import { mapWindowsProgram } from './mapWindowsProgram/mapWindowsProgram';
+
 export const PLUGIN_NAME = 'nx-cmake';
 
 export const PROJECT_FILE = 'CMakeLists.txt';
@@ -7,33 +12,87 @@ export const REQUIRED_MAJOR_NX_VERSION = 16;
 export const REQUIRED_MINOR_NX_VERSION = 9;
 export const REQUIRED_PATCH_NX_VERSION = 0;
 
-export const LINUX_GCC = '/usr/bin/gcc';
-export const LINUX_MAKE = '/usr/bin/make';
-export const LINUX_CMAKE = '/usr/bin/cmake';
-export const LINUX_CTEST = '/usr/bin/ctest';
-export const LINUX_GDB = '/usr/bin/gdb';
-export const LINUX_NASM = '/usr/bin/nasm';
-export const LINUX_CLANG_TIDY = '/usr/bin/clang-tidy';
-export const LINUX_CLANG_FORMAT = '/usr/bin/clang-format';
+export const GCC: Program = 'gcc';
+export const MAKE: Program = 'make';
+export const CMAKE: Program = 'cmake';
+export const CTEST: Program = 'ctest';
+export const GDB: Program = 'gdb';
+export const NASM: Program = 'nasm';
+export const CLANG_FORMAT: Program = 'clang-format';
+export const CLANG_TIDY: Program = 'clang-tidy';
 
-export const DARWIN_GCC = '/usr/local/bin/gcc-13';
-export const DARWIN_MAKE = '/usr/bin/make';
-export const DARWIN_CMAKE = '/usr/local/bin/cmake';
-export const DARWIN_CTEST = '/usr/local/bin/ctest';
-export const DARWIN_GDB = '/usr/local/bin/gdb';
-export const DARWIN_NASM = '/usr/local/bin/nasm';
-export const DARWIN_CLANG_TIDY = '/usr/local/bin/clang-tidy';
-export const DARWIN_CLANG_FORMAT = '/usr/local/bin/clang-format';
+export const LINUX_GCC = mapLinuxProgram(GCC);
+export const LINUX_MAKE = mapLinuxProgram(MAKE);
+export const LINUX_CMAKE = mapLinuxProgram(CMAKE);
+export const LINUX_CTEST = mapLinuxProgram(CTEST);
+export const LINUX_GDB = mapLinuxProgram(GDB);
+export const LINUX_NASM = mapLinuxProgram(NASM);
+export const LINUX_CLANG_FORMAT = mapLinuxProgram(CLANG_FORMAT);
+export const LINUX_CLANG_TIDY = mapLinuxProgram(CLANG_TIDY);
 
-export const WINDOWS_MSYS2_BASE_PATH = `C:/msys64`;
-export const WINDOWS_UCRT64_PATH = `${WINDOWS_MSYS2_BASE_PATH}/ucrt64`;
-export const WINDOWS_UCRT64_BIN_PATH = `${WINDOWS_UCRT64_PATH}/bin`;
+export const DARWIN_GCC = mapDarwinGcc();
+export const DARWIN_MAKE = mapLinuxProgram(MAKE);
+export const DARWIN_CMAKE = mapLinuxProgram(CMAKE);
+export const DARWIN_CTEST = mapLinuxProgram(CTEST);
+export const DARWIN_GDB = mapLinuxProgram(GDB);
+export const DARWIN_NASM = mapLinuxProgram(NASM);
+export const DARWIN_CLANG_FORMAT = mapLinuxProgram(CLANG_FORMAT);
+export const DARWIN_CLANG_TIDY = mapLinuxProgram(CLANG_TIDY);
 
-export const WINDOWS_GCC = `${WINDOWS_UCRT64_BIN_PATH}/gcc.exe`;
-export const WINDOWS_MAKE = `${WINDOWS_UCRT64_BIN_PATH}/mingw32-make.exe`;
-export const WINDOWS_CMAKE = `${WINDOWS_UCRT64_BIN_PATH}/cmake.exe`;
-export const WINDOWS_CTEST = `${WINDOWS_UCRT64_BIN_PATH}/ctest.exe`;
-export const WINDOWS_GDB = `${WINDOWS_UCRT64_BIN_PATH}/gdb.exe`;
-export const WINDOWS_NASM = `${WINDOWS_UCRT64_BIN_PATH}/nasm.exe`;
-export const WINDOWS_CLANG_FORMAT = `${WINDOWS_UCRT64_BIN_PATH}/clang-format.exe`;
-export const WINDOWS_CLANG_TIDY = `${WINDOWS_UCRT64_BIN_PATH}/clang-tidy.exe`;
+export const WINDOWS_GCC = mapWindowsProgram(GCC);
+export const WINDOWS_MAKE = mapWindowsProgram(MAKE);
+export const WINDOWS_CMAKE = mapWindowsProgram(CMAKE);
+export const WINDOWS_CTEST = mapWindowsProgram(CTEST);
+export const WINDOWS_GDB = mapWindowsProgram(GDB);
+export const WINDOWS_NASM = mapWindowsProgram(NASM);
+export const WINDOWS_CLANG_FORMAT = mapWindowsProgram(CLANG_FORMAT);
+export const WINDOWS_CLANG_TIDY = mapWindowsProgram(CLANG_TIDY);
+
+export const PROGRAMS: Programs = {
+    ['gcc']: {
+        linux: LINUX_GCC,
+        darwin: DARWIN_GCC,
+        windows: WINDOWS_GCC,
+    } as const,
+    ['make']: {
+        linux: LINUX_MAKE,
+        darwin: DARWIN_MAKE,
+        windows: WINDOWS_MAKE,
+    } as const,
+    ['cmake']: {
+        linux: LINUX_CMAKE,
+        darwin: DARWIN_CMAKE,
+        windows: WINDOWS_CMAKE,
+    } as const,
+    ['ctest']: {
+        linux: LINUX_CTEST,
+        darwin: DARWIN_CTEST,
+        windows: WINDOWS_CTEST,
+    } as const,
+    ['gdb']: {
+        linux: LINUX_GDB,
+        darwin: DARWIN_GDB,
+        windows: WINDOWS_GDB,
+    } as const,
+    ['nasm']: {
+        linux: LINUX_NASM,
+        darwin: DARWIN_NASM,
+        windows: WINDOWS_NASM,
+    } as const,
+    ['clang-format']: {
+        linux: LINUX_CLANG_FORMAT,
+        darwin: DARWIN_CLANG_FORMAT,
+        windows: WINDOWS_CLANG_FORMAT,
+    } as const,
+    ['clang-tidy']: {
+        linux: LINUX_CLANG_TIDY,
+        darwin: DARWIN_CLANG_TIDY,
+        windows: WINDOWS_CLANG_TIDY,
+    } as const,
+} as const;
+
+export enum CProjectType {
+    App,
+    Lib,
+    Test,
+}

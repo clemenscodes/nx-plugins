@@ -1,4 +1,4 @@
-import type { Graph } from '@/types';
+import type { Graph } from '@/config';
 import type { RawProjectGraphDependency } from '@nx/devkit';
 import { buildGraphFromDeps } from '../buildGraphFromDeps/buildGraphFromDeps';
 import { reduceGraph } from '../reduceGraph/reduceGraph';

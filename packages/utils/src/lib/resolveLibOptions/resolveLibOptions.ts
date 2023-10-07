@@ -1,4 +1,4 @@
-import type { LibGeneratorSchema, LibOptions } from '@/types';
+import type { LibGeneratorSchema, LibOptions } from '@/config';
 import { offsetFromRoot } from '@nx/devkit';
 import { getBaseTest } from '../getBaseTest/getBaseTest';
 import { getGoogleTestInclude } from '../getGoogleTestInclude/getGoogleTestInclude';
@@ -6,7 +6,7 @@ import { getLibName } from '../getLibName/getLibName';
 import { getTestLib } from '../getTestLib/getTestLib';
 import { getTestName } from '../getTestName/getTestName';
 import { getTestSetup } from '../getTestSetup/getTestSetup';
-import { CProjectType } from '@/types';
+import { CProjectType } from '@/config';
 import { resolveOptions } from '../resolveOptions/resolveOptions';
 import { getProjectRoot } from '../getProjectRoot/getProjectRoot';
 

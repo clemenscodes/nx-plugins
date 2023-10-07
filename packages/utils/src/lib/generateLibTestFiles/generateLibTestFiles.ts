@@ -1,4 +1,4 @@
-import type { LibOptions } from '@/types';
+import type { LibOptions } from '@/config';
 import type { Tree } from '@nx/devkit';
 import { generateFiles } from '@nx/devkit';
 import { join } from 'path';

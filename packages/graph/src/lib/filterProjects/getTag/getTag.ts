@@ -1,4 +1,4 @@
-import type { CTag } from '@/types';
+import type { CTag } from '@/config';
 import { isC } from '../isC/isC';
 
 export const getTag = (tags: string[] | undefined): CTag => {

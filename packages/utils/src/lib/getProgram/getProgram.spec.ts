@@ -1,4 +1,4 @@
-import type { Program } from '@/types';
+import type { Program } from '@/config';
 import { getProgram } from './getProgram';
 import { LINUX_GCC, DARWIN_GCC, WINDOWS_GCC } from '@/config';
 import * as fileExistsModule from '@/file/lib/fileExists/fileExists';
@@ -22,7 +22,7 @@ describe('getProgram', () => {
             .mockReturnValue(false);
         fileExistsMock = jest
             .spyOn(fileExistsModule, 'fileExists')
-            .mockReturnValue(true);
+            .mockImplementation(() => true);
     });
 
     afterEach(() => {
@@ -30,45 +30,45 @@ describe('getProgram', () => {
     });
 
     it('should get linux gcc on linux when passing gcc', () => {
-        expectedProgram = LINUX_GCC;
+        expectedProgram = LINUX_GCC[0];
         const result = getProgram(program);
         expect(result).toBe(expectedProgram);
     });
 
     it('should error when program doesnt exist on linux when passing gcc', () => {
-        fileExistsMock.mockReturnValue(false);
+        fileExistsMock.mockImplementation(() => false);
         expect(() => getProgram(program)).toThrowError(
-            `${program} was not found at expected path ${LINUX_GCC}`,
+            `${program} was not found on paths ${LINUX_GCC}`,
         );
     });
 
     it('should get darwin gcc on darwin when passing gcc', () => {
         isDarwinMock.mockReturnValue(true);
-        expectedProgram = DARWIN_GCC;
+        expectedProgram = DARWIN_GCC[0];
         const result = getProgram(program);
         expect(result).toBe(expectedProgram);
     });
 
     it('should error when program doesnt exist on darwin when passing gcc', () => {
         isDarwinMock.mockReturnValue(true);
-        fileExistsMock.mockReturnValue(false);
+        fileExistsMock.mockImplementation(() => false);
         expect(() => getProgram(program)).toThrowError(
-            `${program} was not found at expected path ${DARWIN_GCC}`,
+            `${program} was not found on paths ${DARWIN_GCC}`,
         );
     });
 
     it('should get windows gcc on windows when passing gcc', () => {
         isWindowsMock.mockReturnValue(true);
-        expectedProgram = WINDOWS_GCC;
+        expectedProgram = WINDOWS_GCC[0];
         const result = getProgram(program);
         expect(result).toBe(expectedProgram);
     });
 
     it('should error when program doesnt exist on windows when passing gcc', () => {
         isWindowsMock.mockReturnValue(true);
-        fileExistsMock.mockReturnValue(false);
+        fileExistsMock.mockImplementation(() => false);
         expect(() => getProgram(program)).toThrowError(
-            `${program} was not found at expected path ${WINDOWS_GCC}`,
+            `${program} was not found on paths ${WINDOWS_GCC}`,
         );
     });
 });

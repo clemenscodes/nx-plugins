@@ -1,5 +1,5 @@
 import type { Tree } from '@nx/devkit';
-import type { WorkspaceLayout } from '@/types';
+import type { WorkspaceLayout } from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { readNxJson } from '@nx/devkit';
 import { presetGenerator } from './presetGenerator';

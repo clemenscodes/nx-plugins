@@ -1,4 +1,4 @@
-import type { C } from '@/types';
+import type { C } from '@/config';
 
 export const getLanguageVariant = (configFileContent: string): C => {
     const projectLanguageVariantRegex = /^.*project\([^)]+\s(?:C|CXX)\).*$/gm;

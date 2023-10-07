@@ -22,7 +22,7 @@
                     "error",
                     {
                         "ignoredDependencies": [
-                            "@/types",
+                            "@/config",
                             "@/command",
                             "@/utils",
                             "@/config"
