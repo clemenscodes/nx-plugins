@@ -318,10 +318,10 @@ jobs:
                       -t build lint test
 
             - name: Run E2E Agents (unix)
-              id: agents
-              if: needs.agents.result != 'failure' &&
-                  needs.agents.result != 'cancelled' &&
-                  needs.agents.result != 'skipped' &&
+              id: e2e_agents
+              if: needs.e2e_agents.result != 'failure' &&
+                  needs.e2e_agents.result != 'cancelled' &&
+                  needs.e2e_agents.result != 'skipped' &&
                   matrix.os != 'windows-latest'
               run: |
                   pnpm nx affected \
