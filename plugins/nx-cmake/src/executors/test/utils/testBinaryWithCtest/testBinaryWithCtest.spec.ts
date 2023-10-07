@@ -1,8 +1,11 @@
 import type { TestExecutorSchema } from '../../schema';
+import { DARWIN_CTEST, LINUX_CTEST, WINDOWS_CTEST } from '@/config';
 import { testBinaryWithCtest } from './testBinaryWithCtest';
 import * as runCommandModule from '@/command/lib/runCommand/runCommand';
 import * as checkCommandExistsModule from '@/command/lib/checkCommandExists/checkCommandExists';
 import * as fileExistsModule from '@/file/lib/fileExists/fileExists';
+import * as isDarwinModule from '@/utils/lib/isDarwin/isDarwin';
+import * as isWindowsModule from '@/utils/lib/isWindows/isWindows';
 
 describe('buildProjectWithMake', () => {
     let workspaceRoot: string;
@@ -10,6 +13,8 @@ describe('buildProjectWithMake', () => {
     let runCommandMock: jest.SpyInstance;
     let checkCommandExistsMock: jest.SpyInstance;
     let options: TestExecutorSchema;
+    let isWindowsMock: jest.SpyInstance;
+    let isDarwinMock: jest.SpyInstance;
 
     beforeEach(() => {
         workspaceRoot = '/workspace';
@@ -19,13 +24,17 @@ describe('buildProjectWithMake', () => {
             release: false,
             outputOnFailure: true,
         };
-
         runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
         jest.spyOn(fileExistsModule, 'fileExists').mockReturnValue(true);
-        checkCommandExistsMock = jest.spyOn(
-            checkCommandExistsModule,
-            'checkCommandExists',
-        );
+        checkCommandExistsMock = jest
+            .spyOn(checkCommandExistsModule, 'checkCommandExists')
+            .mockImplementation(jest.fn());
+        isWindowsMock = jest
+            .spyOn(isWindowsModule, 'isWindows')
+            .mockReturnValue(false);
+        isDarwinMock = jest
+            .spyOn(isDarwinModule, 'isDarwin')
+            .mockReturnValue(false);
     });
 
     afterEach(() => {
@@ -33,12 +42,11 @@ describe('buildProjectWithMake', () => {
     });
 
     it('should test binary with ctest and return true', () => {
-        checkCommandExistsMock.mockReturnValue('ctest');
         runCommandMock.mockReturnValue({ success: true });
         const result = testBinaryWithCtest(workspaceRoot, projectRoot, options);
         expect(checkCommandExistsMock).toHaveBeenCalledWith('ctest');
         expect(runCommandMock).toHaveBeenCalledWith(
-            'ctest',
+            LINUX_CTEST,
             '-C Debug',
             '--output-on-failure',
             `--test-dir=${workspaceRoot}/dist/${projectRoot}`,
@@ -48,7 +56,7 @@ describe('buildProjectWithMake', () => {
     });
 
     it('should error if ctest is not installed', () => {
-        checkCommandExistsMock.mockImplementationOnce(() => {
+        checkCommandExistsMock.mockImplementation(() => {
             throw new Error();
         });
         expect(() =>
@@ -59,13 +67,13 @@ describe('buildProjectWithMake', () => {
     });
 
     it('should pass arguments to ctest', () => {
-        checkCommandExistsMock.mockReturnValue('ctest');
+        isDarwinMock.mockReturnValue(true);
         runCommandMock.mockReturnValue({ success: true });
         options.args = ['-ex', 'run', '--arg1', 'value1'];
         const result = testBinaryWithCtest(workspaceRoot, projectRoot, options);
         expect(checkCommandExistsMock).toHaveBeenCalledWith('ctest');
         expect(runCommandMock).toHaveBeenCalledWith(
-            'ctest',
+            DARWIN_CTEST,
             '-C Debug',
             '--output-on-failure',
             `--test-dir=${workspaceRoot}/dist/${projectRoot}`,
@@ -78,13 +86,13 @@ describe('buildProjectWithMake', () => {
     });
 
     it('should return false if ctest failed', () => {
+        isWindowsMock.mockReturnValue(true);
         options.outputOnFailure = false;
-        checkCommandExistsMock.mockReturnValue('ctest');
         runCommandMock.mockReturnValue({ success: false });
         const result = testBinaryWithCtest(workspaceRoot, projectRoot, options);
         expect(checkCommandExistsMock).toHaveBeenCalledWith('ctest');
         expect(runCommandMock).toHaveBeenCalledWith(
-            'ctest',
+            WINDOWS_CTEST,
             '-C Debug',
             `--test-dir=${workspaceRoot}/dist/${projectRoot}`,
             ...options.args,

@@ -1,9 +1,9 @@
+import type { Program } from '@/types';
 import { getProgram } from './getProgram';
 import { LINUX_GCC, DARWIN_GCC, WINDOWS_GCC } from '@/config';
 import * as fileExistsModule from '@/file/lib/fileExists/fileExists';
 import * as isDarwinModule from '../isDarwin/isDarwin';
 import * as isWindowsModule from '../isWindows/isWindows';
-import { Program } from '@/types';
 
 describe('getProgram', () => {
     let program: Program;
@@ -20,7 +20,9 @@ describe('getProgram', () => {
         isWindowsMock = jest
             .spyOn(isWindowsModule, 'isWindows')
             .mockReturnValue(false);
-        fileExistsMock = jest.spyOn(fileExistsModule, 'fileExists');
+        fileExistsMock = jest
+            .spyOn(fileExistsModule, 'fileExists')
+            .mockReturnValue(true);
     });
 
     afterEach(() => {
@@ -28,7 +30,6 @@ describe('getProgram', () => {
     });
 
     it('should get linux gcc on linux when passing gcc', () => {
-        fileExistsMock.mockReturnValue(true);
         expectedProgram = LINUX_GCC;
         const result = getProgram(program);
         expect(result).toBe(expectedProgram);
@@ -43,7 +44,6 @@ describe('getProgram', () => {
 
     it('should get darwin gcc on darwin when passing gcc', () => {
         isDarwinMock.mockReturnValue(true);
-        fileExistsMock.mockReturnValue(true);
         expectedProgram = DARWIN_GCC;
         const result = getProgram(program);
         expect(result).toBe(expectedProgram);
@@ -59,7 +59,6 @@ describe('getProgram', () => {
 
     it('should get windows gcc on windows when passing gcc', () => {
         isWindowsMock.mockReturnValue(true);
-        fileExistsMock.mockReturnValue(true);
         expectedProgram = WINDOWS_GCC;
         const result = getProgram(program);
         expect(result).toBe(expectedProgram);
