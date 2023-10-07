@@ -300,7 +300,7 @@ jobs:
                   matrix.os != 'windows-latest'
               run: npx nx-cloud start-ci-run --stop-agents-after=e2e
 
-            - name: Run Agents (unix)
+            - name: Run Test Agents (unix)
               id: agents
               if: needs.agents.result != 'failure' &&
                   needs.agents.result != 'cancelled' &&
@@ -315,9 +315,26 @@ jobs:
                       --output-style=stream \
                       --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT \
                       --no-cloud \
-                      -t build lint test e2e
+                      -t build lint test
 
-            - name: Run tests (windows)
+            - name: Run E2E Agents (unix)
+              id: agents
+              if: needs.agents.result != 'failure' &&
+                  needs.agents.result != 'cancelled' &&
+                  needs.agents.result != 'skipped' &&
+                  matrix.os != 'windows-latest'
+              run: |
+                  pnpm nx affected \
+                      --nx-bail \
+                      --base=$NX_BASE \
+                      --head=$NX_HEAD \
+                      --configuration=ci \
+                      --output-style=stream \
+                      --parallel=1 \
+                      --no-cloud \
+                      -t e2e
+
+            - name: Run Test Agents (windows)
               if: matrix.os == 'windows-latest'
               run: |
                   pnpm nx affected `
@@ -328,7 +345,20 @@ jobs:
                       --output-style=stream `
                       --parallel=$env:NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT `
                       --no-cloud `
-                      -t build lint test e2e
+                      -t build lint test
+
+            - name: Run E2E Agents (windows)
+              if: matrix.os == 'windows-latest'
+              run: |
+                  pnpm nx affected `
+                      --nx-bail `
+                      --base=$env:NX_BASE `
+                      --head=$env:NX_HEAD `
+                      --configuration=ci `
+                      --output-style=stream `
+                      --parallel=1 `
+                      --no-cloud `
+                      -t e2e
 
             - name: Stop Agents
               if: always()

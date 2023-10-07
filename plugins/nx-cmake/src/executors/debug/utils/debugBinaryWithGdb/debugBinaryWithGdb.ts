@@ -1,6 +1,7 @@
 import type { DebugExecutorSchema } from '../../schema';
 import { runCommand, checkCommandExists } from '@/command';
-import { trimLib } from '@/utils';
+import { getGdb } from '../getGdb/getGdb';
+import { getGdbArguments } from '../getGdbArguments/getGdbArguments';
 
 export const debugBinaryWithGdb = (
     workspaceRoot: string,
@@ -8,10 +9,14 @@ export const debugBinaryWithGdb = (
     projectName: string,
     options: DebugExecutorSchema,
 ): boolean => {
-    const gdbCommand = checkCommandExists('gdb');
-    const { args } = options;
-    const name = trimLib(projectName);
-    const bin = `${workspaceRoot}/dist/${projectRoot}/${name}`;
-    const { success } = runCommand(gdbCommand, bin, ...args);
+    checkCommandExists('gdb');
+    const gdbCommand = getGdb();
+    const gdbArguments = getGdbArguments(
+        workspaceRoot,
+        projectRoot,
+        projectName,
+        options,
+    );
+    const { success } = runCommand(gdbCommand, ...gdbArguments);
     return success;
 };

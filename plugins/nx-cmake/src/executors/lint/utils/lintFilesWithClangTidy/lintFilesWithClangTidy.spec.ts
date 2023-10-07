@@ -5,6 +5,7 @@ import * as getProjectFilesModule from '@/file/lib/getProjectFiles/getProjectFil
 import * as checkCommandExistsModule from '@/command/lib/checkCommandExists/checkCommandExists';
 import * as runCommandModule from '@/command/lib/runCommand/runCommand';
 import * as getLintArgumentsModule from '../getLintArguments/getLintArguments';
+import * as fileExistsModule from '@/file/lib/fileExists/fileExists';
 
 describe('lintFilesWithClangTidy', () => {
     let workspaceRoot: string;
@@ -37,6 +38,7 @@ describe('lintFilesWithClangTidy', () => {
             checkCommandExistsModule,
             'checkCommandExists',
         );
+        jest.spyOn(fileExistsModule, 'fileExists').mockReturnValue(true);
         runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
         lintCommandMock = 'clang-tidy';
         lintArgsMock = ['--config-file=your_config_file', '-p=your_build_path'];

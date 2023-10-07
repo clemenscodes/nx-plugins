@@ -1,6 +1,7 @@
 import type { BuildExecutorSchema } from '../../schema';
 import { runCommand } from '@/command';
 import { getCmake } from '../../../cmake/utils/getCmake/getCmake';
+import { getCmakeBuildCommandArguments } from '../getCmakeBuildCommandArguments/getCmakeBuildCommandArguments';
 
 export const buildProjectWithCMake = (
     workspaceRoot: string,
@@ -8,14 +9,11 @@ export const buildProjectWithCMake = (
     options: BuildExecutorSchema,
 ): boolean => {
     const cmake = getCmake();
-    const { args, release } = options;
-    const config = release ? 'Release' : 'Debug';
-    const { success } = runCommand(
-        cmake,
-        '--build',
-        `${workspaceRoot}/dist/${projectRoot}`,
-        `--config=${config}`,
-        ...args,
+    const buildCommandArguments = getCmakeBuildCommandArguments(
+        workspaceRoot,
+        projectRoot,
+        options,
     );
+    const { success } = runCommand(cmake, ...buildCommandArguments);
     return success;
 };

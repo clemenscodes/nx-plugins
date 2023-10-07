@@ -1,9 +1,8 @@
-import { promises as fsPromises } from 'fs';
+import { existsSync } from 'fs';
 
-export const fileExists = async (filePath: string): Promise<boolean> => {
+export const fileExists = (filePath: string): boolean => {
     try {
-        await fsPromises.access(filePath);
-        return true;
+        return existsSync(filePath);
     } catch (err) {
         return false;
     }

@@ -1,25 +1,20 @@
 import type { ExecutorContext } from '@nx/devkit';
 import type { DebugExecutorSchema } from './schema';
-import { trimLib } from '@/utils';
+import { extractRootsFromExecutorContext } from '@/utils';
 import { debugBinaryWithGdb } from './utils/debugBinaryWithGdb/debugBinaryWithGdb';
 
 export default async function* runExecutor(
     options: DebugExecutorSchema,
     ctx: ExecutorContext,
 ): AsyncGenerator<{ success: boolean }> {
-    const { root: workspaceRoot, projectName, projectsConfigurations } = ctx;
-    const { projects } = projectsConfigurations;
-    const project = projects[projectName];
-    const { root: projectRoot } = project;
-    const name = trimLib(projectName);
-
+    const { workspaceRoot, projectRoot } = extractRootsFromExecutorContext(ctx);
+    const { projectName } = ctx;
     const success = debugBinaryWithGdb(
         workspaceRoot,
         projectRoot,
-        name,
+        projectName,
         options,
     );
-
     yield {
         success,
     };

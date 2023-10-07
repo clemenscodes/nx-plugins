@@ -2,6 +2,7 @@ import type { DebugExecutorSchema } from '../../schema';
 import { debugBinaryWithGdb } from './debugBinaryWithGdb';
 import * as runCommandModule from '@/command/lib/runCommand/runCommand';
 import * as checkCommandExistsModule from '@/command/lib/checkCommandExists/checkCommandExists';
+import * as fileExistsModule from '@/file/lib/fileExists/fileExists';
 
 describe('debugBinaryWithGdb', () => {
     let workspaceRoot: string;
@@ -25,6 +26,7 @@ describe('debugBinaryWithGdb', () => {
             checkCommandExistsModule,
             'checkCommandExists',
         );
+        jest.spyOn(fileExistsModule, 'fileExists').mockReturnValue(true);
     });
 
     afterEach(() => {

@@ -4,6 +4,7 @@ import * as getProjectFilesModule from '@/file/lib/getProjectFiles/getProjectFil
 import * as checkCommandExistsModule from '@/command/lib/checkCommandExists/checkCommandExists';
 import * as executeCommandForFilesModule from '@/command/lib/executeCommandForFiles/executeCommandForFiles';
 import * as getFormatArgumentsModule from '../getFormatArguments/getFormatArguments';
+import * as fileExistsModule from '@/file/lib/fileExists/fileExists';
 
 describe('formatFilesWithClangFormat', () => {
     let workspaceRoot: string;
@@ -41,6 +42,7 @@ describe('formatFilesWithClangFormat', () => {
             executeCommandForFilesModule,
             'executeCommandForFiles',
         );
+        jest.spyOn(fileExistsModule, 'fileExists').mockReturnValue(true);
         formatCommand = 'clang-format';
         formatArgs = ['--style=file:/path/to/.clang-format', '--verbose', '-i'];
         sourceFiles = ['/path/to/file1.cpp', '/path/to/file2.cpp'];
@@ -51,7 +53,7 @@ describe('formatFilesWithClangFormat', () => {
     });
 
     it('should pass executor arguments to clang-format', async () => {
-        getFormatArgumentsMock.mockResolvedValue(formatArgs);
+        getFormatArgumentsMock.mockReturnValue(formatArgs);
         getProjectFilesMock.mockReturnValue(sourceFiles);
         checkCommandExistsMock.mockReturnValue(formatCommand);
         executeCommandForFilesMock.mockReturnValue(true);

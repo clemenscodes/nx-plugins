@@ -7,14 +7,14 @@ export const REQUIRED_MAJOR_NX_VERSION = 16;
 export const REQUIRED_MINOR_NX_VERSION = 9;
 export const REQUIRED_PATCH_NX_VERSION = 0;
 
-export const LINUX_GCC = 'gcc';
-export const LINUX_MAKE = 'make';
-export const LINUX_CMAKE = 'cmake';
-export const LINUX_CTEST = 'ctest';
-export const LINUX_GDB = 'gdb';
-export const LINUX_NASM = 'nasm';
-export const LINUX_CLANG_TIDY = 'clang-tidy';
-export const LINUX_CLANG_FORMAT = 'clang-format';
+export const LINUX_GCC = '/usr/bin/gcc';
+export const LINUX_MAKE = '/usr/bin/make';
+export const LINUX_CMAKE = '/usr/bin/cmake';
+export const LINUX_CTEST = '/usr/bin/ctest';
+export const LINUX_GDB = '/usr/bin/gdb';
+export const LINUX_NASM = '/usr/bin/nasm';
+export const LINUX_CLANG_TIDY = '/usr/bin/clang-tidy';
+export const LINUX_CLANG_FORMAT = '/usr/bin/clang-format';
 
 export const DARWIN_GCC = '/usr/local/bin/gcc-13';
 export const DARWIN_MAKE = '/usr/bin/make';

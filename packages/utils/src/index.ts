@@ -1,3 +1,5 @@
+export { getProgram } from './lib/getProgram/getProgram';
+export { extractRootsFromExecutorContext } from './lib/extractRootsFromExecutorContext/extractRootsFromExecutorContext';
 export { binGenerator } from './lib/binGenerator/binGenerator';
 export { addBinProject } from './lib/addBinProject/addBinProject';
 export { generateBinFiles } from './lib/generateBinFiles/generateBinFiles';

@@ -1,18 +1,14 @@
 import type { BuildExecutorSchema } from './schema';
 import type { ExecutorContext } from '@nx/devkit';
 import { buildProjectWithCMake } from './utils/buildProjectWithCMake/buildProjectWithCMake';
+import { extractRootsFromExecutorContext } from '@/utils';
 
-export default async function* runExecutor(
+export default async function* runExecutors(
     options: BuildExecutorSchema,
     ctx: ExecutorContext,
 ): AsyncGenerator<{ success: boolean }> {
-    const { root: workspaceRoot, projectName, projectsConfigurations } = ctx;
-    const { projects } = projectsConfigurations;
-    const project = projects[projectName];
-    const { root: projectRoot } = project;
-
+    const { workspaceRoot, projectRoot } = extractRootsFromExecutorContext(ctx);
     const success = buildProjectWithCMake(workspaceRoot, projectRoot, options);
-
     yield {
         success,
     };

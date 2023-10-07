@@ -13,6 +13,11 @@
             "description": "Whether to build in release mode",
             "type": "boolean",
             "default": false
+        },
+        "outputOnFailure": {
+            "description": "Whether to print output on test failure",
+            "type": "boolean",
+            "default": true
         }
     },
     "outputCapture": "direct-nodejs",

@@ -1,3 +1,3 @@
-import type { ExecutorBaseOptions } from '../../models/types';
+import type { ExecutorBaseOptions } from '@/types';
 
 export type BuildExecutorSchema = ExecutorBaseOptions;

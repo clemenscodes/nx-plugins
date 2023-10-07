@@ -21,7 +21,9 @@ describe('executeBinary', () => {
         };
 
         runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
-        fileExistsMock = jest.spyOn(fileExistsModule, 'fileExists');
+        fileExistsMock = jest
+            .spyOn(fileExistsModule, 'fileExists')
+            .mockReturnValue(true);
     });
 
     afterEach(() => {
@@ -49,7 +51,7 @@ describe('executeBinary', () => {
         expect(() =>
             executeBinary(workspaceRoot, projectRoot, projectName, options),
         ).toThrowError(
-            `The binary of ${projectName} was not found and cound not be executed.`,
+            `The binary of ${projectName} was not found and cound not be executed [Path: /workspace/dist/projectRoot/Debug/myProject]`,
         );
         expect(fileExistsMock).toHaveBeenCalledWith(
             `${workspaceRoot}/dist/${projectRoot}/Debug/${projectName}`,

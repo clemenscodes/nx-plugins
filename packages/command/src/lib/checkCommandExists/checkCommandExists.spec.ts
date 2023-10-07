@@ -15,14 +15,13 @@ describe('checkCommandExists', () => {
     });
 
     it('should error if the does not command exist', () => {
-        commandExistsMock.mockReturnValueOnce(false);
+        commandExistsMock.mockReturnValue(false);
         const expectedError = `${command} is not installed but required for this executor to run.`;
         expect(() => checkCommandExists(command)).toThrowError(expectedError);
     });
 
     it('should return the command it it exists', () => {
-        commandExistsMock.mockReturnValueOnce(true);
-        const result = checkCommandExists(command);
-        expect(result).toBe(command);
+        commandExistsMock.mockReturnValue(true);
+        expect(() => checkCommandExists(command)).not.toThrowError();
     });
 });

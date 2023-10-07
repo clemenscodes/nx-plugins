@@ -1,6 +1,6 @@
 import { commandExists } from '../commandExists/commandExists';
 
-export const checkCommandExists = (command: string): string => {
+export const checkCommandExists = (command: string) => {
     const checkedCommandExists = commandExists(command);
 
     if (!checkedCommandExists) {
@@ -8,6 +8,4 @@ export const checkCommandExists = (command: string): string => {
             `${command} is not installed but required for this executor to run.`,
         );
     }
-
-    return command;
 };

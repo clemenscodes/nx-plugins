@@ -1,22 +1,20 @@
 import type { TestExecutorSchema } from '../../schema';
 import { runCommand, checkCommandExists } from '@/command';
+import { getCtest } from '../getCtest/getCtest';
+import { getCtestArguments } from '../getCtestArguments/getCtestArguments';
 
 export const testBinaryWithCtest = (
     workspaceRoot: string,
     projectRoot: string,
     options: TestExecutorSchema,
 ): boolean => {
-    const testCommand = checkCommandExists('ctest');
-    const testBin = `${workspaceRoot}/dist/${projectRoot}`;
-    const { args, release } = options;
-    const config = release ? 'Release' : 'Debug';
-    const { success } = runCommand(
-        testCommand,
-        `-C ${config}`,
-        '--output-on-failure',
-        '--test-dir',
-        testBin,
-        ...args,
+    checkCommandExists('ctest');
+    const ctest = getCtest();
+    const ctestArguments = getCtestArguments(
+        workspaceRoot,
+        projectRoot,
+        options,
     );
+    const { success } = runCommand(ctest, ...ctestArguments);
     return success;
 };

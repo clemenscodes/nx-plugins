@@ -21,7 +21,7 @@
                 "@nx/dependency-checks": [
                     "error",
                     {
-                        "ignoredDependencies": ["@/config", "@/types"]
+                        "ignoredDependencies": ["@/config", "@/types", "@/file"]
                     }
                 ]
             }

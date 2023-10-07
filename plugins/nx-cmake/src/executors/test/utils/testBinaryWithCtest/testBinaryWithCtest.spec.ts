@@ -2,6 +2,7 @@ import type { TestExecutorSchema } from '../../schema';
 import { testBinaryWithCtest } from './testBinaryWithCtest';
 import * as runCommandModule from '@/command/lib/runCommand/runCommand';
 import * as checkCommandExistsModule from '@/command/lib/checkCommandExists/checkCommandExists';
+import * as fileExistsModule from '@/file/lib/fileExists/fileExists';
 
 describe('buildProjectWithMake', () => {
     let workspaceRoot: string;
@@ -16,9 +17,11 @@ describe('buildProjectWithMake', () => {
         options = {
             args: [],
             release: false,
+            outputOnFailure: true,
         };
 
         runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
+        jest.spyOn(fileExistsModule, 'fileExists').mockReturnValue(true);
         checkCommandExistsMock = jest.spyOn(
             checkCommandExistsModule,
             'checkCommandExists',
@@ -38,8 +41,7 @@ describe('buildProjectWithMake', () => {
             'ctest',
             '-C Debug',
             '--output-on-failure',
-            '--test-dir',
-            `${workspaceRoot}/dist/${projectRoot}`,
+            `--test-dir=${workspaceRoot}/dist/${projectRoot}`,
             ...options.args,
         );
         expect(result).toBe(true);
@@ -66,8 +68,7 @@ describe('buildProjectWithMake', () => {
             'ctest',
             '-C Debug',
             '--output-on-failure',
-            '--test-dir',
-            `${workspaceRoot}/dist/${projectRoot}`,
+            `--test-dir=${workspaceRoot}/dist/${projectRoot}`,
             '-ex',
             'run',
             '--arg1',
@@ -77,6 +78,7 @@ describe('buildProjectWithMake', () => {
     });
 
     it('should return false if ctest failed', () => {
+        options.outputOnFailure = false;
         checkCommandExistsMock.mockReturnValue('ctest');
         runCommandMock.mockReturnValue({ success: false });
         const result = testBinaryWithCtest(workspaceRoot, projectRoot, options);
@@ -84,9 +86,7 @@ describe('buildProjectWithMake', () => {
         expect(runCommandMock).toHaveBeenCalledWith(
             'ctest',
             '-C Debug',
-            '--output-on-failure',
-            '--test-dir',
-            `${workspaceRoot}/dist/${projectRoot}`,
+            `--test-dir=${workspaceRoot}/dist/${projectRoot}`,
             ...options.args,
         );
         expect(result).toBe(false);
