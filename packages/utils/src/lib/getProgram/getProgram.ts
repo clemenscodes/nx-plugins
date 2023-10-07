@@ -4,29 +4,26 @@ import { isDarwin } from '../isDarwin/isDarwin';
 import { isWindows } from '../isWindows/isWindows';
 import { assertIsValidProgramName } from '../assertIsValidProgramName/assertIsValidProgramName';
 
+export const getFirstMatch = (
+    program: Program,
+    paths: ReadonlyArray<string>,
+): string => {
+    for (const path of paths) {
+        if (fileExists(path)) {
+            return path;
+        }
+    }
+    throw new Error(`${program} was not found on paths ${paths}`);
+};
+
 export const getProgram = (program: Program): string => {
     assertIsValidProgramName(program);
     const { linux, darwin, windows } = PROGRAMS[program];
     if (isDarwin(process.platform)) {
-        for (const program of darwin) {
-            if (fileExists(program)) {
-                return program;
-            }
-        }
-        throw new Error(`${program} was not found on paths ${darwin}`);
+        return getFirstMatch(program, darwin);
     }
     if (isWindows(process.platform)) {
-        for (const program of windows) {
-            if (fileExists(program)) {
-                return program;
-            }
-        }
-        throw new Error(`${program} was not found on paths ${windows}`);
+        return getFirstMatch(program, windows);
     }
-    for (const program of linux) {
-        if (fileExists(program)) {
-            return program;
-        }
-    }
-    throw new Error(`${program} was not found on paths ${linux}`);
+    return getFirstMatch(program, linux);
 };

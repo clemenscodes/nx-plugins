@@ -8,9 +8,7 @@ describe('commandExists', () => {
 
     beforeEach(() => {
         executeCommandMock = jest.spyOn(executeCommandModule, 'executeCommand');
-        isWindowsMock = jest
-            .spyOn(isWindowsModule, 'isWindows')
-            .mockReturnValue(false);
+        isWindowsMock = jest.spyOn(isWindowsModule, 'isWindows');
     });
 
     afterEach(() => {
