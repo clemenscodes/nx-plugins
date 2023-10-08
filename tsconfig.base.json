@@ -15,7 +15,11 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
-            "nx-cmake": ["packages/nx-cmake/src/index.ts"]
+            "@/config": ["packages/config/src/index.ts"],
+            "@/file": ["packages/file/src/index.ts"],
+            "@/graph": ["packages/graph/src/index.ts"],
+            "@/utils": ["packages/utils/src/index.ts"],
+            "nx-cmake": ["plugins/nx-cmake/src/index.ts"]
         }
     },
     "exclude": ["node_modules", "tmp"]

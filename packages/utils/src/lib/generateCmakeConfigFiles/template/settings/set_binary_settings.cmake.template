@@ -1,0 +1,12 @@
+include(settings/set_project_settings)
+
+function(set_binary_settings PROJECT SOURCE_DIR)
+    add_executable(${PROJECT} ${${PROJECT}_SOURCES})
+    set_target_properties(${PROJECT}
+        PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}"
+    )
+    target_include_directories(${PROJECT} PRIVATE ${${PROJECT}_INCLUDE_DIR} ${WORKSPACE_INCLUDE_DIR})
+    target_include_directories(${PROJECT} PRIVATE ${${PROJECT}_INCLUDE_DIR}/include ${WORKSPACE_INCLUDE_DIR})
+    target_include_directories(${PROJECT} PRIVATE ${${PROJECT}_INCLUDE_DIR}/src ${WORKSPACE_INCLUDE_DIR})
+endfunction()

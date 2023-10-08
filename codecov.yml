@@ -7,6 +7,26 @@ coverage:
                 target: 90%
                 flags:
                     - nx-cmake
+            create-nx-cmake:
+                target: 90%
+                flags:
+                    - create-nx-cmake
+            utils:
+                target: 90%
+                flags:
+                    - utils
+            config:
+                target: 90%
+                flags:
+                    - config
+            graph:
+                target: 90%
+                flags:
+                    - graph
+            file:
+                target: 90%
+                flags:
+                    - file
         patch:
             default:
                 enabled: no
@@ -18,4 +38,19 @@ coverage:
 flags:
     nx-cmake:
         paths:
-            - packages/nx-cmake/src
+            - plugins/nx-cmake/src
+    create-nx-cmake:
+        paths:
+            - plugins/create-nx-cmake/src
+    utils:
+        paths:
+            - packages/utils/src
+    config:
+        paths:
+            - packages/config/src
+    graph:
+        paths:
+            - packages/graph/src
+    file:
+        paths:
+            - packages/file/src

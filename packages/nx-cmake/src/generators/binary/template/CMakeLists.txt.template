@@ -1,5 +1,0 @@
-include("<%= relativeRootPath %>CMakeLists.txt")
-
-cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})
-project(<%= name %> <%= cmakeC %>)
-set_binary_settings(${CMAKE_PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})

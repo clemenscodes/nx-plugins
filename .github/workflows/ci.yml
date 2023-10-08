@@ -11,17 +11,20 @@ concurrency:
     cancel-in-progress: true
 
 env:
-    NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT: 2
+    NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT: 3
     NX_CLOUD_DISTRIBUTED_EXECUTION: true
-    NX_EXEC: 'pnpm nx affected --nx-bail --base=$NX_BASE --head=$NX_HEAD --output-style=stream --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT -t'
+    NX_REJECT_UNKNOWN_LOCAL_CACHE: 0
 
 jobs:
     deps:
-        name: Dependencies
+        strategy:
+            matrix:
+                os: [ubuntu-latest, macos-latest, windows-latest]
+        name: Deps [${{ matrix.os }}]
         permissions:
             contents: read
             actions: read
-        runs-on: ubuntu-latest
+        runs-on: ${{ matrix.os }}
         steps:
             - name: Checkout [Pull Request]
               uses: actions/checkout@v3
@@ -42,7 +45,7 @@ jobs:
             - name: Install Node
               uses: actions/setup-node@v3
               with:
-                  node-version: 16
+                  node-version: lts/*
 
             - name: Install pnpm
               uses: pnpm/action-setup@v2
@@ -64,9 +67,9 @@ jobs:
                   path: |
                       ${{ steps.pnpm-cache.outputs.STORE_PATH }}
                       node_modules/
-                  key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  key: ${{ matrix.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
                   restore-keys: |
-                      ${{ runner.os }}-pnpm-store-
+                      ${{ matrix.os }}-pnpm-store-
 
             - name: Install dependencies
               if: steps.cache.outputs.cache-hit != 'true'
@@ -85,24 +88,29 @@ jobs:
               id: set-matrix
               shell: bash
               run: |
-                  AGENTS_JSON_ARRAY=$(node -e "console.log(JSON.stringify(Array.from(new Array($NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT)).map((_, i) => i + 1)));")
+                  AGENTS_JSON_ARRAY=$(node -e "
+                    const agents = Array.from(new Array($NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT)).map((_, i) => i + 1);
+                    console.log(JSON.stringify(agents));
+                  ")
                   echo $AGENTS_JSON_ARRAY
                   echo "matrix=$AGENTS_JSON_ARRAY" >> $GITHUB_OUTPUT
 
     agents:
-        name: Agent ${{ matrix.agent }}
+        name: Agent ${{ matrix.agent }} [${{ matrix.os }}]
         needs: [set-agents, deps]
-        runs-on: ubuntu-latest
+        runs-on: ${{ matrix.os }}
+        env:
+            NX_CACHE_DIRECTORY: tmp/${{ matrix.os }}
         permissions:
             contents: read
             actions: read
-        defaults:
-            run:
-                shell: bash
         strategy:
             matrix:
+                os:
+                    - ubuntu-latest
+                    - macos-latest
                 agent:
-                    - ${{fromJson(needs.set-agents.outputs.matrix)}}
+                    - ${{ fromJson(needs.set-agents.outputs.matrix) }}
         steps:
             - name: Checkout [Pull Request]
               uses: actions/checkout@v3
@@ -120,10 +128,19 @@ jobs:
             - name: Derive SHAs
               uses: nrwl/nx-set-shas@v3
 
+            - name: Nx cache
+              uses: actions/cache/restore@v3
+              id: nx_cache
+              with:
+                  path: ${{ env.NX_CACHE_DIRECTORY }}
+                  key: ${{ matrix.os }}-nx-cache-${{ hashFiles('tmp/**') }}
+                  restore-keys: |
+                      ${{ matrix.os }}-nx-cache
+
             - name: Install Node
               uses: actions/setup-node@v3
               with:
-                  node-version: 16
+                  node-version: lts/*
 
             - name: Install pnpm
               uses: pnpm/action-setup@v2
@@ -131,11 +148,6 @@ jobs:
               with:
                   version: latest
                   run_install: false
-
-            - name: Install gdb
-              run: |
-                  sudo apt-get update -y
-                  sudo apt-get install gdb -y
 
             - name: Get pnpm store directory
               id: pnpm-cache
@@ -150,19 +162,42 @@ jobs:
                   path: |
                       ${{ steps.pnpm-cache.outputs.STORE_PATH }}
                       node_modules/
-                  key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  key: ${{ matrix.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
                   restore-keys: |
-                      ${{ runner.os }}-pnpm-store-
+                      ${{ matrix.os }}-pnpm-store-
 
-            - name: Run Agent
+            - name: Install dependencies
+              if: steps.cache.outputs.cache-hit != 'true'
+              run: pnpm install --no-frozen-lockfile
+
+            - name: Install linux dependencies (ubuntu-latest)
+              if: matrix.os == 'ubuntu-latest'
+              run: |
+                  sudo apt-get update -y
+                  sudo apt-get install gdb nasm -y
+
+            - name: Install macos dependencies (macos-latest)
+              if: matrix.os == 'macos-latest'
+              run: |
+                  brew install llvm gdb nasm
+                  ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
+                  ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
+
+            - name: Run Agent (unix)
               run: npx nx-cloud start-agent
 
     main:
-        name: Main Job
+        strategy:
+            matrix:
+                os: [windows-latest, ubuntu-latest, macos-latest]
+            fail-fast: false
+        name: Main Job [${{ matrix.os }}]
+        env:
+            NX_CACHE_DIRECTORY: tmp/${{ matrix.os }}
         permissions:
             contents: read
             actions: read
-        runs-on: ubuntu-latest
+        runs-on: ${{ matrix.os }}
         needs: [set-agents, deps]
         steps:
             - name: Checkout [Pull Request]
@@ -184,7 +219,7 @@ jobs:
             - name: Install Node
               uses: actions/setup-node@v3
               with:
-                  node-version: 16
+                  node-version: lts/*
 
             - name: Install pnpm
               uses: pnpm/action-setup@v2
@@ -192,11 +227,6 @@ jobs:
               with:
                   version: latest
                   run_install: false
-
-            - name: Install gdb
-              run: |
-                  sudo apt-get update -y
-                  sudo apt-get install gdb -y
 
             - name: Get pnpm store directory
               id: pnpm-cache
@@ -211,33 +241,131 @@ jobs:
                   path: |
                       ${{ steps.pnpm-cache.outputs.STORE_PATH }}
                       node_modules/
-                  key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  key: ${{ matrix.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
                   restore-keys: |
-                      ${{ runner.os }}-pnpm-store-
+                      ${{ matrix.os }}-pnpm-store-
 
-            - name: Start Agents
+            - name: Nx cache
+              uses: actions/cache@v3
+              id: nx_cache
+              with:
+                  path: ${{ env.NX_CACHE_DIRECTORY }}
+                  key: ${{ matrix.os }}-nx-cache-${{ hashFiles('tmp/**') }}
+                  restore-keys: |
+                      ${{ matrix.os }}-nx-cache
+
+            - name: Install dependencies
+              if: steps.cache.outputs.cache-hit != 'true'
+              run: pnpm install --no-frozen-lockfile
+
+            - name: Install linux dependencies (ubuntu-latest)
+              if: matrix.os == 'ubuntu-latest'
+              run: |
+                  sudo apt-get update -y
+                  sudo apt-get install gdb -y
+
+            - name: Install macos dependencies (macos-latest)
+              if: matrix.os == 'macos-latest'
+              run: |
+                  brew install llvm gdb
+                  ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
+                  ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
+
+            - name: Install MSYS2 (windows-latest)
+              if: matrix.os == 'windows-latest'
+              run: |
+                  Add-Content $env:GITHUB_PATH "C:\msys64"
+                  Add-Content $env:GITHUB_PATH "C:\msys64\usr\bin"
+                  Add-Content $env:GITHUB_PATH "C:\msys64\ucrt64\bin"
+
+            - name: Install windows dependencies (windows-latest)
+              uses: msys2/setup-msys2@v2
+              if: matrix.os == 'windows-latest'
+              with:
+                  msystem: UCRT64
+                  update: true
+                  release: false
+                  pacboy: >-
+                      gcc:u
+                      make:u
+                      cmake:u
+                      clang:u
+                      clang-tools-extra:u
+                      gdb:u
+
+            - name: Start Agents (unix)
               if: needs.agents.result != 'failure' &&
                   needs.agents.result != 'cancelled' &&
-                  needs.agents.result != 'skipped'
+                  needs.agents.result != 'skipped' &&
+                  matrix.os != 'windows-latest'
               run: npx nx-cloud start-ci-run --stop-agents-after=e2e
 
-            - name: Run Agents
+            - name: Run Test Agents (unix)
               id: agents
               if: needs.agents.result != 'failure' &&
                   needs.agents.result != 'cancelled' &&
-                  needs.agents.result != 'skipped'
-              uses: jameshenry/parallel-bash-commands@v1
-              with:
-                  cmd1: $NX_EXEC build
-                  cmd2: $NX_EXEC lint --configuration=ci
-                  cmd3: $NX_EXEC test --configuration=ci
-                  cmd4: $NX_EXEC e2e --configuration=ci
+                  needs.agents.result != 'skipped' &&
+                  matrix.os != 'windows-latest'
+              run: |
+                  pnpm nx affected \
+                      --nx-bail \
+                      --base=$NX_BASE \
+                      --head=$NX_HEAD \
+                      --configuration=ci \
+                      --output-style=stream \
+                      --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT \
+                      --no-cloud \
+                      -t build lint test
+
+            - name: Run E2E Agents (unix)
+              id: e2e_agents
+              if: needs.e2e_agents.result != 'failure' &&
+                  needs.e2e_agents.result != 'cancelled' &&
+                  needs.e2e_agents.result != 'skipped' &&
+                  matrix.os != 'windows-latest'
+              run: |
+                  pnpm nx affected \
+                      --nx-bail \
+                      --base=$NX_BASE \
+                      --head=$NX_HEAD \
+                      --configuration=ci \
+                      --output-style=stream \
+                      --parallel=1 \
+                      --no-cloud \
+                      -t e2e
+
+            - name: Run Test Agents (windows)
+              if: matrix.os == 'windows-latest'
+              run: |
+                  pnpm nx affected `
+                      --nx-bail `
+                      --base=$env:NX_BASE `
+                      --head=$env:NX_HEAD `
+                      --configuration=ci `
+                      --output-style=stream `
+                      --parallel=$env:NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT `
+                      --no-cloud `
+                      -t build lint test
+
+            - name: Run E2E Agents (windows)
+              if: matrix.os == 'windows-latest'
+              run: |
+                  pnpm nx affected `
+                      --nx-bail `
+                      --base=$env:NX_BASE `
+                      --head=$env:NX_HEAD `
+                      --configuration=ci `
+                      --output-style=stream `
+                      --parallel=1 `
+                      --no-cloud `
+                      -t e2e
 
             - name: Stop Agents
               if: always()
               run: npx nx-cloud stop-all-agents
 
             - name: Upload coverage reports to Codecov
+              if: matrix.os == 'ubuntu-latest'
               uses: codecov/codecov-action@v3
               env:
                   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
@@ -272,7 +400,7 @@ jobs:
               if: startsWith(github.ref, 'refs/heads/main')
               uses: actions/setup-node@v3
               with:
-                  node-version: 16
+                  node-version: lts/*
                   registry-url: 'https://registry.npmjs.org'
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -293,7 +421,7 @@ jobs:
                   echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
             - name: Restore pnpm cache
-              uses: actions/cache/restore@v3
+              uses: actions/cache@v3
               if: startsWith(github.ref, 'refs/heads/main')
               id: cache
               with:

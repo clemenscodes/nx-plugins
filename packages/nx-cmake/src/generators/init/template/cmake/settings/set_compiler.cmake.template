@@ -1,4 +1,0 @@
-function(set_compiler)
-    set(CMAKE_C_COMPILER gcc CACHE INTERNAL "")
-    set(CMAKE_CXX_COMPILER ${CMAKE_C_COMPILER} CACHE INTERNAL "")
-endfunction()
