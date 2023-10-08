@@ -3,6 +3,7 @@ import { join } from 'path';
 import { ExecuteExecutorSchema } from '@/config';
 import * as fileModule from '@/file';
 import * as runCommandModule from '../runCommand/runCommand';
+import * as isWindowsModule from '../isWindows/isWindows';
 
 describe('executeBinary', () => {
     let workspaceRoot: string;
@@ -10,6 +11,7 @@ describe('executeBinary', () => {
     let projectName: string;
     let runCommandMock: jest.SpyInstance;
     let fileExistsMock: jest.SpyInstance;
+    let isWindowsMock: jest.SpyInstance;
     let options: ExecuteExecutorSchema;
 
     beforeEach(() => {
@@ -22,6 +24,9 @@ describe('executeBinary', () => {
         };
 
         runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
+        isWindowsMock = jest
+            .spyOn(isWindowsModule, 'isWindows')
+            .mockReturnValue(false);
         fileExistsMock = jest
             .spyOn(fileModule, 'fileExists')
             .mockReturnValue(true);
@@ -52,7 +57,7 @@ describe('executeBinary', () => {
         expect(() =>
             executeBinary(workspaceRoot, projectRoot, projectName, options),
         ).toThrowError(
-            `The binary of ${projectName} was not found and cound not be executed [Path: ${join(
+            `The binary of ${projectName} was not found and could not be executed [Path: ${join(
                 '/workspace/dist/projectRoot/Debug/myProject',
             )}]`,
         );
@@ -84,6 +89,7 @@ describe('executeBinary', () => {
     });
 
     it('should return false if binary failed', () => {
+        isWindowsMock.mockReturnValue(true);
         fileExistsMock.mockReturnValue(true);
         runCommandMock.mockReturnValue({ success: false });
         const result = executeBinary(
@@ -93,7 +99,9 @@ describe('executeBinary', () => {
             options,
         );
         expect(runCommandMock).toHaveBeenCalledWith(
-            join(`${workspaceRoot}/dist/${projectRoot}/Debug/${projectName}`),
+            join(
+                `${workspaceRoot}/dist/${projectRoot}/Debug/${projectName}.exe`,
+            ),
             ...options.args,
         );
         expect(result).toBe(false);
