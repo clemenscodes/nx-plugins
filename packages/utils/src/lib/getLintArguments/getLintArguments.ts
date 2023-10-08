@@ -1,4 +1,4 @@
-import type { LintExecutorSchema } from '../../schema';
+import { LintExecutorSchema } from '@/config';
 import { getClangTidyBuildPathArgument } from './getClangTidyBuildPathArgument/getClangTidyBuildPathArgument';
 import { getClangTidyConfigArgument } from './getClangTidyConfigArgument/getClangTidyConfigArgument';
 

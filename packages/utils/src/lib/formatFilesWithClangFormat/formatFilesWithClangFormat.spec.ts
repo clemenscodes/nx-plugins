@@ -3,7 +3,10 @@ import { formatFilesWithClangFormat } from './formatFilesWithClangFormat';
 import * as fileModule from '@/file';
 import * as getFormatArgumentsModule from '../getFormatArguments/getFormatArguments';
 import * as getClangFormatModule from '../getClangFormat/getClangFormat';
-import * as utilsModule from '../../';
+import * as checkCommandExistsModule from '../checkCommandExists/checkCommandExists';
+import * as isDarwinModule from '../isDarwin/isDarwin';
+import * as isWindowsModule from '../isWindows/isWindows';
+import * as executeCommandForFilesModule from '../executeCommandForFiles/executeCommandForFiles';
 
 describe('formatFilesWithClangFormat', () => {
     let workspaceRoot: string;
@@ -32,17 +35,17 @@ describe('formatFilesWithClangFormat', () => {
         );
         getProjectFilesMock = jest.spyOn(fileModule, 'getProjectFiles');
         checkCommandExistsMock = jest
-            .spyOn(utilsModule, 'checkCommandExists')
+            .spyOn(checkCommandExistsModule, 'checkCommandExists')
             .mockImplementation(jest.fn());
         executeCommandForFilesMock = jest.spyOn(
-            utilsModule,
+            executeCommandForFilesModule,
             'executeCommandForFiles',
         );
         isWindowsMock = jest
-            .spyOn(utilsModule, 'isWindows')
+            .spyOn(isWindowsModule, 'isWindows')
             .mockReturnValue(false);
         isDarwinMock = jest
-            .spyOn(utilsModule, 'isDarwin')
+            .spyOn(isDarwinModule, 'isDarwin')
             .mockReturnValue(false);
         jest.spyOn(fileModule, 'fileExists').mockReturnValue(true);
         jest.spyOn(getClangFormatModule, 'getClangFormat').mockReturnValue(

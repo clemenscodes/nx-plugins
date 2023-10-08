@@ -1,4 +1,4 @@
-import type { FormatExecutorSchema } from '../../schema';
+import { FormatExecutorSchema } from '@/config';
 import { getFormatArguments } from './getFormatArguments';
 import * as getStyleArgumentModule from './getStyleArgument/getStyleArgument';
 

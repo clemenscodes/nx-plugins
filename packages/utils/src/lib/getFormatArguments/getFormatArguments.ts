@@ -1,7 +1,7 @@
-import type { FormatExecutorSchema } from '../../schema';
 import { getStyleArgument } from './getStyleArgument/getStyleArgument';
 import { getEditFileInPlaceArgument } from './getEditFilesInPlaceArgument/getEditFilesInPlaceArgument';
 import { getVerboseArgument } from './getVerboseArgument/getVerboseArgument';
+import { FormatExecutorSchema } from '@/config';
 
 export const getFormatArguments = async (
     workspaceRoot: string,

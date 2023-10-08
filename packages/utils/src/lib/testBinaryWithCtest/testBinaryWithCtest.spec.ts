@@ -3,6 +3,10 @@ import { testBinaryWithCtest } from './testBinaryWithCtest';
 import { join } from 'path';
 import * as getCtestModule from '../getCtest/getCtest';
 import * as fileModule from '@/file';
+import * as runCommandModule from '../runCommand/runCommand';
+import * as checkCommandExistsModule from '../checkCommandExists/checkCommandExists';
+import * as isWindowsModule from '../isWindows/isWindows';
+import * as isDarwinModule from '../isDarwin/isDarwin';
 
 describe('buildProjectWithCMake', () => {
     let workspaceRoot: string;
@@ -21,17 +25,17 @@ describe('buildProjectWithCMake', () => {
             release: false,
             outputOnFailure: true,
         };
-        runCommandMock = jest.spyOn(commandModule, 'runCommand');
+        runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
         jest.spyOn(fileModule, 'fileExists').mockReturnValue(true);
         jest.spyOn(getCtestModule, 'getCtest').mockReturnValue(LINUX_CTEST[0]);
         checkCommandExistsMock = jest
-            .spyOn(commandModule, 'checkCommandExists')
+            .spyOn(checkCommandExistsModule, 'checkCommandExists')
             .mockImplementation(jest.fn());
         isWindowsMock = jest
-            .spyOn(utilsModule, 'isWindows')
+            .spyOn(isWindowsModule, 'isWindows')
             .mockReturnValue(false);
         isDarwinMock = jest
-            .spyOn(utilsModule, 'isDarwin')
+            .spyOn(isDarwinModule, 'isDarwin')
             .mockReturnValue(false);
     });
 

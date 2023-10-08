@@ -1,7 +1,8 @@
 import { executeBinary } from './executeBinary';
 import { join } from 'path';
-import * as fileModule from '@/file';
 import { ExecuteExecutorSchema } from '@/config';
+import * as fileModule from '@/file';
+import * as runCommandModule from '../runCommand/runCommand';
 
 describe('executeBinary', () => {
     let workspaceRoot: string;
@@ -20,7 +21,7 @@ describe('executeBinary', () => {
             release: false,
         };
 
-        runCommandMock = jest.spyOn(commandModule, 'runCommand');
+        runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
         fileExistsMock = jest
             .spyOn(fileModule, 'fileExists')
             .mockReturnValue(true);
