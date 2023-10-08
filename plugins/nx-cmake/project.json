@@ -69,7 +69,6 @@
             "configurations": {
                 "ci": {
                     "ci": true,
-                    "silent": true,
                     "coverageReporters": ["lcov"],
                     "codeCoverage": true
                 }

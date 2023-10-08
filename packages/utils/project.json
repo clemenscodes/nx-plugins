@@ -49,6 +49,7 @@
             "configurations": {
                 "ci": {
                     "ci": true,
+                    "coverageReporters": ["lcov"],
                     "codeCoverage": true
                 }
             }

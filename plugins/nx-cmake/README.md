@@ -54,28 +54,80 @@ This allows for efficient caching mechanisms and parallelization of tasks.
 The following tools need to be installed for this plugin to work correctly:
 
 - nx v16.9+ (this plugin uses the latest Nx v2 plugin API)
-- node v18.18+
+- node lts
 - cmake v3.21+
 - ctest
 - make
-- gcc v13+
+- gcc
 - gdb
 - clang-format
 - clang-tidy
 
 #### Windows
 
-NOTE: It is necessary to install a MinGW-w64-ucrt-posix toolchain.
+##### Installing Node.js
+
+Node.js LTS can be downloaded [here](https://nodejs.org/)
 
 Using chocolatey:
 
 ```shell
-choco install mingw
+choco install nodejs-lts
 ```
 
-Alternatively, the latest version can also be downloaded from [winlibs](https://winlibs.com).
+##### Installing CMake
 
-The recommended release can be downloaded [here](https://github.com/brechtsanders/winlibs_mingw/releases/download/13.2.0-16.0.6-11.0.0-ucrt-r1/winlibs-x86_64-posix-seh-gcc-13.2.0-llvm-16.0.6-mingw-w64ucrt-11.0.0-r1.zip).
+CMake can be downloaded [here](https://cmake.org/download)
+
+Using chocolatey:
+
+```shell
+choco install cmake
+```
+
+NOTE: Make sure to add CMake to the PATH:
+
+```shell
+Add-Content $env:PATH "C:\Program Files\CMake\bin"
+```
+
+##### Installing MSYS2 and tools
+
+It is required to install [MSYS2](https://www.msys2.org/).
+
+Afterwards, make sure to have the msys2 system in the PATH:
+
+```shell
+Add-Content $env:PATH "C:\msys64"
+Add-Content $env:PATH "C:\msys64\usr\bin"
+Add-Content $env:PATH "C:\msys64\ucrt64\bin"
+```
+
+Using chocolatey:
+
+```shell
+choco install msys2 
+```
+
+NOTE: chocolatey installs msys2 into `C:\tools\msys64` instead.
+
+```shell
+Add-Content $env:PATH "C:\tools\msys64"
+Add-Content $env:PATH "C:\tools\msys64\usr\bin"
+Add-Content $env:PATH "C:\tools\msys64\ucrt64\bin"
+```
+
+Afterwards, launch a new shell and install the required tools:
+
+```shell
+pacman -S `
+    mingw-w64-ucrt-x86_64-gcc `
+    mingw-w64-ucrt-x86_64-make `
+    mingw-w64-ucrt-x86_64-cmake `  
+    mingw-w64-ucrt-x86_64-gdb `
+    mingw-w64-ucrt-x86_64-clang `
+    mingw-w64-ucrt-x86_64-clang-tools-extra
+```
 
 ### Installation
 
@@ -249,6 +301,8 @@ All the executors support these additional properties:
 > ```shell
 >
 > --release (Test in release mode) default: false
+>
+> --outputOnFailure (Whether to print output on test failure) default: true
 >
 > nx test <testproject>
 > ```
