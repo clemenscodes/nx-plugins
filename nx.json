@@ -1,4 +1,6 @@
 {
+    "extends": "nx/presets/npm.json",
+    "defaultProject": "nx-cmake",
     "tasksRunnerOptions": {
         "default": {
             "runner": "nx-cloud",
@@ -26,9 +28,7 @@
             "cmakeConfigDir": ".cmake"
         }
     },
-    "extends": "nx/presets/npm.json",
     "$schema": "./node_modules/nx/schemas/nx-schema.json",
-    "defaultProject": "nx-cmake",
     "generators": {
         "nx-cmake": {
             "binary": {

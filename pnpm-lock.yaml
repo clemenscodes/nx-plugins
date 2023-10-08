@@ -121,15 +121,6 @@ importers:
         specifier: ^5.26.3
         version: 5.26.3(typanion@3.14.0)
 
-  packages/command:
-    dependencies:
-      '@nx/devkit':
-        specifier: 16.10.0
-        version: 16.10.0(nx@16.10.0)
-      tslib:
-        specifier: ^2.3.0
-        version: 2.6.2
-
   packages/config:
     dependencies:
       '@nx/devkit':

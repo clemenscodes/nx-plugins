@@ -1,11 +1,13 @@
 import { output } from '@nx/devkit';
 import { SpawnSyncReturns, execSync } from 'child_process';
+import { logger } from '../logger/logger';
 
 export const runCommand = (
     command: string,
     ...args: string[]
 ): { success: boolean } => {
     const cmd = args.length > 0 ? `${command} ${args.join(' ')}` : command;
+    logger(`Executing ${cmd}`);
     try {
         execSync(cmd, {
             encoding: 'utf-8',

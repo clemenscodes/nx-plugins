@@ -3,12 +3,14 @@ import { getGcc } from '../getGcc/getGcc';
 import { isWindows } from '../isWindows/isWindows';
 import { getMake } from '../getMake/getMake';
 import { join } from 'path';
+import { logger } from '../logger/logger';
 
 export const getCmakeCommandArguments = (
     workspaceRoot: string,
     projectRoot: string,
     options: CmakeExecutorSchema,
 ): string[] => {
+    logger(`Getting cmake command arguments`);
     const { release, args } = options;
     const gcc = getGcc();
     const make = getMake();

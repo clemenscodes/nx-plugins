@@ -1,0 +1,11 @@
+include("../../CMakeLists.txt")
+
+cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})
+set_project_settings(testsw ${CMAKE_CURRENT_SOURCE_DIR})
+project(testsw CXX)
+set_binary_settings(testsw ${CMAKE_CURRENT_SOURCE_DIR})
+link_static_library(${CMAKE_PROJECT_NAME} sw)
+enable_testing()
+link_gtest(${CMAKE_PROJECT_NAME})
+include(GoogleTest)
+gtest_discover_tests(testsw)

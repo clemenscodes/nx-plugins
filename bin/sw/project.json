@@ -1,0 +1,93 @@
+{
+    "name": "sw",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "application",
+    "sourceRoot": "bin/sw/src",
+    "tags": ["cpp"],
+    "targets": {
+        "cmake": {
+            "executor": "nx-cmake:cmake",
+            "defaultConfiguration": "debug",
+            "configurations": {
+                "debug": {
+                    "release": false,
+                    "args": []
+                },
+                "release": {
+                    "release": true,
+                    "args": []
+                }
+            }
+        },
+        "build": {
+            "executor": "nx-cmake:build",
+            "defaultConfiguration": "debug",
+            "configurations": {
+                "debug": {
+                    "release": false,
+                    "args": []
+                },
+                "release": {
+                    "release": true,
+                    "args": []
+                }
+            }
+        },
+        "lint": {
+            "executor": "nx-cmake:lint",
+            "defaultConfiguration": "local",
+            "configurations": {
+                "local": {
+                    "args": []
+                },
+                "ci": {
+                    "args": ["--warnings-as-errors=*"]
+                }
+            }
+        },
+        "fmt": {
+            "executor": "nx-cmake:format",
+            "defaultConfiguration": "local",
+            "configurations": {
+                "local": {
+                    "args": [],
+                    "verbose": true,
+                    "editFilesInPlace": true
+                },
+                "ci": {
+                    "args": ["--dry-run", "--ferror-limit=0", "-Werror"],
+                    "verbose": false,
+                    "editFilesInPlace": false
+                }
+            }
+        },
+        "debug": {
+            "executor": "nx-cmake:debug",
+            "defaultConfiguration": "debug",
+            "configurations": {
+                "debug": {
+                    "release": false,
+                    "args": []
+                },
+                "release": {
+                    "release": true,
+                    "args": []
+                }
+            }
+        },
+        "execute": {
+            "executor": "nx-cmake:execute",
+            "defaultConfiguration": "debug",
+            "configurations": {
+                "debug": {
+                    "release": false,
+                    "args": []
+                },
+                "release": {
+                    "release": true,
+                    "args": []
+                }
+            }
+        }
+    }
+}

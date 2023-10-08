@@ -1,6 +1,7 @@
 import { ExecuteExecutorSchema } from '@/config';
 import { fileExists } from '@/file';
 import { join } from 'path';
+import { isWindows } from '../isWindows/isWindows';
 
 export const getExecuteBinary = (
     workspaceRoot: string,
@@ -10,16 +11,13 @@ export const getExecuteBinary = (
 ): string => {
     const { release } = options;
     const config = release ? 'Release' : 'Debug';
-    const binary = join(
-        workspaceRoot,
-        'dist',
-        projectRoot,
-        config,
-        projectName,
-    );
+    let binary = join(workspaceRoot, 'dist', projectRoot, config, projectName);
+    if (isWindows(process.platform)) {
+        binary += '.exe';
+    }
     if (!fileExists(binary)) {
         throw new Error(
-            `The binary of ${projectName} was not found and cound not be executed [Path: ${binary}]`,
+            `The binary of ${projectName} was not found and could not be executed [Path: ${binary}]`,
         );
     }
     return binary;
