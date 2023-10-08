@@ -100,7 +100,7 @@ jobs:
         needs: [set-agents, deps]
         runs-on: ${{ matrix.os }}
         env:
-            NX_CACHE_DIRECTORY: node_modules/.cache/nx/${{ matrix.os }}
+            NX_CACHE_DIRECTORY: tmp/${{ matrix.os }}
         permissions:
             contents: read
             actions: read
@@ -133,7 +133,7 @@ jobs:
               id: nx_cache
               with:
                   path: ${{ env.NX_CACHE_DIRECTORY }}
-                  key: ${{ matrix.os }}-nx-cache-${{ hashFiles('node_modules/.cache/nx/**') }}
+                  key: ${{ matrix.os }}-nx-cache-${{ hashFiles('tmp/**') }}
                   restore-keys: |
                       ${{ matrix.os }}-nx-cache
 
@@ -193,7 +193,7 @@ jobs:
             fail-fast: false
         name: Main Job [${{ matrix.os }}]
         env:
-            NX_CACHE_DIRECTORY: node_modules/.cache/nx/${{ matrix.os }}
+            NX_CACHE_DIRECTORY: tmp/${{ matrix.os }}
         permissions:
             contents: read
             actions: read
@@ -250,7 +250,7 @@ jobs:
               id: nx_cache
               with:
                   path: ${{ env.NX_CACHE_DIRECTORY }}
-                  key: ${{ matrix.os }}-nx-cache-${{ hashFiles('node_modules/.cache/nx/**') }}
+                  key: ${{ matrix.os }}-nx-cache-${{ hashFiles('tmp/**') }}
                   restore-keys: |
                       ${{ matrix.os }}-nx-cache
 
