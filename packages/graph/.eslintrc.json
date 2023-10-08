@@ -23,7 +23,6 @@
                     {
                         "ignoredDependencies": [
                             "@/config",
-                            "@/command",
                             "@/utils",
                             "@/config"
                         ]

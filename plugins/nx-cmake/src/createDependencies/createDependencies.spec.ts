@@ -13,10 +13,7 @@ describe('createDependencies', () => {
     let contextMock: CreateDependenciesContext;
 
     beforeEach(() => {
-        mockGetDependencies = jest.spyOn(
-            graphModule,
-            'getDependencies',
-        );
+        mockGetDependencies = jest.spyOn(graphModule, 'getDependencies');
 
         getDependenciesReturnMock = [
             {

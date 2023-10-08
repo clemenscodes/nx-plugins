@@ -1,4 +1,4 @@
-import { runCommand, executeCommand } from '@/command';
+import { runCommand, executeCommand } from '@/utils';
 import { join } from 'path';
 
 export const installTestFramework = (

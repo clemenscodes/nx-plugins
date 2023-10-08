@@ -1,5 +1,4 @@
-import { logger } from '@/utils';
-import { executeCommand } from '@/command';
+import { logger, executeCommand } from '@/utils';
 import { detectTestFramework } from '../detectTestFramework/detectTestFramework';
 import { installTestFramework } from '../installTestFramework/installTestFramework';
 

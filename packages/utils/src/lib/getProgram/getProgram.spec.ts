@@ -14,9 +14,15 @@ describe('getProgram', () => {
 
     beforeEach(() => {
         program = GCC;
-        isDarwinMock = jest.spyOn(isDarwinModule, 'isDarwin').mockReturnValue(false);
-        isWindowsMock = jest.spyOn(isWindowsModule, 'isWindows').mockReturnValue(false);
-        fileExistsMock = jest.spyOn(fileExistsModule, 'fileExists').mockReturnValue(true)
+        isDarwinMock = jest
+            .spyOn(isDarwinModule, 'isDarwin')
+            .mockReturnValue(false);
+        isWindowsMock = jest
+            .spyOn(isWindowsModule, 'isWindows')
+            .mockReturnValue(false);
+        fileExistsMock = jest
+            .spyOn(fileExistsModule, 'fileExists')
+            .mockReturnValue(true);
     });
 
     afterEach(() => {

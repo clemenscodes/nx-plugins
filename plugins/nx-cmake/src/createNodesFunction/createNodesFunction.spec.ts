@@ -2,8 +2,7 @@ import type { CreateNodesContext, ProjectConfiguration } from '@nx/devkit';
 import type { C } from '@/config';
 import { createNodesFunction } from './createNodesFunction';
 import { CProjectType } from '@/config';
-import * as getProjectTypeModule from '@/utils/lib/getProjectTypeAndVariant/getProjectTypeAndVariant';
-import * as getProjectConfigurationModule from '@/utils/lib/getProjectConfiguration/getProjectConfiguration';
+import * as utilsModule from '@/utils';
 
 describe('createNodesFunction', () => {
     let mockGetProjectType: jest.SpyInstance;
@@ -16,11 +15,11 @@ describe('createNodesFunction', () => {
 
     beforeEach(() => {
         mockGetProjectType = jest.spyOn(
-            getProjectTypeModule,
+            utilsModule,
             'getProjectTypeAndVariant',
         );
         mockGetProjectConfiguration = jest.spyOn(
-            getProjectConfigurationModule,
+            utilsModule,
             'getProjectConfiguration',
         );
         getProjectConfigurationReturnMock = {

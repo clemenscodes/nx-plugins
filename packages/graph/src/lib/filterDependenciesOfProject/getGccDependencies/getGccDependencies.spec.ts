@@ -1,7 +1,6 @@
 import { getGccDependencies } from './getGccDependencies';
 import * as detectTestFrameworkModule from '../detectTestFramework/detectTestFramework';
 import * as installTestFrameworkModule from '../installTestFramework/installTestFramework';
-import * as executeCommandModule from '@/command';
 
 describe('getGccDependencies', () => {
     let executeCommandSpy: jest.SpyInstance;

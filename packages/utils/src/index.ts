@@ -1,3 +1,15 @@
+export { checkCommandExists } from './lib/checkCommandExists/checkCommandExists';
+export { executeCommandForFiles } from './lib/executeCommandForFiles/executeCommandForFiles';
+export { executeCommand } from './lib/executeCommand/executeCommand';
+export { runCommand } from './lib/runCommand/runCommand';
+export { testExecutor } from './lib/testExecutor/testExecutor';
+export { lintExecutor } from './lib/lintExecutor/lintExecutor';
+export { formatExecutor } from './lib/formatExecutor/formatExecutor';
+export { executeExecutor } from './lib/executeExecutor/executeExecutor';
+export { debugExecutor } from './lib/debugExecutor/debugExecutor';
+export { buildExecutor } from './lib/buildExecutor/buildExecutor';
+export { cmakeExecutor } from './lib/cmakeExecutor/cmakeExecutor';
+export { configureProjectWithCMake } from './lib/configureProjectWithCMake/configureProjectWithCMake';
 export { getProgram } from './lib/getProgram/getProgram';
 export { extractRootsFromExecutorContext } from './lib/extractRootsFromExecutorContext/extractRootsFromExecutorContext';
 export { binGenerator } from './lib/binGenerator/binGenerator';

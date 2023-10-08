@@ -147,3 +147,22 @@ export type CMakeC = 'C' | 'CXX';
 export type CTag = 'c' | 'cpp';
 
 export type Link = 'shared' | 'static';
+
+export type CmakeExecutorSchema = ExecutorBaseOptions;
+
+export type BuildExecutorSchema = ExecutorBaseOptions;
+
+export type DebugExecutorSchema = ExecutorBaseOptions;
+
+export type ExecuteExecutorSchema = ExecutorBaseOptions;
+
+export type FormatExecutorSchema = Omit<ExecutorBaseOptions, 'release'> & {
+    verbose: boolean;
+    editFilesInPlace: boolean;
+};
+
+export type LintExecutorSchema = ExecutorBaseOptions;
+
+export type TestExecutorSchema = ExecutorBaseOptions & {
+    outputOnFailure: boolean;
+};

@@ -1,7 +1,6 @@
 import type { CTag } from '@/config';
 import { LINUX_GCC } from '@/config';
 import { getGccDependenciesCommand } from './getGccDependenciesCommand';
-import * as utilsModule from '@/utils';
 
 describe('getGccDependenciesCommand', () => {
     let fileName: string;

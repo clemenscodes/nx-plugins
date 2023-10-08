@@ -1,14 +1,14 @@
 import { installTestFramework } from './installTestFramework';
 import { join } from 'path';
-import * as commandModule from '@/command';
+import * as utilsModule from '@/utils';
 
 describe('installTestFramework', () => {
     let runCommandSpy: jest.SpyInstance;
     let executeCommandSpy: jest.SpyInstance;
 
     beforeEach(() => {
-        runCommandSpy = jest.spyOn(commandModule, 'runCommand');
-        executeCommandSpy = jest.spyOn(commandModule, 'executeCommand');
+        runCommandSpy = jest.spyOn(utilsModule, 'runCommand');
+        executeCommandSpy = jest.spyOn(utilsModule, 'executeCommand');
     });
 
     afterEach(() => {
