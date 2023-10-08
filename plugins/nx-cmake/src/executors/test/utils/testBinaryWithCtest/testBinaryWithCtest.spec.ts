@@ -1,14 +1,12 @@
 import type { TestExecutorSchema } from '../../schema';
-import { LINUX_CTEST } from '@/config';
+import { CTEST, LINUX_CTEST } from '@/config';
 import { testBinaryWithCtest } from './testBinaryWithCtest';
-import * as runCommandModule from '@/command/lib/runCommand/runCommand';
-import * as checkCommandExistsModule from '@/command/lib/checkCommandExists/checkCommandExists';
-import * as fileExistsModule from '@/file/lib/fileExists/fileExists';
-import * as isDarwinModule from '@/utils/lib/isDarwin/isDarwin';
-import * as isWindowsModule from '@/utils/lib/isWindows/isWindows';
 import * as getCtestModule from '../getCtest/getCtest';
+import * as commandModule from '@/command';
+import * as fileModule from '@/file';
+import * as utilsModule from '@/utils';
 
-describe('buildProjectWithMake', () => {
+describe('buildProjectWithCMake', () => {
     let workspaceRoot: string;
     let projectRoot: string;
     let runCommandMock: jest.SpyInstance;
@@ -25,17 +23,17 @@ describe('buildProjectWithMake', () => {
             release: false,
             outputOnFailure: true,
         };
-        runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
-        jest.spyOn(fileExistsModule, 'fileExists').mockReturnValue(true);
+        runCommandMock = jest.spyOn(commandModule, 'runCommand');
+        jest.spyOn(fileModule, 'fileExists').mockReturnValue(true);
         jest.spyOn(getCtestModule, 'getCtest').mockReturnValue(LINUX_CTEST[0]);
         checkCommandExistsMock = jest
-            .spyOn(checkCommandExistsModule, 'checkCommandExists')
+            .spyOn(commandModule, 'checkCommandExists')
             .mockImplementation(jest.fn());
         isWindowsMock = jest
-            .spyOn(isWindowsModule, 'isWindows')
+            .spyOn(utilsModule, 'isWindows')
             .mockReturnValue(false);
         isDarwinMock = jest
-            .spyOn(isDarwinModule, 'isDarwin')
+            .spyOn(utilsModule, 'isDarwin')
             .mockReturnValue(false);
     });
 
@@ -46,7 +44,7 @@ describe('buildProjectWithMake', () => {
     it('should test binary with ctest and return true', () => {
         runCommandMock.mockReturnValue({ success: true });
         const result = testBinaryWithCtest(workspaceRoot, projectRoot, options);
-        expect(checkCommandExistsMock).toHaveBeenCalledWith('ctest');
+        expect(checkCommandExistsMock).toHaveBeenCalledWith(CTEST);
         expect(runCommandMock).toHaveBeenCalledWith(
             LINUX_CTEST[0],
             '-C Debug',
@@ -64,7 +62,7 @@ describe('buildProjectWithMake', () => {
         expect(() =>
             testBinaryWithCtest(workspaceRoot, projectRoot, options),
         ).toThrowError();
-        expect(checkCommandExistsMock).toHaveBeenCalledWith('ctest');
+        expect(checkCommandExistsMock).toHaveBeenCalledWith(CTEST);
         expect(runCommandMock).not.toHaveBeenCalled();
     });
 
@@ -73,7 +71,7 @@ describe('buildProjectWithMake', () => {
         runCommandMock.mockReturnValue({ success: true });
         options.args = ['-ex', 'run', '--arg1', 'value1'];
         const result = testBinaryWithCtest(workspaceRoot, projectRoot, options);
-        expect(checkCommandExistsMock).toHaveBeenCalledWith('ctest');
+        expect(checkCommandExistsMock).toHaveBeenCalledWith(CTEST);
         expect(runCommandMock).toHaveBeenCalledWith(
             LINUX_CTEST[0],
             '-C Debug',
@@ -92,7 +90,7 @@ describe('buildProjectWithMake', () => {
         options.outputOnFailure = false;
         runCommandMock.mockReturnValue({ success: false });
         const result = testBinaryWithCtest(workspaceRoot, projectRoot, options);
-        expect(checkCommandExistsMock).toHaveBeenCalledWith('ctest');
+        expect(checkCommandExistsMock).toHaveBeenCalledWith(CTEST);
         expect(runCommandMock).toHaveBeenCalledWith(
             LINUX_CTEST[0],
             '-C Debug',

@@ -3,13 +3,14 @@ import { getFormatArguments } from '../getFormatArguments/getFormatArguments';
 import { getProjectFiles, filterSourceFiles } from '@/file';
 import { checkCommandExists, executeCommandForFiles } from '@/command';
 import { getClangFormat } from '../getClangFormat/getClangFormat';
+import { CLANG_FORMAT } from '@/config';
 
 export const formatFilesWithClangFormat = async (
     workspaceRoot: string,
     projectRoot: string,
     options: FormatExecutorSchema,
 ): Promise<boolean> => {
-    checkCommandExists('clang-format');
+    checkCommandExists(CLANG_FORMAT);
     const clangFormat = getClangFormat();
     const formatArgs = await getFormatArguments(
         workspaceRoot,

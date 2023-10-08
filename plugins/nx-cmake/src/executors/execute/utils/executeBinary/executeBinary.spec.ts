@@ -1,7 +1,7 @@
 import type { ExecuteExecutorSchema } from '../../schema';
 import { executeBinary } from './executeBinary';
-import * as runCommandModule from '@/command/lib/runCommand/runCommand';
-import * as fileExistsModule from '@/file/lib/fileExists/fileExists';
+import * as commandModule from '@/command';
+import * as fileModule from '@/file';
 
 describe('executeBinary', () => {
     let workspaceRoot: string;
@@ -20,9 +20,9 @@ describe('executeBinary', () => {
             release: false,
         };
 
-        runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
+        runCommandMock = jest.spyOn(commandModule, 'runCommand');
         fileExistsMock = jest
-            .spyOn(fileExistsModule, 'fileExists')
+            .spyOn(fileModule, 'fileExists')
             .mockReturnValue(true);
     });
 

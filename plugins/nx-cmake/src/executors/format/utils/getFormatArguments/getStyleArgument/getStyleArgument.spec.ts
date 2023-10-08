@@ -1,5 +1,5 @@
 import { getStyleArgument } from './getStyleArgument';
-import * as getConfigFileModule from '@/file/lib/getConfigFile/getConfigFile';
+import * as fileModule from '@/file';
 
 describe('getStyleArgument', () => {
     let workspaceRoot: string;
@@ -12,7 +12,7 @@ describe('getStyleArgument', () => {
         projectRoot = 'projectRoot';
         clangFormatFile = '.clang-format';
         getConfigFileMock = jest
-            .spyOn(getConfigFileModule, 'getConfigFile')
+            .spyOn(fileModule, 'getConfigFile')
             .mockImplementation(async (workspaceRoot, projectRoot) => {
                 return `${workspaceRoot}/${projectRoot}/.clang-format`;
             });

@@ -1,13 +1,15 @@
 import type { CmakeExecutorSchema } from '../../schema';
-import { runCommand } from '@/command';
+import { checkCommandExists, runCommand } from '@/command';
 import { getCmakeCommandArguments } from '../getCmakeCommandArguments/getCmakeCommandArguments';
 import { getCmake } from '../getCmake/getCmake';
+import { CMAKE } from '@/config';
 
 export const configureProjectWithCMake = (
     workspaceRoot: string,
     projectRoot: string,
     options: CmakeExecutorSchema,
 ): boolean => {
+    checkCommandExists(CMAKE);
     const cmake = getCmake();
     const cmakeArguments = getCmakeCommandArguments(
         workspaceRoot,

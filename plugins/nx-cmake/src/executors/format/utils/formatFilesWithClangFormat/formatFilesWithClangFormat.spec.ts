@@ -1,13 +1,10 @@
 import type { FormatExecutorSchema } from '../../schema';
 import { LINUX_CLANG_FORMAT } from '@/config';
 import { formatFilesWithClangFormat } from './formatFilesWithClangFormat';
-import * as getProjectFilesModule from '@/file/lib/getProjectFiles/getProjectFiles';
-import * as checkCommandExistsModule from '@/command/lib/checkCommandExists/checkCommandExists';
-import * as executeCommandForFilesModule from '@/command/lib/executeCommandForFiles/executeCommandForFiles';
+import * as commandModule from '@/command';
+import * as fileModule from '@/file';
+import * as utilsModule from '@/utils';
 import * as getFormatArgumentsModule from '../getFormatArguments/getFormatArguments';
-import * as fileExistsModule from '@/file/lib/fileExists/fileExists';
-import * as isDarwinModule from '@/utils/lib/isDarwin/isDarwin';
-import * as isWindowsModule from '@/utils/lib/isWindows/isWindows';
 import * as getClangFormatModule from '../getClangFormat/getClangFormat';
 
 describe('formatFilesWithClangFormat', () => {
@@ -36,23 +33,23 @@ describe('formatFilesWithClangFormat', () => {
             'getFormatArguments',
         );
         getProjectFilesMock = jest.spyOn(
-            getProjectFilesModule,
+            fileModule,
             'getProjectFiles',
         );
         checkCommandExistsMock = jest
-            .spyOn(checkCommandExistsModule, 'checkCommandExists')
+            .spyOn(commandModule, 'checkCommandExists')
             .mockImplementation(jest.fn());
         executeCommandForFilesMock = jest.spyOn(
-            executeCommandForFilesModule,
+            commandModule,
             'executeCommandForFiles',
         );
         isWindowsMock = jest
-            .spyOn(isWindowsModule, 'isWindows')
+            .spyOn(utilsModule, 'isWindows')
             .mockReturnValue(false);
         isDarwinMock = jest
-            .spyOn(isDarwinModule, 'isDarwin')
+            .spyOn(utilsModule, 'isDarwin')
             .mockReturnValue(false);
-        jest.spyOn(fileExistsModule, 'fileExists').mockReturnValue(true);
+        jest.spyOn(fileModule, 'fileExists').mockReturnValue(true);
         jest.spyOn(getClangFormatModule, 'getClangFormat').mockReturnValue(
             LINUX_CLANG_FORMAT[0],
         );

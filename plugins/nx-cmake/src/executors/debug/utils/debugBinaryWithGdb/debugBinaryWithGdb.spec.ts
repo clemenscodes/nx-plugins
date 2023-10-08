@@ -1,11 +1,9 @@
 import type { DebugExecutorSchema } from '../../schema';
 import { GDB, LINUX_GDB } from '@/config';
 import { debugBinaryWithGdb } from './debugBinaryWithGdb';
-import * as runCommandModule from '@/command/lib/runCommand/runCommand';
-import * as checkCommandExistsModule from '@/command/lib/checkCommandExists/checkCommandExists';
-import * as fileExistsModule from '@/file/lib/fileExists/fileExists';
-import * as isDarwinModule from '@/utils/lib/isDarwin/isDarwin';
-import * as isWindowsModule from '@/utils/lib/isWindows/isWindows';
+import * as commandModule from '@/command';
+import * as fileModule from '@/file';
+import * as utilsModule from '@/utils';
 import * as getGdbModule from '../getGdb/getGdb';
 
 describe('debugBinaryWithGdb', () => {
@@ -28,17 +26,17 @@ describe('debugBinaryWithGdb', () => {
             release: false,
         };
         getGdbReturnMock = LINUX_GDB[0];
-        jest.spyOn(fileExistsModule, 'fileExists').mockReturnValue(true);
+        jest.spyOn(fileModule, 'fileExists').mockReturnValue(true);
         jest.spyOn(getGdbModule, 'getGdb').mockReturnValue(getGdbReturnMock);
-        runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
+        runCommandMock = jest.spyOn(commandModule, 'runCommand');
         checkCommandExistsMock = jest
-            .spyOn(checkCommandExistsModule, 'checkCommandExists')
+            .spyOn(commandModule, 'checkCommandExists')
             .mockImplementation(jest.fn());
         isWindowsMock = jest
-            .spyOn(isWindowsModule, 'isWindows')
+            .spyOn(utilsModule, 'isWindows')
             .mockReturnValue(false);
         isDarwinMock = jest
-            .spyOn(isDarwinModule, 'isDarwin')
+            .spyOn(utilsModule, 'isDarwin')
             .mockReturnValue(false);
     });
 

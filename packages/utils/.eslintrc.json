@@ -23,7 +23,6 @@
                     {
                         "ignoredDependencies": [
                             "@/config",
-                            "@/config",
                             "@/file"
                         ]
                     }

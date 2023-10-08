@@ -1,9 +1,9 @@
 import type { BuildExecutorSchema } from '../../schema';
 import { LINUX_CMAKE } from '@/config';
 import { buildProjectWithCMake } from './buildProjectWithCMake';
-import * as runCommandModule from '@/command/lib/runCommand/runCommand';
+import * as commandModule from '@/command';
+import * as fileModule from '@/file';
 import * as getCmakeModule from '../../../cmake/utils/getCmake/getCmake';
-import * as fileExistsModule from '@/file/lib/fileExists/fileExists';
 
 describe('buildProjectWithCMake', () => {
     let workspaceRoot: string;
@@ -19,9 +19,9 @@ describe('buildProjectWithCMake', () => {
             args: [],
             release: false,
         };
-        runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
+        runCommandMock = jest.spyOn(commandModule, 'runCommand');
         getCmakeMock = jest.spyOn(getCmakeModule, 'getCmake');
-        jest.spyOn(fileExistsModule, 'fileExists').mockReturnValue(true);
+        jest.spyOn(fileModule, 'fileExists').mockReturnValue(true);
     });
 
     afterEach(() => {

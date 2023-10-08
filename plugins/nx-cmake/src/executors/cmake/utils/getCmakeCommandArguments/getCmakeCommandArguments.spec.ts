@@ -1,8 +1,7 @@
 import { CmakeExecutorSchema } from './../../schema.d';
 import { getCmakeCommandArguments } from './getCmakeCommandArguments';
 import { LINUX_GCC } from '@/config';
-import * as isWindowsModule from '@/utils/lib/isWindows/isWindows';
-import * as getGccModule from '@/utils/lib/getGcc/getGcc';
+import * as utilsModule from '@/utils';
 
 describe('getCmakeCommandArguments', () => {
     let workspaceRoot: string;
@@ -19,8 +18,8 @@ describe('getCmakeCommandArguments', () => {
             args: [],
             release: false,
         };
-        isWindowsMock = jest.spyOn(isWindowsModule, 'isWindows');
-        jest.spyOn(getGccModule, 'getGcc').mockReturnValue(getGccReturnMock);
+        isWindowsMock = jest.spyOn(utilsModule, 'isWindows');
+        jest.spyOn(utilsModule, 'getGcc').mockReturnValue(getGccReturnMock);
     });
 
     afterEach(() => {

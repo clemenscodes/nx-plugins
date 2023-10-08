@@ -1,5 +1,5 @@
 import { commandExists } from './commandExists';
-import * as isWindowsModule from '@/utils/lib/isWindows/isWindows';
+import * as isWindowsModule from '@/utils';
 import * as executeCommandModule from '../executeCommand/executeCommand';
 
 describe('commandExists', () => {
@@ -8,7 +8,7 @@ describe('commandExists', () => {
 
     beforeEach(() => {
         executeCommandMock = jest.spyOn(executeCommandModule, 'executeCommand');
-        isWindowsMock = jest.spyOn(isWindowsModule, 'isWindows');
+        isWindowsMock = jest.spyOn(isWindowsModule, 'isWindows').mockReturnValue(false);
     });
 
     afterEach(() => {
@@ -24,7 +24,6 @@ describe('commandExists', () => {
     });
 
     it('should call command if on unix and return true if command exists', () => {
-        isWindowsMock.mockReturnValue(false);
         executeCommandMock.mockReturnValue(true);
         const result = commandExists('clang-tidy');
         expect(result).toBe(true);
@@ -32,7 +31,6 @@ describe('commandExists', () => {
     });
 
     it('should return false if command exists', () => {
-        isWindowsMock.mockReturnValue(false);
         executeCommandMock.mockReturnValue(false);
         const result = commandExists(
             'clang-tidy-which-absolutely-doesnt-exist',
@@ -44,7 +42,6 @@ describe('commandExists', () => {
     });
 
     it('should handle a command with spaces', () => {
-        isWindowsMock.mockReturnValue(false);
         executeCommandMock.mockReturnValue(true);
         const result = commandExists('ls command with spaces');
         expect(result).toBe(true);
@@ -52,7 +49,6 @@ describe('commandExists', () => {
     });
 
     it('should handle a command with special characters', () => {
-        isWindowsMock.mockReturnValue(false);
         executeCommandMock.mockReturnValue(false);
         const result = commandExists('command-with-$pecial-ch@racters');
         expect(result).toBe(false);
@@ -62,7 +58,6 @@ describe('commandExists', () => {
     });
 
     it('should return false for a non-executable command', () => {
-        isWindowsMock.mockReturnValue(false);
         executeCommandMock.mockReturnValue(true);
         const result = commandExists('/path/to/a/directory');
         expect(result).toBe(true);
@@ -72,7 +67,6 @@ describe('commandExists', () => {
     });
 
     it('should handle a command that exists with arguments', () => {
-        isWindowsMock.mockReturnValue(false);
         executeCommandMock.mockReturnValue(true);
         const result = commandExists('ls -l');
         expect(result).toBe(true);
@@ -80,7 +74,6 @@ describe('commandExists', () => {
     });
 
     it('should return false for a command that does not exist with arguments', () => {
-        isWindowsMock.mockReturnValue(false);
         executeCommandMock.mockReturnValue(false);
         const result = commandExists('doesnt --exit -l');
         expect(result).toBe(false);

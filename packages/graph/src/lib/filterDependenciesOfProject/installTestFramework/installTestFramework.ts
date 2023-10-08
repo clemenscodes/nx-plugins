@@ -1,4 +1,5 @@
 import { runCommand, executeCommand } from '@/command';
+import { join } from 'path';
 
 export const installTestFramework = (
     workspaceRoot: string,
@@ -8,8 +9,8 @@ export const installTestFramework = (
     runCommand(
         'cmake',
         '-S',
-        `${workspaceRoot}/${projectRoot}`,
-        `${workspaceRoot}/dist/${projectRoot}`,
+        join(workspaceRoot, projectRoot),
+        join(workspaceRoot, 'dist', projectRoot),
     );
 
     const stdout = executeCommand(cmd);

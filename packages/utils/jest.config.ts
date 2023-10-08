@@ -9,6 +9,7 @@ export default {
             { tsconfig: '<rootDir>/tsconfig.spec.json' },
         ],
     },
+    modulePaths: ['../../packages/file/src', '../../packages/config/src'],
     moduleFileExtensions: ['ts', 'js', 'html'],
     coverageDirectory: '../../coverage/packages/utils',
 };

@@ -1,14 +1,14 @@
 import { installTestFramework } from './installTestFramework';
-import * as executeCommandModule from '@/command/lib/executeCommand/executeCommand';
-import * as runCommandModule from '@/command/lib/runCommand/runCommand';
+import { join } from 'path';
+import * as commandModule from '@/command';
 
 describe('installTestFramework', () => {
     let runCommandSpy: jest.SpyInstance;
     let executeCommandSpy: jest.SpyInstance;
 
     beforeEach(() => {
-        runCommandSpy = jest.spyOn(runCommandModule, 'runCommand');
-        executeCommandSpy = jest.spyOn(executeCommandModule, 'executeCommand');
+        runCommandSpy = jest.spyOn(commandModule, 'runCommand');
+        executeCommandSpy = jest.spyOn(commandModule, 'executeCommand');
     });
 
     afterEach(() => {
@@ -27,8 +27,8 @@ describe('installTestFramework', () => {
         expect(runCommandSpy).toHaveBeenCalledWith(
             'cmake',
             '-S',
-            '/workspace/root/project-root',
-            '/workspace/root/dist/project-root',
+            join('/workspace/root/project-root'),
+            join('/workspace/root/dist/project-root'),
         );
         expect(executeCommandSpy).toHaveBeenCalledWith(cmd);
     });

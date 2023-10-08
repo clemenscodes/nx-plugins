@@ -1,8 +1,7 @@
 import { getCmake } from './getCmake';
 import { DARWIN_CMAKE, WINDOWS_CMAKE, LINUX_CMAKE, CMAKE } from '@/config';
-import * as fileExistsModule from '@/file/lib/fileExists/fileExists';
-import * as isDarwinModule from '@/utils/lib/isDarwin/isDarwin';
-import * as isWindowsModule from '@/utils/lib/isWindows/isWindows';
+import * as fileModule from '@/file';
+import * as utilsModule from '@/utils';
 
 describe('getCmake', () => {
     let isWindowsMock: jest.SpyInstance;
@@ -11,12 +10,12 @@ describe('getCmake', () => {
 
     beforeEach(() => {
         isWindowsMock = jest
-            .spyOn(isWindowsModule, 'isWindows')
+            .spyOn(utilsModule, 'isWindows')
             .mockReturnValue(false);
         isDarwinMock = jest
-            .spyOn(isDarwinModule, 'isDarwin')
+            .spyOn(utilsModule, 'isDarwin')
             .mockReturnValue(false);
-        fileExistsMock = jest.spyOn(fileExistsModule, 'fileExists');
+        fileExistsMock = jest.spyOn(fileModule, 'fileExists');
     });
 
     afterEach(() => {

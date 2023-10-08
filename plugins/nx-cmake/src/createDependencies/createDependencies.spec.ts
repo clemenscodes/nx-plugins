@@ -4,7 +4,7 @@ import type {
 } from '@nx/devkit';
 import { DependencyType } from '@nx/devkit';
 import { createDependencies } from './createDependencies';
-import * as getDependenciesModule from '@/graph/lib/getDependencies/getDependencies';
+import * as graphModule from '@/graph';
 
 describe('createDependencies', () => {
     let mockGetDependencies: jest.SpyInstance;
@@ -14,7 +14,7 @@ describe('createDependencies', () => {
 
     beforeEach(() => {
         mockGetDependencies = jest.spyOn(
-            getDependenciesModule,
+            graphModule,
             'getDependencies',
         );
 
