@@ -1,0 +1,52 @@
+{
+    "name": "@/file",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "root": "packages/file",
+    "sourceRoot": "packages/file/src",
+    "projectType": "library",
+    "targets": {
+        "build": {
+            "executor": "@nx/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/packages/file",
+                "main": "packages/file/src/index.ts",
+                "tsConfig": "packages/file/tsconfig.lib.json",
+                "assets": []
+            },
+            "configurations": {
+                "ci": {}
+            }
+        },
+        "lint": {
+            "executor": "@nx/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": [
+                    "packages/file/**/*.ts",
+                    "packages/file/package.json"
+                ]
+            },
+            "configurations": {
+                "ci": {
+                    "maxWarnings": 0
+                }
+            }
+        },
+        "test": {
+            "executor": "@nx/jest:jest",
+            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+            "options": {
+                "jestConfig": "packages/file/jest.config.ts",
+                "passWithNoTests": true
+            },
+            "configurations": {
+                "ci": {
+                    "ci": true,
+                    "codeCoverage": true
+                }
+            }
+        }
+    },
+    "tags": []
+}

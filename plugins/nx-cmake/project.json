@@ -1,0 +1,114 @@
+{
+    "name": "nx-cmake",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "plugins/nx-cmake/src",
+    "projectType": "library",
+    "targets": {
+        "build": {
+            "executor": "@nx/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/plugins/nx-cmake",
+                "main": "plugins/nx-cmake/src/index.ts",
+                "external": "none",
+                "tsConfig": "plugins/nx-cmake/tsconfig.lib.json",
+                "assets": [
+                    "plugins/nx-cmake/*.md",
+                    "LICENSE",
+                    {
+                        "input": "./plugins/nx-cmake/src",
+                        "glob": "**/!(*.ts)",
+                        "output": "./src"
+                    },
+                    {
+                        "input": "./plugins/nx-cmake/src",
+                        "glob": "**/*.d.ts",
+                        "output": "./src"
+                    },
+                    {
+                        "input": "./plugins/nx-cmake",
+                        "glob": "generators.json",
+                        "output": "."
+                    },
+                    {
+                        "input": "./plugins/nx-cmake",
+                        "glob": "executors.json",
+                        "output": "."
+                    }
+                ]
+            },
+            "configurations": {
+                "ci": {}
+            }
+        },
+        "lint": {
+            "executor": "@nx/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": [
+                    "plugins/nx-cmake/**/*.ts",
+                    "plugins/nx-cmake/package.json",
+                    "plugins/nx-cmake/generators.json",
+                    "plugins/nx-cmake/executors.json"
+                ]
+            },
+            "configurations": {
+                "ci": {
+                    "maxWarnings": 0
+                }
+            }
+        },
+        "test": {
+            "dependsOn": ["build"],
+            "executor": "@nx/jest:jest",
+            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+            "options": {
+                "jestConfig": "plugins/nx-cmake/jest.config.ts",
+                "passWithNoTests": true
+            },
+            "configurations": {
+                "ci": {
+                    "ci": true,
+                    "silent": true,
+                    "coverageReporters": ["lcov"],
+                    "codeCoverage": true
+                }
+            }
+        },
+        "publish": {
+            "command": "node tools/scripts/publish.mjs nx-cmake {args.ver} {args.tag}",
+            "dependsOn": ["build"]
+        },
+        "version": {
+            "executor": "@jscutlery/semver:version",
+            "options": {
+                "preset": "conventional",
+                "syncVersions": true,
+                "tagPrefix": "nx-cmake-",
+                "allowEmptyRelease": false,
+                "skipCommitTypes": [
+                    "chore",
+                    "build",
+                    "ci",
+                    "docs",
+                    "refactor",
+                    "test"
+                ],
+                "noVerify": true,
+                "skipRootChangelog": true,
+                "changelogHeader": "# Changelog (nx-cmake)\n",
+                "push": false,
+                "commitMessageFormat": "chore({projectName}): release version ${version} [skip ci]",
+                "remote": "origin",
+                "baseBranch": "main"
+            }
+        },
+        "deploy": {
+            "executor": "ngx-deploy-npm:deploy",
+            "options": {
+                "access": "public"
+            }
+        }
+    },
+    "tags": []
+}

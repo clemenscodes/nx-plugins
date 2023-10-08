@@ -1,0 +1,37 @@
+{
+    "name": "nx-cmake",
+    "description": "An Nx plugin to add CMake, C and C++ support for Nx workspaces",
+    "version": "0.3.9",
+    "license": "MIT",
+    "type": "commonjs",
+    "main": "./src/index.js",
+    "typings": "./src/index.d.ts",
+    "generators": "./generators.json",
+    "executors": "./executors.json",
+    "author": {
+        "email": "me@clemenshorn.com",
+        "name": "Clemens Horn",
+        "url": "https://clemenshorn.com"
+    },
+    "keywords": [
+        "nx",
+        "monorepo",
+        "plugin",
+        "cmake",
+        "c",
+        "c++"
+    ],
+    "repository": {
+        "directory": "packages/nx-cmake",
+        "type": "git",
+        "url": "git+https://github.com/clemenscodes/nx-plugins.git#main"
+    },
+    "bugs": {
+        "url": "https://github.com/clemenscodes/nx-plugins/issues/new",
+        "email": "me@clemenshorn.com"
+    },
+    "dependencies": {
+        "tslib": "^2.6.2",
+        "@nx/devkit": "16.10.0"
+    }
+}

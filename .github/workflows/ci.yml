@@ -11,7 +11,7 @@ concurrency:
     cancel-in-progress: true
 
 env:
-    NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT: 2
+    NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT: 3
     NX_CLOUD_DISTRIBUTED_EXECUTION: true
     NX_REJECT_UNKNOWN_LOCAL_CACHE: 0
 
@@ -100,7 +100,7 @@ jobs:
         needs: [set-agents, deps]
         runs-on: ${{ matrix.os }}
         env:
-            NX_CACHE_DIRECTORY: node_modules/.cache/nx/${{ matrix.os }}
+            NX_CACHE_DIRECTORY: tmp/${{ matrix.os }}
         permissions:
             contents: read
             actions: read
@@ -133,7 +133,7 @@ jobs:
               id: nx_cache
               with:
                   path: ${{ env.NX_CACHE_DIRECTORY }}
-                  key: ${{ matrix.os }}-nx-cache-${{ hashFiles('node_modules/.cache/nx/**') }}
+                  key: ${{ matrix.os }}-nx-cache-${{ hashFiles('tmp/**') }}
                   restore-keys: |
                       ${{ matrix.os }}-nx-cache
 
@@ -193,7 +193,7 @@ jobs:
             fail-fast: false
         name: Main Job [${{ matrix.os }}]
         env:
-            NX_CACHE_DIRECTORY: node_modules/.cache/nx/${{ matrix.os }}
+            NX_CACHE_DIRECTORY: tmp/${{ matrix.os }}
         permissions:
             contents: read
             actions: read
@@ -245,12 +245,12 @@ jobs:
                   restore-keys: |
                       ${{ matrix.os }}-pnpm-store-
 
-            - name: Restore Nx cache
-              uses: actions/cache/restore@v3
+            - name: Nx cache
+              uses: actions/cache@v3
               id: nx_cache
               with:
                   path: ${{ env.NX_CACHE_DIRECTORY }}
-                  key: ${{ matrix.os }}-nx-cache-${{ hashFiles('node_modules/.cache/nx/**') }}
+                  key: ${{ matrix.os }}-nx-cache-${{ hashFiles('tmp/**') }}
                   restore-keys: |
                       ${{ matrix.os }}-nx-cache
 
@@ -300,7 +300,7 @@ jobs:
                   matrix.os != 'windows-latest'
               run: npx nx-cloud start-ci-run --stop-agents-after=e2e
 
-            - name: Run Agents (unix)
+            - name: Run Test Agents (unix)
               id: agents
               if: needs.agents.result != 'failure' &&
                   needs.agents.result != 'cancelled' &&
@@ -315,9 +315,26 @@ jobs:
                       --output-style=stream \
                       --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT \
                       --no-cloud \
-                      -t build lint test e2e
+                      -t build lint test
 
-            - name: Run tests (windows)
+            - name: Run E2E Agents (unix)
+              id: e2e_agents
+              if: needs.e2e_agents.result != 'failure' &&
+                  needs.e2e_agents.result != 'cancelled' &&
+                  needs.e2e_agents.result != 'skipped' &&
+                  matrix.os != 'windows-latest'
+              run: |
+                  pnpm nx affected \
+                      --nx-bail \
+                      --base=$NX_BASE \
+                      --head=$NX_HEAD \
+                      --configuration=ci \
+                      --output-style=stream \
+                      --parallel=1 \
+                      --no-cloud \
+                      -t e2e
+
+            - name: Run Test Agents (windows)
               if: matrix.os == 'windows-latest'
               run: |
                   pnpm nx affected `
@@ -328,7 +345,20 @@ jobs:
                       --output-style=stream `
                       --parallel=$env:NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT `
                       --no-cloud `
-                      -t build lint test e2e
+                      -t build lint test
+
+            - name: Run E2E Agents (windows)
+              if: matrix.os == 'windows-latest'
+              run: |
+                  pnpm nx affected `
+                      --nx-bail `
+                      --base=$env:NX_BASE `
+                      --head=$env:NX_HEAD `
+                      --configuration=ci `
+                      --output-style=stream `
+                      --parallel=1 `
+                      --no-cloud `
+                      -t e2e
 
             - name: Stop Agents
               if: always()

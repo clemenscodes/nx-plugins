@@ -1,6 +1,5 @@
 {
     "extends": "nx/presets/npm.json",
-    "$schema": "./node_modules/nx/schemas/nx-schema.json",
     "defaultProject": "nx-cmake",
     "tasksRunnerOptions": {
         "default": {
@@ -29,6 +28,7 @@
             "cmakeConfigDir": ".cmake"
         }
     },
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
     "generators": {
         "nx-cmake": {
             "binary": {

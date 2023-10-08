@@ -1,0 +1,24 @@
+include(settings/set_project_settings)
+
+function(set_library_settings PROJECT SOURCE_DIR)
+    add_library(${PROJECT} SHARED ${${PROJECT}_SOURCES})
+    add_library(${PROJECT}_static STATIC ${${PROJECT}_SOURCES})
+    set_target_properties(${PROJECT} ${PROJECT}_static PROPERTIES PREFIX "")
+    set_target_properties(${PROJECT}_static PROPERTIES OUTPUT_NAME ${PROJECT})
+    set_target_properties(${PROJECT} ${PROJECT}_static
+        PROPERTIES
+        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib"
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib"
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/bin"
+    )
+    target_include_directories(${PROJECT} PUBLIC ${${PROJECT}_INCLUDE_DIR} ${WORKSPACE_INCLUDE_DIR})
+    target_include_directories(${PROJECT}_static PUBLIC ${${PROJECT}_INCLUDE_DIR} ${WORKSPACE_INCLUDE_DIR})
+    target_include_directories(${PROJECT} PUBLIC ${${PROJECT}_INCLUDE_DIR}/include ${WORKSPACE_INCLUDE_DIR})
+    target_include_directories(${PROJECT}_static PUBLIC ${${PROJECT}_INCLUDE_DIR}/include ${WORKSPACE_INCLUDE_DIR})
+    target_include_directories(${PROJECT} PUBLIC ${${PROJECT}_INCLUDE_DIR}/src ${WORKSPACE_INCLUDE_DIR})
+    target_include_directories(${PROJECT}_static PUBLIC ${${PROJECT}_INCLUDE_DIR}/src ${WORKSPACE_INCLUDE_DIR})
+    if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+        set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE CACHE INTERNAL "")
+        set(CMAKE_IMPORT_LIBRARY_PREFIX "" PARENT_SCOPE)
+    endif()
+endfunction()
