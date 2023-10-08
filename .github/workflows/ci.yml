@@ -11,7 +11,7 @@ concurrency:
     cancel-in-progress: true
 
 env:
-    NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT: 2
+    NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT: 3
     NX_CLOUD_DISTRIBUTED_EXECUTION: true
     NX_REJECT_UNKNOWN_LOCAL_CACHE: 0
 
@@ -245,8 +245,8 @@ jobs:
                   restore-keys: |
                       ${{ matrix.os }}-pnpm-store-
 
-            - name: Restore Nx cache
-              uses: actions/cache/restore@v3
+            - name: Nx cache
+              uses: actions/cache@v3
               id: nx_cache
               with:
                   path: ${{ env.NX_CACHE_DIRECTORY }}

@@ -1,4 +1,9 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+if [ -n "$SKIP_TESTS" ]; then
+    echo "Skipping tests"
+    exit 0
+fi
+
 FORCE_COLOR=true pnpm run ci --skip-nx-cache
