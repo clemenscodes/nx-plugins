@@ -99,8 +99,6 @@ jobs:
         name: Agent ${{ matrix.agent }} [${{ matrix.os }}]
         needs: [set-agents, deps]
         runs-on: ${{ matrix.os }}
-        env:
-            NX_CACHE_DIRECTORY: tmp/${{ matrix.os }}
         permissions:
             contents: read
             actions: read
@@ -127,15 +125,6 @@ jobs:
 
             - name: Derive SHAs
               uses: nrwl/nx-set-shas@v3
-
-            - name: Nx cache
-              uses: actions/cache/restore@v3
-              id: nx_cache
-              with:
-                  path: ${{ env.NX_CACHE_DIRECTORY }}
-                  key: ${{ matrix.os }}-nx-cache-${{ hashFiles('tmp/**') }}
-                  restore-keys: |
-                      ${{ matrix.os }}-nx-cache
 
             - name: Install Node
               uses: actions/setup-node@v3
@@ -192,8 +181,6 @@ jobs:
                 os: [windows-latest, ubuntu-latest, macos-latest]
             fail-fast: false
         name: Main Job [${{ matrix.os }}]
-        env:
-            NX_CACHE_DIRECTORY: tmp/${{ matrix.os }}
         permissions:
             contents: read
             actions: read
@@ -244,15 +231,6 @@ jobs:
                   key: ${{ matrix.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
                   restore-keys: |
                       ${{ matrix.os }}-pnpm-store-
-
-            - name: Nx cache
-              uses: actions/cache@v3
-              id: nx_cache
-              with:
-                  path: ${{ env.NX_CACHE_DIRECTORY }}
-                  key: ${{ matrix.os }}-nx-cache-${{ hashFiles('tmp/**') }}
-                  restore-keys: |
-                      ${{ matrix.os }}-nx-cache
 
             - name: Install dependencies
               if: steps.cache.outputs.cache-hit != 'true'
@@ -314,7 +292,6 @@ jobs:
                       --configuration=ci \
                       --output-style=stream \
                       --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT \
-                      --no-cloud \
                       -t build lint test
 
             - name: Run E2E Agents (unix)
@@ -331,7 +308,6 @@ jobs:
                       --configuration=ci \
                       --output-style=stream \
                       --parallel=1 \
-                      --no-cloud \
                       -t e2e
 
             - name: Run Test Agents (windows)
@@ -344,7 +320,6 @@ jobs:
                       --configuration=ci `
                       --output-style=stream `
                       --parallel=$env:NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT `
-                      --no-cloud `
                       -t build lint test
 
             - name: Run E2E Agents (windows)
@@ -357,7 +332,6 @@ jobs:
                       --configuration=ci `
                       --output-style=stream `
                       --parallel=1 `
-                      --no-cloud `
                       -t e2e
 
             - name: Stop Agents
@@ -452,7 +426,7 @@ jobs:
             - name: Semantic Versioning
               if: startsWith(github.ref, 'refs/heads/main')
               shell: bash
-              run: pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t bump --parallel 1
+              run: pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t version --parallel 1
 
             - name: Publish packages
               if: startsWith(github.ref, 'refs/heads/main')

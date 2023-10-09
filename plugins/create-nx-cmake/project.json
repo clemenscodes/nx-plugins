@@ -61,7 +61,6 @@
                 "noVerify": true,
                 "trackDeps": true,
                 "skipRootChangelog": true,
-                "skipCommit": true,
                 "push": false,
                 "changelogHeader": "# Changelog ({projectName})\n",
                 "tagPrefix": "{projectName}-",
@@ -72,20 +71,6 @@
                     "docs",
                     "refactor",
                     "test"
-                ]
-            }
-        },
-        "bump": {
-            "executor": "nx:run-commands",
-            "options": {
-                "parallel": false,
-                "color": true,
-                "commands": [
-                    "nx version {projectName}",
-                    "git reset",
-                    "git add {projectRoot}",
-                    "git commit -m \"chore({projectName}): release new $(git describe --tags --abbrev=0) [skip ci]\"",
-                    "git reset --hard HEAD"
                 ]
             }
         },
