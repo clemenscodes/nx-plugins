@@ -367,6 +367,8 @@ jobs:
             NX_CLOUD_DISTRIBUTED_EXECUTION: false
             NX_SKIP_NX_CACHE: true
             SKIP_TESTS: 1
+            PAT: ${{ secrets.PAT }}
+            REPOSITORY: ${{ github.repository }}
             CI: 1
         permissions:
             contents: write
@@ -422,9 +424,9 @@ jobs:
                   path: |
                       ${{ steps.pnpm-cache.outputs.STORE_PATH }}
                       node_modules/
-                  key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  key: ubuntu-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
                   restore-keys: |
-                      ${{ runner.os }}-pnpm-store-
+                      ubuntu-pnpm-store-
 
             - name: Install dependencies
               if: startsWith(github.ref, 'refs/heads/main') && steps.cache.outputs.cache-hit != 'true'
@@ -443,15 +445,6 @@ jobs:
               shell: bash
               run: pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t version --parallel 1
 
-            - name: Push
-              uses: ad-m/github-push-action@master
-              if: startsWith(github.ref, 'refs/heads/main')
-              with:
-                  github_token: ${{ secrets.PAT }}
-                  branch: main
-                  force: true
-                  tags: true
-
             - name: Publish packages
               if: startsWith(github.ref, 'refs/heads/main')
-              run: pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t deploy
+              run: pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t deploy --parallel 1
