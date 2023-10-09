@@ -1,9 +1,9 @@
-import type { BaseOptions } from '@/config';
+import type { GeneratorBaseOptions } from '@/config';
 import { resolveOptions } from './resolveOptions';
 
 describe('resolveOptions', () => {
-    let options: BaseOptions;
-    let expected: Required<BaseOptions>;
+    let options: GeneratorBaseOptions;
+    let expected: Required<GeneratorBaseOptions>;
 
     beforeEach(() => {
         options = {

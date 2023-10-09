@@ -1,12 +1,9 @@
-import type { CreateNodes, NxPluginV2 } from '@nx/devkit';
-import { PROJECT_FILE_PATTERN, PLUGIN_NAME } from '@/config';
-import { createNodesFunction } from './createNodesFunction/createNodesFunction';
-import { createDependencies } from './createDependencies/createDependencies';
-
-const createNodes: CreateNodes = [PROJECT_FILE_PATTERN, createNodesFunction];
+import type { NxPluginV2 } from '@nx/devkit';
+import { PLUGIN_NAME as name } from '@/config';
+import { createNodes, createDependencies } from '@/graph';
 
 const nxPlugin: NxPluginV2 = {
-    name: PLUGIN_NAME,
+    name,
     createNodes,
     createDependencies,
 };

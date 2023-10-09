@@ -1,11 +1,14 @@
-import type { BaseOptions } from '@/config';
+import type { GeneratorBaseOptions } from '@/config';
 import { getCMakeC } from '../getCmakeC/getCMakeC';
 import { getLanguageExtension } from '../getLanguageExtension/getLanguageExtension';
 import { getProjectRoot } from '../getProjectRoot/getProjectRoot';
 import { CProjectType } from '@/config';
 import { names, offsetFromRoot } from '@nx/devkit';
 
-export const resolveOptions = <T extends BaseOptions, K extends Required<T>>(
+export const resolveOptions = <
+    T extends GeneratorBaseOptions,
+    K extends Required<T>,
+>(
     options: T,
 ): K => {
     const { language } = options;

@@ -29,7 +29,7 @@ describe('create-nx-cmake', () => {
  * @returns The directory where the test project was created
  */
 function createTestProject(extraArgs = '') {
-    const projectName = 'test-project';
+    const projectName = 'create-nx-cmake-test';
     const projectDirectory = join(process.cwd(), 'tmp', projectName);
 
     // Ensure projectDirectory is empty
