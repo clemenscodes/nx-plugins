@@ -1,5 +1,12 @@
 # Changelog (create-nx-cmake)
 
+## [0.1.2](https://github.com/clemenscodes/nx-plugins/compare/create-nx-cmake-0.1.1...create-nx-cmake-0.1.2) (2023-10-09)
+
+
+### Bug Fixes
+
+* **nx-cmake:** deploy target ([e23becd](https://github.com/clemenscodes/nx-plugins/commit/e23becd996c44087e9f6fdaf344eed09781f45b3))
+
 ## [0.1.1](https://github.com/clemenscodes/nx-plugins/compare/create-nx-cmake-0.1.0...create-nx-cmake-0.1.1) (2023-10-09)
 
 
