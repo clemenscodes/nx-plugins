@@ -1,6 +1,6 @@
 {
     "name": "create-nx-cmake",
-    "version": "0.4.0",
+    "version": "0.0.1",
     "dependencies": {
         "tslib": "^2.3.0",
         "create-nx-workspace": "16.10.0"

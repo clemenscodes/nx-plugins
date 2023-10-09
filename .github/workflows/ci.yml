@@ -449,7 +449,7 @@ jobs:
             - name: Semantic Versioning
               if: startsWith(github.ref, 'refs/heads/main')
               shell: bash
-              run: pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t version --parallel 1
+              run: pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t bump --parallel 1
 
             - name: Publish packages
               if: startsWith(github.ref, 'refs/heads/main')

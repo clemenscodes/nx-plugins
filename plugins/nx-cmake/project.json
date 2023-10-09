@@ -83,8 +83,14 @@
             "options": {
                 "preset": "conventional",
                 "syncVersions": true,
-                "tagPrefix": "nx-cmake-",
                 "allowEmptyRelease": false,
+                "noVerify": true,
+                "trackDeps": true,
+                "skipRootChangelog": true,
+                "skipCommit": true,
+                "push": false,
+                "changelogHeader": "# Changelog ({projectName})\n",
+                "tagPrefix": "{projectName}-",
                 "skipCommitTypes": [
                     "chore",
                     "build",
@@ -92,18 +98,7 @@
                     "docs",
                     "refactor",
                     "test"
-                ],
-                "noVerify": true,
-                "trackDeps": false,
-                "skipRootChangelog": true,
-                "skipCommit": true,
-                "changelogHeader": "# Changelog ({projectName})\n",
-                "push": false
-            },
-            "configurations": {
-                "local": {
-                    "dryRun": true
-                }
+                ]
             }
         },
         "bump": {
