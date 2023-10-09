@@ -83,8 +83,14 @@
             "options": {
                 "preset": "conventional",
                 "syncVersions": true,
-                "tagPrefix": "nx-cmake-",
                 "allowEmptyRelease": false,
+                "noVerify": true,
+                "trackDeps": true,
+                "skipRootChangelog": true,
+                "skipCommit": true,
+                "push": false,
+                "changelogHeader": "# Changelog ({projectName})\n",
+                "tagPrefix": "{projectName}-",
                 "skipCommitTypes": [
                     "chore",
                     "build",
@@ -92,19 +98,28 @@
                     "docs",
                     "refactor",
                     "test"
-                ],
-                "noVerify": true,
-                "skipRootChangelog": true,
-                "changelogHeader": "# Changelog (nx-cmake)\n",
-                "push": false,
-                "commitMessageFormat": "chore({projectName}): release version ${version} [skip ci]",
-                "remote": "origin",
-                "baseBranch": "main"
+                ]
+            }
+        },
+        "bump": {
+            "dependsOn": ["version"],
+            "executor": "nx:run-commands",
+            "options": {
+                "parallel": false,
+                "color": true,
+                "commands": [
+                    "git reset",
+                    "git add plugins/nx-cmake",
+                    "git commit -m \"chore(nx-cmake): release new version [skip ci]\"",
+                    "git reset --hard HEAD"
+                ]
             }
         },
         "deploy": {
             "executor": "ngx-deploy-npm:deploy",
             "options": {
+                "buildTarget": "nx-cmake:build:ci",
+                "distFolderPath": "dist/plugins/nx-cmake",
                 "access": "public"
             }
         }
