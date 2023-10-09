@@ -68,7 +68,7 @@
                 ],
                 "noVerify": true,
                 "skipRootChangelog": true,
-                "changelogHeader": "# Changelog (create-nx-cmake)\n",
+                "skipProjectChangelog": true,
                 "push": false,
                 "commitMessageFormat": "chore({projectName}): release version ${version} [skip ci]",
                 "remote": "origin",

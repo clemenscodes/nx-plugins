@@ -451,6 +451,10 @@ jobs:
               shell: bash
               run: pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t version --parallel 1
 
+            - name: Publish packages
+              if: startsWith(github.ref, 'refs/heads/main')
+              run: pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t deploy
+
             - name: Push
               uses: ad-m/github-push-action@master
               if: startsWith(github.ref, 'refs/heads/main')
@@ -459,7 +463,3 @@ jobs:
                   branch: main
                   force: true
                   tags: true
-
-            - name: Publish packages
-              if: startsWith(github.ref, 'refs/heads/main')
-              run: pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t deploy
