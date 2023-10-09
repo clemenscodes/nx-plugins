@@ -98,11 +98,7 @@
                 "skipRootChangelog": true,
                 "skipCommit": true,
                 "changelogHeader": "# Changelog ({projectName})\n",
-                "push": false,
-                "postTargets": ["nx-cmake:commit"],
-                "commitMessageFormat": "chore({projectName}): release version ${version} [skip ci]",
-                "remote": "origin",
-                "baseBranch": "main"
+                "push": false
             },
             "configurations": {
                 "local": {
@@ -110,12 +106,16 @@
                 }
             }
         },
-        "commit": {
+        "bump": {
+            "dependsOn": ["version"],
             "executor": "nx:run-commands",
             "options": {
+                "parallel": false,
+                "color": true,
                 "commands": [
+                    "git reset",
                     "git add plugins/nx-cmake",
-                    "git commit -m \"chore(nx-cmake): release new version [skip ci]\"",
+                    "SKIP_TESTS=1 CI=1 git commit -m \"chore(nx-cmake): release new version [skip ci]\"",
                     "git reset --hard HEAD"
                 ]
             }
