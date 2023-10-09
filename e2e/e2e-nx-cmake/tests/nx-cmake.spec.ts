@@ -67,10 +67,10 @@ describe(plugin, () => {
 
     afterAll(() => {
         // Cleanup the test project
-        // rmSync(projectDirectory, {
-        //     recursive: true,
-        //     force: true,
-        // });
+        rmSync(projectDirectory, {
+            recursive: true,
+            force: true,
+        });
     });
 
     it('should be installed', () => {
@@ -352,7 +352,7 @@ describe(plugin, () => {
  * @returns The directory where the test project was created
  */
 function createTestProject() {
-    const projectName = 'test-project';
+    const projectName = 'nx-cmake-test';
     const projectDirectory = join(process.cwd(), 'tmp', projectName);
 
     // Ensure projectDirectory is empty

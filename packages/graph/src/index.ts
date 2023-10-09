@@ -5,3 +5,6 @@ export { filterProjects } from './lib/filterProjects/filterProjects';
 export { getDependencies } from './lib/getDependencies/getDependencies';
 export { getDependenciesOfFile } from './lib/getDependenciesOfFile/getDependenciesOfFile';
 export { reduceDependenciesTransitively } from './lib/reduceDependenciesTransitively/reduceDependenciesTransitively';
+export { createNodes } from './lib/createNodes/createNodes';
+export { createDependencies } from './lib/createDependencies/createDependencies';
+export { createNodesFunction } from './lib/createNodesFunction/createNodesFunction';

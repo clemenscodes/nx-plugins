@@ -19,9 +19,19 @@ export type Program =
 
 export type Programs = Readonly<Record<Program, Platforms>>;
 
-export type GoogleTestInclude = 'include(GoogleTest)' | '';
+export type GeneratorBaseOptions = {
+    name: string;
+    language: C;
+    constantName?: string;
+    snakeCaseName?: string;
+    camelCaseName?: string;
+    className?: string;
+    relativeRootPath?: string;
+    languageExtension?: string;
+    cmakeC?: CMakeC;
+};
 
-export type LibGeneratorSchema = BaseOptions & {
+export type LibGeneratorSchema = GeneratorBaseOptions & {
     generateTests: boolean;
 };
 
@@ -35,7 +45,12 @@ export type LibOptions = Required<LibGeneratorSchema> & {
     baseTest: string;
 };
 
-export type BinGeneratorSchema = BaseOptions & {
+export type ExecutorBaseOptions = {
+    args: string[];
+    release: boolean;
+};
+
+export type BinGeneratorSchema = GeneratorBaseOptions & {
     generateTests: boolean;
 };
 
@@ -64,16 +79,6 @@ export type InitGeneratorSchema = {
     skipFormat: boolean;
 };
 
-export type NxPluginsConfig = NxJsonConfiguration['pluginsConfig'];
-
-export type NxGeneratorConfig = NxJsonConfiguration['generators'];
-
-export type NxCmakePluginConfig = {
-    language: C;
-    cmakeConfigDir: string;
-    globalIncludeDir: string;
-};
-
 export type BaseGeneratorOptions = {
     language: C;
     generateTests: boolean;
@@ -82,71 +87,6 @@ export type BaseGeneratorOptions = {
 export type BinaryGeneratorOptions = BaseGeneratorOptions;
 
 export type LibraryGeneratorOptions = BaseGeneratorOptions;
-
-export type NxCmakeGeneratorConfig = {
-    binary: BinaryGeneratorOptions;
-    library: LibraryGeneratorOptions;
-};
-
-export type PluginConfig = {
-    [PLUGIN_NAME]: NxCmakePluginConfig;
-} & NxPluginsConfig;
-
-export type PluginGeneratorConfig = {
-    [PLUGIN_NAME]: NxCmakeGeneratorConfig;
-} & NxGeneratorConfig;
-
-export type BaseOptions = {
-    name: string;
-    language: C;
-    constantName?: string;
-    snakeCaseName?: string;
-    camelCaseName?: string;
-    className?: string;
-    relativeRootPath?: string;
-    languageExtension?: string;
-    cmakeC?: CMakeC;
-};
-
-export type ExecutorBaseOptions = {
-    args: string[];
-    release: boolean;
-};
-
-export type Deps = {
-    sourceProject: string;
-    dependsOnProject: string;
-    file: string;
-};
-
-export type FilteredProject = {
-    name: string;
-    root: string;
-    sourceRoot: string;
-    type: CProjectType;
-    tag: CTag;
-};
-
-export type WorkspaceLayout = Required<
-    NonNullable<NxJsonConfiguration['workspaceLayout']>
->;
-
-export type Graph = Record<string, Set<string>>;
-
-export type GraphFile = {
-    graph: {
-        nodes: ProjectGraph['nodes'];
-        dependencies: ProjectGraph['dependencies'];
-    };
-};
-
-export type C = 'C' | 'C++';
-
-export type CMakeC = 'C' | 'CXX';
-
-export type CTag = 'c' | 'cpp';
-
-export type Link = 'shared' | 'static';
 
 export type CmakeExecutorSchema = ExecutorBaseOptions;
 
@@ -166,3 +106,63 @@ export type LintExecutorSchema = ExecutorBaseOptions;
 export type TestExecutorSchema = ExecutorBaseOptions & {
     outputOnFailure: boolean;
 };
+
+export type Graph = Record<string, Set<string>>;
+
+export type GraphFile = {
+    graph: {
+        nodes: ProjectGraph['nodes'];
+        dependencies: ProjectGraph['dependencies'];
+    };
+};
+
+export type C = 'C' | 'C++';
+
+export type CMakeC = 'C' | 'CXX';
+
+export type CTag = 'c' | 'cpp';
+
+export type Link = 'shared' | 'static';
+
+export type GoogleTestInclude = 'include(GoogleTest)' | '';
+
+export type Deps = {
+    sourceProject: string;
+    dependsOnProject: string;
+    file: string;
+};
+
+export type FilteredProject = {
+    name: string;
+    root: string;
+    sourceRoot: string;
+    type: CProjectType;
+    tag: CTag;
+};
+
+export type WorkspaceLayout = Required<
+    NonNullable<NxJsonConfiguration['workspaceLayout']>
+>;
+
+export type NxPluginsConfig = NxJsonConfiguration['pluginsConfig'];
+
+export type NxGeneratorConfig = NxJsonConfiguration['generators'];
+
+export type NxCmakePluginConfig = {
+    language: C;
+    cmakeConfigDir: string;
+    globalIncludeDir: string;
+};
+
+export type NxCmakeGeneratorConfig = {
+    binary: BinaryGeneratorOptions;
+    library: LibraryGeneratorOptions;
+};
+
+export type PluginConfig = {
+    [PLUGIN_NAME]: NxCmakePluginConfig;
+} & NxPluginsConfig;
+
+export type PluginGeneratorConfig = {
+    [PLUGIN_NAME]: NxCmakeGeneratorConfig;
+} & NxGeneratorConfig;

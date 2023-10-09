@@ -56,12 +56,11 @@ The following tools need to be installed for this plugin to work correctly:
 - nx v16.9+ (this plugin uses the latest Nx v2 plugin API)
 - node lts
 - cmake v3.21+
-- ctest
+- gcc (posix thread model and mutex support required)
 - make
-- gcc
-- gdb
 - clang-format
 - clang-tidy
+- gdb
 
 #### Windows
 
@@ -85,7 +84,7 @@ Using chocolatey:
 choco install cmake
 ```
 
-NOTE: Make sure to add CMake to the PATH:
+**NOTE**: Make sure to add CMake to the PATH:
 
 ```shell
 Add-Content $env:PATH "C:\Program Files\CMake\bin"
@@ -109,7 +108,7 @@ Using chocolatey:
 choco install msys2 
 ```
 
-NOTE: chocolatey installs msys2 into `C:\tools\msys64` instead.
+**NOTE**: chocolatey installs msys2 into `C:\tools\msys64` instead.
 
 ```shell
 Add-Content $env:PATH "C:\tools\msys64"
@@ -120,13 +119,7 @@ Add-Content $env:PATH "C:\tools\msys64\ucrt64\bin"
 Afterwards, launch a new shell and install the required tools:
 
 ```shell
-pacman -S `
-    mingw-w64-ucrt-x86_64-gcc `
-    mingw-w64-ucrt-x86_64-make `
-    mingw-w64-ucrt-x86_64-cmake `  
-    mingw-w64-ucrt-x86_64-gdb `
-    mingw-w64-ucrt-x86_64-clang `
-    mingw-w64-ucrt-x86_64-clang-tools-extra
+pacman -S mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-make mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-gdb mingw-w64-ucrt-x86_64-clang mingw-w64-ucrt-x86_64-clang-tools-extra
 ```
 
 ### Installation

@@ -11,11 +11,10 @@ async function main() {
     console.log(`Creating the workspace: ${name}`);
 
     // This assumes "nx-cmake" and "create-nx-cmake" are at the same version
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const presetVersion = require('../package.json').version;
+    const { version } = await import('../package.json');
 
     // TODO: update below to customize the workspace
-    const { directory } = await createWorkspace(`nx-cmake@${presetVersion}`, {
+    const { directory } = await createWorkspace(`nx-cmake@${version}`, {
         name,
         nxCloud: false,
         packageManager: 'npm',
