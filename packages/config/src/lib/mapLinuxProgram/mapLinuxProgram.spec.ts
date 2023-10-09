@@ -1,5 +1,6 @@
 import { mapLinuxProgram } from './mapLinuxProgram';
 import { GCC } from '../nx-cmake';
+import { join } from 'path';
 
 describe('mapLinuxProgram', () => {
     it('should map program to /usr/bin and /usr/local/bin paths', () => {
