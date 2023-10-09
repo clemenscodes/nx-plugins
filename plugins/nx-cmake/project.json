@@ -108,10 +108,8 @@
                 "parallel": false,
                 "color": true,
                 "commands": [
-                    "git reset",
                     "git add plugins/nx-cmake",
-                    "git commit -m \"chore(nx-cmake): release new version [skip ci]\"",
-                    "git reset --hard HEAD"
+                    "git commit -m \"chore(nx-cmake): release new version [skip ci]\""
                 ]
             }
         },
