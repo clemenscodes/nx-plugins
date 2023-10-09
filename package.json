@@ -58,7 +58,7 @@
     },
     "dependencies": {
         "@nx/devkit": "16.10.0",
-        "@swc/helpers": "0.5.2",
+        "@swc/helpers": "0.5.3",
         "create-nx-workspace": "16.10.0",
         "tslib": "^2.6.2"
     },
