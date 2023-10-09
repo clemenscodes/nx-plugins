@@ -376,6 +376,9 @@ jobs:
         needs: [main, agents]
         env:
             NX_CLOUD_DISTRIBUTED_EXECUTION: false
+            NX_SKIP_NX_CACHE: true
+            SKIP_TESTS: 1
+            CI: 1
         permissions:
             contents: write
             actions: read
@@ -448,9 +451,6 @@ jobs:
 
             - name: Semantic Versioning
               if: startsWith(github.ref, 'refs/heads/main')
-              env:
-                  SKIP_TESTS: 1
-                  CI: 1
               shell: bash
               run: pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t bump --parallel 1
 

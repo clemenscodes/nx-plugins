@@ -82,7 +82,7 @@
             "executor": "@jscutlery/semver:version",
             "options": {
                 "preset": "conventional",
-                "syncVersions": true,
+                "syncVersions": false,
                 "allowEmptyRelease": false,
                 "noVerify": true,
                 "trackDeps": true,
@@ -107,20 +107,22 @@
                 "parallel": false,
                 "color": true,
                 "commands": [
-                    "nx version nx-cmake",
+                    "nx version {projectName}",
                     "git reset",
-                    "git add plugins/nx-cmake",
-                    "git commit -m \"chore(nx-cmake): release new version [skip ci]\"",
+                    "git add {projectRoot}",
+                    "git commit -m \"chore({projectName}): release new $(git describe --tags --abbrev=0) [skip ci]\"",
                     "git reset --hard HEAD"
                 ]
             }
         },
         "deploy": {
-            "executor": "ngx-deploy-npm:deploy",
+            "dependsOn": ["build"],
+            "executor": "nx:run-commands",
             "options": {
-                "buildTarget": "nx-cmake:build:ci",
-                "distFolderPath": "dist/plugins/nx-cmake",
-                "access": "public"
+                "cwd": "dist/{projectRoot}",
+                "parallel": false,
+                "color": true,
+                "commands": ["npm publish --access=public"]
             }
         }
     },
