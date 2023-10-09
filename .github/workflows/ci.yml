@@ -424,9 +424,9 @@ jobs:
                   path: |
                       ${{ steps.pnpm-cache.outputs.STORE_PATH }}
                       node_modules/
-                  key: ubuntu-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  key: ubuntu-latest-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
                   restore-keys: |
-                      ubuntu-pnpm-store-
+                      ubuntu-latest-pnpm-store-
 
             - name: Install dependencies
               if: startsWith(github.ref, 'refs/heads/main') && steps.cache.outputs.cache-hit != 'true'
