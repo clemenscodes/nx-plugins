@@ -87,7 +87,7 @@
                 "noVerify": true,
                 "trackDeps": false,
                 "skipRootChangelog": true,
-                "push": false,
+                "push": true,
                 "skipCommit": false,
                 "remote": "origin",
                 "baseBranch": "main",
