@@ -62,6 +62,7 @@
                 "trackDeps": true,
                 "skipRootChangelog": true,
                 "push": false,
+                "postTargets": ["{projectName}:deploy"],
                 "changelogHeader": "# Changelog ({projectName})\n",
                 "tagPrefix": "{projectName}-",
                 "skipCommitTypes": [
@@ -74,8 +75,19 @@
                 ]
             }
         },
-        "deploy": {
+        "push": {
             "dependsOn": ["build"],
+            "executor": "nx:run-commands",
+            "options": {
+                "parallel": false,
+                "color": true,
+                "commands": [
+                    "git push https://oauth2:$PAT@github.com/$REPOSITORY.git HEAD:main --follow-tags --force --tags"
+                ]
+            }
+        },
+        "deploy": {
+            "dependsOn": ["push"],
             "executor": "nx:run-commands",
             "options": {
                 "cwd": "dist/{projectRoot}",
