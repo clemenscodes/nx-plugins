@@ -440,11 +440,7 @@ jobs:
               if: startsWith(github.ref, 'refs/heads/main')
               uses: fregante/setup-git-user@v2
 
-            - name: Semantic Versioning
+            - name: Deploy packages
               if: startsWith(github.ref, 'refs/heads/main')
               shell: bash
-              run: pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t version --parallel 1
-
-            - name: Publish packages
-              if: startsWith(github.ref, 'refs/heads/main')
               run: pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t deploy --parallel 1
