@@ -1,4 +1,5 @@
 import { mapDarwinGcc } from './mapDarwinGcc';
+import { join } from 'path';
 
 describe('mapDarwinGcc', () => {
     it('should map GCC versions correctly', () => {
