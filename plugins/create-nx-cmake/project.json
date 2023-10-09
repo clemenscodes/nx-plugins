@@ -83,7 +83,7 @@
                 "commands": [
                     "git reset",
                     "git add plugins/create-nx-cmake",
-                    "SKIP_TESTS=1 CI=1 git commit -m \"chore(create-nx-cmake): release new version [skip ci]\"",
+                    "git commit -m \"chore(create-nx-cmake): release new version [skip ci]\"",
                     "git reset --hard HEAD"
                 ]
             }
