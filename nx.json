@@ -13,9 +13,6 @@
                     "lint",
                     "fmt"
                 ],
-                "runtimeCacheInputs": [
-                    "node -e \"console.log(process.platform)\""
-                ],
                 "accessToken": "ZTBkM2I2MjYtNTc4Mi00YjUxLTkzNDAtZWFlYjg1OGY0Y2UxfHJlYWQtd3JpdGU=",
                 "useDaemonProcess": false
             }
@@ -47,17 +44,11 @@
     "targetDefaults": {
         "cmake": {
             "dependsOn": ["^cmake"],
-            "inputs": [
-                "cmake",
-                { "runtime": "node -e \"console.log(process.platform)\"" }
-            ]
+            "inputs": ["cmake"]
         },
         "build": {
             "dependsOn": ["^cmake", "^build", "cmake"],
-            "inputs": [
-                "default",
-                { "runtime": "node -e \"console.log(process.platform)\"" }
-            ]
+            "inputs": ["default"]
         },
         "debug": {
             "dependsOn": ["build"],
@@ -69,24 +60,15 @@
         },
         "test": {
             "dependsOn": ["build"],
-            "inputs": [
-                "default",
-                { "runtime": "node -e \"console.log(process.platform)\"" }
-            ]
+            "inputs": ["default"]
         },
         "lint": {
             "dependsOn": ["cmake"],
-            "inputs": [
-                "default",
-                { "runtime": "node -e \"console.log(process.platform)\"" }
-            ]
+            "inputs": ["default"]
         },
         "fmt": {
             "dependsOn": [],
-            "inputs": [
-                "clangFormat",
-                { "runtime": "node -e \"console.log(process.platform)\"" }
-            ]
+            "inputs": ["clangFormat"]
         }
     },
     "namedInputs": {
