@@ -1,7 +1,5 @@
 # Changelog (nx-cmake)
 
-* **nx-cmake:** fix semver setup ([b5bc10a](https://github.com/clemenscodes/nx-plugins/commit/b5bc10aabb326904a22e235c30a8f81e8cfd1053))
-
 ## [0.3.9](https://github.com/clemenscodes/nx-plugins/compare/nx-cmake-0.3.8...nx-cmake-0.3.9) (2023-09-29)
 
 ### Bug Fixes
