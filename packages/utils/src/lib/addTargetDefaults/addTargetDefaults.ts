@@ -254,21 +254,14 @@ export const fillEmptyTargets = <T extends PluginDefaults>(
 };
 
 export const getTargetDefaults = (): PluginDefaults => {
-    const cmake = getCmakeTargetDefault();
-    const fmt = getFmtTargetDefault();
-    const lint = getLintTargetDefault();
-    const build = getBuildTargetDefault();
-    const test = getTestTargetDefault();
-    const debug = getDebugTargetDefault();
-    const execute = getExecuteTargetDefault();
     const targetDefaults: PluginDefaults = {
-        cmake,
-        build,
-        fmt,
-        lint,
-        test,
-        debug,
-        execute,
+        cmake: getCmakeTargetDefault(),
+        build: getBuildTargetDefault(),
+        fmt: getFmtTargetDefault(),
+        lint: getLintTargetDefault(),
+        test: getTestTargetDefault(),
+        execute: getExecuteTargetDefault(),
+        debug: getDebugTargetDefault(),
     };
     return targetDefaults;
 };
@@ -290,8 +283,8 @@ export const addDefaultIfNotExist = (
 export const fillDependsOn = <T extends PluginDefaults>(
     targets: T,
     nxTargets: NonNullable<NxTargetDefaults>,
-): NonNullable<NxTargetDefaults> => {
-    const updatedNxTargets: NonNullable<NxTargetDefaults> = {};
+): NonNullable<TargetDefaultsWithDependsOn> => {
+    const updatedNxTargets: NonNullable<TargetDefaultsWithDependsOn> = {};
     for (const target in targets) {
         assertIsTargetName(target);
         const targetConfig = targets[target];
@@ -304,8 +297,29 @@ export const fillDependsOn = <T extends PluginDefaults>(
     return updatedNxTargets;
 };
 
+export const fillInputs = <T extends PluginDefaults>(
+    targets: T,
+    nxTargets: NonNullable<TargetDefaultsWithDependsOn>,
+): NonNullable<TargetDefaultsWithInputs> => {
+    const updatedNxTargets: NonNullable<TargetDefaultsWithInputs> = {};
+    for (const target in targets) {
+        assertIsTargetName(target);
+        const targetConfig = targets[target];
+        updatedNxTargets[target] = addInputsIfNotExist(
+            nxTargets,
+            target,
+            targetConfig.inputs,
+        );
+    }
+    return updatedNxTargets;
+};
+
 type TargetConfigurationWithDependsOn = TargetConfiguration & {
     dependsOn: NonNullable<TargetConfiguration['dependsOn']>;
+};
+
+type TargetConfigurationWithInputs = TargetConfiguration & {
+    inputs: NonNullable<TargetConfiguration['inputs']>;
 };
 
 export type TargetDefaultsWithDependsOn = Record<
@@ -313,20 +327,58 @@ export type TargetDefaultsWithDependsOn = Record<
     TargetConfigurationWithDependsOn
 >;
 
+export type TargetDefaultsWithInputs = Record<
+    string,
+    TargetConfigurationWithInputs
+>;
+
+export const mergeArrays = <T>(
+    existing: T[] | undefined,
+    defaults: T[] | undefined,
+): T[] => {
+    const uniqueValues = new Set<T>();
+    if (Array.isArray(existing)) {
+        existing.forEach((element) => {
+            uniqueValues.add(element);
+        });
+    }
+    if (Array.isArray(defaults)) {
+        defaults.forEach((element) => {
+            uniqueValues.add(element);
+        });
+    }
+    return Array.from(uniqueValues);
+};
+
 export const addDependsOnIfNotExist = (
     targetDefaults: NonNullable<NxTargetDefaults>,
     field: TargetName,
-    defaultValue: PluginDefaults[TargetName]['dependsOn'],
+    defaultDependsOn: PluginDefaults[TargetName]['dependsOn'],
 ): TargetConfigurationWithDependsOn => {
     const targetConfig = targetDefaults[field];
+    const mergedDependsOn = mergeArrays(
+        targetConfig.dependsOn,
+        defaultDependsOn,
+    );
     const targetConfigWithDependsOn: TargetConfigurationWithDependsOn = {
         ...targetConfig,
-        dependsOn: [],
+        dependsOn: mergedDependsOn,
     };
-    if (!('dependsOn' in targetConfig)) {
-        targetConfigWithDependsOn.dependsOn = defaultValue;
-    }
     return targetConfigWithDependsOn;
+};
+
+export const addInputsIfNotExist = (
+    targetDefaults: NonNullable<NxTargetDefaults>,
+    field: TargetName,
+    defaultInputs: PluginDefaults[TargetName]['inputs'],
+): TargetConfigurationWithInputs => {
+    const targetConfig = targetDefaults[field];
+    const mergedInputs = mergeArrays(targetConfig.inputs, defaultInputs);
+    const targetConfigWithInputs: TargetConfigurationWithInputs = {
+        ...targetConfig,
+        inputs: mergedInputs,
+    };
+    return targetConfigWithInputs;
 };
 
 export const addTargetDefaults = (
@@ -337,73 +389,14 @@ export const addTargetDefaults = (
         pluginTargetDefaults,
         updatedNxJson.targetDefaults,
     );
-
-    if (!targetDefaults['cmake'].dependsOn) {
-        targetDefaults['cmake'].dependsOn = ['^cmake'];
-    }
-
-    if (!targetDefaults['cmake'].dependsOn.includes('^cmake')) {
-        targetDefaults['cmake'].dependsOn.push('^cmake');
-    }
-
-    if (!targetDefaults['cmake'].inputs) {
-        targetDefaults['cmake'].inputs = ['cmake'];
-    }
-
-    if (!targetDefaults['cmake'].inputs.includes('cmake')) {
-        targetDefaults['cmake'].inputs.push('cmake');
-    }
-
-    if (!targetDefaults['build'].dependsOn) {
-        targetDefaults['build'].dependsOn = ['build'];
-        targetDefaults['build'].dependsOn.push('^build');
-    }
-
-    if (!(targetDefaults['build'].dependsOn[0] === '^cmake')) {
-        targetDefaults['build'].dependsOn.unshift('^cmake');
-    }
-
-    if (!targetDefaults['build'].dependsOn.includes('^build')) {
-        targetDefaults['build'].dependsOn.push('^build');
-    }
-
-    if (!targetDefaults['build'].dependsOn.includes('cmake')) {
-        targetDefaults['build'].dependsOn.push('cmake');
-    }
-
-    if (!targetDefaults['build'].dependsOn.includes('cmake')) {
-        targetDefaults['build'].dependsOn.push('cmake');
-    }
-
-    if (!targetDefaults['lint'].dependsOn?.includes('cmake')) {
-        targetDefaults['lint'].dependsOn?.push('cmake');
-    }
-
-    if (!targetDefaults['lint'].inputs) {
-        targetDefaults['fmt'].inputs = ['clangTidy'];
-    }
-
-    if (!targetDefaults['fmt'].inputs) {
-        targetDefaults['fmt'].inputs = ['clangFormat'];
-    }
-
-    if (!targetDefaults['test'].dependsOn) {
-        targetDefaults['test'].dependsOn = ['build'];
-    }
-
-    if (!targetDefaults['test'].dependsOn.includes('build')) {
-        targetDefaults['test'].dependsOn.push('build');
-    }
-
-    if (!targetDefaults['debug'].dependsOn) {
-        targetDefaults['debug'].dependsOn = ['build'];
-    }
-
-    if (!targetDefaults['debug'].dependsOn.includes('build')) {
-        targetDefaults['debug'].dependsOn.push('build');
-    }
-
-    updatedNxJson.targetDefaults = targetDefaults;
-
+    const targetDefaultsWithDependsOn = fillDependsOn(
+        pluginTargetDefaults,
+        targetDefaults,
+    );
+    const targetsWithInputs = fillInputs(
+        pluginTargetDefaults,
+        targetDefaultsWithDependsOn,
+    );
+    updatedNxJson.targetDefaults = targetsWithInputs;
     return updatedNxJson;
 };
