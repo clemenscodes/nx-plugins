@@ -1,5 +1,37 @@
-import type { NxJsonConfiguration, ProjectGraph } from '@nx/devkit';
+import type {
+    NxJsonConfiguration,
+    ProjectGraph,
+    TargetConfiguration,
+} from '@nx/devkit';
 import { CProjectType, PLUGIN_NAME } from './nx-cmake';
+import {
+    BuildTargetName,
+    BuildTargetConfiguration,
+} from './getTargets/getBuildTarget/getBuildTarget';
+import {
+    LintTargetConfiguration,
+    LintTargetName,
+} from './getTargets/getLintTarget/getLintTarget';
+import {
+    FmtTargetName,
+    FmtTargetConfiguration,
+} from './getTargets/getFmtTarget/getFmtTarget';
+import {
+    TestTargetName,
+    TestTargetConfiguration,
+} from './getTargets/getTestTarget/getTestTarget';
+import {
+    ExecuteTargetConfiguration,
+    ExecuteTargetName,
+} from './getTargets/getExecuteTargets/getExecuteTargets';
+import {
+    DebugTargetConfiguration,
+    DebugTargetName,
+} from './getTargets/getDebugTargets/getDebugTargets';
+import {
+    CmakeTargetConfiguration,
+    CmakeTargetName,
+} from './getTargets/getCmakeTarget/getCmakeTarget';
 
 export type Platforms = Readonly<{
     linux: ReadonlyArray<string>;
@@ -168,3 +200,40 @@ export type PluginConfig = {
 export type PluginGeneratorConfig = {
     [PLUGIN_NAME]: NxCmakeGeneratorConfig;
 } & NxGeneratorConfig;
+
+export type TargetName =
+    | CmakeTargetName
+    | BuildTargetName
+    | LintTargetName
+    | FmtTargetName
+    | TestTargetName
+    | ExecuteTargetName
+    | DebugTargetName;
+
+export type PluginDefaults = {
+    cmake: CmakeTargetConfiguration;
+    build: BuildTargetConfiguration;
+    fmt: FmtTargetConfiguration;
+    lint: LintTargetConfiguration;
+    test: TestTargetConfiguration;
+    execute: ExecuteTargetConfiguration;
+    debug: DebugTargetConfiguration;
+};
+
+export type TargetConfigurationWithDependsOn = TargetConfiguration & {
+    dependsOn: NonNullable<TargetConfiguration['dependsOn']>;
+};
+
+export type TargetConfigurationWithInputs = TargetConfiguration & {
+    inputs: NonNullable<TargetConfiguration['inputs']>;
+};
+
+export type TargetDefaultsWithDependsOn = Record<
+    string,
+    TargetConfigurationWithDependsOn
+>;
+
+export type TargetDefaultsWithInputs = Record<
+    string,
+    TargetConfigurationWithInputs
+>;

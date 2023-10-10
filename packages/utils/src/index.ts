@@ -1,3 +1,4 @@
+export { assertIsTargetName } from './lib/assertIsTargetName/assertIsTargetName';
 export { checkCommandExists } from './lib/checkCommandExists/checkCommandExists';
 export { executeCommandForFiles } from './lib/executeCommandForFiles/executeCommandForFiles';
 export { executeCommand } from './lib/executeCommand/executeCommand';
