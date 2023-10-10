@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/schema",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "version": 2,
     "title": "Format executor",
     "description": "Format a C or C++ project with clang-format",

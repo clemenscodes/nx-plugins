@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/schema",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "Init",
     "title": "Intialize CMake support",
     "description": "Initializes this plugin and sets up the boilerplate to support CMake, C and C++",
