@@ -366,10 +366,6 @@ jobs:
         env:
             NX_CLOUD_DISTRIBUTED_EXECUTION: false
             NX_SKIP_NX_CACHE: true
-            SKIP_TESTS: 1
-            PAT: ${{ secrets.PAT }}
-            REPOSITORY: ${{ github.repository }}
-            CI: 1
         permissions:
             contents: write
             actions: read
@@ -417,7 +413,7 @@ jobs:
                   echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
             - name: Restore pnpm cache
-              uses: actions/cache@v3
+              uses: actions/cache/restore@v3
               if: startsWith(github.ref, 'refs/heads/main')
               id: cache
               with:
