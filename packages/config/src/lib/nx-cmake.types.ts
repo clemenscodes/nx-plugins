@@ -148,6 +148,8 @@ export type NxPluginsConfig = NxJsonConfiguration['pluginsConfig'];
 
 export type NxGeneratorConfig = NxJsonConfiguration['generators'];
 
+export type NxTargetDefaults = NxJsonConfiguration['targetDefaults'];
+
 export type NxCmakePluginConfig = {
     language: C;
     cmakeConfigDir: string;
