@@ -1,11 +1,13 @@
-import type { InitGeneratorSchema } from '@/config';
+import {
+    checkNxVersion,
+    getRequiredVersionOfNx,
+    type InitGeneratorSchema,
+} from '@/config';
 import type { Tree } from '@nx/devkit';
-import { checkNxVersion } from '../checkNxVersion/checkNxVersion';
 import { generateClangPreset } from '../generateClangPreset/generateClangPreset';
 import { generateCmakeConfigFiles } from '../generateCmakeConfigFiles/generateCmakeConfigFiles';
 import { generateGlobalIncludeDir } from '../generateGlobalIncludeDir/generateGlobalIncludeDir';
 import { generateRootConfig } from '../generateRootConfig/generateRootConfig';
-import { getRequiredVersionOfNx } from '../getRequiredVersionOfNx/getRequiredVersionOfNx';
 import { getUpdatedNxJson } from '../getUpdatedNxJson/getUpdatedNxJson';
 import {
     readNxJson,

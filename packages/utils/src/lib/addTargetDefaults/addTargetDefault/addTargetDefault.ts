@@ -1,14 +1,14 @@
 import {
-    type NxTargetDefaults,
     type TargetName,
-    type PluginDefaults,
+    type NxTargetDefaults,
     getTargetDefaults,
+    TargetDefaults,
 } from '@/config';
 
 export const addTargetDefault = (
     targetDefaults: NxTargetDefaults,
     field: TargetName,
-    defaultValue: PluginDefaults[TargetName],
+    defaultValue: TargetDefaults[TargetName],
 ): NonNullable<NxTargetDefaults> => {
     if (!targetDefaults) {
         targetDefaults = getTargetDefaults();

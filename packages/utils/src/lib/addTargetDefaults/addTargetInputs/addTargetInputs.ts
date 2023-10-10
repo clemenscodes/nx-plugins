@@ -1,7 +1,7 @@
 import type {
     NxTargetDefaults,
-    PluginDefaults,
     TargetConfigurationWithInputs,
+    TargetDefaults,
     TargetName,
 } from '@/config';
 import { mergeArrays } from '../../mergeArrays/mergeArrays';
@@ -9,7 +9,7 @@ import { mergeArrays } from '../../mergeArrays/mergeArrays';
 export const addTargetInputs = (
     targetDefaults: NonNullable<NxTargetDefaults>,
     field: TargetName,
-    defaultInputs: PluginDefaults[TargetName]['inputs'],
+    defaultInputs: TargetDefaults[TargetName]['inputs'],
 ): TargetConfigurationWithInputs => {
     const targetConfig = targetDefaults[field];
     const mergedInputs = mergeArrays(targetConfig.inputs, defaultInputs);

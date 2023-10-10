@@ -1,11 +1,11 @@
+import type { LibSchema } from '@/config';
 import type { Tree } from '@nx/devkit';
-import type { LibOptions } from '@/config';
 import { generateFiles } from '@nx/devkit';
 import { join } from 'path';
 
 export const generateLibFiles = (
     tree: Tree,
-    resolvedLibOptions: LibOptions,
+    resolvedLibOptions: LibSchema,
 ): void => {
     const { projectRoot } = resolvedLibOptions;
     generateFiles(

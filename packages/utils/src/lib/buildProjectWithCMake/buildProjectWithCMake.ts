@@ -1,7 +1,6 @@
 import { checkCommandExists } from '../checkCommandExists/checkCommandExists';
-import { getCmake } from '../getCmake/getCmake';
 import { getCmakeBuildCommandArguments } from '../getCmakeBuildCommandArguments/getCmakeBuildCommandArguments';
-import { BuildExecutorSchema, CMAKE } from '@/config';
+import { BuildExecutorSchema, CMAKE, getCmake } from '@/config';
 import { runCommand } from '../runCommand/runCommand';
 
 export const buildProjectWithCMake = (

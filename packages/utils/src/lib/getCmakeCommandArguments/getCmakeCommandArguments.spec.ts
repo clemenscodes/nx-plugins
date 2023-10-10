@@ -5,9 +5,7 @@ import {
     WINDOWS_GCC,
     WINDOWS_MAKE,
 } from '@/config';
-import * as isWindowsModule from '../isWindows/isWindows';
-import * as getGccModule from '../getGcc/getGcc';
-import * as getMakeModule from '../getMake/getMake';
+import * as configModule from '@/config';
 import { join } from 'path';
 
 describe('getCmakeCommandArguments', () => {
@@ -28,12 +26,12 @@ describe('getCmakeCommandArguments', () => {
             release: false,
         };
         isWindowsMock = jest
-            .spyOn(isWindowsModule, 'isWindows')
+            .spyOn(configModule, 'isWindows')
             .mockReturnValue(false);
         getGccMock = jest
-            .spyOn(getGccModule, 'getGcc')
+            .spyOn(configModule, 'getGcc')
             .mockReturnValue(getGccReturnMock);
-        getMakeMock = jest.spyOn(getMakeModule, 'getMake');
+        getMakeMock = jest.spyOn(configModule, 'getMake');
     });
 
     afterEach(() => {

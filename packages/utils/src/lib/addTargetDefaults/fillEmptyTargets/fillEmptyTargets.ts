@@ -1,8 +1,11 @@
-import type { PluginDefaults, NxTargetDefaults } from '@/config';
-import { assertIsTargetName } from '../../assertIsTargetName/assertIsTargetName';
+import {
+    assertIsTargetName,
+    type NxTargetDefaults,
+    type TargetDefaults,
+} from '@/config';
 import { addTargetDefault } from '../addTargetDefault/addTargetDefault';
 
-export const fillEmptyTargets = <T extends PluginDefaults>(
+export const fillEmptyTargets = <T extends TargetDefaults>(
     targets: T,
     nxTargets: NxTargetDefaults,
 ): NonNullable<NxTargetDefaults> => {

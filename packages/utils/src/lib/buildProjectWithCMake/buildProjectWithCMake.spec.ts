@@ -2,7 +2,7 @@ import { BuildExecutorSchema, LINUX_CMAKE } from '@/config';
 import { buildProjectWithCMake } from './buildProjectWithCMake';
 import { join } from 'path';
 import * as fileModule from '@/file';
-import * as getCmakeModule from '../getCmake/getCmake';
+import * as configModule from '@/config';
 import * as runCommandModule from '../runCommand/runCommand';
 
 describe('buildProjectWithCMake', () => {
@@ -20,7 +20,7 @@ describe('buildProjectWithCMake', () => {
             release: false,
         };
         runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
-        getCmakeMock = jest.spyOn(getCmakeModule, 'getCmake');
+        getCmakeMock = jest.spyOn(configModule, 'getCmake');
         jest.spyOn(fileModule, 'fileExists').mockReturnValue(true);
     });
 

@@ -1,7 +1,6 @@
 import type { CmakeExecutorSchema } from '@/config';
 import { getCmakeCommandArguments } from '../getCmakeCommandArguments/getCmakeCommandArguments';
-import { getCmake } from '../getCmake/getCmake';
-import { CMAKE } from '@/config';
+import { CMAKE, getCmake } from '@/config';
 import { checkCommandExists } from '../checkCommandExists/checkCommandExists';
 import { runCommand } from '../runCommand/runCommand';
 import { logger } from '../logger/logger';

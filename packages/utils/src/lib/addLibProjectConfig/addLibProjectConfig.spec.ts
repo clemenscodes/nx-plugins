@@ -1,5 +1,5 @@
 import type { ProjectConfiguration, Tree } from '@nx/devkit';
-import type { LibGeneratorSchema, LibOptions } from '@/config';
+import type { LibGeneratorSchema, LibSchema } from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { readProjectConfiguration } from '@nx/devkit';
 import { addLibProjectConfig } from './addLibProjectConfig';
@@ -8,7 +8,7 @@ import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
 describe('addLibProjectConfig', () => {
     let tree: Tree;
     let options: LibGeneratorSchema;
-    let resolvedOptions: LibOptions;
+    let resolvedOptions: LibSchema;
     let expectedProjectConfiguration: ProjectConfiguration;
 
     beforeEach(() => {

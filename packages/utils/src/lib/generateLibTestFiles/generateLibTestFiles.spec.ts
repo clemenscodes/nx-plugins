@@ -1,5 +1,5 @@
 import type { Tree } from '@nx/devkit';
-import type { LibGeneratorSchema, LibOptions } from '@/config';
+import type { LibGeneratorSchema, LibSchema } from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { readProjectConfiguration } from '@nx/devkit';
 import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
@@ -9,7 +9,7 @@ import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
 describe('generateLibTestFiles', () => {
     let tree: Tree;
     let options: LibGeneratorSchema;
-    let resolvedOptions: LibOptions;
+    let resolvedOptions: LibSchema;
     let testRoot: string;
     let testListsFile: string;
     let testSourceFile: string;

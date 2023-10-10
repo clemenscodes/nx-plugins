@@ -1,4 +1,4 @@
-import type { LibGeneratorSchema, LibOptions } from '@/config';
+import type { LibGeneratorSchema, LibSchema } from '@/config';
 import { offsetFromRoot } from '@nx/devkit';
 import { getBaseTest } from '../getBaseTest/getBaseTest';
 import { getGoogleTestInclude } from '../getGoogleTestInclude/getGoogleTestInclude';
@@ -10,8 +10,8 @@ import { CProjectType } from '@/config';
 import { resolveOptions } from '../resolveOptions/resolveOptions';
 import { getProjectRoot } from '../getProjectRoot/getProjectRoot';
 
-export const resolveLibOptions = (options: LibGeneratorSchema): LibOptions => {
-    const resolvedOptions = resolveOptions<LibGeneratorSchema, LibOptions>(
+export const resolveLibOptions = (options: LibGeneratorSchema): LibSchema => {
+    const resolvedOptions = resolveOptions<LibGeneratorSchema, LibSchema>(
         options,
     );
     const { name, generateTests, language } = resolvedOptions;

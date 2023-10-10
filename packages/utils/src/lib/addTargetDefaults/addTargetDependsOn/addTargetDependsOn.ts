@@ -1,15 +1,15 @@
 import type {
     NxTargetDefaults,
     TargetName,
-    PluginDefaults,
     TargetConfigurationWithDependsOn,
+    TargetDefaults,
 } from '@/config';
 import { mergeArrays } from '../../mergeArrays/mergeArrays';
 
 export const addTargetDependsOn = (
     targetDefaults: NonNullable<NxTargetDefaults>,
     field: TargetName,
-    defaultDependsOn: PluginDefaults[TargetName]['dependsOn'],
+    defaultDependsOn: TargetDefaults[TargetName]['dependsOn'],
 ): TargetConfigurationWithDependsOn => {
     const targetConfig = targetDefaults[field];
     const mergedDependsOn = mergeArrays(

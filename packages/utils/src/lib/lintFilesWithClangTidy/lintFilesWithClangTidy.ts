@@ -1,7 +1,6 @@
 import { getProjectFiles, filterSourceFiles } from '@/file';
 import { getLintArguments } from '../getLintArguments/getLintArguments';
-import { getClangTidy } from '../getClangTidy/getClangTidy';
-import { CLANG_TIDY, LintExecutorSchema } from '@/config';
+import { CLANG_TIDY, LintExecutorSchema, getClangTidy } from '@/config';
 import { checkCommandExists } from '../checkCommandExists/checkCommandExists';
 import { runCommand } from '../runCommand/runCommand';
 

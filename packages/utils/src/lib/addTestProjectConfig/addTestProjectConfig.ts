@@ -1,13 +1,12 @@
 import type { Tree } from '@nx/devkit';
-import type { LibOptions } from '@/config';
 import { addProjectConfiguration } from '@nx/devkit';
-import { CProjectType } from '@/config';
+import { CProjectType, LibSchema } from '@/config';
 import { getWorkspaceLayout } from '../getWorkspaceLayout/getWorkspaceLayout';
 import { getProjectTargets } from '../getProjectTargets/getProjectTargets';
 
 export const addTestProjectConfig = (
     tree: Tree,
-    resolvedLibOptions: LibOptions,
+    resolvedLibOptions: LibSchema,
 ): void => {
     if (!resolvedLibOptions.generateTests) {
         return;

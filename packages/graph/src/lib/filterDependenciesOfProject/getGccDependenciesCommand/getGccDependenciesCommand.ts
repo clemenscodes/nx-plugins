@@ -1,7 +1,7 @@
-import type { CTag } from '@/config';
+import { getGcc, type CTag } from '@/config';
 import { getCmockaInclude } from '../getCmockaInclude/getCmockaInclude';
 import { getGtestInclude } from '../getGtestInclude/getGtestInclude';
-import { getWorkspaceIncludeDir, getGcc } from '@/utils';
+import { getWorkspaceIncludeDir } from '@/utils';
 
 export const getGccDependenciesCommand = (
     fileName: string,

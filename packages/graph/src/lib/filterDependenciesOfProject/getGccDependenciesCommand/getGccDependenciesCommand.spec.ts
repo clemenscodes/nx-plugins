@@ -1,7 +1,7 @@
 import type { CTag } from '@/config';
 import { LINUX_GCC } from '@/config';
 import { getGccDependenciesCommand } from './getGccDependenciesCommand';
-import * as utilsModule from '@/utils';
+import * as configModule from '@/config';
 
 describe('getGccDependenciesCommand', () => {
     let fileName: string;
@@ -17,12 +17,12 @@ describe('getGccDependenciesCommand', () => {
         tag = 'c';
         libsDir = 'libs';
         isWindowsMock = jest
-            .spyOn(utilsModule, 'isWindows')
+            .spyOn(configModule, 'isWindows')
             .mockReturnValue(false);
         isDarwinMock = jest
-            .spyOn(utilsModule, 'isDarwin')
+            .spyOn(configModule, 'isDarwin')
             .mockReturnValue(false);
-        jest.spyOn(utilsModule, 'getGcc').mockReturnValue(LINUX_GCC[0]);
+        jest.spyOn(configModule, 'getGcc').mockReturnValue(LINUX_GCC[0]);
     });
 
     afterEach(() => {

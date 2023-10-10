@@ -1,7 +1,6 @@
 import { checkCommandExists } from '../checkCommandExists/checkCommandExists';
-import { getCtest } from '../getCtest/getCtest';
 import { getCtestArguments } from '../getCtestArguments/getCtestArguments';
-import { CTEST, TestExecutorSchema } from '@/config';
+import { CTEST, TestExecutorSchema, getCtest } from '@/config';
 import { runCommand } from '../runCommand/runCommand';
 
 export const testBinaryWithCtest = (

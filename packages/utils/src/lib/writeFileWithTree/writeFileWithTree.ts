@@ -1,4 +1,5 @@
 import type { Tree } from '@nx/devkit';
+import { normalizeLineEndings } from '../normalizeLineEndings/normalizeLineEndings';
 
 export const writeFileWithTree = (
     tree: Tree,
@@ -6,5 +7,5 @@ export const writeFileWithTree = (
     newContent: string,
 ) => {
     tree.write(file, newContent);
-    return newContent;
+    return normalizeLineEndings(newContent);
 };

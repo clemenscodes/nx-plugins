@@ -1,12 +1,12 @@
-import type {
-    PluginDefaults,
-    NxTargetDefaults,
-    TargetDefaultsWithDependsOn,
+import {
+    assertIsTargetName,
+    type NxTargetDefaults,
+    type TargetDefaults,
+    type TargetDefaultsWithDependsOn,
 } from '@/config';
-import { assertIsTargetName } from '../../assertIsTargetName/assertIsTargetName';
 import { addTargetDependsOn } from '../addTargetDependsOn/addTargetDependsOn';
 
-export const fillDependsOn = <T extends PluginDefaults>(
+export const fillDependsOn = <T extends TargetDefaults>(
     targets: T,
     nxTargets: NonNullable<NxTargetDefaults>,
 ): NonNullable<TargetDefaultsWithDependsOn> => {

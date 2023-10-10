@@ -1,7 +1,4 @@
-import { CmakeExecutorSchema } from '@/config';
-import { getGcc } from '../getGcc/getGcc';
-import { isWindows } from '../isWindows/isWindows';
-import { getMake } from '../getMake/getMake';
+import { CmakeExecutorSchema, getGcc, getMake, isWindows } from '@/config';
 import { join } from 'path';
 import { logger } from '../logger/logger';
 

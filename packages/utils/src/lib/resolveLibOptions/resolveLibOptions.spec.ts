@@ -1,9 +1,9 @@
-import type { LibGeneratorSchema, LibOptions } from '@/config';
+import type { LibGeneratorSchema, LibSchema } from '@/config';
 import { resolveLibOptions } from './resolveLibOptions';
 
 describe('resolveLibOptions', () => {
     let options: LibGeneratorSchema;
-    let expectedOptions: LibOptions;
+    let expectedOptions: LibSchema;
 
     beforeEach(() => {
         options = {

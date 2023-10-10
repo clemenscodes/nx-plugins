@@ -2,10 +2,8 @@ import { FormatExecutorSchema, LINUX_CLANG_FORMAT } from '@/config';
 import { formatFilesWithClangFormat } from './formatFilesWithClangFormat';
 import * as fileModule from '@/file';
 import * as getFormatArgumentsModule from '../getFormatArguments/getFormatArguments';
-import * as getClangFormatModule from '../getClangFormat/getClangFormat';
+import * as configModule from '@/config';
 import * as checkCommandExistsModule from '../checkCommandExists/checkCommandExists';
-import * as isDarwinModule from '../isDarwin/isDarwin';
-import * as isWindowsModule from '../isWindows/isWindows';
 import * as executeCommandForFilesModule from '../executeCommandForFiles/executeCommandForFiles';
 
 describe('formatFilesWithClangFormat', () => {
@@ -42,13 +40,13 @@ describe('formatFilesWithClangFormat', () => {
             'executeCommandForFiles',
         );
         isWindowsMock = jest
-            .spyOn(isWindowsModule, 'isWindows')
+            .spyOn(configModule, 'isWindows')
             .mockReturnValue(false);
         isDarwinMock = jest
-            .spyOn(isDarwinModule, 'isDarwin')
+            .spyOn(configModule, 'isDarwin')
             .mockReturnValue(false);
         jest.spyOn(fileModule, 'fileExists').mockReturnValue(true);
-        jest.spyOn(getClangFormatModule, 'getClangFormat').mockReturnValue(
+        jest.spyOn(configModule, 'getClangFormat').mockReturnValue(
             LINUX_CLANG_FORMAT[0],
         );
         formatArgs = ['--style=file:/path/to/.clang-format', '--verbose', '-i'];
