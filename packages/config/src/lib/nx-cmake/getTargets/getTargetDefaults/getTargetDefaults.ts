@@ -1,11 +1,11 @@
 import { TargetDefaults } from '..';
-import { getBuildTargetDefault } from '../getBuildTarget/getBuildTarget';
-import { getCmakeTargetDefault } from '../getCmakeTarget/getCmakeTarget';
-import { getDebugTargetDefault } from '../getDebugTargets/getDebugTargets';
-import { getExecuteTargetDefault } from '../getExecuteTargets/getExecuteTargets';
-import { getFmtTargetDefault } from '../getFmtTarget/getFmtTarget';
-import { getLintTargetDefault } from '../getLintTarget/getLintTarget';
-import { getTestTargetDefault } from '../getTestTarget/getTestTarget';
+import { getBuildTargetDefault } from '../getBuildTargetDefault/getBuildTargetDefault';
+import { getCmakeTargetDefault } from '../getCmakeTargetDefault/getCmakeTargetDefault';
+import { getDebugTargetDefault } from '../getDebugTargetDefault/getDebugTargetDefault';
+import { getExecuteTargetDefault } from '../getExecuteTargetDefault/getExecuteTargetDefault';
+import { getFmtTargetDefault } from '../getFmtTargetDefault/getFmtTargetDefault';
+import { getLintTargetDefault } from '../getLintTargetDefault/getLintTargetDefault';
+import { getTestTargetDefault } from '../getTestTargetDefault/getTestTargetDefault';
 
 export const getTargetDefaults = (): TargetDefaults => {
     const targetDefaults: TargetDefaults = {

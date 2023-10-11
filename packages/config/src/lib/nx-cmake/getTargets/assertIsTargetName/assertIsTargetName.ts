@@ -1,10 +1,10 @@
-import { BUILD_TARGET_NAME } from '../getBuildTarget/getBuildTarget';
-import { CMAKE_TARGET_NAME } from '../getCmakeTarget/getCmakeTarget';
-import { DEBUG_TARGET_NAME } from '../getDebugTargets/getDebugTargets';
-import { EXECUTE_TARGET_NAME } from '../getExecuteTargets/getExecuteTargets';
-import { FMT_TARGET_NAME } from '../getFmtTarget/getFmtTarget';
-import { LINT_TARGET_NAME } from '../getLintTarget/getLintTarget';
-import { TEST_TARGET_NAME } from '../getTestTarget/getTestTarget';
+import { BUILD_TARGET_NAME } from '../getBuildTargetDefault/getBuildTargetDefault';
+import { CMAKE_TARGET_NAME } from '../getCmakeTargetDefault/getCmakeTargetDefault';
+import { DEBUG_TARGET_NAME } from '../getDebugTargetDefault/getDebugTargetDefault';
+import { EXECUTE_TARGET_NAME } from '../getExecuteTargetDefault/getExecuteTargetDefault';
+import { FMT_TARGET_NAME } from '../getFmtTargetDefault/getFmtTargetDefault';
+import { LINT_TARGET_NAME } from '../getLintTargetDefault/getLintTargetDefault';
+import { TEST_TARGET_NAME } from '../getTestTargetDefault/getTestTargetDefault';
 import { TargetName } from '../targetName';
 
 export function assertIsTargetName(s: string): asserts s is TargetName {

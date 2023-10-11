@@ -1,10 +1,10 @@
-import { BuildTargetName } from './getBuildTarget/getBuildTarget';
-import { CmakeTargetName } from './getCmakeTarget/getCmakeTarget';
-import { DebugTargetName } from './getDebugTargets/getDebugTargets';
-import { ExecuteTargetName } from './getExecuteTargets/getExecuteTargets';
-import { FmtTargetName } from './getFmtTarget/getFmtTarget';
-import { LintTargetName } from './getLintTarget/getLintTarget';
-import { TestTargetName } from './getTestTarget/getTestTarget';
+import { BuildTargetName } from './getBuildTargetDefault/getBuildTargetDefault';
+import { CmakeTargetName } from './getCmakeTargetDefault/getCmakeTargetDefault';
+import { DebugTargetName } from './getDebugTargetDefault/getDebugTargetDefault';
+import { ExecuteTargetName } from './getExecuteTargetDefault/getExecuteTargetDefault';
+import { FmtTargetName } from './getFmtTargetDefault/getFmtTargetDefault';
+import { LintTargetName } from './getLintTargetDefault/getLintTargetDefault';
+import { TestTargetName } from './getTestTargetDefault/getTestTargetDefault';
 
 export type TargetName =
     | CmakeTargetName

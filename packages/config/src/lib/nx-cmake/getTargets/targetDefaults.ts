@@ -1,10 +1,10 @@
-import { BuildTargetConfiguration } from './getBuildTarget/getBuildTarget';
-import { CmakeTargetConfiguration } from './getCmakeTarget/getCmakeTarget';
-import { DebugTargetConfiguration } from './getDebugTargets/getDebugTargets';
-import { ExecuteTargetConfiguration } from './getExecuteTargets/getExecuteTargets';
-import { FmtTargetConfiguration } from './getFmtTarget/getFmtTarget';
-import { LintTargetConfiguration } from './getLintTarget/getLintTarget';
-import { TestTargetConfiguration } from './getTestTarget/getTestTarget';
+import { BuildTargetConfiguration } from './getBuildTargetDefault/getBuildTargetDefault';
+import { CmakeTargetConfiguration } from './getCmakeTargetDefault/getCmakeTargetDefault';
+import { DebugTargetConfiguration } from './getDebugTargetDefault/getDebugTargetDefault';
+import { ExecuteTargetConfiguration } from './getExecuteTargetDefault/getExecuteTargetDefault';
+import { FmtTargetConfiguration } from './getFmtTargetDefault/getFmtTargetDefault';
+import { LintTargetConfiguration } from './getLintTargetDefault/getLintTargetDefault';
+import { TestTargetConfiguration } from './getTestTargetDefault/getTestTargetDefault';
 
 export type TargetDefaults = {
     cmake: CmakeTargetConfiguration;
