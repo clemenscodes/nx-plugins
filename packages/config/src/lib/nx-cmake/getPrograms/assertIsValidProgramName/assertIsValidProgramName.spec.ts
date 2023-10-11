@@ -1,15 +1,15 @@
+import { assertIsValidProgramName } from './assertIsValidProgramName';
 import {
-    Program,
-    GCC,
-    MAKE,
+    CLANG_FORMAT,
+    CLANG_TIDY,
     CMAKE,
     CTEST,
+    GCC,
     GDB,
+    MAKE,
     NASM,
-    CLANG_TIDY,
-    CLANG_FORMAT,
+    type Program,
 } from '../getPrograms';
-import { assertIsValidProgramName } from './assertIsValidProgramName';
 
 describe('assertIsValidProgramName', () => {
     let program: Program;

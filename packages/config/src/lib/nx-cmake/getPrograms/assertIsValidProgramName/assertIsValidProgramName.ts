@@ -1,13 +1,13 @@
+import type { Program } from '../getPrograms';
 import {
-    CLANG_FORMAT,
-    CLANG_TIDY,
+    GCC,
+    MAKE,
     CMAKE,
     CTEST,
-    GCC,
     GDB,
-    MAKE,
     NASM,
-    Program,
+    CLANG_FORMAT,
+    CLANG_TIDY,
 } from '../getPrograms';
 
 export function assertIsValidProgramName(
