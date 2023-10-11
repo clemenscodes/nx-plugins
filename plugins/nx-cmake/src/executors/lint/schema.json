@@ -10,7 +10,7 @@
             "type": "array"
         },
         "release": {
-            "description": "Whether to build in release mode",
+            "description": "Whether to lint in release mode",
             "type": "boolean",
             "default": false
         }

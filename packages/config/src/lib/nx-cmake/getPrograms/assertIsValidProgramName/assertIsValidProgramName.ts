@@ -1,24 +1,34 @@
-import { Program } from '../getPrograms';
+import {
+    CLANG_FORMAT,
+    CLANG_TIDY,
+    CMAKE,
+    CTEST,
+    GCC,
+    GDB,
+    MAKE,
+    NASM,
+    Program,
+} from '../getPrograms';
 
 export function assertIsValidProgramName(
     program: Program,
 ): asserts program is Program {
     switch (program) {
-        case 'gcc':
+        case GCC:
             break;
-        case 'make':
+        case MAKE:
             break;
-        case 'cmake':
+        case CMAKE:
             break;
-        case 'ctest':
+        case CTEST:
             break;
-        case 'nasm':
+        case NASM:
             break;
-        case 'gdb':
+        case GDB:
             break;
-        case 'clang-tidy':
+        case CLANG_TIDY:
             break;
-        case 'clang-format':
+        case CLANG_FORMAT:
             break;
         default:
             throw new Error(`${program} is not a valid program`);

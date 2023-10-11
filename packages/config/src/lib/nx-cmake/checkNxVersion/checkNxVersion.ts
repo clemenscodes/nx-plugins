@@ -24,8 +24,5 @@ export const checkNxVersion = (version: string): boolean => {
         return true;
     }
 
-    if (minor < REQUIRED_MINOR_NX_VERSION) {
-        return false;
-    }
     return false;
 };

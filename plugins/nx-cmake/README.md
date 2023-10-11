@@ -1,66 +1,55 @@
-# nx-cmake ![GitHub](https://img.shields.io/github/license/clemenscodes/nx-plugins) [![codecov](https://codecov.io/github/clemenscodes/nx-plugins/graph/badge.svg?token=5053DT3DIF)](https://codecov.io/github/clemenscodes/nx-plugins) ![GitHub package.json version (subfolder of monorepo)](https://img.shields.io/github/package-json/v/clemenscodes/nx-plugins?filename=plugins%2Fnx-cmake%2Fpackage.json) [![CI](https://github.com/clemenscodes/nx-plugins/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/clemenscodes/nx-plugins/actions/workflows/ci.yml)
+# nx-cmake [![CI](https://github.com/clemenscodes/nx-plugins/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/clemenscodes/nx-plugins/actions/workflows/ci.yml) ![GitHub package.json version (subfolder of monorepo)](https://img.shields.io/github/package-json/v/clemenscodes/nx-plugins?filename=plugins%2Fnx-cmake%2Fpackage.json)
 
 ## Motivation
 
-This [Nx](https://nx.dev) plugin was created to provide a better developer experience when developing using C or C++. By taking away the heavy lifting when setting up CMake, generating all the necessary boilerplate and setting up dependency management and caching strategies, spinning up a new C or C++ project becomes quick and easy, as it should be.
+This [Nx](https://nx.dev) plugin was developed to enhance the developer experience when working with C or C++ projects. It streamlines the setup of CMake, automates boilerplate generation, and optimizes dependency management and caching strategies, making it quick and easy to kickstart a new C or C++ project within your Nx workspace.
 
-## Features
+## Key Features
 
-### CMake, C and C++ Support for a Monorepo
+### Comprehensive Support for CMake, C, and C++ in a Monorepo
 
-This plugin installs some CMake utility functions alongside with a `CMakeLists.txt` file in the root of the workspace.
-This sets up initial support for using `CMake` in a monorepo setup.
-The workspace is then analyzed for further `CMakeLists.txt` files.
-An include directory in the root of the workspace is generated which can be included in all projects.
-Optionally an opinionated set of formatting and linting rules can be generated to be used by `clang-format` and `clang-tidy`.
+- The plugin installs essential CMake utility functions and creates a `CMakeLists.txt` file in the root of your workspace, facilitating CMake usage within a monorepo setup.
+- It scans the workspace for additional `CMakeLists.txt` files and generates a global include directory at the root, accessible to all projects.
+- Optionally, you can generate opinionated formatting and linting rules for use with tools like `clang-format` and `clang-tidy`.
+- Automatically updates the `nx.json` file at the root of your workspace for optimal caching behavior, target pipelines, and plugin initialization.
 
-The `nx.json` file in the root of the workspace will be automatically updated for optimal caching behaviors, target pipelines and plugin initialisation.
+### Streamlined Generation of Binaries and Libraries
 
-After initializing the plugin, the generators for creating a binary can be used.
+- After initializing the plugin, you can leverage the provided generators to create binaries.
+- By default, binaries (applications) are placed in the `bin` directory, while libraries are stored in the `libs` directory.
+- Binaries act as basic wrappers around libraries, simplifying testing.
+- When creating a binary, two projects are generated: the primary binary and a testing binary.
+- The library project receives a 'lib' prefix, and the test project is prefixed with 'test,' based on the chosen generator name.
+- Libraries can be easily included in other projects using `#include </dirNameOfLibrary/pathInLibrary/fileNameOfLibrary.h>`.
 
-If not configured otherwise via `nx.json`, by default binaries (applications) will be placed in `bin` and libraries will be placed in `libs`.
+### Automatic Project Inference
 
-Binaries are by default just basic wrappers around libraries to make testing easy.
-When creating a binary, a library will be created with two binary projects, one of which is the actual binary to be used and the other one is a testing binary.
+- Each `CMakeLists.txt` file instructs the plugin to register a new project and adds it to the project graph managed by the Nx daemon.
+- Project configurations are automatically inferred for each `CMakeLists.txt` file, determining the appropriate project type.
+- The plugin's generators create a `project.json` file, mirroring the inferred settings from the `CMakeLists.txt`. Changes to this file can override inferred settings, offering flexibility.
 
-The library project will have 'lib' prepended and the test project will have 'test' prepended to the name given to the generator.
+### Efficient Project Graph Processing
 
-When a library was created, it can be included from any other library or binary using `#include </dirNameOfLibrary/pathInLibrary/fileNameOfLibrary.h>`.
-
-### Project Inference
-
-Each `CMakeLists.txt` file tells this plugin to register another project and add it to the project graph managed by the Nx daemon.
-A project configuration will be automatically inferred for each `CMakeLists.txt` file and the according project type.
-
-The generators of this plugin will also generate a `project.json` file that is the equivalent of what this has plugin inferred for the `CMakeLists.txt`.
-If no changes are made to the project.json file, it can also be deleted and this plugin will keep telling Nx how to deal with these C or C++ projects.
-Changes made to the project.json file will override the inferred settings for the project so it is recommended to keep these files.
-
-### Project Graph Processing
-
-After adding the inferred projects to the project graph, the projects will be analyzed for dependencies between each other.
-Including code from another library will automatically update the project graph and add a dependency between the dependent projects.
-
-This utilizes the caching mechanisms of the Nx daemon to only analyze sources which have been updated by changes to avoid recalculating the dependency graph, which would otherwise get slow for bigger projects.
-Detecting dependencies between projects works by utilizing `gcc -MM` under the hood, which tracks the dependencies of a source file.
-
-The plugin then further processes the graph by performing a transitive reduction, making sure the graph contains as little edges as possible, to keep the graph clean and to ensure that dependencies for a project will be resolved in the correct order.
-This allows for efficient caching mechanisms and parallelization of tasks.
+- Inferred projects are integrated into the project graph, enabling dependency analysis between them.
+- Importing code from one library automatically updates the project graph, establishing dependencies.
+- The Nx daemon's caching mechanisms optimize dependency tracking and graph calculations, particularly for larger projects.
+- Dependency detection relies on `gcc -MM`, which tracks source file dependencies.
+- The plugin performs a transitive reduction on the graph to minimize edges, ensuring dependencies are resolved in the correct order. This enhances caching efficiency and supports parallelization of tasks.
 
 ## Getting Started
 
 ### Prerequisites
 
-The following tools need to be installed for this plugin to work correctly:
+Before getting started with this plugin, ensure you have the following tools installed:
 
-- nx v16.9+ (this plugin uses the latest Nx v2 plugin API)
-- node lts
-- cmake v3.21+
-- gcc (posix thread model and mutex support required)
-- make
+- Nx v16.9 or higher (v2 plugin API)
+- Node.js LTS (Node.js v18.18 or later) – [Download Node.js](https://nodejs.org/)
+- CMake v3.21 or higher – [Download CMake](https://cmake.org/download)
+- GCC (with POSIX thread model and mutex support)
+- Make
 - clang-format
 - clang-tidy
-- gdb
+- GDB
 
 #### Windows
 
@@ -70,7 +59,7 @@ Node.js LTS can be downloaded [here](https://nodejs.org/)
 
 Using chocolatey:
 
-```shell
+```powershell
 choco install nodejs-lts
 ```
 
@@ -80,13 +69,13 @@ CMake can be downloaded [here](https://cmake.org/download)
 
 Using chocolatey:
 
-```shell
+```powershell
 choco install cmake
 ```
 
 **NOTE**: Make sure to add CMake to the PATH:
 
-```shell
+```powershell
 Add-Content $env:PATH "C:\Program Files\CMake\bin"
 ```
 
@@ -96,7 +85,7 @@ It is required to install [MSYS2](https://www.msys2.org/).
 
 Afterwards, make sure to have the msys2 system in the PATH:
 
-```shell
+```powershell
 Add-Content $env:PATH "C:\msys64"
 Add-Content $env:PATH "C:\msys64\usr\bin"
 Add-Content $env:PATH "C:\msys64\ucrt64\bin"
@@ -104,13 +93,13 @@ Add-Content $env:PATH "C:\msys64\ucrt64\bin"
 
 Using chocolatey:
 
-```shell
+```powershell
 choco install msys2 
 ```
 
 **NOTE**: chocolatey installs msys2 into `C:\tools\msys64` instead.
 
-```shell
+```powershell
 Add-Content $env:PATH "C:\tools\msys64"
 Add-Content $env:PATH "C:\tools\msys64\usr\bin"
 Add-Content $env:PATH "C:\tools\msys64\ucrt64\bin"
@@ -118,7 +107,7 @@ Add-Content $env:PATH "C:\tools\msys64\ucrt64\bin"
 
 Afterwards, launch a new shell and install the required tools:
 
-```shell
+```powershell
 pacman -S mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-make mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-gdb mingw-w64-ucrt-x86_64-clang mingw-w64-ucrt-x86_64-clang-tools-extra
 ```
 
@@ -166,161 +155,118 @@ nx g nx-cmake:init
 
 ## Generators
 
-Use Nx Console to see the full list of options for each generator.
-In general, settings in nx.json have higher precedence.
+Use Nx Console to see the full list of options for each generator. In general, settings in `nx.json` have higher precedence.
 
-### `nx-cmake:init`
+Generators provide the following options:
 
-> aliases: install, i
->
-> Initializes this plugin and sets up the boilerplate to support CMake, C and C++.
->
-> --language (Whether to use C or C++ by default for generators) [choices: "C", "C++"] [default: "C"]
->
-> --cmakeConfigDir (Where the configuration for CMake will be generated) [string] [default: ".cmake"]
->
-> --globalIncludeDir (Where the global include directory will be generated) [string] [default: "include"]
->
-> --appsDir (Where the binaries will be generated) [string] [default: "bin"]
->
-> --libsDir (Where the libraries will be generated) [string] [default: "libs"]
->
-> --addClangPreset (Generate a clang preset) [boolean] [default: true]
->
-> ```shell
-> nx g nx-cmake:init [appsDir] [options,...]
-> ```
+### `nx-cmake:init` (aliases: install, i)
 
-### `nx-cmake:binary`
+#### Initialize this plugin and set up the boilerplate to support CMake, C and C++
 
-> aliases: bin, b
->
-> Generate a C or C++ binary
->
-> --name (The name of the binary to generate) [string]
->
-> --language (Whether to use C or C++) [choices: "C", "C++"] [default: "C++"]
->
-> --generateTests (Whether to generate tests using googletest for C++ or cmocka for C) [boolean] [default: true]
->
-> ```shell
-> nx g nx-cmake:binary [name] [options,...]
-> ```
+| Options | Description | Type | Default |
+|---------|-------------|-----------|---------------|
+| --language | Whether to use C or C++ by default for generators. |  "C", "C++" | "C" |
+| --cmakeConfigDir | Where the configuration for CMake will be generated. | string | ".cmake" |
+| --globalIncludeDir | Where the global include directory will be generated. | string | "include" |
+| --appsDir | Where the binaries will be generated. | string | "bin" |
+| --libsDir | Where the libraries will be generated. | string | "libs" |
+| --addClangPreset | Generate a clang preset. | boolean | true |
 
-### `nx-cmake:library`
+### `nx-cmake:binary` (aliases: bin, b)
 
-> aliases: lib, l
->
-> Creates a C or C++ library that can be used in binaries or other libraries, optionally generate tests.
->
-> --name (The name of the library to generate) [string]
->
-> --language (Whether to use C or C++) [choices: "C", "C++"] [default: "C++"]
->
-> --generateTests (Whether to generate tests using googletest for C++ or cmocka for C) [boolean] [default: true]
->
-> ```shell
-> nx g nx-cmake:library [name] [options,...]
-> ```
+#### Generate a C or C++ binary
 
-### `nx-cmake:link`
+| Options | Description | Type | Default |
+|---------|-------------|-----------|---------------|
+| --name | The name of the binary to generate. | string | N/A |
+| --language | Whether to use C or C++. |  "C", "C++" | "C++" |
+| --generateTests | Whether to generate tests using googletest for C++ or cmocka for C. | boolean | true |
 
-> aliases: ld
->
-> Link a library to another library or binary
->
-> --source (The source project in which another library will be linked into) [string]
->
-> --target (The target library to link into the source project) [string]
->
-> --link (Whether to link statically or dynamically) [string] [choices: "shared", "static"] [default: "shared"]
->
-> ```shell
-> nx g nx-cmake:link [source] [options,...]
-> ```
+### `nx-cmake:library` (aliases: lib, l)
+
+#### Generate a C or C++ library that can be used in binaries or other libraries
+
+| Options | Description | Type | Default |
+|---------|-------------|-----------|---------------|
+| --name | The name of the library to generate. | string | N/A |
+| --language | Whether to use C or C++. |  "C", "C++" | "C++" |
+| --generateTests | Whether to generate tests using googletest for C++ or CMocka for C. | boolean | true |
+
+### `nx-cmake:link` (aliases: ld)
+
+#### Link a library to another library or binary
+
+| Options | Description | Type | Default |
+|---------|-------------|-----------|---------------|
+| --source | The source project in which another library will be linked into. | string | N/A |
+| --target | The target library to link into the source project. | string | N/A |
+| --link | Whether to link statically or dynamically. |  "shared", "static" | "shared" |
 
 ## Executors
 
 All the executors support these additional properties:
 
-- args (Optional arguments which will be forwarded to the underlying command) [array]
+| Options | Description | Type | Default |
+|---------|-------------|-----------|---------------|
+| --args | Optional arguments which will be forwarded to the underlying command | string[] | N/A |
 
 ### `nx-cmake:cmake`
 
-> Configure a C or C++ library with CMake
->
-> ```shell
->
-> --release (Configure in release mode) default: false
->
-> nx cmake <project>
-> ```
+#### Configure a C or C++ library with CMake
+
+| Options | Description | Type | Default |
+|---------|-------------|-----------|---------------|
+| --release | Configure a C or C++ library with CMake in release mode. | boolean | false |
 
 ### `nx-cmake:build`
 
-> Build a C or C++ library with Make
->
-> ```shell
->
-> --release (Build in release mode) default: false
->
-> nx build <project>
-> ```
+#### Build a C or C++ library with Make
+
+| Options | Description | Type | Default |
+|---------|-------------|-----------|---------------|
+| --release | Build a C or C++ library with Make in release mode. | boolean | false |
 
 ### `nx-cmake:fmt`
 
-> Format a C or C++ project with clang-format
->
-> --verbose (Whether to print verbose output ) default: true
->
-> --editFilesInPlace (Whether to format files in place) default: true
->
-> ```shell
-> nx fmt <project>
-> ```
+#### Format a C or C++ project with clang-format
+
+| Options | Description | Type | Default |
+|---------|-------------|-----------|---------------|
+| --verbose | Whether to print verbose output when formatting a C or C++ project with clang-format. | boolean | true |
+| --editFilesInPlace | Whether to format files in place. | boolean | true |
 
 ### `nx-cmake:lint`
 
-> Lint a C or C++ project with clang-tidy
->
-> ```shell
-> nx lint <project>
-> ```
+#### Lint a C or C++ project with clang-tidy
+
+| Options | Description | Type | Default |
+|---------|-------------|-----------|---------------|
+| --release | Wheter to lint in release mode | boolean | false |
 
 ### `nx-cmake:test`
 
-> Test a C library using CMocka or C++ library using googletest
->
-> ```shell
->
-> --release (Test in release mode) default: false
->
-> --outputOnFailure (Whether to print output on test failure) default: true
->
-> nx test <testproject>
-> ```
+#### Test a C library using CMocka or C++ library using googletest
+
+| Options | Description | Type | Default |
+|---------|-------------|-----------|---------------|
+| --release | Test a C library using CMocka or a C++ library using googletest. | boolean | false |
+| --outputOnFailure | Whether to print output on test failure. | boolean | true |
 
 ### `nx-cmake:execute`
 
-> Execute a C or C++ binary
->
-> ```shell
->
-> --release (Execute in release mode) default: false
->
-> nx execute <binaryproject>
-> ```
+#### Execute a C or C++ binary
+
+| Options | Description | Type | Default |
+|---------|-------------|-----------|---------------|
+| --release | Execute a C or C++ binary in release mode. | boolean | false |
 
 ### `nx-cmake:debug`
 
-> Debug a C or C++ project using gdb
->
-> ```shell
->
-> --release (Debug in release mode) default: false
->
-> nx debug <binaryproject>
-> ```
+#### Debug a C or C++ project using gdb
+
+| Options | Description | Type | Default |
+|---------|-------------|-----------|---------------|
+| --release | Debug a C or C++ project using gdb in release mode. | boolean | false |
 
 ## Contributing
 
