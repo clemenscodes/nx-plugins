@@ -16,9 +16,9 @@ export function assertIsValidProgramName(
             break;
         case 'gdb':
             break;
-        case 'clang_tidy':
+        case 'clang-tidy':
             break;
-        case 'clang_format':
+        case 'clang-format':
             break;
         default:
             throw new Error(`${program} is not a valid program`);
