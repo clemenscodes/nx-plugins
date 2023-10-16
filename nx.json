@@ -23,7 +23,7 @@
             "analyzeSourceFiles": true
         },
         "nx-cmake": {
-            "language": "C++",
+            "language": "C",
             "globalIncludeDir": "include",
             "cmakeConfigDir": ".cmake",
             "workspaceName": "workspace"

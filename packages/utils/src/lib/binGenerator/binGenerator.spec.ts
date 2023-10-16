@@ -1,8 +1,6 @@
 import type { Tree } from '@nx/devkit';
-import {
-    getDefaultInitGeneratorOptions,
-    type BinGeneratorSchema,
-} from '@/config';
+import type { BinGeneratorSchema } from '@/config';
+import { getDefaultInitGeneratorOptions } from '@/config';
 import { readProjectConfiguration } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { binGenerator } from './binGenerator';

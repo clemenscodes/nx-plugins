@@ -99,7 +99,8 @@ describe('generateLibTestFiles', () => {
             '\n';
 
         expectedListsFile =
-            `include("${resolvedOptions.relativeRootPath}${resolvedOptions.cmakeConfigDir}/${resolvedOptions.workspaceName}")\n` +
+            `include(${resolvedOptions.relativeRootPath}${resolvedOptions.cmakeConfigDir}/${resolvedOptions.workspaceName}.cmake)\n` +
+            `cmake_minimum_required(VERSION 3.21)\n` +
             'set_project_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(testtest C)\n' +
             'set_binary_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
@@ -176,7 +177,8 @@ describe('generateLibTestFiles', () => {
             '}\n' +
             '\n';
         expectedListsFile =
-            `include("${resolvedOptions.relativeRootPath}${resolvedOptions.cmakeConfigDir}/${resolvedOptions.workspaceName}")\n` +
+            `include(${resolvedOptions.relativeRootPath}${resolvedOptions.cmakeConfigDir}/${resolvedOptions.workspaceName}.cmake)\n` +
+            `cmake_minimum_required(VERSION 3.21)\n` +
             'set_project_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(testtest CXX)\n' +
             'set_binary_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +

@@ -107,8 +107,7 @@ describe('generateCmakeConfigFiles', () => {
             'set(CMAKE_INCLUDE_PATH ${WORKSPACE_INCLUDE_DIR})\n' +
             `set(CMAKE_LIBRARY_PATH \${WORKSPACE_DIR}/dist/${options.libsDir})\n` +
             `set(CMAKE_PREFIX_PATH \${CURRENT_DIR}/config)\n` +
-            'set_global_settings()\n' +
-            'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n';
+            'set_global_settings()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
 
@@ -195,7 +194,6 @@ describe('generateCmakeConfigFiles', () => {
         const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'function(set_global_settings)\n' +
-            '    set(CMAKE_MINIMUM_REQUIRED_VERSION 3.21.0 CACHE INTERNAL "")\n' +
             '    set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")\n' +
             '    set(CMAKE_CXX_STANDARD 17 CACHE INTERNAL "")\n' +
             '    set(CMAKE_CXX_EXTENSIONS OFF CACHE INTERNAL "")\n' +

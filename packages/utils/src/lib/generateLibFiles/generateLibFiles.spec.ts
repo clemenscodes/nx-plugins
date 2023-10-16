@@ -56,7 +56,8 @@ describe('generateLibFiles', () => {
             '    return 0;\n' +
             '}\n';
         expectedListsFile =
-            `include("${options.relativeRootPath}${options.cmakeConfigDir}/${options.workspaceName}")\n` +
+            `include(${options.relativeRootPath}${options.cmakeConfigDir}/${options.workspaceName}.cmake)\n` +
+            `cmake_minimum_required(VERSION 3.21)\n` +
             'set_project_settings(libtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(libtest CXX)\n' +
             'set_library_settings(libtest ${CMAKE_CURRENT_SOURCE_DIR})\n';
@@ -115,7 +116,8 @@ describe('generateLibFiles', () => {
         options.language = 'C';
         librarySourceFile = `packages/test/src/libtest.c`;
         expectedListsFile =
-            `include("${options.relativeRootPath}${options.cmakeConfigDir}/${options.workspaceName}")\n` +
+            `include(${options.relativeRootPath}${options.cmakeConfigDir}/${options.workspaceName}.cmake)\n` +
+            `cmake_minimum_required(VERSION 3.21)\n` +
             'set_project_settings(libtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(libtest C)\n' +
             'set_library_settings(libtest ${CMAKE_CURRENT_SOURCE_DIR})\n';

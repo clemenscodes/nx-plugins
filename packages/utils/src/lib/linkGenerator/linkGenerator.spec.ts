@@ -33,12 +33,14 @@ describe('link generator', () => {
         await libGenerator(tree, libOptions);
         expectedCmakeFile = 'packages/link/CMakeLists.txt';
         expectedCmakeFileContent =
-            `include("${options.relativeRootPath}${options.cmakeConfigDir}/${options.workspaceName}")\n` +
+            `include(${options.relativeRootPath}${options.cmakeConfigDir}/${options.workspaceName}.cmake)\n` +
+            `cmake_minimum_required(VERSION 3.21)\n` +
             'set_project_settings(liblink ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(liblink CXX)\n' +
             'set_library_settings(liblink ${CMAKE_CURRENT_SOURCE_DIR})\n';
         expectedUpdatedCmakeFileContent =
-            `include("${options.relativeRootPath}${options.cmakeConfigDir}/${options.workspaceName}")\n` +
+            `include(${options.relativeRootPath}${options.cmakeConfigDir}/${options.workspaceName}.cmake)\n` +
+            `cmake_minimum_required(VERSION 3.21)\n` +
             'set_project_settings(liblink ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(liblink CXX)\n' +
             'set_library_settings(liblink ${CMAKE_CURRENT_SOURCE_DIR})\n';

@@ -1,3 +1,4 @@
 include(<%= cmakeConfigDir %>/<%= workspaceName %>.cmake)
+cmake_minimum_required(VERSION 3.21)
 project(<%= workspaceName %> <%= language %>)
 add_projects()

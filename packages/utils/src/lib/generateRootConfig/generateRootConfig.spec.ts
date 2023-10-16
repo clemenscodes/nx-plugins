@@ -30,6 +30,7 @@ describe('generateRootConfig', () => {
         const readRootConfig = readFileWithTree(tree, rootConfig);
         const expectedRootConfig =
             `include(${options.cmakeConfigDir}/${options.workspaceName}.cmake)\n` +
+            `cmake_minimum_required(VERSION 3.21)\n` +
             `project(${options.workspaceName} ${options.language})\n` +
             'add_projects()\n';
         expect(readRootConfig).toBe(normalizeLineEndings(expectedRootConfig));

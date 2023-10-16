@@ -1,4 +1,5 @@
-include("<%= relativeRootPath %><%= cmakeConfigDir %>/<%= workspaceName %>")
+include(<%= relativeRootPath %><%= cmakeConfigDir %>/<%= workspaceName %>.cmake)
+cmake_minimum_required(VERSION 3.21)
 set_project_settings(<%= libName %> ${CMAKE_CURRENT_SOURCE_DIR})
 project(<%= libName %> <%= cmakeC %>)
 set_library_settings(<%= libName %> ${CMAKE_CURRENT_SOURCE_DIR})
