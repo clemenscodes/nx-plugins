@@ -21,6 +21,8 @@ export type GeneratorBaseOptions = {
     className?: string;
     relativeRootPath?: string;
     languageExtension?: string;
+    cmakeConfigDir?: string;
+    workspaceName?: string;
     cmakeC?: CMakeC;
 };
 

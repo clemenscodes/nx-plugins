@@ -1,15 +1,21 @@
+import type {
+    LibGeneratorSchema,
+    LibSchema,
+    LinkGeneratorSchema,
+} from '@/config';
 import type { Tree } from '@nx/devkit';
-import type { LibGeneratorSchema, LinkGeneratorSchema } from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
 import { normalizeLineEndings } from '../normalizeLineEndings/normalizeLineEndings';
 import { linkGenerator } from './linkGenerator';
 import { libGenerator } from '../libGenerator/libGenerator';
+import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
 import * as devkit from '@nx/devkit';
 
 describe('link generator', () => {
     let tree: Tree;
     let libOptions: LibGeneratorSchema;
+    let options: LibSchema;
     let linkOptions: LinkGeneratorSchema;
     let expectedCmakeFile: string;
     let expectedCmakeFileContent: string;
@@ -22,24 +28,24 @@ describe('link generator', () => {
             language: 'C++',
             generateTests: true,
         };
+        options = resolveLibOptions(libOptions);
         jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
         await libGenerator(tree, libOptions);
         expectedCmakeFile = 'packages/link/CMakeLists.txt';
         expectedCmakeFileContent =
-            'include("../../CMakeLists.txt")\n' +
+            `include("${options.relativeRootPath}${options.cmakeConfigDir}/${options.workspaceName}")\n` +
             '\n' +
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
             'set_project_settings(liblink ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(liblink CXX)\n' +
             'set_library_settings(liblink ${CMAKE_CURRENT_SOURCE_DIR})\n';
         expectedUpdatedCmakeFileContent =
-            'include("../../CMakeLists.txt")\n' +
+            `include("${options.relativeRootPath}${options.cmakeConfigDir}/${options.workspaceName}")\n` +
             '\n' +
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
             'set_project_settings(liblink ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(liblink CXX)\n' +
-            'set_library_settings(liblink ${CMAKE_CURRENT_SOURCE_DIR})\n' +
-            'link_shared_library(${CMAKE_PROJECT_NAME} target)\n';
+            'set_library_settings(liblink ${CMAKE_CURRENT_SOURCE_DIR})\n';
         libOptions.name = 'target';
         await libGenerator(tree, libOptions);
         linkOptions = {

@@ -1,13 +1,16 @@
 import type { Tree } from '@nx/devkit';
-import type { LibGeneratorSchema } from '@/config';
+import type { LibSchema } from '@/config';
+import { getDefaultInitGeneratorOptions } from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
 import { generateLibFiles } from './generateLibFiles';
 import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
+import { initGenerator } from '../initGenerator/initGenerator';
+import * as devkit from '@nx/devkit';
 
 describe('generateLibFiles', () => {
     let tree: Tree;
-    let options: LibGeneratorSchema;
+    let options: LibSchema;
     let libraryRoot: string;
     let libraryListsFile: string;
     let librarySourceFile: string;
@@ -19,13 +22,15 @@ describe('generateLibFiles', () => {
     let expectedListsFile: string;
     let expectedReadMeFile: string;
 
-    beforeEach(() => {
+    beforeEach(async () => {
+        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
         tree = createTreeWithEmptyWorkspace();
-        options = {
+        await initGenerator(tree, getDefaultInitGeneratorOptions());
+        options = resolveLibOptions({
             name: 'test',
             language: 'C++',
             generateTests: false,
-        };
+        });
         libraryRoot = `packages/test`;
         libraryListsFile = `packages/test/CMakeLists.txt`;
         librarySourceFile = `packages/test/src/libtest.cpp`;
@@ -51,7 +56,7 @@ describe('generateLibFiles', () => {
             '    return 0;\n' +
             '}\n';
         expectedListsFile =
-            'include("../../CMakeLists.txt")\n' +
+            `include("${options.relativeRootPath}${options.cmakeConfigDir}/${options.workspaceName}")\n` +
             '\n' +
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
             'set_project_settings(libtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
@@ -112,7 +117,7 @@ describe('generateLibFiles', () => {
         options.language = 'C';
         librarySourceFile = `packages/test/src/libtest.c`;
         expectedListsFile =
-            'include("../../CMakeLists.txt")\n' +
+            `include("${options.relativeRootPath}${options.cmakeConfigDir}/${options.workspaceName}")\n` +
             '\n' +
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
             'set_project_settings(libtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +

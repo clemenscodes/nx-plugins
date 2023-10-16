@@ -4,6 +4,7 @@ import { getLanguageExtension } from '../getLanguageExtension/getLanguageExtensi
 import { getProjectRoot } from '../getProjectRoot/getProjectRoot';
 import { CProjectType } from '@/config';
 import { names, offsetFromRoot } from '@nx/devkit';
+import { getPluginConfig } from '../getPluginConfig/getPluginConfig';
 
 export const resolveOptions = <
     T extends GeneratorBaseOptions,
@@ -20,6 +21,7 @@ export const resolveOptions = <
     const relativeRootPath = offsetFromRoot(projectRoot);
     const languageExtension = getLanguageExtension(language);
     const cmakeC = getCMakeC(language);
+    const { cmakeConfigDir, workspaceName } = getPluginConfig();
 
     const resolvedOptions = {
         ...options,
@@ -30,6 +32,8 @@ export const resolveOptions = <
         className,
         languageExtension,
         relativeRootPath,
+        workspaceName,
+        cmakeConfigDir,
         cmakeC,
     } as K;
 

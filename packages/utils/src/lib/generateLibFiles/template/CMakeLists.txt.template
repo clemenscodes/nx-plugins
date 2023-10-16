@@ -1,4 +1,4 @@
-include("<%= relativeRootPath %>CMakeLists.txt")
+include("<%= relativeRootPath %><%= cmakeConfigDir %>/<%= workspaceName %>")
 
 cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})
 set_project_settings(<%= libName %> ${CMAKE_CURRENT_SOURCE_DIR})

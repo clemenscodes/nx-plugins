@@ -1,11 +1,21 @@
+import type { Tree } from '@nx/devkit';
 import type { BinGeneratorSchema, BinSchema } from '@/config';
+import { getDefaultInitGeneratorOptions } from '@/config';
 import { resolveBinOptions } from './resolveBinOptions';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
+import { initGenerator } from '../initGenerator/initGenerator';
+import * as devkit from '@nx/devkit';
 
 describe('resolveBinOptions ', () => {
     let options: BinGeneratorSchema;
     let expected: BinSchema;
+    let tree: Tree;
 
-    beforeEach(() => {
+    beforeEach(async () => {
+        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
+        tree = createTreeWithEmptyWorkspace();
+        await initGenerator(tree, getDefaultInitGeneratorOptions());
+
         options = {
             name: 'base',
             language: 'C++',
@@ -18,6 +28,8 @@ describe('resolveBinOptions ', () => {
             snakeCaseName: 'base',
             camelCaseName: 'base',
             className: 'Base',
+            cmakeConfigDir: '.cmake',
+            workspaceName: 'workspace',
             languageExtension: 'cpp',
             relativeRootPath: '../../',
             cmakeC: 'CXX',

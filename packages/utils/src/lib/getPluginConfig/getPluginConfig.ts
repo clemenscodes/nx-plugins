@@ -7,6 +7,7 @@ export const getPluginConfig = (): NxCmakePluginConfig => {
         language: 'C',
         cmakeConfigDir: '.cmake',
         globalIncludeDir: 'include',
+        workspaceName: 'workspace',
     };
     const config = getNxJsonConfiguration();
     const pluginsConfig = config.pluginsConfig;

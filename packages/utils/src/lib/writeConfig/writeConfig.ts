@@ -11,12 +11,14 @@ export const writeConfig = (
     updatedNxJson: NxJsonConfiguration,
     options: InitGeneratorSchema,
 ): NxJsonConfiguration => {
-    const { globalIncludeDir, cmakeConfigDir, language } = options;
+    const { globalIncludeDir, cmakeConfigDir, language, workspaceName } =
+        options;
     const nxPluginConfig: PluginConfig = {
         [PLUGIN_NAME]: {
             language,
             globalIncludeDir,
             cmakeConfigDir,
+            workspaceName,
         },
     };
 
@@ -55,6 +57,11 @@ export const writeConfig = (
     if (!existingPluginConfig.language) {
         existingPluginConfig['language'] = language;
         updatedPluginConfig['language'] = language;
+    }
+
+    if (!existingPluginConfig.workspaceName) {
+        existingPluginConfig['workspaceName'] = workspaceName;
+        updatedPluginConfig['workspaceName'] = workspaceName;
     }
 
     return updatedNxJson;

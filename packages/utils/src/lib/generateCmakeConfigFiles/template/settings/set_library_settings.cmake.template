@@ -2,7 +2,9 @@ include(settings/set_project_settings)
 
 function(set_library_settings PROJECT SOURCE_DIR)
     add_library(${PROJECT} SHARED ${${PROJECT}_SOURCES})
+    add_library(${PROJECT}::${PROJECT} ALIAS ${PROJECT})
     add_library(${PROJECT}_static STATIC ${${PROJECT}_SOURCES})
+    add_library(${PROJECT}_static::${PROJECT}_static ALIAS ${PROJECT}_static)
     set_target_properties(${PROJECT} ${PROJECT}_static PROPERTIES PREFIX "")
     set_target_properties(${PROJECT}_static PROPERTIES OUTPUT_NAME ${PROJECT})
     set_target_properties(${PROJECT} ${PROJECT}_static

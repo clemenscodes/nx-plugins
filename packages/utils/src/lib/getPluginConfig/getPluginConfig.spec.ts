@@ -14,6 +14,7 @@ describe('getPluginConfig', () => {
                     language: 'C',
                     cmakeConfigDir: 'path/to/cmakeConfigDir',
                     globalIncludeDir: 'path/to/globalIncludeDir',
+                    workspaceName: 'workspace',
                 },
             },
         };
@@ -45,6 +46,7 @@ describe('getPluginConfig', () => {
             language: 'C',
             cmakeConfigDir: '.cmake',
             globalIncludeDir: 'include',
+            workspaceName: 'workspace',
         });
     });
 });

@@ -22,6 +22,7 @@ describe('writeConfig', () => {
             language: options.language,
             globalIncludeDir: options.globalIncludeDir,
             cmakeConfigDir: options.cmakeConfigDir,
+            workspaceName: options.workspaceName,
         };
         expectedPluginConfig = {
             'nx-cmake': pluginConfig,

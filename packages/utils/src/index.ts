@@ -46,7 +46,6 @@ export { getTestName } from './lib/getTestName/getTestName';
 export { getTestSetup } from './lib/getTestSetup/getTestSetup';
 export { resolveLibOptions } from './lib/resolveLibOptions/resolveLibOptions';
 export { resolveLinkOptions } from './lib/resolveLinkOptions/resolveLinkOptions';
-export { updateCmakeFile } from './lib/updateCmakeFile/updateCmakeFile';
 export { updateIncludeFile } from './lib/updateIncludeFile/updateIncludeFile';
 export { linkGenerator } from './lib/linkGenerator/linkGenerator';
 export { generateReadMe } from './lib/generateReadMe/generateReadMe';

@@ -16,6 +16,8 @@ describe('resolveOptions', () => {
             constantName: 'EXAMPLE_NAME',
             snakeCaseName: 'example_name',
             camelCaseName: 'exampleName',
+            cmakeConfigDir: '.cmake',
+            workspaceName: 'workspace',
             className: 'ExampleName',
             languageExtension: 'cpp',
             cmakeC: 'CXX',

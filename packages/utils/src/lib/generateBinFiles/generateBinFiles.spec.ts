@@ -1,13 +1,15 @@
 import type { Tree } from '@nx/devkit';
-import type { BinGeneratorSchema } from '@/config';
+import { getDefaultInitGeneratorOptions, type BinSchema } from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { generateBinFiles } from './generateBinFiles';
 import { resolveBinOptions } from '../resolveBinOptions/resolveBinOptions';
 import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
+import { initGenerator } from '../initGenerator/initGenerator';
+import * as devkit from '@nx/devkit';
 
 describe('generateBinFiles', () => {
     let tree: Tree;
-    let options: BinGeneratorSchema;
+    let options: BinSchema;
     let expectedSourceFile: string;
     let expectedIncludeFile: string;
     let expectedListsFile: string;
@@ -45,13 +47,15 @@ describe('generateBinFiles', () => {
         expect(readReadMeFile).toStrictEqual(expectedReadMeFile);
     };
 
-    beforeEach(() => {
+    beforeEach(async () => {
+        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
         tree = createTreeWithEmptyWorkspace();
-        options = {
+        await initGenerator(tree, getDefaultInitGeneratorOptions());
+        options = resolveBinOptions({
             name: 'test',
             language: 'C++',
             generateTests: false,
-        };
+        });
         expectedSourceFile =
             '#include "include/test.h"\n' +
             '\n' +
@@ -61,6 +65,7 @@ describe('generateBinFiles', () => {
             '    return test();\n' +
             '}\n';
         expectedListsFile =
+            `include("${options.relativeRootPath}${options.cmakeConfigDir}/${options.workspaceName}")\n` +
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
             'set_project_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(test CXX)\n' +
@@ -118,6 +123,7 @@ describe('generateBinFiles', () => {
     it('should generate a C library', () => {
         options.language = 'C';
         expectedListsFile =
+            `include("${options.relativeRootPath}${options.cmakeConfigDir}/${options.workspaceName}")\n` +
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
             'set_project_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(test C)\n' +

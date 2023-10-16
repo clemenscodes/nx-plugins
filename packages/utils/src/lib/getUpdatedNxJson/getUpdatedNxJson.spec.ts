@@ -53,6 +53,7 @@ describe('getUpdatedNxJson', () => {
                     cmakeConfigDir: '.cmake',
                     globalIncludeDir: 'include',
                     language: 'C',
+                    workspaceName: 'workspace',
                 },
             },
             generators: {

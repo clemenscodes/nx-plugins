@@ -11,6 +11,7 @@ describe('getWorkspaceIncludeDir', () => {
             language: 'C',
             globalIncludeDir: 'include',
             cmakeConfigDir: '.cmake',
+            workspaceName: 'workspace',
         };
         getPluginConfigMock = jest.spyOn(
             getPluginConfigModule,
