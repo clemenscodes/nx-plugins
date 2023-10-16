@@ -17,7 +17,8 @@
         "e2e": "pnpm nx affected  -t e2e --output-style=stream",
         "e2e:ci": " pnpm run e2e --configuration=ci --skip-nx-cache --parallel=1",
         "e2e:all": "pnpm nx run-many -t e2e --output-style=stream --skip-nx-cache",
-        "ci": "pnpm fmt:check && pnpm lint:ci && pnpm build:ci && pnpm test:ci && pnpm e2e:ci",
+        "ci": "pnpm fmt:check && pnpm lint:ci && pnpm build:ci && pnpm test:ci",
+        "ci:full": "pnpm fmt:check && pnpm lint:ci && pnpm build:ci && pnpm test:ci && pnpm e2e:ci",
         "prepare": "husky install"
     },
     "private": true,

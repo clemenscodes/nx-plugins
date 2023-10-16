@@ -1,5 +1,5 @@
-import { WorkspaceLayout } from '../nx';
-import { C, CMakeC, GoogleTestInclude, Link } from '.';
+import { WorkspaceLayout } from '../../nx';
+import { C, CMakeC, GoogleTestInclude, Link } from '..';
 
 export type InitGeneratorSchema = {
     language: C;
