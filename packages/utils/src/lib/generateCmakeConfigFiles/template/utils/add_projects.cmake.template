@@ -1,0 +1,8 @@
+include(settings/projects)
+
+macro(add_projects)
+    foreach(PROJECT ${PROJECTS})
+        message("Adding project: ${PROJECT}")
+        add_subdirectory(${PROJECT})
+    endforeach()
+endmacro()

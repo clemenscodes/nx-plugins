@@ -6,9 +6,10 @@ export const getDefaultInitGeneratorOptions = () => {
         cmakeConfigDir: '.cmake',
         globalIncludeDir: 'include',
         appsDir: 'bin',
-        libsDir: 'packages',
+        libsDir: 'libs',
         addClangPreset: true,
         skipFormat: false,
+        workspaceName: 'workspace',
     };
     return options;
 };

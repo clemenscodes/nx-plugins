@@ -1,0 +1,8 @@
+include(settings/projects)
+
+macro(find_package)
+  if(NOT "${ARGV0}" IN_LIST PROJECTS)
+    message(STATUS "using native find_package for ${ARGV0}: ${ARGV}")
+    _find_package(${ARGV})
+  endif()
+endmacro()

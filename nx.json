@@ -50,7 +50,15 @@
             "dependsOn": ["^cmake", "^build", "cmake"],
             "inputs": ["default"]
         },
-        "debug": {
+        "fmt": {
+            "dependsOn": [],
+            "inputs": ["clangFormat"]
+        },
+        "lint": {
+            "dependsOn": ["cmake"],
+            "inputs": ["default", "clangTidy"]
+        },
+        "test": {
             "dependsOn": ["build"],
             "inputs": ["default"]
         },
@@ -58,17 +66,9 @@
             "dependsOn": ["build"],
             "inputs": ["default"]
         },
-        "test": {
+        "debug": {
             "dependsOn": ["build"],
             "inputs": ["default"]
-        },
-        "lint": {
-            "dependsOn": ["cmake"],
-            "inputs": ["default"]
-        },
-        "fmt": {
-            "dependsOn": [],
-            "inputs": ["clangFormat"]
         }
     },
     "namedInputs": {

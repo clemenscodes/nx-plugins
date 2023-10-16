@@ -1,8 +1,8 @@
 import type { NxJsonConfiguration } from '@nx/devkit';
 import type {
-    InitGeneratorSchema,
     PluginConfig,
     NxCmakePluginConfig,
+    InitGeneratorSchema,
 } from '@/config';
 import { PLUGIN_NAME } from '@/config';
 

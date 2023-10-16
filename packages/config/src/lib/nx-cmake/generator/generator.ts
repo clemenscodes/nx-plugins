@@ -9,6 +9,7 @@ export type InitGeneratorSchema = {
     libsDir: WorkspaceLayout['libsDir'];
     addClangPreset: boolean;
     skipFormat: boolean;
+    workspaceName: string;
 };
 
 export type GeneratorBaseOptions = {

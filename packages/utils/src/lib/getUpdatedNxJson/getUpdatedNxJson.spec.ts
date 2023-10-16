@@ -1,4 +1,7 @@
-import type { InitGeneratorSchema } from '@/config';
+import {
+    getDefaultInitGeneratorOptions,
+    type InitGeneratorSchema,
+} from '@/config';
 import type { NxJsonConfiguration } from '@nx/devkit';
 import { getUpdatedNxJson } from './getUpdatedNxJson';
 
@@ -24,15 +27,7 @@ describe('getUpdatedNxJson', () => {
             },
         } as NxJsonConfiguration;
 
-        mockOptions = {
-            language: 'C',
-            cmakeConfigDir: '.cmake',
-            globalIncludeDir: 'include',
-            appsDir: 'bin',
-            libsDir: 'libs',
-            addClangPreset: true,
-            skipFormat: false,
-        };
+        mockOptions = getDefaultInitGeneratorOptions();
 
         mockUpdatedNxJson = {
             extends: 'nx/presets/npm.json',

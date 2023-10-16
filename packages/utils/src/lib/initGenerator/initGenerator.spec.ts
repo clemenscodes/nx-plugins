@@ -15,15 +15,7 @@ describe('init generator', () => {
 
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
-        options = {
-            language: 'C',
-            cmakeConfigDir: '.cmake',
-            globalIncludeDir: 'include',
-            appsDir: 'bin',
-            libsDir: 'packages',
-            addClangPreset: true,
-            skipFormat: false,
-        };
+        options = configModule.getDefaultInitGeneratorOptions();
         checkNxVersionMock = jest.spyOn(configModule, 'checkNxVersion');
         nxOutputWarnMock = jest.spyOn(output, 'warn');
         nxOutputErrorMock = jest.spyOn(output, 'error');

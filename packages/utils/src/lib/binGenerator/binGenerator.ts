@@ -12,6 +12,7 @@ export async function binGenerator(tree: Tree, options: BinGeneratorSchema) {
     const { linkOptions } = resolvedOptions;
     addBinProject(tree, resolvedOptions);
     generateBinFiles(tree, resolvedOptions);
+    // addBinaryToRootCmakeProjects(tree, resolvedOptions);
     await libGenerator(tree, resolvedOptions);
     await linkGenerator(tree, linkOptions);
     await formatFiles(tree);

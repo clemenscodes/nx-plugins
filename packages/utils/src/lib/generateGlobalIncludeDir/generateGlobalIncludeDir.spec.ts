@@ -1,5 +1,8 @@
 import type { Tree } from '@nx/devkit';
-import type { InitGeneratorSchema } from '@/config';
+import {
+    getDefaultInitGeneratorOptions,
+    type InitGeneratorSchema,
+} from '@/config';
 import { generateGlobalIncludeDir } from './generateGlobalIncludeDir';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
@@ -16,15 +19,7 @@ describe('generateGlobalIncludeDir', () => {
 
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
-        options = {
-            language: 'C',
-            cmakeConfigDir: '.cmake',
-            globalIncludeDir: 'include',
-            appsDir: 'bin',
-            libsDir: 'libs',
-            addClangPreset: true,
-            skipFormat: false,
-        };
+        options = getDefaultInitGeneratorOptions();
         commonFile = 'include/common.h';
         libcmockaFile = 'include/libcmocka.h';
         libgtestFile = 'include/libgtest.h';

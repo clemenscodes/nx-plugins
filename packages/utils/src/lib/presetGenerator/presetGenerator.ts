@@ -5,20 +5,12 @@ import {
     installPackagesTask,
     runTasksInSerial,
 } from '@nx/devkit';
-import { PLUGIN_NAME } from '@/config';
+import { PLUGIN_NAME, getDefaultInitGeneratorOptions } from '@/config';
 import { generateReadMe } from '../generateReadMe/generateReadMe';
 import { initGenerator } from '../initGenerator/initGenerator';
 
 export async function presetGenerator(tree: Tree) {
-    const initOptions: InitGeneratorSchema = {
-        language: 'C',
-        cmakeConfigDir: '.cmake',
-        globalIncludeDir: 'include',
-        appsDir: 'bin',
-        libsDir: 'libs',
-        addClangPreset: true,
-        skipFormat: true,
-    };
+    const initOptions: InitGeneratorSchema = getDefaultInitGeneratorOptions();
     await initGenerator(tree, initOptions);
     const name = `Welcome to [${PLUGIN_NAME}](https://www.npmjs.com/package/${PLUGIN_NAME})!`;
     generateReadMe(tree, name);

@@ -1,4 +1,7 @@
-import type { InitGeneratorSchema } from '@/config';
+import {
+    getDefaultInitGeneratorOptions,
+    type InitGeneratorSchema,
+} from '@/config';
 import type { Tree } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { generateClangPreset } from './generateClangPreset';
@@ -14,15 +17,7 @@ describe('generateClangPreset', () => {
 
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
-        options = {
-            language: 'C',
-            cmakeConfigDir: '.cmake',
-            globalIncludeDir: 'include',
-            appsDir: 'bin',
-            libsDir: 'libs',
-            addClangPreset: true,
-            skipFormat: false,
-        };
+        options = getDefaultInitGeneratorOptions();
         clangFormatFile = '.clang-format.yml';
         clangTidyFile = '.clang-tidy.yml';
         expectedClangTidyFileContent =

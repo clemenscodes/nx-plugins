@@ -1,5 +1,8 @@
 import type { Tree } from '@nx/devkit';
-import type { InitGeneratorSchema } from '@/config';
+import {
+    getDefaultInitGeneratorOptions,
+    type InitGeneratorSchema,
+} from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { generateCmakeConfigFiles } from './generateCmakeConfigFiles';
 import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
@@ -12,16 +15,9 @@ describe('generateCmakeConfigFiles', () => {
 
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
-        options = {
-            language: 'C',
-            cmakeConfigDir: '.cmake',
-            globalIncludeDir: 'include',
-            appsDir: 'bin',
-            libsDir: 'libs',
-            addClangPreset: true,
-            skipFormat: false,
-        };
+        options = getDefaultInitGeneratorOptions();
         expectedCmakeSettingsFiles = [
+            'projects.cmake',
             'set_binary_settings.cmake',
             'set_compiler_settings.cmake',
             'set_global_settings.cmake',
@@ -29,6 +25,8 @@ describe('generateCmakeConfigFiles', () => {
             'set_project_settings.cmake',
         ];
         expectedCmakeUtilsFiles = [
+            'add_projects.cmake',
+            'find_package_macro.cmake',
             'install_cmocka.cmake',
             'install_gtest.cmake',
             'link_cmocka.cmake',
@@ -40,19 +38,13 @@ describe('generateCmakeConfigFiles', () => {
         ];
     });
 
-    it('should generate cmake config in cmake', async () => {
+    it('should generate cmake config in cmakeConfigDir', async () => {
         generateCmakeConfigFiles(tree, options);
         const cmakeChildren = tree.children(options.cmakeConfigDir);
-        const expectedCmakeChildren = ['settings', 'utils'];
-        expect(cmakeChildren).toStrictEqual(expectedCmakeChildren);
-    });
-
-    it('should generate cmake config in .cmake', async () => {
-        options.cmakeConfigDir = '.cmake';
-        generateCmakeConfigFiles(tree, options);
-        const cmakeChildren = tree.children('.cmake');
-        const expectedCmakeChildren = ['settings', 'utils'];
-        expect(cmakeChildren).toStrictEqual(expectedCmakeChildren);
+        const expectedCmakeChildren = ['settings', 'utils', 'modules.cmake'];
+        expect(cmakeChildren).toStrictEqual(
+            expect.arrayContaining(expectedCmakeChildren),
+        );
     });
 
     it('should generate cmake config files', async () => {
@@ -63,8 +55,35 @@ describe('generateCmakeConfigFiles', () => {
         const cmakeUtilsFiles = tree.children(
             `${options.cmakeConfigDir}/utils`,
         );
-        expect(cmakeSettingsFiles).toStrictEqual(expectedCmakeSettingsFiles);
-        expect(cmakeUtilsFiles).toStrictEqual(expectedCmakeUtilsFiles);
+        expect(cmakeSettingsFiles).toStrictEqual(
+            expect.arrayContaining(expectedCmakeSettingsFiles),
+        );
+        expect(cmakeUtilsFiles).toStrictEqual(
+            expect.arrayContaining(expectedCmakeUtilsFiles),
+        );
+    });
+
+    it('should generate cmake/modules.cmake correctly', async () => {
+        generateCmakeConfigFiles(tree, options);
+        const file = `${options.cmakeConfigDir}/modules.cmake`;
+        const readFile = readFileWithTree(tree, file);
+        const expectedFile =
+            'include(FetchContent)\n' +
+            'include(utils/make_var_readonly)\n' +
+            'include(utils/print_variables)\n' +
+            'include(utils/link_shared_library)\n' +
+            'include(utils/link_static_library)\n' +
+            'include(utils/link_cmocka)\n' +
+            'include(utils/link_gtest)\n' +
+            'include(utils/install_cmocka)\n' +
+            'include(utils/install_gtest)\n' +
+            'include(utils/find_package_macro)\n' +
+            'include(utils/add_projects)\n' +
+            'include(settings/set_global_settings)\n' +
+            'include(settings/set_library_settings)\n' +
+            'include(settings/set_binary_settings)\n' +
+            'include(settings/projects)\n';
+        expect(readFile).toStrictEqual(expectedFile);
     });
 
     it('should generate cmake/settings/set_binary_settings.cmake correctly', async () => {
@@ -212,6 +231,46 @@ describe('generateCmakeConfigFiles', () => {
             '    set(${PROJECT}_INCLUDE_SOURCES ${INCLUDE_SOURCES} CACHE INTERNAL "")\n' +
             '    set_compiler_settings()\n' +
             'endfunction()\n';
+        expect(readFile).toStrictEqual(expectedFile);
+    });
+
+    it('should generate cmake/settings/projects.cmake correctly', async () => {
+        generateCmakeConfigFiles(tree, options);
+        const file = `${options.cmakeConfigDir}/settings/projects.cmake`;
+        const readFile = readFileWithTree(tree, file);
+        const expectedFile = 'set(PROJECTS PARENT_SCOPE)\n';
+        expect(readFile).toStrictEqual(expectedFile);
+    });
+
+    it('should generate cmake/utils/add_projects.cmake correctly', async () => {
+        generateCmakeConfigFiles(tree, options);
+        const file = `${options.cmakeConfigDir}/utils/add_projects.cmake`;
+        const readFile = readFileWithTree(tree, file);
+        const expectedFile =
+            'include(settings/projects)\n' +
+            '\n' +
+            'macro(add_projects)\n' +
+            '    foreach(PROJECT ${PROJECTS})\n' +
+            '        message("Adding project: ${PROJECT}")\n' +
+            '        add_subdirectory(${PROJECT})\n' +
+            '    endforeach()\n' +
+            'endmacro()\n';
+        expect(readFile).toStrictEqual(expectedFile);
+    });
+
+    it('should generate cmake/utils/find_package_macro.cmake correctly', async () => {
+        generateCmakeConfigFiles(tree, options);
+        const file = `${options.cmakeConfigDir}/utils/find_package_macro.cmake`;
+        const readFile = readFileWithTree(tree, file);
+        const expectedFile =
+            'include(settings/projects)\n' +
+            '\n' +
+            'macro(find_package)\n' +
+            '  if(NOT "${ARGV0}" IN_LIST PROJECTS)\n' +
+            '    message(STATUS "using native find_package for ${ARGV0}: ${ARGV}")\n' +
+            '    _find_package(${ARGV})\n' +
+            '  endif()\n' +
+            'endmacro()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
 

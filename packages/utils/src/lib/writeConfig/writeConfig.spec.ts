@@ -5,7 +5,7 @@ import type {
 } from '@/config';
 import type { NxJsonConfiguration } from '@nx/devkit';
 import { writeConfig } from './writeConfig';
-import { PLUGIN_NAME } from '@/config';
+import { PLUGIN_NAME, getDefaultInitGeneratorOptions } from '@/config';
 
 describe('writeConfig', () => {
     let nxJson: NxJsonConfiguration;
@@ -17,15 +17,7 @@ describe('writeConfig', () => {
     beforeEach(() => {
         nxJson = {};
         updatedNxJson = {};
-        options = {
-            language: 'C',
-            globalIncludeDir: 'include',
-            cmakeConfigDir: '.cmake',
-            addClangPreset: false,
-            appsDir: 'apps',
-            libsDir: 'libs',
-            skipFormat: false,
-        };
+        options = getDefaultInitGeneratorOptions();
         pluginConfig = {
             language: options.language,
             globalIncludeDir: options.globalIncludeDir,

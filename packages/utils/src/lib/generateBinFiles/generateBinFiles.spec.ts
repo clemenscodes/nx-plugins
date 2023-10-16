@@ -61,12 +61,14 @@ describe('generateBinFiles', () => {
             '    return test();\n' +
             '}\n';
         expectedListsFile =
-            'include("../../CMakeLists.txt")\n' +
-            '\n' +
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
             'set_project_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(test CXX)\n' +
-            'set_binary_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n';
+            'set_binary_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n' +
+            'add_subdirectory("../../bin/test" "../../dist/bin/test/${CMAKE_BUILD_TYPE}")\n' +
+            'find_package(libtest REQUIRED)\n' +
+            'target_link_libraries(test PRIVATE libtest::libtest)\n' +
+            'install(TARGETS test DESTINATION bin)\n';
         expectedIncludeFile =
             '#ifndef _TEST_TEST\n' + '#define _TEST_TEST\n' + '\n' + '#endif\n';
         expectedReadMeFile =
@@ -116,12 +118,14 @@ describe('generateBinFiles', () => {
     it('should generate a C library', () => {
         options.language = 'C';
         expectedListsFile =
-            'include("../../CMakeLists.txt")\n' +
-            '\n' +
             'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
             'set_project_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(test C)\n' +
-            'set_binary_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n';
+            'set_binary_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n' +
+            'add_subdirectory("../../bin/test" "../../dist/bin/test/${CMAKE_BUILD_TYPE}")\n' +
+            'find_package(libtest REQUIRED)\n' +
+            'target_link_libraries(test PRIVATE libtest::libtest)\n' +
+            'install(TARGETS test DESTINATION bin)\n';
         expectedReadMeFile =
             '# test\n' +
             '\n' +
