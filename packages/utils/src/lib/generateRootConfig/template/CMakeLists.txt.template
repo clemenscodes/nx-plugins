@@ -1,3 +1,3 @@
-include(<%= cmakeConfigDir %>/<%= workspaceName %>)
+include(<%= cmakeConfigDir %>/<%= workspaceName %>.cmake)
 project(<%= workspaceName %> <%= language %>)
 add_projects()

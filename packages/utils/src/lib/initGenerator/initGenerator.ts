@@ -1,14 +1,15 @@
-import {
-    checkNxVersion,
-    getRequiredVersionOfNx,
-    type InitGeneratorSchema,
-} from '@/config';
+import type { InitGeneratorSchema } from '@/config';
 import type { Tree } from '@nx/devkit';
 import { generateClangPreset } from '../generateClangPreset/generateClangPreset';
 import { generateCmakeConfigFiles } from '../generateCmakeConfigFiles/generateCmakeConfigFiles';
 import { generateGlobalIncludeDir } from '../generateGlobalIncludeDir/generateGlobalIncludeDir';
 import { generateRootConfig } from '../generateRootConfig/generateRootConfig';
 import { getUpdatedNxJson } from '../getUpdatedNxJson/getUpdatedNxJson';
+import {
+    checkNxVersion,
+    getRequiredVersionOfNx,
+    resolveInitOptions,
+} from '@/config';
 import {
     readNxJson,
     updateNxJson,
@@ -28,11 +29,15 @@ export async function initGenerator(tree: Tree, options: InitGeneratorSchema) {
             ],
         });
     }
+    const resolvedOptions = resolveInitOptions(options);
     const nxJson = readNxJson(tree);
     if (!nxJson) {
         throw new Error(`Failed to read nx.json`);
     }
-    const [updatedNxJson, updatedOptions] = getUpdatedNxJson(nxJson, options);
+    const [updatedNxJson, updatedOptions] = getUpdatedNxJson(
+        nxJson,
+        resolvedOptions,
+    );
     updateNxJson(tree, updatedNxJson);
     generateCmakeConfigFiles(tree, updatedOptions);
     generateGlobalIncludeDir(tree, updatedOptions);

@@ -1,6 +1,7 @@
-import { InitGeneratorSchema } from '../../generator';
+import { InitGeneratorSchema, InitSchema } from '../../generator';
+import { resolveInitOptions } from '../resolveInitOptions/resolveInitOptions';
 
-export const getDefaultInitGeneratorOptions = () => {
+export const getDefaultInitGeneratorOptions = (): InitSchema => {
     const options: InitGeneratorSchema = {
         language: 'C',
         cmakeConfigDir: '.cmake',
@@ -11,5 +12,6 @@ export const getDefaultInitGeneratorOptions = () => {
         skipFormat: false,
         workspaceName: 'workspace',
     };
-    return options;
+    const resolvedOptions = resolveInitOptions(options);
+    return resolvedOptions;
 };

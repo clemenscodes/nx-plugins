@@ -66,7 +66,6 @@ describe('generateBinFiles', () => {
             '}\n';
         expectedListsFile =
             `include("${options.relativeRootPath}${options.cmakeConfigDir}/${options.workspaceName}")\n` +
-            'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
             'set_project_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(test CXX)\n' +
             'set_binary_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n' +
@@ -124,7 +123,6 @@ describe('generateBinFiles', () => {
         options.language = 'C';
         expectedListsFile =
             `include("${options.relativeRootPath}${options.cmakeConfigDir}/${options.workspaceName}")\n` +
-            'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
             'set_project_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(test C)\n' +
             'set_binary_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n' +

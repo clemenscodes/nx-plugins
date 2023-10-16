@@ -1,10 +1,13 @@
 import type { Tree } from '@nx/devkit';
 import type { LibGeneratorSchema, LibSchema } from '@/config';
+import { getDefaultInitGeneratorOptions } from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { readProjectConfiguration } from '@nx/devkit';
 import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
 import { generateLibTestFiles } from './generateLibTestFiles';
 import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
+import { initGenerator } from '../initGenerator/initGenerator';
+import * as devkit from '@nx/devkit';
 
 describe('generateLibTestFiles', () => {
     let tree: Tree;
@@ -39,8 +42,10 @@ describe('generateLibTestFiles', () => {
         expect(readMeFileContent).toStrictEqual(expectedReadMeFile);
     };
 
-    beforeEach(() => {
+    beforeEach(async () => {
+        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
         tree = createTreeWithEmptyWorkspace();
+        await initGenerator(tree, getDefaultInitGeneratorOptions());
         options = {
             name: 'test',
             language: 'C',
@@ -94,9 +99,7 @@ describe('generateLibTestFiles', () => {
             '\n';
 
         expectedListsFile =
-            'include("../../CMakeLists.txt")\n' +
-            '\n' +
-            'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
+            `include("${resolvedOptions.relativeRootPath}${resolvedOptions.cmakeConfigDir}/${resolvedOptions.workspaceName}")\n` +
             'set_project_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(testtest C)\n' +
             'set_binary_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
@@ -173,9 +176,7 @@ describe('generateLibTestFiles', () => {
             '}\n' +
             '\n';
         expectedListsFile =
-            'include("../../CMakeLists.txt")\n' +
-            '\n' +
-            'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
+            `include("${resolvedOptions.relativeRootPath}${resolvedOptions.cmakeConfigDir}/${resolvedOptions.workspaceName}")\n` +
             'set_project_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(testtest CXX)\n' +
             'set_binary_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +

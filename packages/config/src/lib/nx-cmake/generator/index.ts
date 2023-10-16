@@ -1,2 +1,2 @@
-export { getDefaultInitGeneratorOptions } from './init';
+export * from './init';
 export * from './generator';

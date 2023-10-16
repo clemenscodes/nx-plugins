@@ -3,8 +3,8 @@ import type { LibGeneratorSchema, LibSchema } from '@/config';
 import { readFileWithTree } from './readFileWithTree';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { libGenerator } from '../libGenerator/libGenerator';
-import * as devkit from '@nx/devkit';
 import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
+import * as devkit from '@nx/devkit';
 
 describe('writeFileWithTree', () => {
     let tree: Tree;
@@ -26,8 +26,6 @@ describe('writeFileWithTree', () => {
         expectedCmakeFile = 'packages/link/CMakeLists.txt';
         expectedCmakeFileContent =
             `include("${options.relativeRootPath}${options.cmakeConfigDir}/${options.workspaceName}")\n` +
-            '\n' +
-            'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
             'set_project_settings(liblink ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(liblink CXX)\n' +
             'set_library_settings(liblink ${CMAKE_CURRENT_SOURCE_DIR})\n';

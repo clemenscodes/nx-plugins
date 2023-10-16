@@ -25,7 +25,8 @@
         "nx-cmake": {
             "language": "C++",
             "globalIncludeDir": "include",
-            "cmakeConfigDir": ".cmake"
+            "cmakeConfigDir": ".cmake",
+            "workspaceName": "workspace"
         }
     },
     "$schema": "./node_modules/nx/schemas/nx-schema.json",

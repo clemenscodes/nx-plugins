@@ -1,5 +1,5 @@
 import type { Tree } from '@nx/devkit';
-import type { InitGeneratorSchema } from '@/config';
+import type { InitSchema } from '@/config';
 import { getDefaultInitGeneratorOptions } from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { generateCmakeConfigFiles } from './generateCmakeConfigFiles';
@@ -7,11 +7,11 @@ import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
 
 describe('generateCmakeConfigFiles', () => {
     let tree: Tree;
-    let options: InitGeneratorSchema;
+    let options: InitSchema;
     let expectedCmakeSettingsFiles: string[];
     let expectedCmakeUtilsFiles: string[];
 
-    beforeEach(() => {
+    beforeEach(async () => {
         tree = createTreeWithEmptyWorkspace();
         options = getDefaultInitGeneratorOptions();
         expectedCmakeSettingsFiles = [
@@ -94,21 +94,21 @@ describe('generateCmakeConfigFiles', () => {
         const file = `${options.cmakeConfigDir}/${options.workspaceName}.cmake`;
         const readFile = readFileWithTree(tree, file);
         const expectedFile =
-            'get_filename_component(CURRENT_DIR "${CMAKE_CURRENT_LIST_FILE}" DIRECTORY)\n' +
-            `set(CONFIG_DIR \${CURRENT_DIR}/${options.cmakeConfigDir})\n` +
-            `list(APPEND CMAKE_MODULE_PATH \${CONFIG_DIR})\n` +
+            `get_filename_component(ROOT "\${CMAKE_CURRENT_LIST_FILE}/../${options.relativeCmakeConfigPath}" REALPATH)\n` +
+            `list(APPEND CMAKE_MODULE_PATH \${ROOT}/${options.cmakeConfigDir})\n` +
             'cmake_policy(SET CMP0003 NEW)\n' +
             'cmake_policy(SET CMP0011 NEW)\n' +
             'cmake_policy(SET CMP0054 NEW)\n' +
             'include(modules)\n' +
-            'make_var_readonly(WORKSPACE_DIR ${CURRENT_DIR})\n' +
+            'make_var_readonly(WORKSPACE_DIR ${ROOT})\n' +
             `make_var_readonly(WORKSPACE_INCLUDE_DIR \${WORKSPACE_DIR}/${options.globalIncludeDir})\n` +
             `make_var_readonly(WORKSPACE_LIBRARY_DIR \${WORKSPACE_DIR}/${options.libsDir})\n` +
             'include_directories(SYSTEM ${WORKSPACE_LIBRARY_DIR})\n' +
             'set(CMAKE_INCLUDE_PATH ${WORKSPACE_INCLUDE_DIR})\n' +
             `set(CMAKE_LIBRARY_PATH \${WORKSPACE_DIR}/dist/${options.libsDir})\n` +
-            `set(CMAKE_PREFIX_PATH \${CONFIG_DIR}/config)\n` +
-            'set_global_settings()\n';
+            `set(CMAKE_PREFIX_PATH \${CURRENT_DIR}/config)\n` +
+            'set_global_settings()\n' +
+            'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
 
@@ -266,7 +266,7 @@ describe('generateCmakeConfigFiles', () => {
         generateCmakeConfigFiles(tree, options);
         const file = `${options.cmakeConfigDir}/settings/projects.cmake`;
         const readFile = readFileWithTree(tree, file);
-        const expectedFile = 'set(PROJECTS PARENT_SCOPE)\n';
+        const expectedFile = 'set(PROJECTS)\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
 

@@ -1,8 +1,8 @@
-import { InitGeneratorSchema } from '../../generator';
+import { InitSchema } from '../../generator';
 import { getDefaultInitGeneratorOptions } from './getDefaultInitGeneratorOptions';
 
 describe('getDefaultInitGeneratorOptions', () => {
-    let expected: InitGeneratorSchema;
+    let expected: InitSchema;
 
     beforeEach(() => {
         expected = {
@@ -14,6 +14,7 @@ describe('getDefaultInitGeneratorOptions', () => {
             addClangPreset: true,
             skipFormat: false,
             workspaceName: 'workspace',
+            relativeCmakeConfigPath: '../',
         };
     });
 

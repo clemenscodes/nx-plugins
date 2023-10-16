@@ -16,8 +16,7 @@ describe('addBinaryToProjects', () => {
         tree = createTreeWithEmptyWorkspace();
         await initGenerator(tree, getDefaultInitGeneratorOptions());
         expectedProjectsFile =
-            'set(PROJECTS PARENT_SCOPE)\n\n' +
-            `list(APPEND PROJECTS ${projectName})`;
+            'set(PROJECTS)\n\n' + `list(APPEND PROJECTS ${projectName})`;
     });
 
     it('should add binary to projects', () => {

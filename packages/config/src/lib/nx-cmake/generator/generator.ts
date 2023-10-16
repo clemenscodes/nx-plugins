@@ -12,6 +12,9 @@ export type InitGeneratorSchema = {
     workspaceName: string;
 };
 
+export type InitSchema = InitGeneratorSchema & {
+    relativeCmakeConfigPath: string;
+};
 export type GeneratorBaseOptions = {
     name: string;
     language: C;
