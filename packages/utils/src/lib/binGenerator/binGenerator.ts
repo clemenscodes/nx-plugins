@@ -6,13 +6,14 @@ import { generateBinFiles } from '../generateBinFiles/generateBinFiles';
 import { libGenerator } from '../libGenerator/libGenerator';
 import { linkGenerator } from '../linkGenerator/linkGenerator';
 import { resolveBinOptions } from '../resolveBinOptions/resolveBinOptions';
+import { addBinaryToProjects } from '../addBinaryToProjects/addBinaryToProjects';
 
 export async function binGenerator(tree: Tree, options: BinGeneratorSchema) {
     const resolvedOptions = resolveBinOptions(options);
-    const { linkOptions } = resolvedOptions;
+    const { linkOptions, name } = resolvedOptions;
     addBinProject(tree, resolvedOptions);
     generateBinFiles(tree, resolvedOptions);
-    // addBinaryToRootCmakeProjects(tree, resolvedOptions);
+    addBinaryToProjects(tree, name);
     await libGenerator(tree, resolvedOptions);
     await linkGenerator(tree, linkOptions);
     await formatFiles(tree);

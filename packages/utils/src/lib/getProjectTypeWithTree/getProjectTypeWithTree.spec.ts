@@ -2,9 +2,10 @@ import type { BinGeneratorSchema } from '@/config';
 import type { Tree } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { getProjectTypeWithTree } from './getProjectTypeWithTree';
-import { CProjectType } from '@/config';
+import { CProjectType, getDefaultInitGeneratorOptions } from '@/config';
 import { binGenerator } from '../binGenerator/binGenerator';
 import * as devkit from '@nx/devkit';
+import { initGenerator } from '../initGenerator/initGenerator';
 
 describe('getProjectTypeWithTree', () => {
     let tree: Tree;
@@ -18,6 +19,7 @@ describe('getProjectTypeWithTree', () => {
             generateTests: true,
         };
         jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
+        await initGenerator(tree, getDefaultInitGeneratorOptions());
         await binGenerator(tree, binOptions);
     });
 

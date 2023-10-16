@@ -1,6 +1,5 @@
 import { type Tree } from '@nx/devkit';
 import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
-import { PROJECT_FILE } from '@/config';
 import { writeFileWithTree } from '../writeFileWithTree/writeFileWithTree';
 
 export const appendLines = (appendTo: string, whatToAppend: string): string => {
@@ -8,10 +7,13 @@ export const appendLines = (appendTo: string, whatToAppend: string): string => {
     return result;
 };
 
-export const updateRootCmakeFile = (tree: Tree, content: string) => {
-    const rootCmakeFile = PROJECT_FILE;
-    const readContent = readFileWithTree(tree, rootCmakeFile);
+export const updateFile = (
+    tree: Tree,
+    file: string,
+    content: string,
+): string => {
+    const readContent = readFileWithTree(tree, file);
     const newContent = appendLines(readContent, content);
-    const updatedContent = writeFileWithTree(tree, rootCmakeFile, newContent);
+    const updatedContent = writeFileWithTree(tree, file, newContent);
     return updatedContent;
 };
