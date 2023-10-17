@@ -50,7 +50,7 @@ describe('generateLibFiles', () => {
             '\n' +
             '#endif\n';
         expectedSourceFile =
-            '#include <test/include/libtest.h>\n' +
+            '#include "libtest.h"\n' +
             '\n' +
             'int test(void) {\n' +
             '    return 0;\n' +

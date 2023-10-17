@@ -57,7 +57,7 @@ describe('generateBinFiles', () => {
             generateTests: false,
         });
         expectedSourceFile =
-            '#include "include/test.h"\n' +
+            '#include "test.h"\n' +
             '\n' +
             'int main(int argc, char *argv[]) {\n' +
             '    (void)argc;\n' +
@@ -70,10 +70,9 @@ describe('generateBinFiles', () => {
             'set_project_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(test CXX)\n' +
             'set_binary_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n' +
-            'add_subdirectory("../../bin/test" "../../dist/bin/test/${CMAKE_BUILD_TYPE}")\n' +
             'find_package(libtest REQUIRED)\n' +
-            'target_link_libraries(test PRIVATE libtest::libtest)\n' +
-            'install(TARGETS test DESTINATION bin)\n';
+            'target_link_libraries(test PUBLIC libtest::libtest)\n' +
+            'install(TARGETS test)\n';
         expectedIncludeFile =
             '#ifndef _TEST_TEST\n' + '#define _TEST_TEST\n' + '\n' + '#endif\n';
         expectedReadMeFile =
@@ -128,10 +127,9 @@ describe('generateBinFiles', () => {
             'set_project_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             'project(test C)\n' +
             'set_binary_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n' +
-            'add_subdirectory("../../bin/test" "../../dist/bin/test/${CMAKE_BUILD_TYPE}")\n' +
             'find_package(libtest REQUIRED)\n' +
-            'target_link_libraries(test PRIVATE libtest::libtest)\n' +
-            'install(TARGETS test DESTINATION bin)\n';
+            'target_link_libraries(test PUBLIC libtest::libtest)\n' +
+            'install(TARGETS test)\n';
         expectedReadMeFile =
             '# test\n' +
             '\n' +

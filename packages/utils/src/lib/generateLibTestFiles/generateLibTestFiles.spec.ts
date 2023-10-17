@@ -68,12 +68,12 @@ describe('generateLibTestFiles', () => {
             '#define _TESTTEST_TEST\n' +
             '\n' +
             '#include "libcmocka.h"\n' +
-            '#include <test/include/libtest.h>\n' +
+            '#include "libtest.h"\n' +
             '\n' +
             '#endif\n';
 
         expectedSourceFile =
-            '#include "include/testtest.h"\n' +
+            '#include "testtest.h"\n' +
             '\n' +
             'static int setup(void **state) {\n' +
             '\t(void) state;\n' +
@@ -166,11 +166,11 @@ describe('generateLibTestFiles', () => {
             '#define _TESTTEST_TEST\n' +
             '\n' +
             '#include "libgtest.h"\n' +
-            '#include <test/include/libtest.h>\n' +
+            '#include "libtest.h"\n' +
             '\n' +
             '#endif\n';
         expectedSourceFile =
-            '#include "include/testtest.h"\n' +
+            '#include "testtest.h"\n' +
             '\n' +
             'TEST(libtest, test_test) {\n' +
             '\tEXPECT_EQ(test(), 0);\n' +
