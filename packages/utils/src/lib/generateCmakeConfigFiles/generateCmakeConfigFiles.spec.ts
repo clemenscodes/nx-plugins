@@ -187,8 +187,7 @@ describe('generateCmakeConfigFiles', () => {
         const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'function(set_global_settings)\n' +
-            '    set(WORKSPACE_DIR ${CURRENT_DIR} PARENT_SCOPE)\n' +
-            '    set(WORKSPACE_INCLUDE_DIR ${WORKSPACE_DIR}/include PARENT_SCOPE)\n' +
+            '    set(WORKSPACE_INCLUDE_DIR ${ROOT}/include PARENT_SCOPE)\n' +
             '    set(CMAKE_EXPORT_COMPILE_COMMANDS ON PARENT_SCOPE)\n' +
             'endfunction()\n';
         expect(readFile).toStrictEqual(expectedFile);
@@ -221,6 +220,20 @@ describe('generateCmakeConfigFiles', () => {
             '        set(CMAKE_IMPORT_LIBRARY_PREFIX "" PARENT_SCOPE)\n' +
             '    endif()\n' +
             'endfunction()\n';
+        expect(readFile).toStrictEqual(expectedFile);
+    });
+
+    it('should generate cmake/settings/set_policies.cmake correctly', async () => {
+        generateCmakeConfigFiles(tree, options);
+        const file = `${options.cmakeConfigDir}/settings/set_policies.cmake`;
+        const readFile = readFileWithTree(tree, file);
+        const expectedFile =
+            'macro(set_policies)\n' +
+            '    cmake_policy(SET CMP0003 NEW)\n' +
+            '    cmake_policy(SET CMP0011 NEW)\n' +
+            '    cmake_policy(SET CMP0054 NEW)\n' +
+            '    cmake_policy(SET CMP0057 NEW)\n' +
+            'endmacro()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
 

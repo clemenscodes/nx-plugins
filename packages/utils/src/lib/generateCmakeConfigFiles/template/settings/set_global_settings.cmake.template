@@ -1,5 +1,4 @@
 function(set_global_settings)
-    set(WORKSPACE_DIR ${CURRENT_DIR} PARENT_SCOPE)
-    set(WORKSPACE_INCLUDE_DIR ${WORKSPACE_DIR}/<%= globalIncludeDir %> PARENT_SCOPE)
+    set(WORKSPACE_INCLUDE_DIR ${ROOT}/include PARENT_SCOPE)
     set(CMAKE_EXPORT_COMPILE_COMMANDS ON PARENT_SCOPE)
 endfunction()
