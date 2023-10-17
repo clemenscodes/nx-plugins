@@ -9,9 +9,7 @@ export const addProjectRootToSubDirectories = (
     projectRoot: string,
 ) => {
     const { cmakeConfigDir } = getPluginConfig();
-    const subDirectoriesFile = join(
-        `${cmakeConfigDir}/settings/subdirectories.cmake`,
-    );
+    const subDirectoriesFile = join(`${cmakeConfigDir}/subdirectories.cmake`);
     const subDirectoryAddition = `list(APPEND SUB_DIRECTORIES ${projectRoot})`;
     const updatedSubDirectoriesFile = updateFile(
         tree,

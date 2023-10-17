@@ -15,17 +15,16 @@ describe('generateCmakeConfigFiles', () => {
         tree = createTreeWithEmptyWorkspace();
         options = getDefaultInitGeneratorOptions();
         expectedCmakeSettingsFiles = [
-            'projects.cmake',
-            'subdirectories.cmake',
             'set_binary_settings.cmake',
             'set_compiler_settings.cmake',
+            'set_cmake_paths.cmake',
+            'set_policies.cmake',
             'set_global_settings.cmake',
             'set_library_settings.cmake',
             'set_project_settings.cmake',
         ];
         expectedCmakeUtilsFiles = [
-            'add_projects.cmake',
-            'find_package_macro.cmake',
+            'add_subdirectories.cmake',
             'install_cmocka.cmake',
             'install_gtest.cmake',
             'link_cmocka.cmake',
@@ -44,6 +43,7 @@ describe('generateCmakeConfigFiles', () => {
             'settings',
             'utils',
             `${options.workspaceName}.cmake`,
+            'subdirectories.cmake',
             'modules.cmake',
         ];
         expect(cmakeChildren).toStrictEqual(
@@ -73,6 +73,11 @@ describe('generateCmakeConfigFiles', () => {
         const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'include(FetchContent)\n' +
+            `include(${options.cmakeConfigDir}/settings/set_cmake_paths.cmake)\n` +
+            'include(settings/set_global_settings)\n' +
+            'include(settings/set_library_settings)\n' +
+            'include(settings/set_binary_settings)\n' +
+            'include(settings/set_policies)\n' +
             'include(utils/make_var_readonly)\n' +
             'include(utils/print_variables)\n' +
             'include(utils/link_shared_library)\n' +
@@ -81,12 +86,7 @@ describe('generateCmakeConfigFiles', () => {
             'include(utils/link_gtest)\n' +
             'include(utils/install_cmocka)\n' +
             'include(utils/install_gtest)\n' +
-            'include(utils/find_package_macro)\n' +
-            'include(utils/add_projects)\n' +
-            'include(settings/set_global_settings)\n' +
-            'include(settings/set_library_settings)\n' +
-            'include(settings/set_binary_settings)\n' +
-            'include(settings/projects)\n';
+            'include(utils/add_subdirectories)\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
 
@@ -95,20 +95,9 @@ describe('generateCmakeConfigFiles', () => {
         const file = `${options.cmakeConfigDir}/${options.workspaceName}.cmake`;
         const readFile = readFileWithTree(tree, file);
         const expectedFile =
-            `get_filename_component(ROOT "\${CMAKE_CURRENT_LIST_FILE}/../${options.relativeCmakeConfigPath}" REALPATH)\n` +
-            `list(APPEND CMAKE_MODULE_PATH \${ROOT}/${options.cmakeConfigDir})\n` +
-            'cmake_policy(SET CMP0003 NEW)\n' +
-            'cmake_policy(SET CMP0011 NEW)\n' +
-            'cmake_policy(SET CMP0054 NEW)\n' +
-            'cmake_policy(SET CMP0057 NEW)\n' +
-            'include(modules)\n' +
-            'make_var_readonly(WORKSPACE_DIR ${ROOT})\n' +
-            `make_var_readonly(WORKSPACE_INCLUDE_DIR \${WORKSPACE_DIR}/${options.globalIncludeDir})\n` +
-            `make_var_readonly(WORKSPACE_LIBRARY_DIR \${WORKSPACE_DIR}/${options.libsDir})\n` +
-            'include_directories(SYSTEM ${WORKSPACE_LIBRARY_DIR})\n' +
-            'set(CMAKE_INCLUDE_PATH ${WORKSPACE_INCLUDE_DIR})\n' +
-            `set(CMAKE_LIBRARY_PATH \${WORKSPACE_DIR}/dist/${options.libsDir})\n` +
-            `set(CMAKE_PREFIX_PATH \${CURRENT_DIR}/config)\n` +
+            `include(${options.cmakeConfigDir}/modules.cmake)\n` +
+            '\n' +
+            'set_policies()\n' +
             'set_global_settings()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
@@ -196,15 +185,9 @@ describe('generateCmakeConfigFiles', () => {
         const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'function(set_global_settings)\n' +
-            '    set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")\n' +
-            '    set(CMAKE_CXX_STANDARD 17 CACHE INTERNAL "")\n' +
-            '    set(CMAKE_CXX_EXTENSIONS OFF CACHE INTERNAL "")\n' +
-            '    set(CMAKE_CXX_STANDARD_REQUIRED ON CACHE INTERNAL "")\n' +
-            '    set(CMAKE_CXX_STANDARD_LIBRARIES "-lstdc++" CACHE INTERNAL "")\n' +
-            '\n' +
-            '    if (NOT CMAKE_BUILD_TYPE)\n' +
-            '        set(CMAKE_BUILD_TYPE Debug CACHE INTERNAL "")\n' +
-            '    endif ()\n' +
+            '    make_var_readonly(WORKSPACE_DIR ${CURRENT_DIR})\n' +
+            '    make_var_readonly(WORKSPACE_INCLUDE_DIR ${WORKSPACE_DIR}/include)\n' +
+            '    make_var_readonly(CMAKE_EXPORT_COMPILE_COMMANDS ON)\n' +
             'endfunction()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
@@ -262,50 +245,26 @@ describe('generateCmakeConfigFiles', () => {
         expect(readFile).toStrictEqual(expectedFile);
     });
 
-    it('should generate cmake/settings/projects.cmake correctly', async () => {
+    it('should generate cmake/subdirectories.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
-        const file = `${options.cmakeConfigDir}/settings/projects.cmake`;
-        const readFile = readFileWithTree(tree, file);
-        const expectedFile = 'set(PROJECTS)\n';
-        expect(readFile).toStrictEqual(expectedFile);
-    });
-
-    it('should generate cmake/settings/subdirectories.cmake correctly', async () => {
-        generateCmakeConfigFiles(tree, options);
-        const file = `${options.cmakeConfigDir}/settings/subdirectories.cmake`;
+        const file = `${options.cmakeConfigDir}/subdirectories.cmake`;
         const readFile = readFileWithTree(tree, file);
         const expectedFile = 'set(SUB_DIRECTORIES)\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
 
-    it('should generate cmake/utils/add_projects.cmake correctly', async () => {
+    it('should generate cmake/utils/add_subdirectories.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
-        const file = `${options.cmakeConfigDir}/utils/add_projects.cmake`;
+        const file = `${options.cmakeConfigDir}/utils/add_subdirectories.cmake`;
         const readFile = readFileWithTree(tree, file);
         const expectedFile =
-            'include(settings/subdirectories)\n' +
+            'include(subdirectories)\n' +
             '\n' +
-            'macro(add_projects)\n' +
+            'macro(add_subdirectories)\n' +
             '    foreach(SUB_DIRECTORY ${SUB_DIRECTORIES})\n' +
             '        message("Adding subdirectory: ${SUB_DIRECTORY}")\n' +
             '        add_subdirectory(${SUB_DIRECTORY})\n' +
             '    endforeach()\n' +
-            'endmacro()\n';
-        expect(readFile).toStrictEqual(expectedFile);
-    });
-
-    it('should generate cmake/utils/find_package_macro.cmake correctly', async () => {
-        generateCmakeConfigFiles(tree, options);
-        const file = `${options.cmakeConfigDir}/utils/find_package_macro.cmake`;
-        const readFile = readFileWithTree(tree, file);
-        const expectedFile =
-            'include(settings/projects)\n' +
-            '\n' +
-            'macro(find_package)\n' +
-            '  if(NOT "${ARGV0}" IN_LIST PROJECTS)\n' +
-            '    message(STATUS "using native find_package for ${ARGV0}: ${ARGV}")\n' +
-            '    _find_package(${ARGV})\n' +
-            '  endif()\n' +
             'endmacro()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
@@ -390,7 +349,7 @@ describe('generateCmakeConfigFiles', () => {
             '\n' +
             'function(link_gtest PROJECT)\n' +
             '    install_gtest()\n' +
-            '    include_directories(${googletest_SOURCE_DIR}/googletest/include/gtest)\n' +
+            '    target_include_directories(${PROJECT} ${googletest_SOURCE_DIR}/googletest/include/gtest)\n' +
             '    if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")\n' +
             '        target_link_libraries(${PROJECT} GTest::gtest_main -Wl,-export_dynamic)\n' +
             '    else()\n' +

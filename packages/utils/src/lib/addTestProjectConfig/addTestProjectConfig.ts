@@ -3,7 +3,7 @@ import { addProjectConfiguration } from '@nx/devkit';
 import { CProjectType, LibSchema } from '@/config';
 import { getWorkspaceLayout } from '../getWorkspaceLayout/getWorkspaceLayout';
 import { getProjectTargets } from '../getProjectTargets/getProjectTargets';
-import { addProjectToProjects } from '../addProjectToProjects/addProjectToProjects';
+import { addProjectRootToSubDirectories } from '../addProjectRootToSubDirectories/addProjectRootToSubDirectories';
 
 export const addTestProjectConfig = (
     tree: Tree,
@@ -24,5 +24,5 @@ export const addTestProjectConfig = (
         tags: [languageExtension, 'test'],
         targets: testTargets,
     });
-    addProjectToProjects(tree, testName, root);
+    addProjectRootToSubDirectories(tree, root);
 };

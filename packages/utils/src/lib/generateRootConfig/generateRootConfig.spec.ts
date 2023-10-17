@@ -32,7 +32,7 @@ describe('generateRootConfig', () => {
             `include(${options.cmakeConfigDir}/${options.workspaceName}.cmake)\n` +
             `cmake_minimum_required(VERSION 3.21)\n` +
             `project(${options.workspaceName} ${options.language})\n` +
-            'add_projects()\n';
+            'add_subdirectories()\n';
         expect(readRootConfig).toBe(normalizeLineEndings(expectedRootConfig));
     });
 });
