@@ -1,15 +1,12 @@
 import type { Tree } from '@nx/devkit';
-import {
-    getDefaultInitGeneratorOptions,
-    type LibGeneratorSchema,
-    type LinkSchema,
-} from '@/config';
+import type { LibGeneratorSchema, LinkSchema } from '@/config';
+import { getDefaultInitGeneratorOptions } from '@/config';
 import { updateIncludeFile } from './updateIncludeFile';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { libGenerator } from '../libGenerator/libGenerator';
 import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
-import * as devkit from '@nx/devkit';
 import { initGenerator } from '../initGenerator/initGenerator';
+import * as devkit from '@nx/devkit';
 
 describe('updateIncludeFile', () => {
     let tree: Tree;
@@ -31,7 +28,7 @@ describe('updateIncludeFile', () => {
         await initGenerator(tree, getDefaultInitGeneratorOptions());
         await libGenerator(tree, libOptions);
         expectedIncludeFile = 'packages/link/include/liblink.h';
-        expectedIncludeDirective = '#include <target/include/libtarget.h>';
+        expectedIncludeDirective = '#include "libtarget.h"';
         expectedIncludeFileContent =
             '#ifndef _LIBLINK_LINK\n#define _LIBLINK_LINK\n\nint link(void);\n\n#endif\n';
         expectedUpdatedIncludeFileContent =

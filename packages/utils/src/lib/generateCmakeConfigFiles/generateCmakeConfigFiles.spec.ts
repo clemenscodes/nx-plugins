@@ -183,9 +183,9 @@ describe('generateCmakeConfigFiles', () => {
         const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'function(set_global_settings)\n' +
-            '    make_var_readonly(WORKSPACE_DIR ${CURRENT_DIR})\n' +
-            '    make_var_readonly(WORKSPACE_INCLUDE_DIR ${WORKSPACE_DIR}/include)\n' +
-            '    make_var_readonly(CMAKE_EXPORT_COMPILE_COMMANDS ON)\n' +
+            '    set(WORKSPACE_DIR ${CURRENT_DIR} PARENT_SCOPE)\n' +
+            '    set(WORKSPACE_INCLUDE_DIR ${WORKSPACE_DIR}/include PARENT_SCOPE)\n' +
+            '    set(CMAKE_EXPORT_COMPILE_COMMANDS ON PARENT_SCOPE)\n' +
             'endfunction()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });

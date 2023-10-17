@@ -6,8 +6,7 @@ import { trimLib } from '../trimLib/trimLib';
 import { writeFileWithTree } from '../writeFileWithTree/writeFileWithTree';
 
 export const getIncludeDirective = (project: string): string => {
-    const trimmedLibraryName = trimLib(project);
-    const includeDirective = `#include <${trimmedLibraryName}/include/${project}.h>`;
+    const includeDirective = `#include "${project}.h"`;
     return includeDirective;
 };
 
