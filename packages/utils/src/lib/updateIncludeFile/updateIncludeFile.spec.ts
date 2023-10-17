@@ -1,10 +1,15 @@
 import type { Tree } from '@nx/devkit';
-import type { LibGeneratorSchema, LinkSchema } from '@/config';
+import {
+    getDefaultInitGeneratorOptions,
+    type LibGeneratorSchema,
+    type LinkSchema,
+} from '@/config';
 import { updateIncludeFile } from './updateIncludeFile';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { libGenerator } from '../libGenerator/libGenerator';
 import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
 import * as devkit from '@nx/devkit';
+import { initGenerator } from '../initGenerator/initGenerator';
 
 describe('updateIncludeFile', () => {
     let tree: Tree;
@@ -23,6 +28,7 @@ describe('updateIncludeFile', () => {
             generateTests: true,
         };
         jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
+        await initGenerator(tree, getDefaultInitGeneratorOptions());
         await libGenerator(tree, libOptions);
         expectedIncludeFile = 'packages/link/include/liblink.h';
         expectedIncludeDirective = '#include <target/include/libtarget.h>';

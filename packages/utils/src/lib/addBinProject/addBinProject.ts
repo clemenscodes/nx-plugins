@@ -3,6 +3,7 @@ import type { BinSchema } from '@/config';
 import { addProjectConfiguration } from '@nx/devkit';
 import { CProjectType } from '@/config';
 import { getProjectTargets } from '../getProjectTargets/getProjectTargets';
+import { addProjectToProjects } from '../addProjectToProjects/addProjectToProjects';
 
 export const addBinProject = (tree: Tree, options: BinSchema) => {
     const { name, projectRoot, languageExtension } = options;
@@ -14,4 +15,5 @@ export const addBinProject = (tree: Tree, options: BinSchema) => {
         tags: [languageExtension],
         targets,
     });
+    addProjectToProjects(tree, name, projectRoot);
 };

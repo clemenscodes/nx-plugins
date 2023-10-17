@@ -1,9 +1,12 @@
 import type { ProjectConfiguration, Tree } from '@nx/devkit';
 import type { LibGeneratorSchema, LibSchema } from '@/config';
+import { getDefaultInitGeneratorOptions } from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { readProjectConfiguration } from '@nx/devkit';
 import { addLibProjectConfig } from './addLibProjectConfig';
 import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
+import { initGenerator } from '../initGenerator/initGenerator';
+import * as devkit from '@nx/devkit';
 
 describe('addLibProjectConfig', () => {
     let tree: Tree;
@@ -11,13 +14,15 @@ describe('addLibProjectConfig', () => {
     let resolvedOptions: LibSchema;
     let expectedProjectConfiguration: ProjectConfiguration;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         tree = createTreeWithEmptyWorkspace();
         options = {
             name: 'test',
             language: 'C++',
             generateTests: false,
         };
+        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
+        await initGenerator(tree, getDefaultInitGeneratorOptions());
         resolvedOptions = resolveLibOptions(options);
         expectedProjectConfiguration = {
             name: 'libtest',

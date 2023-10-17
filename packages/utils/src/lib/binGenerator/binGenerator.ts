@@ -6,14 +6,12 @@ import { generateBinFiles } from '../generateBinFiles/generateBinFiles';
 import { libGenerator } from '../libGenerator/libGenerator';
 import { linkGenerator } from '../linkGenerator/linkGenerator';
 import { resolveBinOptions } from '../resolveBinOptions/resolveBinOptions';
-import { addBinaryToProjects } from '../addBinaryToProjects/addBinaryToProjects';
 
 export async function binGenerator(tree: Tree, options: BinGeneratorSchema) {
     const resolvedOptions = resolveBinOptions(options);
-    const { linkOptions, name } = resolvedOptions;
-    addBinProject(tree, resolvedOptions);
+    const { linkOptions } = resolvedOptions;
     generateBinFiles(tree, resolvedOptions);
-    addBinaryToProjects(tree, name);
+    addBinProject(tree, resolvedOptions);
     await libGenerator(tree, resolvedOptions);
     await linkGenerator(tree, linkOptions);
     await formatFiles(tree);

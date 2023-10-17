@@ -4,12 +4,14 @@ import type {
     LinkGeneratorSchema,
 } from '@/config';
 import type { Tree } from '@nx/devkit';
+import { getDefaultInitGeneratorOptions } from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
 import { normalizeLineEndings } from '../normalizeLineEndings/normalizeLineEndings';
 import { linkGenerator } from './linkGenerator';
 import { libGenerator } from '../libGenerator/libGenerator';
 import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
+import { initGenerator } from '../initGenerator/initGenerator';
 import * as devkit from '@nx/devkit';
 
 describe('link generator', () => {
@@ -30,6 +32,7 @@ describe('link generator', () => {
         };
         options = resolveLibOptions(libOptions);
         jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
+        await initGenerator(tree, getDefaultInitGeneratorOptions());
         await libGenerator(tree, libOptions);
         expectedCmakeFile = 'packages/link/CMakeLists.txt';
         expectedCmakeFileContent =

@@ -1,10 +1,15 @@
 import type { Tree } from '@nx/devkit';
-import type { LibGeneratorSchema, LibSchema } from '@/config';
+import {
+    getDefaultInitGeneratorOptions,
+    type LibGeneratorSchema,
+    type LibSchema,
+} from '@/config';
 import { readFileWithTree } from './readFileWithTree';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { libGenerator } from '../libGenerator/libGenerator';
 import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
 import * as devkit from '@nx/devkit';
+import { initGenerator } from '../initGenerator/initGenerator';
 
 describe('writeFileWithTree', () => {
     let tree: Tree;
@@ -22,6 +27,7 @@ describe('writeFileWithTree', () => {
         };
         options = resolveLibOptions(libOptions);
         jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
+        await initGenerator(tree, getDefaultInitGeneratorOptions());
         await libGenerator(tree, libOptions);
         expectedCmakeFile = 'packages/link/CMakeLists.txt';
         expectedCmakeFileContent =
