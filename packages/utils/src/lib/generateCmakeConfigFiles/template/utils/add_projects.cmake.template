@@ -1,8 +1,8 @@
-include(settings/projects)
+include(settings/subdirectories)
 
 macro(add_projects)
-    foreach(PROJECT ${PROJECTS})
-        message("Adding project: ${PROJECT}")
-        add_subdirectory(${PROJECT})
+    foreach(SUB_DIRECTORY ${SUB_DIRECTORIES})
+        message("Adding subdirectory: ${SUB_DIRECTORY}")
+        add_subdirectory(${SUB_DIRECTORY})
     endforeach()
 endmacro()

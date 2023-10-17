@@ -16,6 +16,7 @@ describe('generateCmakeConfigFiles', () => {
         options = getDefaultInitGeneratorOptions();
         expectedCmakeSettingsFiles = [
             'projects.cmake',
+            'subdirectories.cmake',
             'set_binary_settings.cmake',
             'set_compiler_settings.cmake',
             'set_global_settings.cmake',
@@ -99,6 +100,7 @@ describe('generateCmakeConfigFiles', () => {
             'cmake_policy(SET CMP0003 NEW)\n' +
             'cmake_policy(SET CMP0011 NEW)\n' +
             'cmake_policy(SET CMP0054 NEW)\n' +
+            'cmake_policy(SET CMP0057 NEW)\n' +
             'include(modules)\n' +
             'make_var_readonly(WORKSPACE_DIR ${ROOT})\n' +
             `make_var_readonly(WORKSPACE_INCLUDE_DIR \${WORKSPACE_DIR}/${options.globalIncludeDir})\n` +
@@ -268,17 +270,25 @@ describe('generateCmakeConfigFiles', () => {
         expect(readFile).toStrictEqual(expectedFile);
     });
 
+    it('should generate cmake/settings/subdirectories.cmake correctly', async () => {
+        generateCmakeConfigFiles(tree, options);
+        const file = `${options.cmakeConfigDir}/settings/subdirectories.cmake`;
+        const readFile = readFileWithTree(tree, file);
+        const expectedFile = 'set(SUB_DIRECTORIES)\n';
+        expect(readFile).toStrictEqual(expectedFile);
+    });
+
     it('should generate cmake/utils/add_projects.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
         const file = `${options.cmakeConfigDir}/utils/add_projects.cmake`;
         const readFile = readFileWithTree(tree, file);
         const expectedFile =
-            'include(settings/projects)\n' +
+            'include(settings/subdirectories)\n' +
             '\n' +
             'macro(add_projects)\n' +
-            '    foreach(PROJECT ${PROJECTS})\n' +
-            '        message("Adding project: ${PROJECT}")\n' +
-            '        add_subdirectory(${PROJECT})\n' +
+            '    foreach(SUB_DIRECTORY ${SUB_DIRECTORIES})\n' +
+            '        message("Adding subdirectory: ${SUB_DIRECTORY}")\n' +
+            '        add_subdirectory(${SUB_DIRECTORY})\n' +
             '    endforeach()\n' +
             'endmacro()\n';
         expect(readFile).toStrictEqual(expectedFile);
