@@ -6,5 +6,9 @@ function(set_binary_settings PROJECT SOURCE_DIR)
         PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}"
     )
-    target_include_directories(${PROJECT} PUBLIC ${${PROJECT}_INCLUDE_DIR}/include ${WORKSPACE_INCLUDE_DIR})
+    target_include_directories(${PROJECT}
+        PUBLIC
+        $<BUILD_INTERFACE:${${PROJECT}_INCLUDE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+    )
 endfunction()

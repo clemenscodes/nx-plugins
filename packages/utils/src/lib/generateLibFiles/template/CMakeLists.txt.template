@@ -1,5 +1,27 @@
 include(<%= relativeRootPath %><%= cmakeConfigDir %>/<%= workspaceName %>.cmake)
+
 cmake_minimum_required(VERSION 3.21)
 set_project_settings(<%= libName %> ${CMAKE_CURRENT_SOURCE_DIR})
 project(<%= libName %> <%= cmakeC %>)
 set_library_settings(<%= libName %> ${CMAKE_CURRENT_SOURCE_DIR})
+
+include(GNUInstallDirs)
+install(TARGETS <%= libName %> EXPORT <%= libName %>Targets
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    RUNTIME DESTINATION include
+)
+install(EXPORT <%= libName %>Targets
+    FILE <%= libName %>Targets.cmake
+    NAMESPACE <%= libName %>::
+    DESTINATION lib/cmake/<%= libName %>
+)
+
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file("<%= libName %>ConfigVersion.cmake"
+    VERSION 0.0.1
+    COMPATIBILITY SameMajorVersion
+)
+install(FILES "<%= libName %>Config.cmake" "<%= libName %>ConfigVersion.cmake"
+    DESTINATION lib/cmake/<%= libName %>
+)

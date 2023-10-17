@@ -93,7 +93,7 @@ describe('generateCmakeConfigFiles', () => {
         const expectedFile =
             `get_filename_component(ROOT "\${CMAKE_CURRENT_LIST_FILE}/../${options.relativeCmakeConfigPath}" REALPATH)\n` +
             `list(APPEND CMAKE_MODULE_PATH \${ROOT}/${options.cmakeConfigDir})\n` +
-            `set(CMAKE_PREFIX_PATH \${ROOT}/config)\n` +
+            `set(CMAKE_PREFIX_PATH \${ROOT}/${options.cmakeConfigDir}/config)\n` +
             '\n' +
             `include(modules)\n` +
             '\n' +
@@ -115,7 +115,11 @@ describe('generateCmakeConfigFiles', () => {
             '        PROPERTIES\n' +
             '        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}"\n' +
             '    )\n' +
-            '    target_include_directories(${PROJECT} PUBLIC ${${PROJECT}_INCLUDE_DIR}/include ${WORKSPACE_INCLUDE_DIR})\n' +
+            '    target_include_directories(${PROJECT}\n' +
+            '        PUBLIC\n' +
+            '        $<BUILD_INTERFACE:${${PROJECT}_INCLUDE_DIR}/include>\n' +
+            '        $<INSTALL_INTERFACE:include>\n' +
+            '    )\n' +
             'endfunction()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
@@ -207,7 +211,11 @@ describe('generateCmakeConfigFiles', () => {
             '        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib"\n' +
             '        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/bin"\n' +
             '    )\n' +
-            '    target_include_directories(${PROJECT} PUBLIC ${${PROJECT}_INCLUDE_DIR}/include ${WORKSPACE_INCLUDE_DIR})\n' +
+            '    target_include_directories(${PROJECT}\n' +
+            '        PUBLIC\n' +
+            '        $<BUILD_INTERFACE:${${PROJECT}_INCLUDE_DIR}/include>\n' +
+            '        $<INSTALL_INTERFACE:include>\n' +
+            '    )\n' +
             '    if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")\n' +
             '        set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE CACHE INTERNAL "")\n' +
             '        set(CMAKE_IMPORT_LIBRARY_PREFIX "" PARENT_SCOPE)\n' +
@@ -229,7 +237,7 @@ describe('generateCmakeConfigFiles', () => {
             '    file(GLOB_RECURSE INCLUDE_SOURCES ${${PROJECT}_INCLUDE_DIR}/**/*.h*)\n' +
             '    file(GLOB_RECURSE SOURCES ${${PROJECT}_SOURCES_DIR}/**/*.c*)\n' +
             '    set(${PROJECT}_SOURCES ${SOURCES} CACHE INTERNAL "")\n' +
-            '    set(${PROJECT}_INCLUDE_SOURCES ${INCLUDE_SOURCES} CACHE INTERNAL "")\n' +
+            '    set(${PROJECT}_INCLUDE_SOURCES ${INCLUDE_SOURCES} ${WORKSPACE_INCLUDE_DIR} CACHE INTERNAL "")\n' +
             '    set_compiler_settings()\n' +
             'endfunction()\n';
         expect(readFile).toStrictEqual(expectedFile);
