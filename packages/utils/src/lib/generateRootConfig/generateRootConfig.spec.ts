@@ -35,6 +35,13 @@ describe('generateRootConfig', () => {
             `\n` +
             `project(${options.workspaceName} ${options.language})\n` +
             `\n` +
+            'macro(find_package)\n' +
+            '    if(NOT "${ARGV0}" IN_LIST LIBRARIES)\n' +
+            '        message(STATUS "using native find_package for ${ARGV0}: ${ARGV}")\n' +
+            '        _find_package(${ARGV})\n' +
+            '    endif()\n' +
+            'endmacro()\n' +
+            '\n' +
             'foreach(SUB_DIRECTORY ${SUB_DIRECTORIES})\n' +
             '    message("Adding subdirectory: ${SUB_DIRECTORY}")\n' +
             '    add_subdirectory(${SUB_DIRECTORY})\n' +

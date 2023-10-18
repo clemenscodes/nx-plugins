@@ -44,6 +44,7 @@ describe('generateCmakeConfigFiles', () => {
             'utils',
             `${options.workspaceName}.cmake`,
             'subdirectories.cmake',
+            'libraries.cmake',
             'modules.cmake',
         ];
         expect(cmakeChildren).toStrictEqual(
@@ -107,7 +108,17 @@ describe('generateCmakeConfigFiles', () => {
             'include(utils/link_gtest)\n' +
             'include(utils/link_library)\n' +
             'include(utils/install_cmocka)\n' +
-            'include(utils/install_gtest)\n';
+            'include(utils/install_gtest)\n' +
+            'include(libraries)\n' +
+            'include(subdirectories)\n';
+        expect(readFile).toStrictEqual(expectedFile);
+    });
+
+    it('should generate cmake/libraries.cmake correctly', async () => {
+        generateCmakeConfigFiles(tree, options);
+        const file = `${options.cmakeConfigDir}/libraries.cmake`;
+        const readFile = readFileWithTree(tree, file);
+        const expectedFile = 'set(LIBRARIES)\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
 

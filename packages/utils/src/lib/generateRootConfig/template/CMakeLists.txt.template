@@ -4,6 +4,13 @@ include(<%= cmakeConfigDir %>/<%= workspaceName %>.cmake)
 
 project(<%= workspaceName %> <%= language %>)
 
+macro(find_package)
+    if(NOT "${ARGV0}" IN_LIST LIBRARIES)
+        message(STATUS "using native find_package for ${ARGV0}: ${ARGV}")
+        _find_package(${ARGV})
+    endif()
+endmacro()
+
 foreach(SUB_DIRECTORY ${SUB_DIRECTORIES})
     message("Adding subdirectory: ${SUB_DIRECTORY}")
     add_subdirectory(${SUB_DIRECTORY})

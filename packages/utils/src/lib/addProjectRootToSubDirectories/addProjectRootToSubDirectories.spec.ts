@@ -8,14 +8,14 @@ import * as devkit from '@nx/devkit';
 describe('addProjectRootToSubDirectories', () => {
     let tree: Tree;
     let projectRoot: string;
-    let expectedProjectsFile: string;
+    let expectedSubDirectoriesFile: string;
 
     beforeEach(async () => {
         jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
         projectRoot = `bin/project`;
         tree = createTreeWithEmptyWorkspace();
         await initGenerator(tree, getDefaultInitGeneratorOptions());
-        expectedProjectsFile =
+        expectedSubDirectoriesFile =
             'set(SUB_DIRECTORIES)\n\n' +
             `list(APPEND SUB_DIRECTORIES ${projectRoot})`;
     });
@@ -25,11 +25,11 @@ describe('addProjectRootToSubDirectories', () => {
             tree,
             projectRoot,
         );
-        expect(updatedProjectsFile).toStrictEqual(expectedProjectsFile);
+        expect(updatedProjectsFile).toStrictEqual(expectedSubDirectoriesFile);
         projectRoot += 2;
         updatedProjectsFile = addProjectRootToSubDirectories(tree, projectRoot);
         expect(updatedProjectsFile).toStrictEqual(
-            expectedProjectsFile +
+            expectedSubDirectoriesFile +
                 `\nlist(APPEND SUB_DIRECTORIES ${projectRoot})`,
         );
     });
