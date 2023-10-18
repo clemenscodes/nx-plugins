@@ -3,9 +3,10 @@ include(settings/set_project_settings)
 function(set_library_settings PROJECT SOURCE_DIR)
     add_library(${PROJECT} ${${PROJECT}_SOURCES})
     add_library(${PROJECT}::${PROJECT} ALIAS ${PROJECT})
-    set_target_properties(${PROJECT} PROPERTIES PREFIX "")
     set_target_properties(${PROJECT}
         PROPERTIES
+        PREFIX ""
+        EXPORT_NAME ${PROJECT}
         ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib"
         LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib"
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/bin"

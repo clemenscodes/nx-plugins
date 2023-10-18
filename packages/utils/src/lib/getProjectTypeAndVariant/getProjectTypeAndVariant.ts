@@ -3,6 +3,7 @@ import { CProjectType } from '@/config';
 import { getProjectTypeFromConfigFileContent } from './getProjectTypeFromConfigFileContent/getProjectFileFromConfigFileContent';
 import { readProjectFile } from './readProjectFile/readProjectFile';
 import { getLanguageVariant } from './getLanguageVariant/getLanguageVariant';
+import { output } from '@nx/devkit';
 
 export const getProjectTypeAndVariant = (
     projectConfigurationFile: string,
@@ -13,8 +14,9 @@ export const getProjectTypeAndVariant = (
         const languageVariant = getLanguageVariant(configFileContent);
         return [type, languageVariant];
     } catch (e) {
-        throw new Error(
-            `Failed to determine project type or variant for the configuration file ${projectConfigurationFile}`,
-        );
+        output.error({
+            title: `Failed to determine project type or variant for the configuration file ${projectConfigurationFile}`,
+        });
+        throw new Error();
     }
 };

@@ -1,6 +1,5 @@
 get_filename_component(ROOT "${CMAKE_CURRENT_LIST_FILE}/../<%= relativeCmakeConfigPath %>" REALPATH)
 list(APPEND CMAKE_MODULE_PATH ${ROOT}/<%= cmakeConfigDir %>)
-set(CMAKE_PREFIX_PATH ${ROOT}/<%= cmakeConfigDir %>/config)
 
 include(modules)
 

@@ -1,8 +1,17 @@
 include(<%= relativeRootPath %><%= cmakeConfigDir %>/<%= workspaceName %>.cmake)
+include(cmake/version.cmake)
+
 cmake_minimum_required(VERSION 3.21)
+
+set(PROJECT_TYPE BIN)
+set(LANGUAGE <%= cmakeC %>)
+
 set_project_settings(<%= name %> ${CMAKE_CURRENT_SOURCE_DIR})
-project(<%= name %> <%= cmakeC %>)
+
+project(<%= name %> LANGUAGES ${LANGUAGE} VERSION ${<%= name %>_VERSION})
+
 set_binary_settings(<%= name %> ${CMAKE_CURRENT_SOURCE_DIR})
-find_package(lib<%= name %> REQUIRED)
-target_link_libraries(<%= name %> PUBLIC lib<%= name %>::lib<%= name %>)
+
+link_library(<%= name %> <%= name %>)
+
 install(TARGETS <%= name %>)

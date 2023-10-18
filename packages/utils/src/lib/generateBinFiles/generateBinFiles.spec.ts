@@ -66,13 +66,22 @@ describe('generateBinFiles', () => {
             '}\n';
         expectedListsFile =
             `include(${options.relativeRootPath}${options.cmakeConfigDir}/${options.workspaceName}.cmake)\n` +
+            `include(cmake/version.cmake)\n` +
+            '\n' +
             `cmake_minimum_required(VERSION 3.21)\n` +
+            '\n' +
+            'set(PROJECT_TYPE BIN)\n' +
+            `set(LANGUAGE CXX)\n` +
+            '\n' +
             'set_project_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n' +
-            'project(test CXX)\n' +
-            'set_binary_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n' +
-            'find_package(libtest REQUIRED)\n' +
-            'target_link_libraries(test PUBLIC libtest::libtest)\n' +
-            'install(TARGETS test)\n';
+            '\n' +
+            `project(${options.name} LANGUAGES \${LANGUAGE} VERSION \${${options.name}_VERSION})\n` +
+            '\n' +
+            `set_binary_settings(${options.name} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
+            '\n' +
+            `link_library(${options.name} ${options.name})\n` +
+            '\n' +
+            `install(TARGETS ${options.name})\n`;
         expectedIncludeFile =
             '#ifndef _TEST_TEST\n' + '#define _TEST_TEST\n' + '\n' + '#endif\n';
         expectedReadMeFile =
@@ -123,13 +132,22 @@ describe('generateBinFiles', () => {
         options.language = 'C';
         expectedListsFile =
             `include(${options.relativeRootPath}${options.cmakeConfigDir}/${options.workspaceName}.cmake)\n` +
+            `include(cmake/version.cmake)\n` +
+            '\n' +
             `cmake_minimum_required(VERSION 3.21)\n` +
+            '\n' +
+            'set(PROJECT_TYPE BIN)\n' +
+            `set(LANGUAGE C)\n` +
+            '\n' +
             'set_project_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n' +
-            'project(test C)\n' +
-            'set_binary_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n' +
-            'find_package(libtest REQUIRED)\n' +
-            'target_link_libraries(test PUBLIC libtest::libtest)\n' +
-            'install(TARGETS test)\n';
+            '\n' +
+            `project(${options.name} LANGUAGES \${LANGUAGE} VERSION \${${options.name}_VERSION})\n` +
+            '\n' +
+            `set_binary_settings(${options.name} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
+            '\n' +
+            `link_library(${options.name} ${options.name})\n` +
+            '\n' +
+            `install(TARGETS ${options.name})\n`;
         expectedReadMeFile =
             '# test\n' +
             '\n' +

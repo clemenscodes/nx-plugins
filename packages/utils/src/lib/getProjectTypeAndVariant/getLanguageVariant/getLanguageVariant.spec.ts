@@ -1,13 +1,20 @@
 import type { C } from '@/config';
 import { getLanguageVariant } from './getLanguageVariant';
+import { output } from '@nx/devkit';
 
 describe('getLanguageVariantFromConfigFileContent', () => {
     let configFileContent: string;
     let expectedVariant: C;
+    let nxErrorOutputMock: jest.SpyInstance;
 
     beforeEach(() => {
-        configFileContent = 'project(testproject C)\n';
+        configFileContent = 'set(LANGUAGE C)\n';
         expectedVariant = 'C';
+        nxErrorOutputMock = jest.spyOn(output, 'error');
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
     });
 
     it('should get C language variant', () => {
@@ -16,16 +23,19 @@ describe('getLanguageVariantFromConfigFileContent', () => {
     });
 
     it('should get C++ language variant', () => {
-        configFileContent = 'project(testproject CXX)\n';
+        configFileContent = 'set(LANGUAGE CXX)\n';
         expectedVariant = 'C++';
         const result = getLanguageVariant(configFileContent);
         expect(result).toStrictEqual(expectedVariant);
     });
 
     it('should throw if no language variant set', () => {
-        configFileContent = 'project(testproject whatever)\n';
-        expect(() => getLanguageVariant(configFileContent)).toThrowError(
-            'Failed to determine C language variant from CMakeLists.txt',
-        );
+        configFileContent = 'set(LANGUAGE INCORRECTLY)\n';
+        nxErrorOutputMock.mockImplementation(jest.fn());
+        expect(() => getLanguageVariant(configFileContent)).toThrowError();
+        expect(nxErrorOutputMock).toHaveBeenCalledWith({
+            title: 'Failed to determine C language variant from CMakeLists.txt',
+            bodyLines: ['Please make sure to have set(LANGUAGE <LANGUAGE>)'],
+        });
     });
 });

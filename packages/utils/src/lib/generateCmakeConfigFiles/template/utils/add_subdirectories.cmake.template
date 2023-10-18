@@ -1,8 +1,0 @@
-include(subdirectories)
-
-macro(add_subdirectories)
-    foreach(SUB_DIRECTORY ${SUB_DIRECTORIES})
-        message("Adding subdirectory: ${SUB_DIRECTORY}")
-        add_subdirectory(${SUB_DIRECTORY})
-    endforeach()
-endmacro()

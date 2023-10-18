@@ -11,7 +11,7 @@ describe('generateCmakeConfigFiles', () => {
     let expectedCmakeSettingsFiles: string[];
     let expectedCmakeUtilsFiles: string[];
 
-    beforeEach(async () => {
+    beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
         options = getDefaultInitGeneratorOptions();
         expectedCmakeSettingsFiles = [
@@ -21,15 +21,17 @@ describe('generateCmakeConfigFiles', () => {
             'set_global_settings.cmake',
             'set_library_settings.cmake',
             'set_project_settings.cmake',
+            'set_package_version.cmake',
+            'set_library_install_destination.cmake',
         ];
         expectedCmakeUtilsFiles = [
-            'add_subdirectories.cmake',
             'install_cmocka.cmake',
             'install_gtest.cmake',
             'link_cmocka.cmake',
             'link_gtest.cmake',
             'link_shared_library.cmake',
             'link_static_library.cmake',
+            'link_library.cmake',
             'print_variables.cmake',
         ];
     });
@@ -60,9 +62,30 @@ describe('generateCmakeConfigFiles', () => {
         expect(cmakeSettingsFiles).toStrictEqual(
             expect.arrayContaining(expectedCmakeSettingsFiles),
         );
+        expect(cmakeSettingsFiles.length).toStrictEqual(
+            expectedCmakeSettingsFiles.length,
+        );
         expect(cmakeUtilsFiles).toStrictEqual(
             expect.arrayContaining(expectedCmakeUtilsFiles),
         );
+        expect(cmakeUtilsFiles.length).toStrictEqual(
+            expectedCmakeUtilsFiles.length,
+        );
+    });
+
+    it('should generate cmake/__workspaceName__.cmake correctly', async () => {
+        generateCmakeConfigFiles(tree, options);
+        const file = `${options.cmakeConfigDir}/${options.workspaceName}.cmake`;
+        const readFile = readFileWithTree(tree, file);
+        const expectedFile =
+            `get_filename_component(ROOT "\${CMAKE_CURRENT_LIST_FILE}/../${options.relativeCmakeConfigPath}" REALPATH)\n` +
+            `list(APPEND CMAKE_MODULE_PATH \${ROOT}/${options.cmakeConfigDir})\n` +
+            '\n' +
+            `include(modules)\n` +
+            '\n' +
+            'set_policies()\n' +
+            'set_global_settings()\n';
+        expect(readFile).toStrictEqual(expectedFile);
     });
 
     it('should generate cmake/modules.cmake correctly', async () => {
@@ -75,30 +98,24 @@ describe('generateCmakeConfigFiles', () => {
             'include(settings/set_library_settings)\n' +
             'include(settings/set_binary_settings)\n' +
             'include(settings/set_policies)\n' +
+            'include(settings/set_library_install_destination)\n' +
+            'include(settings/set_package_version)\n' +
             'include(utils/print_variables)\n' +
             'include(utils/link_shared_library)\n' +
             'include(utils/link_static_library)\n' +
             'include(utils/link_cmocka)\n' +
             'include(utils/link_gtest)\n' +
+            'include(utils/link_library)\n' +
             'include(utils/install_cmocka)\n' +
-            'include(utils/install_gtest)\n' +
-            'include(utils/add_subdirectories)\n';
+            'include(utils/install_gtest)\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
 
-    it('should generate cmake/__workspaceName__.cmake correctly', async () => {
+    it('should generate cmake/subdirectories.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
-        const file = `${options.cmakeConfigDir}/${options.workspaceName}.cmake`;
+        const file = `${options.cmakeConfigDir}/subdirectories.cmake`;
         const readFile = readFileWithTree(tree, file);
-        const expectedFile =
-            `get_filename_component(ROOT "\${CMAKE_CURRENT_LIST_FILE}/../${options.relativeCmakeConfigPath}" REALPATH)\n` +
-            `list(APPEND CMAKE_MODULE_PATH \${ROOT}/${options.cmakeConfigDir})\n` +
-            `set(CMAKE_PREFIX_PATH \${ROOT}/${options.cmakeConfigDir}/config)\n` +
-            '\n' +
-            `include(modules)\n` +
-            '\n' +
-            'set_policies()\n' +
-            'set_global_settings()\n';
+        const expectedFile = 'set(SUB_DIRECTORIES)\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
 
@@ -193,6 +210,34 @@ describe('generateCmakeConfigFiles', () => {
         expect(readFile).toStrictEqual(expectedFile);
     });
 
+    it('should generate cmake/settings/set_library_install_destination.cmake correctly', async () => {
+        generateCmakeConfigFiles(tree, options);
+        const file = `${options.cmakeConfigDir}/settings/set_library_install_destination.cmake`;
+        const readFile = readFileWithTree(tree, file);
+        const expectedFile =
+            'macro(set_library_install_destination PROJECT)\n' +
+            '    set(${PROJECT}_INSTALL_CMAKEDIR ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT})\n' +
+            '    install(TARGETS ${PROJECT}\n' +
+            '        EXPORT ${PROJECT}_Targets\n' +
+            '        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}\n' +
+            '        COMPONENT ${PROJECT}_Runtime\n' +
+            '        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}\n' +
+            '        COMPONENT ${PROJECT}_Runtime\n' +
+            '        NAMELINK_COMPONENT ${PROJECT}_Development\n' +
+            '        ARCHIVE DESTINATION ${CMAKE_INSTALL_BINDIR}\n' +
+            '        COMPONENT ${PROJECT}_Development\n' +
+            '        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}\n' +
+            '    )\n' +
+            '    install(EXPORT ${PROJECT}_Targets\n' +
+            '        FILE ${PROJECT}_Targets.cmake\n' +
+            '        NAMESPACE ${PROJECT}::\n' +
+            '        DESTINATION ${${PROJECT}_INSTALL_CMAKEDIR}\n' +
+            '        COMPONENT ${PROJECT}_DEVELOPMENT\n' +
+            '    )\n' +
+            'endmacro()\n';
+        expect(readFile).toStrictEqual(expectedFile);
+    });
+
     it('should generate cmake/settings/set_library_settings.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
         const file = `${options.cmakeConfigDir}/settings/set_library_settings.cmake`;
@@ -203,9 +248,10 @@ describe('generateCmakeConfigFiles', () => {
             'function(set_library_settings PROJECT SOURCE_DIR)\n' +
             '    add_library(${PROJECT} ${${PROJECT}_SOURCES})\n' +
             '    add_library(${PROJECT}::${PROJECT} ALIAS ${PROJECT})\n' +
-            '    set_target_properties(${PROJECT} PROPERTIES PREFIX "")\n' +
             '    set_target_properties(${PROJECT}\n' +
             '        PROPERTIES\n' +
+            '        PREFIX ""\n' +
+            '        EXPORT_NAME ${PROJECT}\n' +
             '        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib"\n' +
             '        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib"\n' +
             '        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/bin"\n' +
@@ -256,27 +302,16 @@ describe('generateCmakeConfigFiles', () => {
         expect(readFile).toStrictEqual(expectedFile);
     });
 
-    it('should generate cmake/subdirectories.cmake correctly', async () => {
+    it('should generate cmake/utils/link_library.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
-        const file = `${options.cmakeConfigDir}/subdirectories.cmake`;
-        const readFile = readFileWithTree(tree, file);
-        const expectedFile = 'set(SUB_DIRECTORIES)\n';
-        expect(readFile).toStrictEqual(expectedFile);
-    });
-
-    it('should generate cmake/utils/add_subdirectories.cmake correctly', async () => {
-        generateCmakeConfigFiles(tree, options);
-        const file = `${options.cmakeConfigDir}/utils/add_subdirectories.cmake`;
+        const file = `${options.cmakeConfigDir}/utils/link_library.cmake`;
         const readFile = readFileWithTree(tree, file);
         const expectedFile =
-            'include(subdirectories)\n' +
-            '\n' +
-            'macro(add_subdirectories)\n' +
-            '    foreach(SUB_DIRECTORY ${SUB_DIRECTORIES})\n' +
-            '        message("Adding subdirectory: ${SUB_DIRECTORY}")\n' +
-            '        add_subdirectory(${SUB_DIRECTORY})\n' +
-            '    endforeach()\n' +
-            'endmacro()\n';
+            'function(link_library PROJECT LIBRARY)\n' +
+            '    list(APPEND CMAKE_PREFIX_PATH ${ROOT}/dist/libs/${LIBRARY})\n' +
+            '    find_package(lib${LIBRARY} CONFIG REQUIRED)\n' +
+            '    target_link_libraries(${PROJECT} PUBLIC lib${LIBRARY}::lib${LIBRARY})\n' +
+            'endfunction()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
 

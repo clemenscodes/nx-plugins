@@ -1,5 +1,5 @@
 export enum CProjectType {
-    App,
-    Lib,
-    Test,
+    App = 'BIN',
+    Lib = 'LIB',
+    Test = 'TEST',
 }

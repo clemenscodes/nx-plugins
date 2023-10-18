@@ -1,16 +1,23 @@
 import { CProjectType } from '@/config';
+import { output } from '@nx/devkit';
 
 export const getProjectTypeFromConfigFileContent = (
     content: string,
 ): CProjectType => {
-    if (content.includes('enable_testing()')) {
+    if (content.includes('set(PROJECT_TYPE TEST)')) {
         return CProjectType.Test;
     }
-    if (content.includes('set_library_settings')) {
+    if (content.includes('set(PROJECT_TYPE LIB)')) {
         return CProjectType.Lib;
     }
-    if (content.includes('set_binary_settings')) {
+    if (content.includes('set(PROJECT_TYPE BIN)')) {
         return CProjectType.App;
     }
-    throw new Error('Failed to determine project type');
+    output.error({
+        title: 'Failed to determine project type from CMakeLists.txt',
+        bodyLines: [
+            'Please make sure to have set(PROJECT_TYPE <TEST|LIB|BIN>)',
+        ],
+    });
+    throw new Error();
 };

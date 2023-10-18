@@ -1,18 +1,24 @@
 import type { C } from '@/config';
+import { output } from '@nx/devkit';
 
 export const getLanguageVariant = (configFileContent: string): C => {
-    const projectLanguageVariantRegex = /^.*project\([^)]+\s(?:C|CXX)\).*$/gm;
+    const projectLanguageVariantRegex = /^.*set\(LANGUAGE+\s(?:C|CXX)\).*$/gm;
     const projectMatchResult = configFileContent.match(
         projectLanguageVariantRegex,
     );
     if (!projectMatchResult) {
-        throw new Error(
-            'Failed to determine C language variant from CMakeLists.txt',
-        );
+        output.error({
+            title: 'Failed to determine C language variant from CMakeLists.txt',
+            bodyLines: ['Please make sure to have set(LANGUAGE <LANGUAGE>)'],
+        });
+        throw new Error();
     }
     const project = projectMatchResult.pop();
     if (!project) {
-        throw new Error(`Failed to get project name from CMakeLists.txt`);
+        output.error({
+            title: `Failed to get project name from CMakeLists.txt`,
+        });
+        throw new Error();
     }
     if (project.endsWith('C)')) {
         return 'C';
@@ -20,7 +26,8 @@ export const getLanguageVariant = (configFileContent: string): C => {
     if (project.endsWith('CXX)')) {
         return 'C++';
     }
-    throw new Error(
-        'Failed to determine C language variant from CMakeLists.txt',
-    );
+    output.error({
+        title: 'Failed to determine C language variant from CMakeLists.txt',
+    });
+    throw new Error();
 };

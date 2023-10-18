@@ -57,31 +57,37 @@ describe('generateLibFiles', () => {
             '}\n';
         expectedListsFile =
             `include(${options.relativeRootPath}${options.cmakeConfigDir}/${options.workspaceName}.cmake)\n` +
+            'include(cmake/version.cmake)\n' +
             '\n' +
-            `cmake_minimum_required(VERSION 3.21)\n` +
+            'cmake_minimum_required(VERSION 3.21)\n' +
+            '\n' +
+            'set(PROJECT_TYPE LIB)\n' +
+            `set(LANGUAGE CXX)\n` +
+            '\n' +
             `set_project_settings(${options.libName} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
-            `project(${options.libName} CXX)\n` +
+            '\n' +
+            `project(${options.libName} LANGUAGES \${LANGUAGE} VERSION \${${options.libName}_VERSION})\n` +
+            '\n' +
             `set_library_settings(${options.libName} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
             '\n' +
             'include(GNUInstallDirs)\n' +
-            `install(TARGETS ${options.libName} EXPORT ${options.libName}Targets\n` +
-            '    LIBRARY DESTINATION lib\n' +
-            '    ARCHIVE DESTINATION lib\n' +
-            '    RUNTIME DESTINATION include\n' +
-            ')\n' +
-            `install(EXPORT ${options.libName}Targets\n` +
-            `    FILE ${options.libName}Targets.cmake\n` +
+            '\n' +
+            `set_library_install_destination(${options.libName})\n` +
+            '\n' +
+            `set_package_version(${options.libName} \${${options.libName}_VERSION})\n` +
+            '\n' +
+            'export(\n' +
+            `    EXPORT ${options.libName}_Targets\n` +
             `    NAMESPACE ${options.libName}::\n` +
-            `    DESTINATION lib/cmake/${options.libName}\n` +
+            `    FILE \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}Config.cmake\n` +
             ')\n' +
             '\n' +
-            'include(CMakePackageConfigHelpers)\n' +
-            `write_basic_package_version_file("${options.libName}ConfigVersion.cmake"\n` +
-            '    VERSION 0.0.1\n' +
-            '    COMPATIBILITY SameMajorVersion\n' +
-            ')\n' +
-            `install(FILES "${options.libName}Config.cmake" "${options.libName}ConfigVersion.cmake"\n` +
-            `    DESTINATION lib/cmake/${options.libName}\n` +
+            `export(PACKAGE ${options.libName})\n` +
+            '\n' +
+            'install(FILES\n' +
+            `    \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}Config.cmake\n` +
+            `    \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}ConfigVersion.cmake\n` +
+            `    DESTINATION \${${options.libName}_INSTALL_CMAKEDIR}\n` +
             ')\n';
         expectedReadMeFile =
             '# libtest\n' +
@@ -139,31 +145,37 @@ describe('generateLibFiles', () => {
         librarySourceFile = `packages/test/src/libtest.c`;
         expectedListsFile =
             `include(${options.relativeRootPath}${options.cmakeConfigDir}/${options.workspaceName}.cmake)\n` +
+            'include(cmake/version.cmake)\n' +
             '\n' +
-            `cmake_minimum_required(VERSION 3.21)\n` +
+            'cmake_minimum_required(VERSION 3.21)\n' +
+            '\n' +
+            'set(PROJECT_TYPE LIB)\n' +
+            `set(LANGUAGE C)\n` +
+            '\n' +
             `set_project_settings(${options.libName} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
-            `project(${options.libName} C)\n` +
+            '\n' +
+            `project(${options.libName} LANGUAGES \${LANGUAGE} VERSION \${${options.libName}_VERSION})\n` +
+            '\n' +
             `set_library_settings(${options.libName} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
             '\n' +
             'include(GNUInstallDirs)\n' +
-            `install(TARGETS ${options.libName} EXPORT ${options.libName}Targets\n` +
-            '    LIBRARY DESTINATION lib\n' +
-            '    ARCHIVE DESTINATION lib\n' +
-            '    RUNTIME DESTINATION include\n' +
-            ')\n' +
-            `install(EXPORT ${options.libName}Targets\n` +
-            `    FILE ${options.libName}Targets.cmake\n` +
+            '\n' +
+            `set_library_install_destination(${options.libName})\n` +
+            '\n' +
+            `set_package_version(${options.libName} \${${options.libName}_VERSION})\n` +
+            '\n' +
+            'export(\n' +
+            `    EXPORT ${options.libName}_Targets\n` +
             `    NAMESPACE ${options.libName}::\n` +
-            `    DESTINATION lib/cmake/${options.libName}\n` +
+            `    FILE \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}Config.cmake\n` +
             ')\n' +
             '\n' +
-            'include(CMakePackageConfigHelpers)\n' +
-            `write_basic_package_version_file("${options.libName}ConfigVersion.cmake"\n` +
-            '    VERSION 0.0.1\n' +
-            '    COMPATIBILITY SameMajorVersion\n' +
-            ')\n' +
-            `install(FILES "${options.libName}Config.cmake" "${options.libName}ConfigVersion.cmake"\n` +
-            `    DESTINATION lib/cmake/${options.libName}\n` +
+            `export(PACKAGE ${options.libName})\n` +
+            '\n' +
+            'install(FILES\n' +
+            `    \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}Config.cmake\n` +
+            `    \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}ConfigVersion.cmake\n` +
+            `    DESTINATION \${${options.libName}_INSTALL_CMAKEDIR}\n` +
             ')\n';
         expectedReadMeFile =
             '# libtest\n' +
