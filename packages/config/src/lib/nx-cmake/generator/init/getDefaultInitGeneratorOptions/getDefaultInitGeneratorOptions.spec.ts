@@ -8,6 +8,7 @@ describe('getDefaultInitGeneratorOptions', () => {
         expected = {
             language: 'C',
             cmakeConfigDir: '.cmake',
+            cmakeC: 'C',
             globalIncludeDir: 'include',
             appsDir: 'bin',
             libsDir: 'libs',

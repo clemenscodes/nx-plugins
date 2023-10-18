@@ -1,5 +1,5 @@
 import type { FileData, RawProjectGraphDependency } from '@nx/devkit';
-import type { FilteredProject } from '@/config';
+import { CProjectType, type FilteredProject } from '@/config';
 import { DependencyType } from '@nx/devkit';
 import { filterDependenciesOfProject } from './filterDependenciesOfProject';
 import * as getGccDependenciesModule from './getGccDependencies/getGccDependencies';
@@ -16,7 +16,7 @@ describe('filterDependenciesOfProject', () => {
         project = {
             name: 'testparser',
             root: 'packages/parser/test',
-            type: 2,
+            type: CProjectType.Test,
             tag: 'c',
             sourceRoot: 'packages/parser/test/src',
         };
@@ -25,21 +25,21 @@ describe('filterDependenciesOfProject', () => {
             {
                 name: 'testparser',
                 root: 'packages/parser/test',
-                type: 2,
+                type: CProjectType.Test,
                 tag: 'c',
                 sourceRoot: 'packages/parser/test/src',
             },
             {
                 name: 'libparser',
                 root: 'packages/parser',
-                type: 1,
+                type: CProjectType.Lib,
                 tag: 'c',
                 sourceRoot: 'packages/parser/src',
             },
             {
                 name: 'parser',
                 root: 'bin/parser',
-                type: 0,
+                type: CProjectType.App,
                 tag: 'c',
                 sourceRoot: 'bin/parser/src',
             },

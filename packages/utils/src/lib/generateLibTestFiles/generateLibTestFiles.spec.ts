@@ -108,7 +108,7 @@ describe('generateLibTestFiles', () => {
             '\n' +
             'set_project_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             '\n' +
-            'project(testtest LANGUAGE ${LANGUAGE})\n' +
+            'project(testtest LANGUAGES ${LANGUAGE})\n' +
             '\n' +
             'set_binary_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             '\n' +
@@ -190,7 +190,7 @@ describe('generateLibTestFiles', () => {
             '\n' +
             'set_project_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             '\n' +
-            'project(testtest LANGUAGE ${LANGUAGE})\n' +
+            'project(testtest LANGUAGES ${LANGUAGE})\n' +
             '\n' +
             'set_binary_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             '\n' +

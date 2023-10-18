@@ -1,13 +1,13 @@
-import { getCMakeC } from './getCMakeC';
+import { getCmakeC } from './getCmakeC';
 
-describe('getCMakeC', () => {
+describe('getCmakeC', () => {
     it('should return "C" for input "C"', () => {
-        const result = getCMakeC('C');
+        const result = getCmakeC('C');
         expect(result).toBe('C');
     });
 
     it('should return "CXX" for input "C++"', () => {
-        const result = getCMakeC('C++');
+        const result = getCmakeC('C++');
         expect(result).toBe('CXX');
     });
 });

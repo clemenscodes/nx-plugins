@@ -50,7 +50,6 @@ export { updateIncludeFile } from './lib/updateIncludeFile/updateIncludeFile';
 export { linkGenerator } from './lib/linkGenerator/linkGenerator';
 export { generateReadMe } from './lib/generateReadMe/generateReadMe';
 export { presetGenerator } from './lib/presetGenerator/presetGenerator';
-export { getCMakeC } from './lib/getCmakeC/getCMakeC';
 export { getLanguageExtension } from './lib/getLanguageExtension/getLanguageExtension';
 export { getProjectConfiguration } from './lib/getProjectConfiguration/getProjectConfiguration';
 export { getProjectConfigurationType } from './lib/getProjectConfigurationType/getProjectConfigurationType';

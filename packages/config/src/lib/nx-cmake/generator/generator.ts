@@ -14,6 +14,7 @@ export type InitGeneratorSchema = {
 
 export type InitSchema = InitGeneratorSchema & {
     relativeCmakeConfigPath: string;
+    cmakeC: CMakeC;
 };
 
 export type GeneratorBaseOptions = {

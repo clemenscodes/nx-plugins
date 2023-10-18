@@ -23,25 +23,13 @@
             "analyzeSourceFiles": true
         },
         "nx-cmake": {
-            "language": "C",
+            "language": "C++",
             "globalIncludeDir": "include",
             "cmakeConfigDir": ".cmake",
             "workspaceName": "workspace"
         }
     },
     "$schema": "./node_modules/nx/schemas/nx-schema.json",
-    "generators": {
-        "nx-cmake": {
-            "binary": {
-                "language": "C++",
-                "generateTests": true
-            },
-            "library": {
-                "language": "C++",
-                "generateTests": true
-            }
-        }
-    },
     "targetDefaults": {
         "cmake": {
             "dependsOn": ["^cmake"],
@@ -103,5 +91,17 @@
     "workspaceLayout": {
         "appsDir": "bin",
         "libsDir": "packages"
+    },
+    "generators": {
+        "nx-cmake": {
+            "binary": {
+                "language": "C++",
+                "generateTests": true
+            },
+            "library": {
+                "language": "C++",
+                "generateTests": true
+            }
+        }
     }
 }

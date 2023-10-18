@@ -7,7 +7,7 @@ set(LANGUAGE <%= cmakeC %>)
 
 set_project_settings(<%= testName %> ${CMAKE_CURRENT_SOURCE_DIR})
 
-project(<%= testName %> LANGUAGE ${LANGUAGE})
+project(<%= testName %> LANGUAGES ${LANGUAGE})
 
 set_binary_settings(<%= testName %> ${CMAKE_CURRENT_SOURCE_DIR})
 
