@@ -1,4 +1,8 @@
-import { FormatExecutorSchema, LINUX_CLANG_FORMAT } from '@/config';
+import {
+    FormatExecutorSchema,
+    LINUX_CLANG_FORMAT,
+    CLANG_FORMAT_CONFIG_FILE,
+} from '@/config';
 import { formatFilesWithClangFormat } from './formatFilesWithClangFormat';
 import * as fileModule from '@/file';
 import * as getFormatArgumentsModule from '../getFormatArguments/getFormatArguments';
@@ -49,7 +53,11 @@ describe('formatFilesWithClangFormat', () => {
         jest.spyOn(configModule, 'getClangFormat').mockReturnValue(
             LINUX_CLANG_FORMAT[0],
         );
-        formatArgs = ['--style=file:/path/to/.clang-format', '--verbose', '-i'];
+        formatArgs = [
+            `--style=file:/path/to/${CLANG_FORMAT_CONFIG_FILE}`,
+            '--verbose',
+            '-i',
+        ];
         sourceFiles = ['/path/to/file1.cpp', '/path/to/file2.cpp'];
     });
 
@@ -57,11 +65,11 @@ describe('formatFilesWithClangFormat', () => {
         jest.restoreAllMocks();
     });
 
-    it('should pass executor arguments to clang-format', async () => {
+    it('should pass executor arguments to clang-format', () => {
         getFormatArgumentsMock.mockReturnValue(formatArgs);
         getProjectFilesMock.mockReturnValue(sourceFiles);
         executeCommandForFilesMock.mockReturnValue(true);
-        await formatFilesWithClangFormat(workspaceRoot, projectRoot, options);
+        formatFilesWithClangFormat(workspaceRoot, projectRoot, options);
         expect(getFormatArgumentsMock).toHaveBeenCalledWith(
             workspaceRoot,
             projectRoot,
@@ -79,12 +87,12 @@ describe('formatFilesWithClangFormat', () => {
         );
     });
 
-    it('should return true if all files were successfully formatted', async () => {
+    it('should return true if all files were successfully formatted', () => {
         isWindowsMock.mockReturnValue(true);
-        getFormatArgumentsMock.mockResolvedValue(formatArgs);
+        getFormatArgumentsMock.mockReturnValue(formatArgs);
         getProjectFilesMock.mockReturnValue(sourceFiles);
         executeCommandForFilesMock.mockReturnValue(true);
-        const result = await formatFilesWithClangFormat(
+        const result = formatFilesWithClangFormat(
             workspaceRoot,
             projectRoot,
             options,
@@ -97,12 +105,12 @@ describe('formatFilesWithClangFormat', () => {
         expect(result).toBe(true);
     });
 
-    it('should return false if not all files were successfully formatted', async () => {
+    it('should return false if not all files were successfully formatted', () => {
         isDarwinMock.mockReturnValue(true);
-        getFormatArgumentsMock.mockResolvedValue(formatArgs);
+        getFormatArgumentsMock.mockReturnValue(formatArgs);
         getProjectFilesMock.mockReturnValue(sourceFiles);
         executeCommandForFilesMock.mockReturnValue(false);
-        const result = await formatFilesWithClangFormat(
+        const result = formatFilesWithClangFormat(
             workspaceRoot,
             projectRoot,
             options,

@@ -10,7 +10,7 @@ export async function* formatExecutor(
 ): AsyncGenerator<{ success: boolean }> {
     logger(`Running fmt executor`);
     const { workspaceRoot, projectRoot } = extractRootsFromExecutorContext(ctx);
-    const success = await formatFilesWithClangFormat(
+    const success = formatFilesWithClangFormat(
         workspaceRoot,
         projectRoot,
         options,

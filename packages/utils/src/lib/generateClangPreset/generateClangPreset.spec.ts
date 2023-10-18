@@ -1,4 +1,6 @@
 import {
+    CLANG_FORMAT_CONFIG_FILE,
+    CLANG_TIDY_CONFIG_FILE,
     getDefaultInitGeneratorOptions,
     type InitGeneratorSchema,
 } from '@/config';
@@ -10,16 +12,12 @@ import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
 describe('generateClangPreset', () => {
     let tree: Tree;
     let options: InitGeneratorSchema;
-    let clangFormatFile: string;
-    let clangTidyFile: string;
     let expectedClangTidyFileContent: string;
     let expectedClangFormatFileContent: string;
 
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
         options = getDefaultInitGeneratorOptions();
-        clangFormatFile = '.clang-format.yml';
-        clangTidyFile = '.clang-tidy.yml';
         expectedClangTidyFileContent =
             "Checks: 'clang-diagnostic-*,clang-analyzer-*'\n" +
             "WarningsAsErrors: ''\n" +
@@ -79,20 +77,23 @@ describe('generateClangPreset', () => {
     it('should not generate clang preset when addClangPreset is false', async () => {
         options.addClangPreset = false;
         generateClangPreset(tree, options);
-        expect(tree.exists('.clang-format.yml')).toBe(false);
-        expect(tree.exists('.clang-tidy.yml')).toBe(false);
+        expect(tree.exists(CLANG_FORMAT_CONFIG_FILE)).toBe(false);
+        expect(tree.exists(CLANG_TIDY_CONFIG_FILE)).toBe(false);
     });
 
     it('should generate clang preset when addClangFormatPreset is true', async () => {
         generateClangPreset(tree, options);
-        expect(tree.exists('.clang-format.yml')).toBe(true);
-        expect(tree.exists('.clang-tidy.yml')).toBe(true);
+        expect(tree.exists(CLANG_FORMAT_CONFIG_FILE)).toBe(true);
+        expect(tree.exists(CLANG_TIDY_CONFIG_FILE)).toBe(true);
     });
 
     it('should generate clang preset correctly', async () => {
         generateClangPreset(tree, options);
-        const clangFileContent = readFileWithTree(tree, clangFormatFile);
-        const clangTidyContent = readFileWithTree(tree, clangTidyFile);
+        const clangFileContent = readFileWithTree(
+            tree,
+            CLANG_FORMAT_CONFIG_FILE,
+        );
+        const clangTidyContent = readFileWithTree(tree, CLANG_TIDY_CONFIG_FILE);
         expect(clangFileContent).toStrictEqual(expectedClangFormatFileContent);
         expect(clangTidyContent).toStrictEqual(expectedClangTidyFileContent);
     });

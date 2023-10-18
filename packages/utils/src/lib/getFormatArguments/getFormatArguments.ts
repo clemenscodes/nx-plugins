@@ -1,18 +1,18 @@
 import { getStyleArgument } from './getStyleArgument/getStyleArgument';
 import { getEditFileInPlaceArgument } from './getEditFilesInPlaceArgument/getEditFilesInPlaceArgument';
 import { getVerboseArgument } from './getVerboseArgument/getVerboseArgument';
-import { FormatExecutorSchema } from '@/config';
+import { CLANG_FORMAT_CONFIG_FILE, FormatExecutorSchema } from '@/config';
 
-export const getFormatArguments = async (
+export const getFormatArguments = (
     workspaceRoot: string,
     projectRoot: string,
     options: FormatExecutorSchema,
-): Promise<string[]> => {
+): string[] => {
     const { args, verbose, editFilesInPlace } = options;
-    const style = await getStyleArgument(
+    const style = getStyleArgument(
         workspaceRoot,
         projectRoot,
-        '.clang-format.yml',
+        CLANG_FORMAT_CONFIG_FILE,
     );
     const isVerbose = getVerboseArgument(verbose);
     const inPlace = getEditFileInPlaceArgument(editFilesInPlace);

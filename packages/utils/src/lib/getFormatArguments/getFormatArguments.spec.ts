@@ -1,4 +1,4 @@
-import { FormatExecutorSchema } from '@/config';
+import { CLANG_FORMAT_CONFIG_FILE, FormatExecutorSchema } from '@/config';
 import { getFormatArguments } from './getFormatArguments';
 import * as getStyleArgumentModule from './getStyleArgument/getStyleArgument';
 
@@ -18,8 +18,8 @@ describe('getFormatArguments', () => {
         };
         getStyleArgumentMock = jest
             .spyOn(getStyleArgumentModule, 'getStyleArgument')
-            .mockImplementation(async () => {
-                return `--style=file:${workspaceRoot}/${projectRoot}/.clang-format.yml`;
+            .mockImplementation(() => {
+                return `--style=file:${workspaceRoot}/${projectRoot}/${CLANG_FORMAT_CONFIG_FILE}`;
             });
     });
 
@@ -27,21 +27,17 @@ describe('getFormatArguments', () => {
         jest.restoreAllMocks();
     });
 
-    it('should return format arguments with style, verbose, and in-place edit', async () => {
-        const result = await getFormatArguments(
-            workspaceRoot,
-            projectRoot,
-            options,
-        );
+    it('should return format arguments with style, verbose, and in-place edit', () => {
+        const result = getFormatArguments(workspaceRoot, projectRoot, options);
 
         expect(getStyleArgumentMock).toHaveBeenCalledWith(
             workspaceRoot,
             projectRoot,
-            '.clang-format.yml',
+            CLANG_FORMAT_CONFIG_FILE,
         );
 
         expect(result).toEqual([
-            `--style=file:${workspaceRoot}/${projectRoot}/.clang-format.yml`,
+            `--style=file:${workspaceRoot}/${projectRoot}/${CLANG_FORMAT_CONFIG_FILE}`,
             '--verbose',
             '-i',
             '--arg1',
@@ -49,36 +45,31 @@ describe('getFormatArguments', () => {
         ]);
     });
 
-    it('should return format arguments without verbose and in-place edit', async () => {
+    it('should return format arguments without verbose and in-place edit', () => {
         options.editFilesInPlace = false;
 
-        const result = await getFormatArguments(
-            workspaceRoot,
-            projectRoot,
-            options,
-        );
+        const result = getFormatArguments(workspaceRoot, projectRoot, options);
 
         expect(getStyleArgumentMock).toHaveBeenCalledWith(
             workspaceRoot,
             projectRoot,
-            '.clang-format.yml',
+            CLANG_FORMAT_CONFIG_FILE,
         );
 
         expect(result).toEqual([
-            `--style=file:${workspaceRoot}/${projectRoot}/.clang-format.yml`,
+            `--style=file:${workspaceRoot}/${projectRoot}/${CLANG_FORMAT_CONFIG_FILE}`,
             '--verbose',
             '--arg1',
             '--arg2',
         ]);
     });
 
-    it('should error if config file does not exist', async () => {
+    it('should error if config file does not exist', () => {
         getStyleArgumentMock.mockImplementation(() => {
             throw new Error();
         });
-        await expect(
-            async () =>
-                await getFormatArguments(workspaceRoot, projectRoot, options),
-        ).rejects.toThrowError();
+        expect(() =>
+            getFormatArguments(workspaceRoot, projectRoot, options),
+        ).toThrowError();
     });
 });

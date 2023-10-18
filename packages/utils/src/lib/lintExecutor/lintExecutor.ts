@@ -10,11 +10,7 @@ export async function* lintExecutor(
 ): AsyncGenerator<{ success: boolean }> {
     logger(`Running lint executor`);
     const { workspaceRoot, projectRoot } = extractRootsFromExecutorContext(ctx);
-    const success = await lintFilesWithClangTidy(
-        workspaceRoot,
-        projectRoot,
-        options,
-    );
+    const success = lintFilesWithClangTidy(workspaceRoot, projectRoot, options);
     yield {
         success,
     };

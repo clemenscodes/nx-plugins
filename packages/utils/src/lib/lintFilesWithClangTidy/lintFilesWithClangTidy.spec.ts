@@ -53,11 +53,11 @@ describe('lintFilesWithClangTidy', () => {
         jest.restoreAllMocks();
     });
 
-    it('should pass executor arguments to clang-tidy', async () => {
-        getLintArgumentsMock.mockResolvedValue(lintArgsMock);
+    it('should pass executor arguments to clang-tidy', () => {
+        getLintArgumentsMock.mockReturnValue(lintArgsMock);
         getProjectFilesMock.mockReturnValue(sourceFilesMock);
         runCommandMock.mockReturnValueOnce({ success: true });
-        await lintFilesWithClangTidy(workspaceRoot, projectRoot, options);
+        lintFilesWithClangTidy(workspaceRoot, projectRoot, options);
         expect(getLintArgumentsMock).toHaveBeenCalledWith(
             workspaceRoot,
             projectRoot,
@@ -75,12 +75,12 @@ describe('lintFilesWithClangTidy', () => {
         );
     });
 
-    it('should return true if all files were successfully linted', async () => {
+    it('should return true if all files were successfully linted', () => {
         isDarwinMock.mockReturnValue(true);
-        getLintArgumentsMock.mockResolvedValue(lintArgsMock);
+        getLintArgumentsMock.mockReturnValue(lintArgsMock);
         getProjectFilesMock.mockReturnValue(sourceFilesMock);
         runCommandMock.mockReturnValue({ success: true });
-        const result = await lintFilesWithClangTidy(
+        const result = lintFilesWithClangTidy(
             workspaceRoot,
             projectRoot,
             options,
@@ -93,12 +93,12 @@ describe('lintFilesWithClangTidy', () => {
         expect(result).toBe(true);
     });
 
-    it('should return false if not all files were successfully linted', async () => {
+    it('should return false if not all files were successfully linted', () => {
         isWindowsMock.mockReturnValue(true);
-        getLintArgumentsMock.mockResolvedValue(lintArgsMock);
+        getLintArgumentsMock.mockReturnValue(lintArgsMock);
         getProjectFilesMock.mockReturnValue(sourceFilesMock);
         runCommandMock.mockReturnValue({ success: false });
-        const result = await lintFilesWithClangTidy(
+        const result = lintFilesWithClangTidy(
             workspaceRoot,
             projectRoot,
             options,

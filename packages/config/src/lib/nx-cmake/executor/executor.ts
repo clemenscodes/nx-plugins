@@ -1,23 +1,40 @@
+import { ExecutorContext } from '@nx/devkit';
+
+export type Executor = <T extends ExecutorBaseOptions>(
+    schema: T,
+    ctx: ExecutorContext,
+) => AsyncGenerator<{ success: boolean }>;
+
 export type ExecutorBaseOptions = {
     args: string[];
+};
+
+export type CmakeExecutorSchema = ExecutorBaseOptions & {
     release: boolean;
 };
 
-export type CmakeExecutorSchema = ExecutorBaseOptions;
+export type BuildExecutorSchema = ExecutorBaseOptions & {
+    release: boolean;
+};
 
-export type BuildExecutorSchema = ExecutorBaseOptions;
-
-export type FormatExecutorSchema = Omit<ExecutorBaseOptions, 'release'> & {
+export type FormatExecutorSchema = ExecutorBaseOptions & {
     verbose: boolean;
     editFilesInPlace: boolean;
 };
 
-export type LintExecutorSchema = ExecutorBaseOptions;
+export type LintExecutorSchema = ExecutorBaseOptions & {
+    release: boolean;
+};
 
 export type TestExecutorSchema = ExecutorBaseOptions & {
+    release: boolean;
     outputOnFailure: boolean;
 };
 
-export type DebugExecutorSchema = ExecutorBaseOptions;
+export type DebugExecutorSchema = ExecutorBaseOptions & {
+    release: boolean;
+};
 
-export type ExecuteExecutorSchema = ExecutorBaseOptions;
+export type ExecuteExecutorSchema = ExecutorBaseOptions & {
+    release: boolean;
+};

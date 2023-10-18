@@ -1,4 +1,4 @@
-import { LintExecutorSchema } from '@/config';
+import { CLANG_FORMAT_CONFIG_FILE, LintExecutorSchema } from '@/config';
 import { getLintArguments } from './getLintArguments';
 import * as getClangTidyConfigArgumentModule from './getClangTidyConfigArgument/getClangTidyConfigArgument';
 
@@ -17,7 +17,7 @@ describe('getLintArguments', () => {
             release: false,
         };
         expectedArguments = [
-            `--config-file=${workspaceRoot}/${projectRoot}/.clang-format`,
+            `--config-file=${workspaceRoot}/${projectRoot}/${CLANG_FORMAT_CONFIG_FILE}`,
             `-p=${workspaceRoot}/dist/${projectRoot}/compile_commands.json`,
         ];
         getClangTidyConfigArgumentMock = jest
@@ -25,8 +25,8 @@ describe('getLintArguments', () => {
                 getClangTidyConfigArgumentModule,
                 'getClangTidyConfigArgument',
             )
-            .mockImplementation(async (workspaceRoot, projectRoot) => {
-                return `--config-file=${workspaceRoot}/${projectRoot}/.clang-format`;
+            .mockImplementation((workspaceRoot, projectRoot) => {
+                return `--config-file=${workspaceRoot}/${projectRoot}/${CLANG_FORMAT_CONFIG_FILE}`;
             });
     });
 
@@ -34,34 +34,25 @@ describe('getLintArguments', () => {
         jest.restoreAllMocks();
     });
 
-    it('should get lint arguments for clang-tidy', async () => {
-        const result = await getLintArguments(
-            workspaceRoot,
-            projectRoot,
-            options,
-        );
+    it('should get lint arguments for clang-tidy', () => {
+        const result = getLintArguments(workspaceRoot, projectRoot, options);
         expect(result).toStrictEqual(expectedArguments);
     });
 
-    it('should add arguments at the end', async () => {
+    it('should add arguments at the end', () => {
         options.args = ['--arg1', '--arg2'];
         expectedArguments.push('--arg1');
         expectedArguments.push('--arg2');
-        const result = await getLintArguments(
-            workspaceRoot,
-            projectRoot,
-            options,
-        );
+        const result = getLintArguments(workspaceRoot, projectRoot, options);
         expect(result).toStrictEqual(expectedArguments);
     });
 
-    it('should error if config file does not exist', async () => {
-        getClangTidyConfigArgumentMock.mockImplementation(async () => {
+    it('should error if config file does not exist', () => {
+        getClangTidyConfigArgumentMock.mockImplementation(() => {
             throw new Error();
         });
-        await expect(
-            async () =>
-                await getLintArguments(workspaceRoot, projectRoot, options),
-        ).rejects.toThrowError();
+        expect(() =>
+            getLintArguments(workspaceRoot, projectRoot, options),
+        ).toThrowError();
     });
 });
