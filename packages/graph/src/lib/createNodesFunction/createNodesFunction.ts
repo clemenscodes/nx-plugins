@@ -14,7 +14,7 @@ export const createNodesFunction: CreateNodesFunction = (
         return { projects };
     } catch (e) {
         output.error({
-            title: `Failed to create project nodes. Please report this bug so it can be fixed :)`,
+            title: `Failed to create project node for ${projectConfigurationFile}`,
         });
         return { projects: {} };
     }

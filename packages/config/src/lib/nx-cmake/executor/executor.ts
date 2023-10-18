@@ -1,9 +1,7 @@
-import { ExecutorContext } from '@nx/devkit';
+import { Executor as NxExecutor } from '@nx/devkit';
 
-export type Executor = <T extends ExecutorBaseOptions>(
-    schema: T,
-    ctx: ExecutorContext,
-) => AsyncGenerator<{ success: boolean }>;
+export type Executor<T extends ExecutorBaseOptions = ExecutorBaseOptions> =
+    NxExecutor<T>;
 
 export type ExecutorBaseOptions = {
     args: string[];
