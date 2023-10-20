@@ -167,7 +167,6 @@ Generators provide the following options:
 |---------|-------------|-----------|---------------|
 | --language | Whether to use C or C++ by default for generators. |  "C", "C++" | "C" |
 | --cmakeConfigDir | Where the configuration for CMake will be generated. | string | ".cmake" |
-| --globalIncludeDir | Where the global include directory will be generated. | string | "include" |
 | --appsDir | Where the binaries will be generated. | string | "bin" |
 | --libsDir | Where the libraries will be generated. | string | "libs" |
 | --addClangPreset | Generate a clang preset. | boolean | true |

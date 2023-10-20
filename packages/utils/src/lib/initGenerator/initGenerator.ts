@@ -2,7 +2,6 @@ import type { InitGeneratorSchema } from '@/config';
 import type { Tree } from '@nx/devkit';
 import { generateClangPreset } from '../generateClangPreset/generateClangPreset';
 import { generateCmakeConfigFiles } from '../generateCmakeConfigFiles/generateCmakeConfigFiles';
-import { generateGlobalIncludeDir } from '../generateGlobalIncludeDir/generateGlobalIncludeDir';
 import { generateRootConfig } from '../generateRootConfig/generateRootConfig';
 import { getUpdatedNxJson } from '../getUpdatedNxJson/getUpdatedNxJson';
 import {
@@ -40,7 +39,6 @@ export async function initGenerator(tree: Tree, options: InitGeneratorSchema) {
     );
     updateNxJson(tree, updatedNxJson);
     generateCmakeConfigFiles(tree, updatedOptions);
-    generateGlobalIncludeDir(tree, updatedOptions);
     generateRootConfig(tree, updatedOptions);
     generateClangPreset(tree, updatedOptions);
     if (!options.skipFormat) {

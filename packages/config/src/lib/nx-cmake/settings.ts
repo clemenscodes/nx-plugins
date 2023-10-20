@@ -23,7 +23,6 @@ export type PluginGeneratorConfig = {
 export type NxCmakePluginConfig = {
     language: C;
     cmakeConfigDir: string;
-    globalIncludeDir: string;
     workspaceName: string;
 };
 

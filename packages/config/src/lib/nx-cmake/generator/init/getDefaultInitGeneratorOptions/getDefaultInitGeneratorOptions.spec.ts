@@ -9,7 +9,6 @@ describe('getDefaultInitGeneratorOptions', () => {
             language: 'C',
             cmakeConfigDir: '.cmake',
             cmakeC: 'C',
-            globalIncludeDir: 'include',
             appsDir: 'bin',
             libsDir: 'libs',
             addClangPreset: true,

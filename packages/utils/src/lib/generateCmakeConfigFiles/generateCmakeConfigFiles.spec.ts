@@ -217,6 +217,10 @@ describe('generateCmakeConfigFiles', () => {
             'function(set_global_settings)\n' +
             '    set(WORKSPACE_INCLUDE_DIR ${ROOT}/include PARENT_SCOPE)\n' +
             '    set(CMAKE_EXPORT_COMPILE_COMMANDS ON PARENT_SCOPE)\n' +
+            '    set(CMAKE_CXX_STANDARD 17 PARENT_SCOPE)\n' +
+            '    set(CMAKE_CXX_EXTENSIONS OFF PARENT_SCOPE)\n' +
+            '    set(CMAKE_CXX_STANDARD_REQUIRED ON PARENT_SCOPE)\n' +
+            '    set(CMAKE_CXX_STANDARD_LIBRARIES "-lstdc++" PARENT_SCOPE)\n' +
             'endfunction()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
@@ -307,7 +311,7 @@ describe('generateCmakeConfigFiles', () => {
             '    file(GLOB_RECURSE INCLUDE_SOURCES ${${PROJECT}_INCLUDE_DIR}/**/*.h*)\n' +
             '    file(GLOB_RECURSE SOURCES ${${PROJECT}_SOURCES_DIR}/**/*.c*)\n' +
             '    set(${PROJECT}_SOURCES ${SOURCES} CACHE INTERNAL "")\n' +
-            '    set(${PROJECT}_INCLUDE_SOURCES ${INCLUDE_SOURCES} ${WORKSPACE_INCLUDE_DIR} CACHE INTERNAL "")\n' +
+            '    set(${PROJECT}_INCLUDE_SOURCES ${INCLUDE_SOURCES} CACHE INTERNAL "")\n' +
             '    set_compiler_settings()\n' +
             'endfunction()\n';
         expect(readFile).toStrictEqual(expectedFile);
@@ -332,7 +336,7 @@ describe('generateCmakeConfigFiles', () => {
         const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'function(install_cmocka)\n' +
-            '    set(FETCHCONTENT_BASE_DIR ${CMAKE_LIBRARY_PATH}/cmocka)\n' +
+            '    set(FETCHCONTENT_BASE_DIR ${ROOT}/dist/libs/cmocka)\n' +
             '\n' +
             '    FetchContent_Declare(\n' +
             '        cmocka\n' +
@@ -361,7 +365,7 @@ describe('generateCmakeConfigFiles', () => {
         const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'function(install_gtest)\n' +
-            '    set(FETCHCONTENT_BASE_DIR ${CMAKE_LIBRARY_PATH}/gtest)\n' +
+            '    set(FETCHCONTENT_BASE_DIR ${ROOT}/dist/libs/gtest)\n' +
             '\n' +
             '    FetchContent_Declare(\n' +
             '        googletest\n' +
@@ -385,7 +389,6 @@ describe('generateCmakeConfigFiles', () => {
             'include(utils/install_cmocka)\n' +
             '\n' +
             'function(link_cmocka PROJECT)\n' +
-            '    install_cmocka()\n' +
             '    target_include_directories(${PROJECT} PUBLIC ${cmocka_SOURCE_DIR}/include)\n' +
             '    if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")\n' +
             '        target_link_libraries(${PROJECT} PUBLIC cmocka-static -Wl,-export_dynamic)\n' +
@@ -405,7 +408,6 @@ describe('generateCmakeConfigFiles', () => {
             'include(utils/install_gtest)\n' +
             '\n' +
             'function(link_gtest PROJECT)\n' +
-            '    install_gtest()\n' +
             '    target_include_directories(${PROJECT} PUBLIC ${googletest_SOURCE_DIR}/googletest/include/gtest)\n' +
             '    if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")\n' +
             '        target_link_libraries(${PROJECT} PUBLIC GTest::gtest_main -Wl,-export_dynamic)\n' +

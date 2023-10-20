@@ -1,7 +1,14 @@
 #ifndef _TEST<%= constantName %>_<%= constantName %>
 #define _TEST<%= constantName %>_<%= constantName %>
-
-#include "lib<%= testLib %>.h"
+<% if (testLib === 'gtest') { %>
+#include <gtest/gtest.h>
+<% } else { %>
+#include <stdint.h>
+#include <stdarg.h>
+#include <stddef.h>
+#include <setjmp.h>
+#include <cmocka.h>
+<% } %>
 #include "<%= libName %>.h"
 
 #endif

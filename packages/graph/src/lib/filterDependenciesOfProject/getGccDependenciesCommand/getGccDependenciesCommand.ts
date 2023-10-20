@@ -1,7 +1,6 @@
 import { getGcc, type CTag } from '@/config';
 import { getCmockaInclude } from '../getCmockaInclude/getCmockaInclude';
 import { getGtestInclude } from '../getGtestInclude/getGtestInclude';
-import { getWorkspaceIncludeDir } from '@/utils';
 import { getIncludeDirectoriesFlag } from '../getIncludeDirectoriesFlag/getIncludeDirectoriesFlag';
 
 export const getGccDependenciesCommand = (
@@ -10,7 +9,6 @@ export const getGccDependenciesCommand = (
     libsDir: string,
     tag: CTag,
 ): string => {
-    const includeDir = getWorkspaceIncludeDir();
     const gtestInclude = getGtestInclude(libsDir);
     const cmockaInclude = getCmockaInclude(libsDir);
     const includeDirectoriesFlag = getIncludeDirectoriesFlag(libsDir);
@@ -21,7 +19,6 @@ export const getGccDependenciesCommand = (
         ` -I ${projectRoot}` +
         ` -I ${projectRoot}/include` +
         ` -I ${projectRoot}/src` +
-        ` -I ${includeDir}` +
         ` -I ${gtestInclude}` +
         ` -I ${cmockaInclude}` +
         ` ${includeDirectoriesFlag}`;

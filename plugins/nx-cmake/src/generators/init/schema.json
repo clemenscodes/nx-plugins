@@ -28,17 +28,6 @@
             },
             "x-prompt": "Where do you want to generate the CMake configuration?"
         },
-        "globalIncludeDir": {
-            "description": "Where the global include directory will be generated",
-            "type": "string",
-            "aliases": ["include"],
-            "default": "include",
-            "$default": {
-                "$source": "argv",
-                "index": 2
-            },
-            "x-prompt": "Where do you want to generate the global include directory?"
-        },
         "appsDir": {
             "type": "string",
             "description": "Where the binaries will be generated (nx.json has higher precedence)",
@@ -46,7 +35,7 @@
             "aliases": ["apps", "a"],
             "$default": {
                 "$source": "argv",
-                "index": 3
+                "index": 2
             },
             "x-prompt": "Where do you want to generate binaries?"
         },
@@ -57,7 +46,7 @@
             "aliases": ["libs", "l"],
             "$default": {
                 "$source": "argv",
-                "index": 4
+                "index": 3
             },
             "x-prompt": "Where do you want to generate libraries?"
         },
@@ -68,7 +57,7 @@
             "default": true,
             "$default": {
                 "$source": "argv",
-                "index": 5
+                "index": 4
             },
             "x-prompt": "Do you want to generate an opinionated set of configuration files for clang-format and clang-tidy?"
         },
@@ -79,7 +68,7 @@
             "default": "workspace",
             "$default": {
                 "$source": "argv",
-                "index": 6
+                "index": 5
             },
             "x-prompt": "What is the name of the workspace?"
         }

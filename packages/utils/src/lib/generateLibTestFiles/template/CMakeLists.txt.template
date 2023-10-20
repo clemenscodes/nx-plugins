@@ -11,4 +11,12 @@ project(<%= testName %> LANGUAGES ${LANGUAGE})
 
 set_binary_settings(<%= testName %> ${CMAKE_CURRENT_SOURCE_DIR})
 
+link_library(${CMAKE_PROJECT_NAME} <%= name %>)
+
 enable_testing()
+
+install_<%= testLib %>()
+
+link_<%= testLib %>(${CMAKE_PROJECT_NAME})
+<%= includeGoogleTest %>
+<%= setupTests %>

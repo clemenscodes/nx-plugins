@@ -13,7 +13,6 @@ describe('getPluginConfig', () => {
                 [PLUGIN_NAME]: {
                     language: 'C',
                     cmakeConfigDir: 'path/to/cmakeConfigDir',
-                    globalIncludeDir: 'path/to/globalIncludeDir',
                     workspaceName: 'workspace',
                 },
             },
@@ -45,7 +44,6 @@ describe('getPluginConfig', () => {
         expect(result).toEqual({
             language: 'C',
             cmakeConfigDir: '.cmake',
-            globalIncludeDir: 'include',
             workspaceName: 'workspace',
         });
     });

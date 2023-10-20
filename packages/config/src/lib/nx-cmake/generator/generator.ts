@@ -1,10 +1,9 @@
-import { WorkspaceLayout } from '../../nx';
-import { C, CMakeC, GoogleTestInclude, Link } from '..';
+import type { WorkspaceLayout } from '../../nx';
+import type { C, CMakeC, GoogleTestInclude, Link } from '..';
 
 export type InitGeneratorSchema = {
     language: C;
     cmakeConfigDir: string;
-    globalIncludeDir: string;
     appsDir: WorkspaceLayout['appsDir'];
     libsDir: WorkspaceLayout['libsDir'];
     addClangPreset: boolean;

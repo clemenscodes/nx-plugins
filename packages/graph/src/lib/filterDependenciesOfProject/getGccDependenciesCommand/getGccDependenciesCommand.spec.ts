@@ -44,7 +44,6 @@ describe('getGccDependenciesCommand', () => {
             `-I projectA ` +
             `-I projectA/include ` +
             `-I projectA/src ` +
-            `-I include ` +
             `-I dist/libs/gtest/googletest-src/googletest/include ` +
             `-I dist/libs/cmocka/cmocka-src/include ` +
             `${getIncludeDirectoriesFlagReturnMock}`;

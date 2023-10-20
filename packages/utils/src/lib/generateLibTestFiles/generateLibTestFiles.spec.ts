@@ -67,7 +67,12 @@ describe('generateLibTestFiles', () => {
             '#ifndef _TESTTEST_TEST\n' +
             '#define _TESTTEST_TEST\n' +
             '\n' +
-            '#include "libcmocka.h"\n' +
+            '#include <stdint.h>\n' +
+            '#include <stdarg.h>\n' +
+            '#include <stddef.h>\n' +
+            '#include <setjmp.h>\n' +
+            '#include <cmocka.h>\n' +
+            '\n' +
             '#include "libtest.h"\n' +
             '\n' +
             '#endif\n';
@@ -112,7 +117,15 @@ describe('generateLibTestFiles', () => {
             '\n' +
             'set_binary_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             '\n' +
-            'enable_testing()\n';
+            'link_library(${CMAKE_PROJECT_NAME} test)\n' +
+            '\n' +
+            'enable_testing()\n' +
+            '\n' +
+            'install_cmocka()\n' +
+            '\n' +
+            'link_cmocka(${CMAKE_PROJECT_NAME})\n' +
+            '\n' +
+            'add_test(UnitTests testtest)\n';
 
         expectedReadMeFile =
             '# testtest\n' +
@@ -169,7 +182,8 @@ describe('generateLibTestFiles', () => {
             '#ifndef _TESTTEST_TEST\n' +
             '#define _TESTTEST_TEST\n' +
             '\n' +
-            '#include "libgtest.h"\n' +
+            '#include <gtest/gtest.h>\n' +
+            '\n' +
             '#include "libtest.h"\n' +
             '\n' +
             '#endif\n';
@@ -194,7 +208,16 @@ describe('generateLibTestFiles', () => {
             '\n' +
             'set_binary_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             '\n' +
-            'enable_testing()\n';
+            'link_library(${CMAKE_PROJECT_NAME} test)\n' +
+            '\n' +
+            'enable_testing()\n' +
+            '\n' +
+            'install_gtest()\n' +
+            '\n' +
+            'link_gtest(${CMAKE_PROJECT_NAME})\n' +
+            'include(GoogleTest)\n' +
+            'gtest_discover_tests(testtest)\n';
+
         expectedReadMeFile =
             '# testtest\n' +
             '\n' +

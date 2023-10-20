@@ -51,7 +51,6 @@ describe('getUpdatedNxJson', () => {
                 '@nx/js': { analyzeSourceFiles: true },
                 'nx-cmake': {
                     cmakeConfigDir: '.cmake',
-                    globalIncludeDir: 'include',
                     language: 'C',
                     workspaceName: 'workspace',
                 },

@@ -11,12 +11,10 @@ export const writeConfig = (
     updatedNxJson: NxJsonConfiguration,
     options: InitGeneratorSchema,
 ): NxJsonConfiguration => {
-    const { globalIncludeDir, cmakeConfigDir, language, workspaceName } =
-        options;
+    const { cmakeConfigDir, language, workspaceName } = options;
     const nxPluginConfig: PluginConfig = {
         [PLUGIN_NAME]: {
             language,
-            globalIncludeDir,
             cmakeConfigDir,
             workspaceName,
         },
@@ -43,11 +41,6 @@ export const writeConfig = (
     const updatedPluginConfig = updatedNxJson.pluginsConfig[
         PLUGIN_NAME
     ] as NxCmakePluginConfig;
-
-    if (!existingPluginConfig.globalIncludeDir) {
-        existingPluginConfig['globalIncludeDir'] = globalIncludeDir;
-        updatedPluginConfig['globalIncludeDir'] = globalIncludeDir;
-    }
 
     if (!existingPluginConfig.cmakeConfigDir) {
         existingPluginConfig['cmakeConfigDir'] = cmakeConfigDir;

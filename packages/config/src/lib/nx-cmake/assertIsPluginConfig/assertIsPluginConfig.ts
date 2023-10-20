@@ -15,7 +15,6 @@ export function assertIsPluginConfig(
         }
     };
     assertField(data, 'language');
-    assertField(data, 'globalIncludeDir');
     assertField(data, 'cmakeConfigDir');
     assertField(data, 'workspaceName');
 }

@@ -6,7 +6,6 @@ export const getPluginConfig = (): NxCmakePluginConfig => {
     const defaultPluginConfig: NxCmakePluginConfig = {
         language: 'C',
         cmakeConfigDir: '.cmake',
-        globalIncludeDir: 'include',
         workspaceName: 'workspace',
     };
     const config = getNxJsonConfiguration();

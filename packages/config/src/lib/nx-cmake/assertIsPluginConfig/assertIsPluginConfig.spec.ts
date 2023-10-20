@@ -8,7 +8,6 @@ describe('assertIsPluginConfig', () => {
         validConfig = {
             language: 'C',
             cmakeConfigDir: '.cmake',
-            globalIncludeDir: 'include',
             workspaceName: 'workspace',
         };
     });
@@ -36,27 +35,15 @@ describe('assertIsPluginConfig', () => {
     it('should throw an error if language field is missing', () => {
         const configWithoutLanguage = {
             cmakeConfigDir: '.cmake',
-            globalIncludeDir: 'include',
         };
         expect(() => assertIsPluginConfig(configWithoutLanguage)).toThrow(
             'Could not read language of plugin configuration',
         );
     });
 
-    it('should throw an error if globalIncludeDir field is missing', () => {
-        const configWithoutGlobalIncludeDir = {
-            language: 'C',
-            cmakeConfigDir: '.cmake',
-        };
-        expect(() =>
-            assertIsPluginConfig(configWithoutGlobalIncludeDir),
-        ).toThrow('Could not read globalIncludeDir of plugin configuration');
-    });
-
     it('should throw an error if cmakeConfigDir field is missing', () => {
         const configWithoutCmakeConfigDir = {
             language: 'C',
-            globalIncludeDir: 'include',
         };
         expect(() => assertIsPluginConfig(configWithoutCmakeConfigDir)).toThrow(
             'Could not read cmakeConfigDir of plugin configuration',

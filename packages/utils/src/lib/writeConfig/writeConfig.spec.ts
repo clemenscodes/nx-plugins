@@ -20,7 +20,6 @@ describe('writeConfig', () => {
         options = getDefaultInitGeneratorOptions();
         pluginConfig = {
             language: options.language,
-            globalIncludeDir: options.globalIncludeDir,
             cmakeConfigDir: options.cmakeConfigDir,
             workspaceName: options.workspaceName,
         };
@@ -89,7 +88,6 @@ describe('writeConfig', () => {
         nxJson = {
             pluginsConfig: {
                 [PLUGIN_NAME]: {
-                    globalIncludeDir: 'include',
                     language: 'C',
                 },
             },
@@ -101,9 +99,7 @@ describe('writeConfig', () => {
     it('should update plugin config when it exists but is misses language', () => {
         nxJson = {
             pluginsConfig: {
-                [PLUGIN_NAME]: {
-                    globalIncludeDir: 'include',
-                },
+                [PLUGIN_NAME]: {},
             },
         };
         const resultNxJson = writeConfig(nxJson, updatedNxJson, options);
