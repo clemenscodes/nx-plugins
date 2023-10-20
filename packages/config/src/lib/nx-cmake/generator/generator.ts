@@ -27,6 +27,7 @@ export type GeneratorBaseOptions = {
     languageExtension?: string;
     cmakeConfigDir?: string;
     workspaceName?: string;
+    libsDir?: string;
     cmakeC?: CMakeC;
 };
 
@@ -40,7 +41,6 @@ export type LibSchema = Required<LibGeneratorSchema> & {
     projectRoot: string;
     libName: string;
     testName: string;
-    libsDir: string;
     includeGoogleTest: GoogleTestInclude;
     baseTest: string;
 };

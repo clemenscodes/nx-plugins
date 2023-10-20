@@ -1,6 +1,7 @@
 {
     "name": "@/file",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "root": "packages/file",
     "sourceRoot": "packages/file/src",
     "projectType": "library",
     "targets": {

@@ -1,6 +1,7 @@
 {
     "name": "@/graph",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "root": "packages/graph",
     "sourceRoot": "packages/graph/src",
     "projectType": "library",
     "targets": {

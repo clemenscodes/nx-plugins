@@ -40,6 +40,10 @@
             "inputs": ["cmake"],
             "cache": true
         },
+        "build": {
+            "dependsOn": ["^build"],
+            "inputs": ["default"]
+        },
         "compile": {
             "dependsOn": ["^cmake", "^compile", "cmake"],
             "inputs": ["default"]

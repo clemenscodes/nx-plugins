@@ -1,6 +1,7 @@
 {
     "name": "nx-cmake",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "root": "plugins/nx-cmake",
     "sourceRoot": "plugins/nx-cmake/src",
     "projectType": "library",
     "targets": {
