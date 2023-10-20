@@ -2,14 +2,14 @@ import { CTEST, LINUX_CTEST, TestExecutorSchema } from '@/config';
 import { testBinaryWithCtest } from './testBinaryWithCtest';
 import { join } from 'path';
 import * as fileModule from '@/file';
-import * as runCommandModule from '../runCommand/runCommand';
 import * as checkCommandExistsModule from '../checkCommandExists/checkCommandExists';
 import * as configModule from '@/config';
+import * as runCommandFromDirectoryModule from '../runCommandFromDirectory/runCommandFromDirectory';
 
 describe('buildProjectWithCMake', () => {
     let workspaceRoot: string;
     let projectRoot: string;
-    let runCommandMock: jest.SpyInstance;
+    let runCommandFromDirectoryMock: jest.SpyInstance;
     let checkCommandExistsMock: jest.SpyInstance;
     let options: TestExecutorSchema;
     let isWindowsMock: jest.SpyInstance;
@@ -23,7 +23,10 @@ describe('buildProjectWithCMake', () => {
             release: false,
             outputOnFailure: true,
         };
-        runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
+        runCommandFromDirectoryMock = jest.spyOn(
+            runCommandFromDirectoryModule,
+            'runCommandFromDirectory',
+        );
         jest.spyOn(fileModule, 'fileExists').mockReturnValue(true);
         jest.spyOn(configModule, 'getCtest').mockReturnValue(LINUX_CTEST[0]);
         checkCommandExistsMock = jest
@@ -42,14 +45,14 @@ describe('buildProjectWithCMake', () => {
     });
 
     it('should test binary with ctest and return true', () => {
-        runCommandMock.mockReturnValue({ success: true });
+        runCommandFromDirectoryMock.mockReturnValue({ success: true });
         const result = testBinaryWithCtest(workspaceRoot, projectRoot, options);
         expect(checkCommandExistsMock).toHaveBeenCalledWith(CTEST);
-        expect(runCommandMock).toHaveBeenCalledWith(
+        expect(runCommandFromDirectoryMock).toHaveBeenCalledWith(
             LINUX_CTEST[0],
+            join(workspaceRoot, 'dist', projectRoot),
             '-C Debug',
             '--output-on-failure',
-            `--test-dir=${join(workspaceRoot, 'dist', projectRoot)}`,
             ...options.args,
         );
         expect(result).toBe(true);
@@ -63,20 +66,20 @@ describe('buildProjectWithCMake', () => {
             testBinaryWithCtest(workspaceRoot, projectRoot, options),
         ).toThrowError();
         expect(checkCommandExistsMock).toHaveBeenCalledWith(CTEST);
-        expect(runCommandMock).not.toHaveBeenCalled();
+        expect(runCommandFromDirectoryMock).not.toHaveBeenCalled();
     });
 
     it('should pass arguments to ctest', () => {
         isDarwinMock.mockReturnValue(true);
-        runCommandMock.mockReturnValue({ success: true });
+        runCommandFromDirectoryMock.mockReturnValue({ success: true });
         options.args = ['-ex', 'run', '--arg1', 'value1'];
         const result = testBinaryWithCtest(workspaceRoot, projectRoot, options);
         expect(checkCommandExistsMock).toHaveBeenCalledWith(CTEST);
-        expect(runCommandMock).toHaveBeenCalledWith(
+        expect(runCommandFromDirectoryMock).toHaveBeenCalledWith(
             LINUX_CTEST[0],
+            join(workspaceRoot, 'dist', projectRoot),
             '-C Debug',
             '--output-on-failure',
-            `--test-dir=${join(workspaceRoot, 'dist', projectRoot)}`,
             '-ex',
             'run',
             '--arg1',
@@ -88,13 +91,13 @@ describe('buildProjectWithCMake', () => {
     it('should return false if ctest failed', () => {
         isWindowsMock.mockReturnValue(true);
         options.outputOnFailure = false;
-        runCommandMock.mockReturnValue({ success: false });
+        runCommandFromDirectoryMock.mockReturnValue({ success: false });
         const result = testBinaryWithCtest(workspaceRoot, projectRoot, options);
         expect(checkCommandExistsMock).toHaveBeenCalledWith(CTEST);
-        expect(runCommandMock).toHaveBeenCalledWith(
+        expect(runCommandFromDirectoryMock).toHaveBeenCalledWith(
             LINUX_CTEST[0],
+            join(workspaceRoot, 'dist', projectRoot),
             '-C Debug',
-            `--test-dir=${join(workspaceRoot, 'dist', projectRoot)}`,
             ...options.args,
         );
         expect(result).toBe(false);

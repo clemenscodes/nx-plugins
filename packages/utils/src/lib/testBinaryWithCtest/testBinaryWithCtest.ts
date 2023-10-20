@@ -1,7 +1,8 @@
 import { checkCommandExists } from '../checkCommandExists/checkCommandExists';
 import { getCtestArguments } from '../getCtestArguments/getCtestArguments';
 import { CTEST, TestExecutorSchema, getCtest } from '@/config';
-import { runCommand } from '../runCommand/runCommand';
+import { runCommandFromDirectory } from '../runCommandFromDirectory/runCommandFromDirectory';
+import { join } from 'path';
 
 export const testBinaryWithCtest = (
     workspaceRoot: string,
@@ -10,11 +11,12 @@ export const testBinaryWithCtest = (
 ): boolean => {
     checkCommandExists(CTEST);
     const ctest = getCtest();
-    const ctestArguments = getCtestArguments(
-        workspaceRoot,
-        projectRoot,
-        options,
+    const ctestArguments = getCtestArguments(options);
+    const directory = join(workspaceRoot, 'dist', projectRoot);
+    const { success } = runCommandFromDirectory(
+        ctest,
+        directory,
+        ...ctestArguments,
     );
-    const { success } = runCommand(ctest, ...ctestArguments);
     return success;
 };
