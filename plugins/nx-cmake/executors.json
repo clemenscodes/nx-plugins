@@ -25,9 +25,9 @@
             "schema": "./src/executors/lint/schema.json",
             "description": "Lint the project"
         },
-        "format": {
-            "implementation": "./src/executors/format/executor",
-            "schema": "./src/executors/format/schema.json",
+        "fmt": {
+            "implementation": "./src/executors/fmt/executor",
+            "schema": "./src/executors/fmt/schema.json",
             "description": "Format the project"
         },
         "execute": {

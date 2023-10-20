@@ -59,7 +59,7 @@ describe('addBinProject', () => {
                     },
                 },
                 fmt: {
-                    executor: 'nx-cmake:format',
+                    executor: 'nx-cmake:fmt',
                     defaultConfiguration: 'local',
                     configurations: {
                         local: {

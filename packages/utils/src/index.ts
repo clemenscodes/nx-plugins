@@ -4,7 +4,7 @@ export { executeCommand } from './lib/executeCommand/executeCommand';
 export { runCommand } from './lib/runCommand/runCommand';
 export { testExecutor } from './lib/testExecutor/testExecutor';
 export { lintExecutor } from './lib/lintExecutor/lintExecutor';
-export { formatExecutor } from './lib/formatExecutor/formatExecutor';
+export { fmtExecutor } from './lib/fmtExecutor/fmtExecutor';
 export { executeExecutor } from './lib/executeExecutor/executeExecutor';
 export { debugExecutor } from './lib/debugExecutor/debugExecutor';
 export { compileExecutor } from './lib/compileExecutor/compileExecutor';

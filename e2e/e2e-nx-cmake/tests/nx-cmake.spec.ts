@@ -292,7 +292,7 @@ describe(plugin, () => {
         testExecutor('cmake');
         testExecutor('fmt');
         testExecutor('lint');
-        testExecutor('build');
+        testExecutor('compile');
 
         describe('nx-cmake:execute', () => {
             let projectName: string;
