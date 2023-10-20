@@ -1,5 +1,5 @@
-import { BuildTargetConfiguration } from './getBuildTargetDefault/getBuildTargetDefault';
 import { CmakeTargetConfiguration } from './getCmakeTargetDefault/getCmakeTargetDefault';
+import { CompileTargetConfiguration } from './getCompileTargetDefault/getCompileTargetDefault';
 import { DebugTargetConfiguration } from './getDebugTargetDefault/getDebugTargetDefault';
 import { ExecuteTargetConfiguration } from './getExecuteTargetDefault/getExecuteTargetDefault';
 import { FmtTargetConfiguration } from './getFmtTargetDefault/getFmtTargetDefault';
@@ -8,7 +8,7 @@ import { TestTargetConfiguration } from './getTestTargetDefault/getTestTargetDef
 
 export type TargetDefaults = {
     cmake: CmakeTargetConfiguration;
-    build: BuildTargetConfiguration;
+    compile: CompileTargetConfiguration;
     fmt: FmtTargetConfiguration;
     lint: LintTargetConfiguration;
     test: TestTargetConfiguration;

@@ -1,6 +1,6 @@
 import { TargetDefaults } from '..';
-import { getBuildTargetDefault } from '../getBuildTargetDefault/getBuildTargetDefault';
 import { getCmakeTargetDefault } from '../getCmakeTargetDefault/getCmakeTargetDefault';
+import { getCompileTargetDefault } from '../getCompileTargetDefault/getCompileTargetDefault';
 import { getDebugTargetDefault } from '../getDebugTargetDefault/getDebugTargetDefault';
 import { getExecuteTargetDefault } from '../getExecuteTargetDefault/getExecuteTargetDefault';
 import { getFmtTargetDefault } from '../getFmtTargetDefault/getFmtTargetDefault';
@@ -10,7 +10,7 @@ import { getTestTargetDefault } from '../getTestTargetDefault/getTestTargetDefau
 export const getTargetDefaults = (): TargetDefaults => {
     const targetDefaults: TargetDefaults = {
         cmake: getCmakeTargetDefault(),
-        build: getBuildTargetDefault(),
+        compile: getCompileTargetDefault(),
         fmt: getFmtTargetDefault(),
         lint: getLintTargetDefault(),
         test: getTestTargetDefault(),

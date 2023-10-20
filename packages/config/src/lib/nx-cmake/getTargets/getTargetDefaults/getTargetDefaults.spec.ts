@@ -9,7 +9,7 @@ describe('getTargetDefaults', () => {
                 dependsOn: ['^cmake'],
                 inputs: ['cmake'],
             },
-            build: {
+            compile: {
                 dependsOn: ['^cmake', '^build', 'cmake'],
                 inputs: ['default'],
             },

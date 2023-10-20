@@ -1,5 +1,5 @@
-import { BUILD_TARGET_NAME } from '../getBuildTargetDefault/getBuildTargetDefault';
 import { CMAKE_TARGET_NAME } from '../getCmakeTargetDefault/getCmakeTargetDefault';
+import { COMPILE_TARGET_NAME } from '../getCompileTargetDefault/getCompileTargetDefault';
 import { DEBUG_TARGET_NAME } from '../getDebugTargetDefault/getDebugTargetDefault';
 import { EXECUTE_TARGET_NAME } from '../getExecuteTargetDefault/getExecuteTargetDefault';
 import { FMT_TARGET_NAME } from '../getFmtTargetDefault/getFmtTargetDefault';
@@ -11,7 +11,7 @@ export function assertIsTargetName(s: string): asserts s is TargetName {
     switch (s) {
         case CMAKE_TARGET_NAME:
             break;
-        case BUILD_TARGET_NAME:
+        case COMPILE_TARGET_NAME:
             break;
         case FMT_TARGET_NAME:
             break;

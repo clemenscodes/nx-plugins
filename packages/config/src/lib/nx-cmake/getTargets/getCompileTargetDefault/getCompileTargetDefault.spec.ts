@@ -1,17 +1,17 @@
 import {
-    BUILD_TARGET_NAME,
-    BuildTargetConfiguration,
-    getBuildTargetDefault,
-} from './getBuildTargetDefault';
+    COMPILE_TARGET_NAME,
+    CompileTargetConfiguration,
+    getCompileTargetDefault,
+} from './getCompileTargetDefault';
 
-describe('BUILD_TARGET_NAME', () => {
+describe('COMPILE_TARGET_NAME', () => {
     it('should have the correct value', () => {
-        expect(BUILD_TARGET_NAME).toBe('build');
+        expect(COMPILE_TARGET_NAME).toBe('compile');
     });
 });
 
-describe('getBuildTargetDefault', () => {
-    let expectedConfiguration: BuildTargetConfiguration;
+describe('getCompileTargetDefault', () => {
+    let expectedConfiguration: CompileTargetConfiguration;
 
     beforeEach(() => {
         expectedConfiguration = {
@@ -21,13 +21,13 @@ describe('getBuildTargetDefault', () => {
     });
 
     it('should return a BuildTargetConfiguration object with the correct structure', () => {
-        const result = getBuildTargetDefault();
+        const result = getCompileTargetDefault();
         expect(result).toEqual(expectedConfiguration);
     });
 
     it('should return a new object each time it is called', () => {
-        const result1 = getBuildTargetDefault();
-        const result2 = getBuildTargetDefault();
+        const result1 = getCompileTargetDefault();
+        const result2 = getCompileTargetDefault();
         expect(result1).not.toBe(result2);
     });
 });

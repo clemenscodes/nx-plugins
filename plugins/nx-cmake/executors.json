@@ -5,7 +5,7 @@
             "schema": "./src/executors/cmake/schema.json",
             "description": "Run CMake to produce a Makefile"
         },
-        "build": {
+        "compile": {
             "implementation": "./src/executors/compile/executor",
             "schema": "./src/executors/compile/schema.json",
             "description": "Build the project with Make"

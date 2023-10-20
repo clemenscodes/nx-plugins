@@ -1,5 +1,5 @@
-import { BUILD_TARGET_NAME } from '../getBuildTargetDefault/getBuildTargetDefault';
 import { CMAKE_TARGET_NAME } from '../getCmakeTargetDefault/getCmakeTargetDefault';
+import { COMPILE_TARGET_NAME } from '../getCompileTargetDefault/getCompileTargetDefault';
 import { DEBUG_TARGET_NAME } from '../getDebugTargetDefault/getDebugTargetDefault';
 import { EXECUTE_TARGET_NAME } from '../getExecuteTargetDefault/getExecuteTargetDefault';
 import { FMT_TARGET_NAME } from '../getFmtTargetDefault/getFmtTargetDefault';
@@ -10,7 +10,7 @@ import { assertIsTargetName } from './assertIsTargetName';
 describe('assertIsTargetName', () => {
     it('should not throw an error for valid target names', () => {
         expect(() => assertIsTargetName(CMAKE_TARGET_NAME)).not.toThrow();
-        expect(() => assertIsTargetName(BUILD_TARGET_NAME)).not.toThrow();
+        expect(() => assertIsTargetName(COMPILE_TARGET_NAME)).not.toThrow();
         expect(() => assertIsTargetName(FMT_TARGET_NAME)).not.toThrow();
         expect(() => assertIsTargetName(LINT_TARGET_NAME)).not.toThrow();
         expect(() => assertIsTargetName(TEST_TARGET_NAME)).not.toThrow();

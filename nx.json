@@ -1,7 +1,17 @@
 {
-    "$schema": "./node_modules/nx/schemas/nx-schema.json",
     "extends": "nx/presets/npm.json",
     "defaultProject": "nx-cmake",
+    "pluginsConfig": {
+        "@nx/js": {
+            "analyzeSourceFiles": true
+        },
+        "nx-cmake": {
+            "language": "C",
+            "cmakeConfigDir": ".cmake",
+            "workspaceName": "workspace"
+        }
+    },
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
     "nxCloudAccessToken": "ZTBkM2I2MjYtNTc4Mi00YjUxLTkzNDAtZWFlYjg1OGY0Y2UxfHJlYWQtd3JpdGU=",
     "useDaemonProcess": false,
     "workspaceLayout": {
@@ -42,9 +52,6 @@
         "debug": {
             "dependsOn": ["build"],
             "inputs": ["default"]
-        },
-        "e2e": {
-            "cache": true
         }
     },
     "namedInputs": {
@@ -74,7 +81,6 @@
             "{workspaceRoot}/.clang-tidy.yaml"
         ]
     },
-
     "generators": {
         "nx-cmake": {
             "binary": {
@@ -87,14 +93,12 @@
             }
         }
     },
-    "pluginsConfig": {
-        "@nx/js": {
-            "analyzeSourceFiles": true
-        },
-        "nx-cmake": {
-            "language": "C",
-            "cmakeConfigDir": ".cmake",
-            "workspaceName": "workspace"
+    "tasksRunnerOptions": {
+        "default": {
+            "runner": "nx/tasks-runners/default",
+            "options": {
+                "cacheableOperations": ["cmake", "build", "test", "lint", "fmt"]
+            }
         }
     }
 }
