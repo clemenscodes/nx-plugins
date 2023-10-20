@@ -40,8 +40,8 @@ describe('addLibProjectConfig', () => {
                         release: { release: true, args: [] },
                     },
                 },
-                build: {
-                    executor: 'nx-cmake:build',
+                compile: {
+                    executor: 'nx-cmake:compile',
                     defaultConfiguration: 'debug',
                     configurations: {
                         debug: { release: false, args: [] },
@@ -59,7 +59,7 @@ describe('addLibProjectConfig', () => {
                     },
                 },
                 fmt: {
-                    executor: 'nx-cmake:format',
+                    executor: 'nx-cmake:fmt',
                     defaultConfiguration: 'local',
                     configurations: {
                         local: {

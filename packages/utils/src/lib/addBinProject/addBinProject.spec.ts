@@ -40,8 +40,8 @@ describe('addBinProject', () => {
                         release: { release: true, args: [] },
                     },
                 },
-                build: {
-                    executor: 'nx-cmake:build',
+                compile: {
+                    executor: 'nx-cmake:compile',
                     defaultConfiguration: 'debug',
                     configurations: {
                         debug: { release: false, args: [] },

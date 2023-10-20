@@ -14,7 +14,7 @@ describe('addCacheableTargets', () => {
                     options: {
                         cacheableOperations: [
                             'cmake',
-                            'build',
+                            'compile',
                             'test',
                             'lint',
                             'fmt',
@@ -85,7 +85,7 @@ describe('addCacheableTargets', () => {
             'custom-op',
             'test',
             'cmake',
-            'build',
+            'compile',
             'lint',
             'fmt',
         ];

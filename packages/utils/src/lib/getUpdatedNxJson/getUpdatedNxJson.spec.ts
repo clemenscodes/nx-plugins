@@ -39,7 +39,7 @@ describe('getUpdatedNxJson', () => {
                     options: {
                         cacheableOperations: [
                             'cmake',
-                            'build',
+                            'compile',
                             'test',
                             'lint',
                             'fmt',
@@ -69,8 +69,8 @@ describe('getUpdatedNxJson', () => {
             },
             targetDefaults: {
                 cmake: { dependsOn: ['^cmake'], inputs: ['cmake'] },
-                build: {
-                    dependsOn: ['^cmake', '^build', 'cmake'],
+                compile: {
+                    dependsOn: ['^cmake', '^compile', 'cmake'],
                     inputs: ['default'],
                 },
                 fmt: { dependsOn: [], inputs: ['clangFormat'] },

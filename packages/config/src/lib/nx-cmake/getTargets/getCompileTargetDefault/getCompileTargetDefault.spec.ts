@@ -15,7 +15,7 @@ describe('getCompileTargetDefault', () => {
 
     beforeEach(() => {
         expectedConfiguration = {
-            dependsOn: ['^cmake', '^build', 'cmake'],
+            dependsOn: ['^cmake', '^compile', 'cmake'],
             inputs: ['default'],
         };
     });

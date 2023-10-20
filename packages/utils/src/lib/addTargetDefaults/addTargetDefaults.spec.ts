@@ -12,8 +12,8 @@ describe('addTargetDefaults', () => {
                     dependsOn: ['^cmake'],
                     inputs: ['cmake'],
                 },
-                build: {
-                    dependsOn: ['^cmake', '^build', 'cmake'],
+                compile: {
+                    dependsOn: ['^cmake', '^compile', 'cmake'],
                     inputs: ['default'],
                 },
                 fmt: {
@@ -45,8 +45,8 @@ describe('addTargetDefaults', () => {
                     dependsOn: ['^cmake'],
                     inputs: ['cmake'],
                 },
-                build: {
-                    dependsOn: ['^cmake', '^build', 'cmake'],
+                compile: {
+                    dependsOn: ['^cmake', '^compile', 'cmake'],
                     inputs: ['default'],
                 },
                 fmt: {
