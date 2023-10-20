@@ -7,7 +7,7 @@ export { lintExecutor } from './lib/lintExecutor/lintExecutor';
 export { formatExecutor } from './lib/formatExecutor/formatExecutor';
 export { executeExecutor } from './lib/executeExecutor/executeExecutor';
 export { debugExecutor } from './lib/debugExecutor/debugExecutor';
-export { buildExecutor } from './lib/buildExecutor/buildExecutor';
+export { compileExecutor } from './lib/compileExecutor/compileExecutor';
 export { cmakeExecutor } from './lib/cmakeExecutor/cmakeExecutor';
 export { configureProjectWithCMake } from './lib/configureProjectWithCMake/configureProjectWithCMake';
 export { extractRootsFromExecutorContext } from './lib/extractRootsFromExecutorContext/extractRootsFromExecutorContext';

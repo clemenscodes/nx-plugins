@@ -217,9 +217,9 @@ All the executors support these additional properties:
 |---------|-------------|-----------|---------------|
 | --release | Configure a C or C++ library with CMake in release mode. | boolean | false |
 
-### `nx-cmake:build`
+### `nx-cmake:compile`
 
-#### Build a C or C++ library with Make
+#### Compile a C or C++ library with Make
 
 | Options | Description | Type | Default |
 |---------|-------------|-----------|---------------|

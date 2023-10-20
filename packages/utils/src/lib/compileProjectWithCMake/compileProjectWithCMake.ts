@@ -1,12 +1,12 @@
 import { checkCommandExists } from '../checkCommandExists/checkCommandExists';
 import { getCmakeBuildCommandArguments } from '../getCmakeBuildCommandArguments/getCmakeBuildCommandArguments';
-import { BuildExecutorSchema, CMAKE, getCmake } from '@/config';
+import { CompileExecutorSchema, CMAKE, getCmake } from '@/config';
 import { runCommand } from '../runCommand/runCommand';
 
-export const buildProjectWithCMake = (
+export const compileProjectWithCMake = (
     workspaceRoot: string,
     projectRoot: string,
-    options: BuildExecutorSchema,
+    options: CompileExecutorSchema,
 ): boolean => {
     checkCommandExists(CMAKE);
     const cmake = getCmake();

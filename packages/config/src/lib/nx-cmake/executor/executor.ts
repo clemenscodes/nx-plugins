@@ -11,7 +11,7 @@ export type CmakeExecutorSchema = ExecutorBaseOptions & {
     release: boolean;
 };
 
-export type BuildExecutorSchema = ExecutorBaseOptions & {
+export type CompileExecutorSchema = ExecutorBaseOptions & {
     release: boolean;
 };
 

@@ -1,11 +1,11 @@
-import { BuildExecutorSchema } from '@/config';
+import { CompileExecutorSchema } from '@/config';
 import { getCmakeBuildConfigArgument } from '../getCmakeBuildConfigArgument/getCmakeBuildConfigArgument';
 import { getCmakeBuildPathArgument } from '../getCmakeBuildPathArgument/getCmakeBuildPathArgument';
 
 export const getCmakeBuildCommandArguments = (
     workspaceRoot: string,
     projectRoot: string,
-    options: BuildExecutorSchema,
+    options: CompileExecutorSchema,
 ): string[] => {
     const { args, release } = options;
     const config = getCmakeBuildConfigArgument(release);

@@ -6,8 +6,8 @@
             "description": "Run CMake to produce a Makefile"
         },
         "build": {
-            "implementation": "./src/executors/build/executor",
-            "schema": "./src/executors/build/schema.json",
+            "implementation": "./src/executors/compile/executor",
+            "schema": "./src/executors/compile/schema.json",
             "description": "Build the project with Make"
         },
         "test": {

@@ -1,14 +1,14 @@
-import { BuildExecutorSchema, LINUX_CMAKE } from '@/config';
-import { buildProjectWithCMake } from './buildProjectWithCMake';
+import { CompileExecutorSchema, LINUX_CMAKE } from '@/config';
+import { compileProjectWithCMake } from './compileProjectWithCMake';
 import { join } from 'path';
 import * as fileModule from '@/file';
 import * as configModule from '@/config';
 import * as runCommandModule from '../runCommand/runCommand';
 
-describe('buildProjectWithCMake', () => {
+describe('compileProjectWithCMake', () => {
     let workspaceRoot: string;
     let projectRoot: string;
-    let options: BuildExecutorSchema;
+    let options: CompileExecutorSchema;
     let runCommandMock: jest.SpyInstance;
     let getCmakeMock: jest.SpyInstance;
 
@@ -33,7 +33,7 @@ describe('buildProjectWithCMake', () => {
             throw new Error();
         });
         expect(() =>
-            buildProjectWithCMake(workspaceRoot, projectRoot, options),
+            compileProjectWithCMake(workspaceRoot, projectRoot, options),
         ).toThrowError();
         expect(runCommandMock).not.toHaveBeenCalled();
     });
@@ -42,7 +42,7 @@ describe('buildProjectWithCMake', () => {
         options.release = true;
         runCommandMock.mockReturnValue({ success: true });
         getCmakeMock.mockReturnValue(LINUX_CMAKE);
-        buildProjectWithCMake(workspaceRoot, projectRoot, options);
+        compileProjectWithCMake(workspaceRoot, projectRoot, options);
         expect(runCommandMock).toHaveBeenCalledWith(
             LINUX_CMAKE,
             '--build',
@@ -54,7 +54,7 @@ describe('buildProjectWithCMake', () => {
 
     it('should return true if runCommand succeeds', () => {
         runCommandMock.mockReturnValue({ success: true });
-        const result = buildProjectWithCMake(
+        const result = compileProjectWithCMake(
             workspaceRoot,
             projectRoot,
             options,
@@ -64,7 +64,7 @@ describe('buildProjectWithCMake', () => {
 
     it('should return false if runCommand fails', () => {
         runCommandMock.mockReturnValue({ success: false });
-        const result = buildProjectWithCMake(
+        const result = compileProjectWithCMake(
             workspaceRoot,
             projectRoot,
             options,
