@@ -13,6 +13,7 @@ import { libGenerator } from '../libGenerator/libGenerator';
 import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
 import { initGenerator } from '../initGenerator/initGenerator';
 import * as devkit from '@nx/devkit';
+import { trimLib } from '../trimLib/trimLib';
 
 describe('link generator', () => {
     let tree: Tree;
@@ -29,6 +30,11 @@ describe('link generator', () => {
             name: 'link',
             language: 'C++',
             generateTests: true,
+        };
+        linkOptions = {
+            source: 'liblink',
+            target: 'libtarget',
+            link: 'shared',
         };
         options = resolveLibOptions(libOptions);
         jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
@@ -103,14 +109,13 @@ describe('link generator', () => {
             `    \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}Config.cmake\n` +
             `    \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}ConfigVersion.cmake\n` +
             `    DESTINATION \${${options.libName}_INSTALL_CMAKEDIR}\n` +
-            ')\n';
+            ')\n' +
+            '\n' +
+            `link_library(\${CMAKE_PROJECT_NAME} ${trimLib(
+                linkOptions.target,
+            )})\n`;
         libOptions.name = 'target';
         await libGenerator(tree, libOptions);
-        linkOptions = {
-            source: 'liblink',
-            target: 'libtarget',
-            link: 'shared',
-        };
     });
 
     afterEach(() => {
