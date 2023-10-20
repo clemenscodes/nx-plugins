@@ -1,9 +1,10 @@
 {
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
     "extends": "nx/presets/npm.json",
     "defaultProject": "nx-cmake",
     "tasksRunnerOptions": {
         "default": {
-            "runner": "nx/tasks-runners/default",
+            "runner": "nx-cloud",
             "options": {
                 "cacheableOperations": [
                     "cmake",
@@ -12,7 +13,9 @@
                     "lint",
                     "fmt",
                     "compile"
-                ]
+                ],
+                "nxCloudAccessToken": "ZTBkM2I2MjYtNTc4Mi00YjUxLTkzNDAtZWFlYjg1OGY0Y2UxfHJlYWQtd3JpdGU=",
+                "useDaemonProcess": false
             }
         }
     },
@@ -26,9 +29,6 @@
             "workspaceName": "workspace"
         }
     },
-    "$schema": "./node_modules/nx/schemas/nx-schema.json",
-    "nxCloudAccessToken": "ZTBkM2I2MjYtNTc4Mi00YjUxLTkzNDAtZWFlYjg1OGY0Y2UxfHJlYWQtd3JpdGU=",
-    "useDaemonProcess": false,
     "workspaceLayout": {
         "appsDir": "bin",
         "libsDir": "packages"
