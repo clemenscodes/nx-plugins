@@ -14,7 +14,7 @@
                     "fmt",
                     "compile"
                 ],
-                "nxCloudAccessToken": "ZTBkM2I2MjYtNTc4Mi00YjUxLTkzNDAtZWFlYjg1OGY0Y2UxfHJlYWQtd3JpdGU=",
+                "accessToken": "ZTBkM2I2MjYtNTc4Mi00YjUxLTkzNDAtZWFlYjg1OGY0Y2UxfHJlYWQtd3JpdGU=",
                 "useDaemonProcess": false
             }
         }
