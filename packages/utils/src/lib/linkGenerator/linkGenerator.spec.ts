@@ -34,7 +34,6 @@ describe('link generator', () => {
         linkOptions = {
             source: 'liblink',
             target: 'libtarget',
-            link: 'shared',
         };
         options = resolveLibOptions(libOptions);
         jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());

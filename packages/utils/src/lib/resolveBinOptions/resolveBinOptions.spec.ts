@@ -37,7 +37,6 @@ describe('resolveBinOptions ', () => {
             linkOptions: {
                 source: 'base',
                 target: 'libbase',
-                link: 'shared',
             },
         };
     });

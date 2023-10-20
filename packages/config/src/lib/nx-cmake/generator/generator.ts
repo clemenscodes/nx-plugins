@@ -1,5 +1,5 @@
 import type { WorkspaceLayout } from '../../nx';
-import type { C, CMakeC, GoogleTestInclude, Link } from '..';
+import type { C, CMakeC, GoogleTestInclude } from '..';
 
 export type InitGeneratorSchema = {
     language: C;
@@ -40,6 +40,7 @@ export type LibSchema = Required<LibGeneratorSchema> & {
     projectRoot: string;
     libName: string;
     testName: string;
+    libsDir: string;
     includeGoogleTest: GoogleTestInclude;
     baseTest: string;
 };
@@ -47,11 +48,11 @@ export type LibSchema = Required<LibGeneratorSchema> & {
 export type LinkGeneratorSchema = {
     source: string;
     target: string;
-    link: Link;
 };
 
 export type LinkSchema = LinkGeneratorSchema & {
     sourceProjectRoot: string;
+    targetProjectRoot: string;
 };
 
 export type BinGeneratorSchema = GeneratorBaseOptions & {

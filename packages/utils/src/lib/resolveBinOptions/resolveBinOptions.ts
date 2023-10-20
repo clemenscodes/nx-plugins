@@ -17,7 +17,6 @@ export const resolveBinOptions = (options: BinGeneratorSchema): BinSchema => {
     const linkOptions: LinkGeneratorSchema = {
         source: name,
         target: getLibName(name),
-        link: 'shared',
     };
     const projectRoot = getProjectRoot(name, CProjectType.App);
     resolvedOptions.projectRoot = projectRoot;

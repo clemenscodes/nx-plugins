@@ -13,6 +13,6 @@ export async function binGenerator(tree: Tree, options: BinGeneratorSchema) {
     generateBinFiles(tree, resolvedOptions);
     addBinProject(tree, resolvedOptions);
     await libGenerator(tree, resolvedOptions);
-    await linkGenerator(tree, linkOptions);
+    linkGenerator(tree, linkOptions);
     await formatFiles(tree);
 }

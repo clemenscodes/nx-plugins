@@ -9,9 +9,9 @@ import {
 import { resolveLinkOptions } from './resolveLinkOptions';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { libGenerator } from '../libGenerator/libGenerator';
-import * as devkit from '@nx/devkit';
 import { binGenerator } from '../binGenerator/binGenerator';
 import { initGenerator } from '../initGenerator/initGenerator';
+import * as devkit from '@nx/devkit';
 
 describe('resolveLinkOptions', () => {
     let tree: Tree;
@@ -24,7 +24,6 @@ describe('resolveLinkOptions', () => {
         options = {
             source: 'liblink',
             target: 'libtarget',
-            link: 'shared',
         };
         binOptions = {
             name: 'binary',
@@ -54,8 +53,8 @@ describe('resolveLinkOptions', () => {
         const expectedResolvedOptions: LinkSchema = {
             source: 'liblink',
             target: 'libtarget',
-            link: 'shared',
             sourceProjectRoot: 'packages/link',
+            targetProjectRoot: 'packages/target',
         };
         expect(resolvedOptions).toStrictEqual(expectedResolvedOptions);
     });

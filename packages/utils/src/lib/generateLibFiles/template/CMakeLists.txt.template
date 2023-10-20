@@ -18,13 +18,17 @@ set_library_install_destination(<%= libName %>)
 
 set_package_version(<%= libName %> ${<%= libName %>_VERSION})
 
+configure_package_config_file(
+    cmake/<%= libName %>Config.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/<%= libName %>Config.cmake
+    INSTALL_DESTINATION ${<%= libName %>_INSTALL_CMAKEDIR}
+)
+
 export(
     EXPORT <%= libName %>_Targets
     NAMESPACE <%= libName %>::
     FILE ${CMAKE_CURRENT_BINARY_DIR}/<%= libName %>Config.cmake
 )
-
-export(PACKAGE <%= libName %>)
 
 install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/<%= libName %>Config.cmake

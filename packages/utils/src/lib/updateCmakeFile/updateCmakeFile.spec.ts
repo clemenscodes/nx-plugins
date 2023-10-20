@@ -34,8 +34,8 @@ describe('updateCmakeFile', () => {
         linkOptions = {
             source: 'liblink',
             target: 'libtarget',
-            link: 'shared',
             sourceProjectRoot: 'packages/link',
+            targetProjectRoot: 'packages/target',
         };
         jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
         await initGenerator(tree, getDefaultInitGeneratorOptions());

@@ -9,12 +9,14 @@ import { getTestSetup } from '../getTestSetup/getTestSetup';
 import { CProjectType } from '@/config';
 import { resolveOptions } from '../resolveOptions/resolveOptions';
 import { getProjectRoot } from '../getProjectRoot/getProjectRoot';
+import { getWorkspaceLayout } from '../getWorkspaceLayout/getWorkspaceLayout';
 
 export const resolveLibOptions = (options: LibGeneratorSchema): LibSchema => {
     const resolvedOptions = resolveOptions<LibGeneratorSchema, LibSchema>(
         options,
     );
     const { name, generateTests, language } = resolvedOptions;
+    const { libsDir } = getWorkspaceLayout();
     const projectRoot = getProjectRoot(name, CProjectType.Lib);
     const relativeRootPath = offsetFromRoot(projectRoot);
     const libName = getLibName(name);
@@ -32,6 +34,7 @@ export const resolveLibOptions = (options: LibGeneratorSchema): LibSchema => {
     resolvedOptions.libName = libName;
     resolvedOptions.relativeRootPath = relativeRootPath;
     resolvedOptions.projectRoot = projectRoot;
+    resolvedOptions.libsDir = libsDir;
 
     return resolvedOptions;
 };

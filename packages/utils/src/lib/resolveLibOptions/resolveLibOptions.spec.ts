@@ -21,6 +21,7 @@ describe('resolveLibOptions', () => {
             cmakeConfigDir: '.cmake',
             languageExtension: 'c',
             relativeRootPath: '../../',
+            libsDir: 'packages',
             cmakeC: 'C',
             includeGoogleTest: '',
             setupTests: '',

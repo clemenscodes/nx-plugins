@@ -79,8 +79,6 @@ describe('generateBinFiles', () => {
             '\n' +
             `set_binary_settings(${options.name} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
             '\n' +
-            `link_library(${options.name} ${options.name})\n` +
-            '\n' +
             `install(TARGETS ${options.name})\n`;
         expectedIncludeFile =
             '#ifndef _TEST_TEST\n' + '#define _TEST_TEST\n' + '\n' + '#endif\n';
@@ -144,8 +142,6 @@ describe('generateBinFiles', () => {
             `project(${options.name} LANGUAGES \${LANGUAGE} VERSION \${${options.name}_VERSION})\n` +
             '\n' +
             `set_binary_settings(${options.name} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
-            '\n' +
-            `link_library(${options.name} ${options.name})\n` +
             '\n' +
             `install(TARGETS ${options.name})\n`;
         expectedReadMeFile =

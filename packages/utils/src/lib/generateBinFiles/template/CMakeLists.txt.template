@@ -12,6 +12,4 @@ project(<%= name %> LANGUAGES ${LANGUAGE} VERSION ${<%= name %>_VERSION})
 
 set_binary_settings(<%= name %> ${CMAKE_CURRENT_SOURCE_DIR})
 
-link_library(<%= name %> <%= name %>)
-
 install(TARGETS <%= name %>)

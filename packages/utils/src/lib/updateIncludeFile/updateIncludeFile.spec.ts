@@ -41,8 +41,8 @@ describe('updateIncludeFile', () => {
         linkOptions = {
             source: 'liblink',
             target: 'libtarget',
-            link: 'shared',
             sourceProjectRoot: 'packages/link',
+            targetProjectRoot: 'packages/target',
         };
     });
 
