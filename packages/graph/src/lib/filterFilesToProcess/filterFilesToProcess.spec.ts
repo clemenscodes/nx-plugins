@@ -1,5 +1,5 @@
 import type { ProjectFileMap } from '@nx/devkit';
-import type { FilteredProject } from '@/config';
+import { CProjectType, type FilteredProject } from '@/config';
 import { filterFilesToProcess } from './filterFilesToProcess';
 
 describe('filterFilesToProcess', () => {
@@ -148,42 +148,42 @@ describe('filterFilesToProcess', () => {
             {
                 name: 'testa',
                 root: 'packages/a/test',
-                type: 2,
+                type: CProjectType.Test,
                 tag: 'c',
                 sourceRoot: 'packages/a/test/src',
             },
             {
                 name: 'testb',
                 root: 'packages/b/test',
-                type: 2,
+                type: CProjectType.Test,
                 tag: 'c',
                 sourceRoot: 'packages/b/test/src',
             },
             {
                 name: 'libb',
                 root: 'packages/b',
-                type: 1,
+                type: CProjectType.Lib,
                 tag: 'c',
                 sourceRoot: 'packages/b/src',
             },
             {
                 name: 'liba',
                 root: 'packages/a',
-                type: 1,
+                type: CProjectType.Lib,
                 tag: 'c',
                 sourceRoot: 'packages/a/src',
             },
             {
                 name: 'a',
                 root: 'bin/a',
-                type: 0,
+                type: CProjectType.App,
                 tag: 'c',
                 sourceRoot: 'bin/a/src',
             },
             {
                 name: 'b',
                 root: 'bin/b',
-                type: 0,
+                type: CProjectType.App,
                 tag: 'c',
                 sourceRoot: 'bin/b/src',
             },
