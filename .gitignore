@@ -52,3 +52,5 @@ Thumbs.db
 /.clang-tidy.yml
 /.clang-tidy.yaml
 /CMakeLists.txt
+
+.nx/cache

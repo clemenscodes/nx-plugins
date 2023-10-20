@@ -10,6 +10,7 @@ import { reduceDependenciesTransitively } from '../reduceDependenciesTransitivel
 import { getWorkspaceLayout } from '@/utils';
 
 export const createDependencies: CreateDependencies = (
+    _options,
     context: CreateDependenciesContext,
 ): RawProjectGraphDependency[] => {
     const { projects, filesToProcess } = context;

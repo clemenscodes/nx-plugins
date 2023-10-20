@@ -1,7 +1,6 @@
 {
     "name": "@/utils",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "root": "packages/utils",
     "sourceRoot": "packages/utils/src",
     "projectType": "library",
     "targets": {
@@ -25,7 +24,7 @@
             }
         },
         "lint": {
-            "executor": "@nx/linter:eslint",
+            "executor": "@nx/eslint:lint",
             "outputs": ["{options.outputFile}"],
             "options": {
                 "lintFilePatterns": [

@@ -14,3 +14,5 @@ node_modules/
 **/*.c
 **/*.h
 pnpm-lock.yaml
+
+/.nx/cache

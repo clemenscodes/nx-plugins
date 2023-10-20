@@ -1,54 +1,39 @@
 {
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
     "extends": "nx/presets/npm.json",
     "defaultProject": "nx-cmake",
-    "tasksRunnerOptions": {
-        "default": {
-            "runner": "nx-cloud",
-            "options": {
-                "cacheableOperations": [
-                    "cmake",
-                    "build",
-                    "test",
-                    "e2e",
-                    "lint",
-                    "fmt"
-                ],
-                "accessToken": "ZTBkM2I2MjYtNTc4Mi00YjUxLTkzNDAtZWFlYjg1OGY0Y2UxfHJlYWQtd3JpdGU=",
-                "useDaemonProcess": false
-            }
-        }
+    "nxCloudAccessToken": "ZTBkM2I2MjYtNTc4Mi00YjUxLTkzNDAtZWFlYjg1OGY0Y2UxfHJlYWQtd3JpdGU=",
+    "useDaemonProcess": false,
+    "workspaceLayout": {
+        "appsDir": "bin",
+        "libsDir": "packages"
     },
-    "pluginsConfig": {
-        "@nx/js": {
-            "analyzeSourceFiles": true
-        },
-        "nx-cmake": {
-            "language": "C",
-            "cmakeConfigDir": ".cmake",
-            "workspaceName": "workspace"
-        }
-    },
-    "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "plugins": ["nx-cmake"],
     "targetDefaults": {
         "cmake": {
             "dependsOn": ["^cmake"],
-            "inputs": ["cmake"]
+            "inputs": ["cmake"],
+            "cache": true
         },
         "build": {
             "dependsOn": ["^cmake", "^build", "cmake"],
-            "inputs": ["default"]
+            "inputs": ["default"],
+            "cache": true
         },
         "fmt": {
             "dependsOn": [],
-            "inputs": ["clangFormat"]
+            "inputs": ["clangFormat"],
+            "cache": true
         },
         "lint": {
             "dependsOn": ["cmake"],
-            "inputs": ["default", "clangTidy"]
+            "inputs": ["default", "clangTidy"],
+            "cache": true
         },
         "test": {
             "dependsOn": ["build"],
-            "inputs": ["default"]
+            "inputs": ["default"],
+            "cache": true
         },
         "execute": {
             "dependsOn": ["build"],
@@ -57,6 +42,9 @@
         "debug": {
             "dependsOn": ["build"],
             "inputs": ["default"]
+        },
+        "e2e": {
+            "cache": true
         }
     },
     "namedInputs": {
@@ -86,11 +74,7 @@
             "{workspaceRoot}/.clang-tidy.yaml"
         ]
     },
-    "plugins": ["nx-cmake"],
-    "workspaceLayout": {
-        "appsDir": "bin",
-        "libsDir": "packages"
-    },
+
     "generators": {
         "nx-cmake": {
             "binary": {
@@ -101,6 +85,16 @@
                 "language": "C",
                 "generateTests": true
             }
+        }
+    },
+    "pluginsConfig": {
+        "@nx/js": {
+            "analyzeSourceFiles": true
+        },
+        "nx-cmake": {
+            "language": "C",
+            "cmakeConfigDir": ".cmake",
+            "workspaceName": "workspace"
         }
     }
 }

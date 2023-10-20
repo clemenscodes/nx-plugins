@@ -10,6 +10,7 @@ describe('createDependencies', () => {
     let mockGetDependencies: jest.SpyInstance;
     let getDependenciesReturnMock: RawProjectGraphDependency[];
     let expectedDependencies: RawProjectGraphDependency[];
+    let optionsMock: unknown;
     let contextMock: CreateDependenciesContext;
 
     beforeEach(() => {
@@ -877,7 +878,7 @@ describe('createDependencies', () => {
     });
 
     it('should return dependencies based on the provided context', () => {
-        const result = createDependencies(contextMock);
+        const result = createDependencies(optionsMock, contextMock);
         expect(result).toStrictEqual(expectedDependencies);
     });
 });

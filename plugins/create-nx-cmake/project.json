@@ -1,7 +1,6 @@
 {
     "name": "create-nx-cmake",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "root": "plugins/create-nx-cmake",
     "sourceRoot": "plugins/create-nx-cmake/bin",
     "projectType": "library",
     "targets": {
@@ -23,7 +22,7 @@
             "dependsOn": ["build"]
         },
         "lint": {
-            "executor": "@nx/linter:eslint",
+            "executor": "@nx/eslint:lint",
             "outputs": ["{options.outputFile}"],
             "options": {
                 "lintFilePatterns": [
