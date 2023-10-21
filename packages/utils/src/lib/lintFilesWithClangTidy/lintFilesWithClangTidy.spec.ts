@@ -2,11 +2,9 @@ import { lintFilesWithClangTidy } from './lintFilesWithClangTidy';
 import { CLANG_TIDY, LINUX_GCC, LintExecutorSchema } from '@/config';
 import * as fileModule from '@/file';
 import * as getLintArgumentsModule from '../getLintArguments/getLintArguments';
-import * as getClangTidyModule from '../getClangTidy/getClangTidy';
+import * as configModule from '@/config';
 import * as runCommandModule from '../runCommand/runCommand';
 import * as checkCommandExistsModule from '../checkCommandExists/checkCommandExists';
-import * as isDarwinModule from '../isDarwin/isDarwin';
-import * as isWindowsModule from '../isWindows/isWindows';
 
 describe('lintFilesWithClangTidy', () => {
     let workspaceRoot: string;
@@ -38,16 +36,14 @@ describe('lintFilesWithClangTidy', () => {
             .spyOn(checkCommandExistsModule, 'checkCommandExists')
             .mockImplementation(jest.fn());
         isWindowsMock = jest
-            .spyOn(isWindowsModule, 'isWindows')
+            .spyOn(configModule, 'isWindows')
             .mockReturnValue(false);
         isDarwinMock = jest
-            .spyOn(isDarwinModule, 'isDarwin')
+            .spyOn(configModule, 'isDarwin')
             .mockReturnValue(false);
         jest.spyOn(fileModule, 'fileExists').mockReturnValue(true);
         clangTidyMock = LINUX_GCC[0];
-        jest.spyOn(getClangTidyModule, 'getClangTidy').mockReturnValue(
-            clangTidyMock,
-        );
+        jest.spyOn(configModule, 'getClangTidy').mockReturnValue(clangTidyMock);
         runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
         lintArgsMock = ['--config-file=your_config_file', '-p=your_build_path'];
         sourceFilesMock = ['/path/to/file1.cpp', '/path/to/file2.cpp'];
@@ -57,11 +53,11 @@ describe('lintFilesWithClangTidy', () => {
         jest.restoreAllMocks();
     });
 
-    it('should pass executor arguments to clang-tidy', async () => {
-        getLintArgumentsMock.mockResolvedValue(lintArgsMock);
+    it('should pass executor arguments to clang-tidy', () => {
+        getLintArgumentsMock.mockReturnValue(lintArgsMock);
         getProjectFilesMock.mockReturnValue(sourceFilesMock);
         runCommandMock.mockReturnValueOnce({ success: true });
-        await lintFilesWithClangTidy(workspaceRoot, projectRoot, options);
+        lintFilesWithClangTidy(workspaceRoot, projectRoot, options);
         expect(getLintArgumentsMock).toHaveBeenCalledWith(
             workspaceRoot,
             projectRoot,
@@ -79,12 +75,12 @@ describe('lintFilesWithClangTidy', () => {
         );
     });
 
-    it('should return true if all files were successfully linted', async () => {
+    it('should return true if all files were successfully linted', () => {
         isDarwinMock.mockReturnValue(true);
-        getLintArgumentsMock.mockResolvedValue(lintArgsMock);
+        getLintArgumentsMock.mockReturnValue(lintArgsMock);
         getProjectFilesMock.mockReturnValue(sourceFilesMock);
         runCommandMock.mockReturnValue({ success: true });
-        const result = await lintFilesWithClangTidy(
+        const result = lintFilesWithClangTidy(
             workspaceRoot,
             projectRoot,
             options,
@@ -97,12 +93,12 @@ describe('lintFilesWithClangTidy', () => {
         expect(result).toBe(true);
     });
 
-    it('should return false if not all files were successfully linted', async () => {
+    it('should return false if not all files were successfully linted', () => {
         isWindowsMock.mockReturnValue(true);
-        getLintArgumentsMock.mockResolvedValue(lintArgsMock);
+        getLintArgumentsMock.mockReturnValue(lintArgsMock);
         getProjectFilesMock.mockReturnValue(sourceFilesMock);
         runCommandMock.mockReturnValue({ success: false });
-        const result = await lintFilesWithClangTidy(
+        const result = lintFilesWithClangTidy(
             workspaceRoot,
             projectRoot,
             options,

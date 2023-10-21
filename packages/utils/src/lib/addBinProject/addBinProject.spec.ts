@@ -1,17 +1,24 @@
 import type { ProjectConfiguration, Tree } from '@nx/devkit';
-import type { BinGeneratorSchema } from '@/config';
+import {
+    getDefaultInitGeneratorOptions,
+    type BinGeneratorSchema,
+} from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { addBinProject } from './addBinProject';
 import { resolveBinOptions } from '../resolveBinOptions/resolveBinOptions';
 import { readProjectConfiguration } from '@nx/devkit';
+import { initGenerator } from '../initGenerator/initGenerator';
+import * as devkit from '@nx/devkit';
 
 describe('addBinProject', () => {
     let tree: Tree;
     let options: BinGeneratorSchema;
     let expected: ProjectConfiguration;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         tree = createTreeWithEmptyWorkspace();
+        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
+        await initGenerator(tree, getDefaultInitGeneratorOptions());
         options = {
             name: 'test',
             language: 'C++',
@@ -33,8 +40,8 @@ describe('addBinProject', () => {
                         release: { release: true, args: [] },
                     },
                 },
-                build: {
-                    executor: 'nx-cmake:build',
+                compile: {
+                    executor: 'nx-cmake:compile',
                     defaultConfiguration: 'debug',
                     configurations: {
                         debug: { release: false, args: [] },
@@ -52,7 +59,7 @@ describe('addBinProject', () => {
                     },
                 },
                 fmt: {
-                    executor: 'nx-cmake:format',
+                    executor: 'nx-cmake:fmt',
                     defaultConfiguration: 'local',
                     configurations: {
                         local: {

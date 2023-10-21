@@ -10,7 +10,7 @@ describe('getProjectType', () => {
     beforeEach(() => {
         mockProjectConfigFile = 'some-directory/CMakeLists.txt';
         mockProjectConfigFileContent =
-            'project(whatever C)\n' + 'enable_testing()';
+            'set(PROJECT_TYPE TEST)\n' + 'set(LANGUAGE C)';
         readFileSyncMock = jest.spyOn(fs, 'readFileSync');
     });
 
@@ -28,7 +28,7 @@ describe('getProjectType', () => {
 
     it('should return the app type and c language variant', () => {
         mockProjectConfigFileContent =
-            'project(whatever CXX)\n' + 'set_binary_settings()';
+            'set(PROJECT_TYPE BIN)\n' + 'set(LANGUAGE CXX)';
         readFileSyncMock.mockReturnValue(mockProjectConfigFileContent);
         expect(getProjectTypeAndVariant(mockProjectConfigFile)).toStrictEqual([
             CProjectType.App,
@@ -38,20 +38,11 @@ describe('getProjectType', () => {
 
     it('should return lib type and c language variant', () => {
         mockProjectConfigFileContent =
-            'project(whatever CXX)\n' + 'set_library_settings()';
+            'set(PROJECT_TYPE LIB)\n' + 'set(LANGUAGE CXX)';
         readFileSyncMock.mockReturnValue(mockProjectConfigFileContent);
         expect(getProjectTypeAndVariant(mockProjectConfigFile)).toStrictEqual([
             CProjectType.Lib,
             'C++',
         ]);
-    });
-
-    it('should throw an error for an invalid project configuration file', () => {
-        mockProjectConfigFile = 'invalid_project_config.txt';
-        expect(() =>
-            getProjectTypeAndVariant(mockProjectConfigFile),
-        ).toThrowError(
-            `Failed to determine project type or variant for the configuration file ${mockProjectConfigFile}`,
-        );
     });
 });

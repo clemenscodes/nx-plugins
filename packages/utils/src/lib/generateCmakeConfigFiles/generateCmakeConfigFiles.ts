@@ -1,5 +1,5 @@
-import type { Tree } from '@nx/devkit';
 import type { InitGeneratorSchema } from '@/config';
+import type { Tree } from '@nx/devkit';
 import { generateFiles } from '@nx/devkit';
 import { join } from 'path';
 

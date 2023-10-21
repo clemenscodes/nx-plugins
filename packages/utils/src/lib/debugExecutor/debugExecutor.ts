@@ -1,13 +1,12 @@
-import type { ExecutorContext } from '@nx/devkit';
-import { DebugExecutorSchema } from '@/config';
+import type { DebugExecutorSchema, Executor } from '@/config';
 import { debugBinaryWithGdb } from '../debugBinaryWithGdb/debugBinaryWithGdb';
 import { extractRootsFromExecutorContext } from '../extractRootsFromExecutorContext/extractRootsFromExecutorContext';
 import { logger } from '../logger/logger';
 
-export async function* debugExecutor(
-    options: DebugExecutorSchema,
-    ctx: ExecutorContext,
-): AsyncGenerator<{ success: boolean }> {
+export const debugExecutor: Executor<DebugExecutorSchema> = async function* (
+    options,
+    ctx,
+) {
     logger(`Running debug executor`);
     const { workspaceRoot, projectRoot } = extractRootsFromExecutorContext(ctx);
     const { projectName } = ctx;
@@ -23,4 +22,4 @@ export async function* debugExecutor(
     yield {
         success,
     };
-}
+};

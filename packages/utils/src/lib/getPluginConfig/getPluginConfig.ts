@@ -1,13 +1,12 @@
 import type { NxCmakePluginConfig } from '@/config';
-import { PLUGIN_NAME } from '@/config';
-import { assertIsPluginConfig } from '../assertIsPluginConfig/assertIsPluginConfig';
+import { PLUGIN_NAME, assertIsPluginConfig } from '@/config';
 import { getNxJsonConfiguration } from '../getNxJsonConfiguration/getNxJsonConfiguration';
 
 export const getPluginConfig = (): NxCmakePluginConfig => {
     const defaultPluginConfig: NxCmakePluginConfig = {
         language: 'C',
         cmakeConfigDir: '.cmake',
-        globalIncludeDir: 'include',
+        workspaceName: 'workspace',
     };
     const config = getNxJsonConfiguration();
     const pluginsConfig = config.pluginsConfig;

@@ -1,3 +1,4 @@
+export { getIncludeDirectories } from './lib/getIncludeDirectories/getIncludeDirectories';
 export { fileExists } from './lib/fileExists/fileExists';
 export { fileIsSourceFile } from './lib/fileIsSourceFile/fileIsSourceFile';
 export { filterSourceFiles } from './lib/filterSourceFiles/filterSourceFiles';

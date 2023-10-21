@@ -1,22 +1,17 @@
 import { getProjectFiles, filterSourceFiles } from '@/file';
 import { getLintArguments } from '../getLintArguments/getLintArguments';
-import { getClangTidy } from '../getClangTidy/getClangTidy';
-import { CLANG_TIDY, LintExecutorSchema } from '@/config';
+import { CLANG_TIDY, LintExecutorSchema, getClangTidy } from '@/config';
 import { checkCommandExists } from '../checkCommandExists/checkCommandExists';
 import { runCommand } from '../runCommand/runCommand';
 
-export const lintFilesWithClangTidy = async (
+export const lintFilesWithClangTidy = (
     workspaceRoot: string,
     projectRoot: string,
     options: LintExecutorSchema,
-): Promise<boolean> => {
+): boolean => {
     checkCommandExists(CLANG_TIDY);
     const clangTidy = getClangTidy();
-    const lintArgs = await getLintArguments(
-        workspaceRoot,
-        projectRoot,
-        options,
-    );
+    const lintArgs = getLintArguments(workspaceRoot, projectRoot, options);
     const files = getProjectFiles(workspaceRoot, projectRoot);
     const sourceFiles = filterSourceFiles(files);
     const { success } = runCommand(clangTidy, ...lintArgs, ...sourceFiles);

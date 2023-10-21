@@ -14,7 +14,13 @@ export const resolveLinkOptions = (
         throw Error(`Project ${target} is not a library and not linkable`);
     }
     const sourceProjectConfig = readProjectConfiguration(tree, source);
+    const targetProjectConfig = readProjectConfiguration(tree, target);
     const sourceProjectRoot = sourceProjectConfig.root;
-    const resolvedOptions: LinkSchema = { ...options, sourceProjectRoot };
+    const targetProjectRoot = targetProjectConfig.root;
+    const resolvedOptions: LinkSchema = {
+        ...options,
+        sourceProjectRoot,
+        targetProjectRoot,
+    };
     return resolvedOptions;
 };

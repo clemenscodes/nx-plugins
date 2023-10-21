@@ -1,22 +1,25 @@
 import type { Tree } from '@nx/devkit';
 import type { BinGeneratorSchema } from '@/config';
+import { getDefaultInitGeneratorOptions } from '@/config';
 import { readProjectConfiguration } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { binGenerator } from './binGenerator';
 import * as devkit from '@nx/devkit';
+import { initGenerator } from '../initGenerator/initGenerator';
 
 describe('bin generator', () => {
     let tree: Tree;
     let options: BinGeneratorSchema;
 
-    beforeEach(() => {
+    beforeEach(async () => {
+        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
         tree = createTreeWithEmptyWorkspace();
         options = {
             name: 'test',
             generateTests: true,
             language: 'C',
         };
-        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
+        await initGenerator(tree, getDefaultInitGeneratorOptions());
     });
 
     afterEach(() => {

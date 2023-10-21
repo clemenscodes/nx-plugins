@@ -1,6 +1,12 @@
 import { getTag } from './getTag';
 
 describe('getTag', () => {
+    it('should throw an error if tags are not defined', () => {
+        expect(() => getTag(undefined)).toThrowError(
+            'No tags were defined in project.json',
+        );
+    });
+
     it('should return the first "c" or "cpp" tag', () => {
         const tags = ['java', 'c', 'python', 'cpp', 'rust'];
         const tag = getTag(tags);

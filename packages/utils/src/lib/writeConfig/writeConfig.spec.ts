@@ -5,7 +5,7 @@ import type {
 } from '@/config';
 import type { NxJsonConfiguration } from '@nx/devkit';
 import { writeConfig } from './writeConfig';
-import { PLUGIN_NAME } from '@/config';
+import { PLUGIN_NAME, getDefaultInitGeneratorOptions } from '@/config';
 
 describe('writeConfig', () => {
     let nxJson: NxJsonConfiguration;
@@ -17,19 +17,11 @@ describe('writeConfig', () => {
     beforeEach(() => {
         nxJson = {};
         updatedNxJson = {};
-        options = {
-            language: 'C',
-            globalIncludeDir: 'include',
-            cmakeConfigDir: '.cmake',
-            addClangPreset: false,
-            appsDir: 'apps',
-            libsDir: 'libs',
-            skipFormat: false,
-        };
+        options = getDefaultInitGeneratorOptions();
         pluginConfig = {
             language: options.language,
-            globalIncludeDir: options.globalIncludeDir,
             cmakeConfigDir: options.cmakeConfigDir,
+            workspaceName: options.workspaceName,
         };
         expectedPluginConfig = {
             'nx-cmake': pluginConfig,
@@ -96,7 +88,6 @@ describe('writeConfig', () => {
         nxJson = {
             pluginsConfig: {
                 [PLUGIN_NAME]: {
-                    globalIncludeDir: 'include',
                     language: 'C',
                 },
             },
@@ -108,9 +99,7 @@ describe('writeConfig', () => {
     it('should update plugin config when it exists but is misses language', () => {
         nxJson = {
             pluginsConfig: {
-                [PLUGIN_NAME]: {
-                    globalIncludeDir: 'include',
-                },
+                [PLUGIN_NAME]: {},
             },
         };
         const resultNxJson = writeConfig(nxJson, updatedNxJson, options);

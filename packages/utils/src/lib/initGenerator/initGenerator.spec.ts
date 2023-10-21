@@ -3,7 +3,7 @@ import type { InitGeneratorSchema } from '@/config';
 import { output } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { initGenerator } from './initGenerator';
-import * as checkNxVersionModule from '../checkNxVersion/checkNxVersion';
+import * as configModule from '@/config';
 import * as devkit from '@nx/devkit';
 
 describe('init generator', () => {
@@ -15,16 +15,8 @@ describe('init generator', () => {
 
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
-        options = {
-            language: 'C',
-            cmakeConfigDir: '.cmake',
-            globalIncludeDir: 'include',
-            appsDir: 'bin',
-            libsDir: 'packages',
-            addClangPreset: true,
-            skipFormat: false,
-        };
-        checkNxVersionMock = jest.spyOn(checkNxVersionModule, 'checkNxVersion');
+        options = configModule.getDefaultInitGeneratorOptions();
+        checkNxVersionMock = jest.spyOn(configModule, 'checkNxVersion');
         nxOutputWarnMock = jest.spyOn(output, 'warn');
         nxOutputErrorMock = jest.spyOn(output, 'error');
         jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());

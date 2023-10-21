@@ -1,11 +1,11 @@
-import { BuildExecutorSchema } from '@/config';
+import { CompileExecutorSchema } from '@/config';
 import { getCmakeBuildCommandArguments } from './getCmakeBuildCommandArguments';
 import { join } from 'path';
 
 describe('getCmakeBuildCommandArguments', () => {
     let workspaceRoot: string;
     let projectRoot: string;
-    let options: BuildExecutorSchema;
+    let options: CompileExecutorSchema;
     let expectedBuildPathArgument: string;
     let expectedConfigArgument: string;
     let expectedBuildArguments: string[];

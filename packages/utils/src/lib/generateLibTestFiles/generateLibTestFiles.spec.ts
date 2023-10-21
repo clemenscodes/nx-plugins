@@ -1,15 +1,18 @@
 import type { Tree } from '@nx/devkit';
-import type { LibGeneratorSchema, LibOptions } from '@/config';
+import type { LibGeneratorSchema, LibSchema } from '@/config';
+import { getDefaultInitGeneratorOptions } from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { readProjectConfiguration } from '@nx/devkit';
 import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
 import { generateLibTestFiles } from './generateLibTestFiles';
 import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
+import { initGenerator } from '../initGenerator/initGenerator';
+import * as devkit from '@nx/devkit';
 
 describe('generateLibTestFiles', () => {
     let tree: Tree;
     let options: LibGeneratorSchema;
-    let resolvedOptions: LibOptions;
+    let resolvedOptions: LibSchema;
     let testRoot: string;
     let testListsFile: string;
     let testSourceFile: string;
@@ -39,8 +42,10 @@ describe('generateLibTestFiles', () => {
         expect(readMeFileContent).toStrictEqual(expectedReadMeFile);
     };
 
-    beforeEach(() => {
+    beforeEach(async () => {
+        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
         tree = createTreeWithEmptyWorkspace();
+        await initGenerator(tree, getDefaultInitGeneratorOptions());
         options = {
             name: 'test',
             language: 'C',
@@ -62,46 +67,57 @@ describe('generateLibTestFiles', () => {
             '#ifndef _TESTTEST_TEST\n' +
             '#define _TESTTEST_TEST\n' +
             '\n' +
-            '#include "libcmocka.h"\n' +
-            '#include <test/include/libtest.h>\n' +
+            '#include <stdint.h>\n' +
+            '#include <stdarg.h>\n' +
+            '#include <stddef.h>\n' +
+            '#include <setjmp.h>\n' +
+            '#include <cmocka.h>\n' +
             '\n' +
             '#endif\n';
 
         expectedSourceFile =
-            '#include "include/testtest.h"\n' +
+            '#include "testtest.h"\n' +
             '\n' +
             'static int setup(void **state) {\n' +
-            '\t(void) state;\n' +
-            '\treturn 0;\n' +
+            '    (void) state;\n' +
+            '    return 0;\n' +
             '}\n' +
             '\n' +
             'static int teardown(void **state) {\n' +
-            '\t(void) state;\n' +
-            '\treturn 0;\n' +
+            '    (void) state;\n' +
+            '    return 0;\n' +
             '}\n' +
             '\n' +
             'static void test_test(void **state) {\n' +
-            '\t(void) state;\n' +
-            '\ttest();\n' +
+            '    (void) state;\n' +
+            '    test();\n' +
             '}\n' +
             '\n' +
             'int main(void) {\n' +
-            '\tconst struct CMUnitTest test_tests[] = {\n' +
-            '\t\tcmocka_unit_test(test_test),\n' +
-            '\t};\n' +
-            '\treturn cmocka_run_group_tests(test_tests, setup, teardown);\n' +
+            '    const struct CMUnitTest test_tests[] = {\n' +
+            '        cmocka_unit_test(test_test),\n' +
+            '    };\n' +
+            '    return cmocka_run_group_tests(test_tests, setup, teardown);\n' +
             '}\n' +
             '\n';
-
         expectedListsFile =
-            'include("../../CMakeLists.txt")\n' +
+            'include(../../.cmake/workspace.cmake)\n' +
             '\n' +
-            'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
+            'cmake_minimum_required(VERSION 3.21)\n' +
+            '\n' +
+            'set(PROJECT_TYPE TEST)\n' +
+            'set(LANGUAGE C)\n' +
+            '\n' +
             'set_project_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
-            'project(testtest C)\n' +
+            '\n' +
+            'project(testtest LANGUAGES ${LANGUAGE})\n' +
+            '\n' +
             'set_binary_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
-            'link_static_library(${CMAKE_PROJECT_NAME} test)\n' +
+            '\n' +
             'enable_testing()\n' +
+            '\n' +
+            'install_cmocka()\n' +
+            '\n' +
             'link_cmocka(${CMAKE_PROJECT_NAME})\n' +
             '\n' +
             'add_test(UnitTests testtest)\n';
@@ -161,29 +177,39 @@ describe('generateLibTestFiles', () => {
             '#ifndef _TESTTEST_TEST\n' +
             '#define _TESTTEST_TEST\n' +
             '\n' +
-            '#include "libgtest.h"\n' +
-            '#include <test/include/libtest.h>\n' +
+            '#include <gtest/gtest.h>\n' +
             '\n' +
             '#endif\n';
         expectedSourceFile =
-            '#include "include/testtest.h"\n' +
+            '#include "testtest.h"\n' +
             '\n' +
             'TEST(libtest, test_test) {\n' +
-            '\tEXPECT_EQ(test(), 0);\n' +
+            '    EXPECT_EQ(test(), 0);\n' +
             '}\n' +
             '\n';
         expectedListsFile =
-            'include("../../CMakeLists.txt")\n' +
+            'include(../../.cmake/workspace.cmake)\n' +
             '\n' +
-            'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
+            'cmake_minimum_required(VERSION 3.21)\n' +
+            '\n' +
+            'set(PROJECT_TYPE TEST)\n' +
+            'set(LANGUAGE CXX)\n' +
+            '\n' +
             'set_project_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
-            'project(testtest CXX)\n' +
+            '\n' +
+            'project(testtest LANGUAGES ${LANGUAGE})\n' +
+            '\n' +
             'set_binary_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
-            'link_static_library(${CMAKE_PROJECT_NAME} test)\n' +
+            '\n' +
             'enable_testing()\n' +
+            '\n' +
+            'install_gtest()\n' +
+            '\n' +
             'link_gtest(${CMAKE_PROJECT_NAME})\n' +
+            '\n' +
             'include(GoogleTest)\n' +
             'gtest_discover_tests(testtest)\n';
+
         expectedReadMeFile =
             '# testtest\n' +
             '\n' +

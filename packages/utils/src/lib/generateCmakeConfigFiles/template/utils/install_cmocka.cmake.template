@@ -1,5 +1,5 @@
 function(install_cmocka)
-    set(FETCHCONTENT_BASE_DIR ${CMAKE_LIBRARY_PATH}/cmocka)
+    set(FETCHCONTENT_BASE_DIR ${ROOT}/dist/<%= libsDir %>/cmocka)
 
     FetchContent_Declare(
         cmocka

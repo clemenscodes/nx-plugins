@@ -1,15 +1,17 @@
 import type { Tree } from '@nx/devkit';
-import type {
-    BinGeneratorSchema,
-    LibGeneratorSchema,
-    LinkGeneratorSchema,
-    LinkSchema,
+import {
+    getDefaultInitGeneratorOptions,
+    type BinGeneratorSchema,
+    type LibGeneratorSchema,
+    type LinkGeneratorSchema,
+    type LinkSchema,
 } from '@/config';
 import { resolveLinkOptions } from './resolveLinkOptions';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { libGenerator } from '../libGenerator/libGenerator';
-import * as devkit from '@nx/devkit';
 import { binGenerator } from '../binGenerator/binGenerator';
+import { initGenerator } from '../initGenerator/initGenerator';
+import * as devkit from '@nx/devkit';
 
 describe('resolveLinkOptions', () => {
     let tree: Tree;
@@ -22,7 +24,6 @@ describe('resolveLinkOptions', () => {
         options = {
             source: 'liblink',
             target: 'libtarget',
-            link: 'shared',
         };
         binOptions = {
             name: 'binary',
@@ -35,6 +36,7 @@ describe('resolveLinkOptions', () => {
             generateTests: true,
         };
         jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
+        await initGenerator(tree, getDefaultInitGeneratorOptions());
     });
 
     it('should throw when source project does not exist', () => {
@@ -51,8 +53,8 @@ describe('resolveLinkOptions', () => {
         const expectedResolvedOptions: LinkSchema = {
             source: 'liblink',
             target: 'libtarget',
-            link: 'shared',
             sourceProjectRoot: 'packages/link',
+            targetProjectRoot: 'packages/target',
         };
         expect(resolvedOptions).toStrictEqual(expectedResolvedOptions);
     });

@@ -1,17 +1,20 @@
 import type { ProjectConfiguration, Tree } from '@nx/devkit';
-import type { LibGeneratorSchema, LibOptions } from '@/config';
+import type { LibGeneratorSchema, LibSchema } from '@/config';
+import { getDefaultInitGeneratorOptions } from '@/config';
 import { readProjectConfiguration } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { addTestProjectConfig } from './addTestProjectConfig';
 import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
+import { initGenerator } from '../initGenerator/initGenerator';
+import * as devkit from '@nx/devkit';
 
 describe('addTestProjectConfig', () => {
     let tree: Tree;
     let options: LibGeneratorSchema;
-    let resolvedOptions: LibOptions;
+    let resolvedOptions: LibSchema;
     let expectedProjectConfiguration: ProjectConfiguration;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         tree = createTreeWithEmptyWorkspace();
         options = {
             name: 'test',
@@ -19,6 +22,8 @@ describe('addTestProjectConfig', () => {
             generateTests: true,
         };
         resolvedOptions = resolveLibOptions(options);
+        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
+        await initGenerator(tree, getDefaultInitGeneratorOptions());
         expectedProjectConfiguration = {
             name: 'testtest',
             root: 'bin/testtest',
@@ -35,8 +40,8 @@ describe('addTestProjectConfig', () => {
                         release: { release: true, args: [] },
                     },
                 },
-                build: {
-                    executor: 'nx-cmake:build',
+                compile: {
+                    executor: 'nx-cmake:compile',
                     defaultConfiguration: 'debug',
                     configurations: {
                         debug: { release: false, args: [] },
@@ -54,7 +59,7 @@ describe('addTestProjectConfig', () => {
                     },
                 },
                 fmt: {
-                    executor: 'nx-cmake:format',
+                    executor: 'nx-cmake:fmt',
                     defaultConfiguration: 'local',
                     configurations: {
                         local: {

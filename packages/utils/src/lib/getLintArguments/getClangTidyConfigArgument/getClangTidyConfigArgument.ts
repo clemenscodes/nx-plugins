@@ -1,13 +1,14 @@
+import { CLANG_TIDY_CONFIG_FILE } from '@/config';
 import { getConfigFile } from '@/file';
 
-export const getClangTidyConfigArgument = async (
+export const getClangTidyConfigArgument = (
     workspaceRoot: string,
     projectRoot: string,
-): Promise<string> => {
-    const configFile = await getConfigFile(
+): string => {
+    const configFile = getConfigFile(
         workspaceRoot,
         projectRoot,
-        '.clang-tidy.yml',
+        CLANG_TIDY_CONFIG_FILE,
     );
     const configArgument = `--config-file=${configFile}`;
     return configArgument;

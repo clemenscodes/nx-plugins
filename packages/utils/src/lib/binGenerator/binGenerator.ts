@@ -10,9 +10,9 @@ import { resolveBinOptions } from '../resolveBinOptions/resolveBinOptions';
 export async function binGenerator(tree: Tree, options: BinGeneratorSchema) {
     const resolvedOptions = resolveBinOptions(options);
     const { linkOptions } = resolvedOptions;
-    addBinProject(tree, resolvedOptions);
     generateBinFiles(tree, resolvedOptions);
+    addBinProject(tree, resolvedOptions);
     await libGenerator(tree, resolvedOptions);
-    await linkGenerator(tree, linkOptions);
+    linkGenerator(tree, linkOptions);
     await formatFiles(tree);
 }

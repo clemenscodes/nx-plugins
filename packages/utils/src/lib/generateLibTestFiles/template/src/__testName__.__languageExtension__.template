@@ -1,3 +1,28 @@
-#include "include/<%= testName %>.h"
+#include "<%= testName %>.h"
+<% if (testLib === 'gtest') { %>
+TEST(<%= snakeCaseLibName %>, test_<%= snakeCaseProjectName %>) {
+    EXPECT_EQ(<%= camelCaseProjectName %>(), 0);
+}
+<% } else { %>
+static int setup(void **state) {
+    (void) state;
+    return 0;
+}
 
-<%= baseTest %>
+static int teardown(void **state) {
+    (void) state;
+    return 0;
+}
+
+static void test_<%= snakeCaseProjectName %>(void **state) {
+    (void) state;
+    <%= camelCaseProjectName %>();
+}
+
+int main(void) {
+    const struct CMUnitTest <%= snakeCaseProjectName %>_tests[] = {
+        cmocka_unit_test(test_<%= snakeCaseProjectName %>),
+    };
+    return cmocka_run_group_tests(<%= snakeCaseProjectName %>_tests, setup, teardown);
+}
+<% } %>

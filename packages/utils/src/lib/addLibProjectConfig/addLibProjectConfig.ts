@@ -1,12 +1,12 @@
 import type { Tree } from '@nx/devkit';
-import type { LibOptions } from '@/config';
 import { addProjectConfiguration } from '@nx/devkit';
-import { CProjectType } from '@/config';
+import { CProjectType, LibSchema } from '@/config';
 import { getProjectTargets } from '../getProjectTargets/getProjectTargets';
+import { addProjectRootToSubDirectories } from '../addProjectRootToSubDirectories/addProjectRootToSubDirectories';
 
 export const addLibProjectConfig = (
     tree: Tree,
-    resolvedLibOptions: LibOptions,
+    resolvedLibOptions: LibSchema,
 ) => {
     const { projectRoot, libName, languageExtension } = resolvedLibOptions;
     const targets = getProjectTargets(CProjectType.Lib);
@@ -17,4 +17,5 @@ export const addLibProjectConfig = (
         tags: [languageExtension],
         targets,
     });
+    addProjectRootToSubDirectories(tree, projectRoot);
 };

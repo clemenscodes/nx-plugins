@@ -1,0 +1,4 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+include(${ROOT}/dist/<%= appsDir %>/<%= name %>/<%= name %>_Targets.cmake)

@@ -4,7 +4,7 @@ import type {
     PluginGeneratorConfig,
 } from '@/config';
 import type { NxJsonConfiguration } from '@nx/devkit';
-import { PLUGIN_NAME } from '@/config';
+import { PLUGIN_NAME, getDefaultInitGeneratorOptions } from '@/config';
 import { writeGeneratorConfig } from './writeGeneratorConfig';
 
 describe('writeGeneratorConfig', () => {
@@ -17,15 +17,7 @@ describe('writeGeneratorConfig', () => {
     beforeEach(() => {
         nxJson = {};
         updatedNxJson = {};
-        options = {
-            language: 'C',
-            globalIncludeDir: 'include',
-            cmakeConfigDir: '.cmake',
-            addClangPreset: false,
-            appsDir: 'apps',
-            libsDir: 'libs',
-            skipFormat: false,
-        };
+        options = getDefaultInitGeneratorOptions();
         generatorConfig = {
             binary: {
                 language: options.language,

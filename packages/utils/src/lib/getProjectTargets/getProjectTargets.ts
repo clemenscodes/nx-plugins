@@ -1,5 +1,14 @@
 import type { ProjectConfiguration } from '@nx/devkit';
-import { PLUGIN_NAME } from '@/config';
+import {
+    CMAKE_TARGET_NAME,
+    COMPILE_TARGET_NAME,
+    DEBUG_TARGET_NAME,
+    EXECUTE_TARGET_NAME,
+    FMT_TARGET_NAME,
+    LINT_TARGET_NAME,
+    PLUGIN_NAME,
+    TEST_TARGET_NAME,
+} from '@/config';
 import { CProjectType } from '@/config';
 
 export const defaultConfiguration = {
@@ -17,32 +26,32 @@ export const defaultConfiguration = {
 };
 
 export const cmakeTarget = {
-    executor: `${PLUGIN_NAME}:cmake`,
+    executor: `${PLUGIN_NAME}:${CMAKE_TARGET_NAME}`,
     ...defaultConfiguration,
 };
 
-export const buildTarget = {
-    executor: `${PLUGIN_NAME}:build`,
+export const compileTarget = {
+    executor: `${PLUGIN_NAME}:${COMPILE_TARGET_NAME}`,
     ...defaultConfiguration,
 };
 
 export const executeTarget = {
-    executor: `${PLUGIN_NAME}:execute`,
+    executor: `${PLUGIN_NAME}:${EXECUTE_TARGET_NAME}`,
     ...defaultConfiguration,
 };
 
 export const debugTarget = {
-    executor: `${PLUGIN_NAME}:debug`,
+    executor: `${PLUGIN_NAME}:${DEBUG_TARGET_NAME}`,
     ...defaultConfiguration,
 };
 
 export const testTarget = {
-    executor: `${PLUGIN_NAME}:test`,
+    executor: `${PLUGIN_NAME}:${TEST_TARGET_NAME}`,
     ...defaultConfiguration,
 };
 
 export const lintTarget = {
-    executor: `${PLUGIN_NAME}:lint`,
+    executor: `${PLUGIN_NAME}:${LINT_TARGET_NAME}`,
     defaultConfiguration: 'local',
     configurations: {
         local: {
@@ -55,7 +64,7 @@ export const lintTarget = {
 };
 
 export const fmtTarget = {
-    executor: `${PLUGIN_NAME}:format`,
+    executor: `${PLUGIN_NAME}:${FMT_TARGET_NAME}`,
     defaultConfiguration: 'local',
     configurations: {
         local: {
@@ -73,7 +82,7 @@ export const fmtTarget = {
 
 export const defaultTargets = {
     cmake: cmakeTarget,
-    build: buildTarget,
+    compile: compileTarget,
     lint: lintTarget,
     fmt: fmtTarget,
 };

@@ -1,5 +1,6 @@
 import type { Tree } from '@nx/devkit';
 import type { InitGeneratorSchema } from '@/config';
+import { getDefaultInitGeneratorOptions } from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { generateRootConfig } from './generateRootConfig';
 import { normalizeLineEndings } from '../normalizeLineEndings/normalizeLineEndings';
@@ -13,13 +14,8 @@ describe('generateRootConfig', () => {
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
         options = {
-            language: 'C',
-            cmakeConfigDir: '.cmake',
-            globalIncludeDir: 'include',
-            appsDir: 'bin',
-            libsDir: 'libs',
-            addClangPreset: false,
-            skipFormat: false,
+            ...getDefaultInitGeneratorOptions(),
+            workspaceName: 'workspace',
         };
         rootConfig = 'CMakeLists.txt';
     });
@@ -33,30 +29,23 @@ describe('generateRootConfig', () => {
         generateRootConfig(tree, options);
         const readRootConfig = readFileWithTree(tree, rootConfig);
         const expectedRootConfig =
-            'get_filename_component(CURRENT_DIR "${CMAKE_CURRENT_LIST_FILE}" DIRECTORY)\n' +
-            `list(APPEND CMAKE_MODULE_PATH \${CURRENT_DIR}/${options.cmakeConfigDir})\n` +
-            'cmake_policy(SET CMP0003 NEW)\n' +
-            'cmake_policy(SET CMP0011 NEW)\n' +
-            'cmake_policy(SET CMP0054 NEW)\n' +
-            'include(FetchContent)\n' +
-            'include(utils/make_var_readonly)\n' +
-            'include(utils/print_variables)\n' +
-            'include(utils/link_shared_library)\n' +
-            'include(utils/link_static_library)\n' +
-            'include(utils/link_cmocka)\n' +
-            'include(utils/link_gtest)\n' +
-            'include(utils/install_cmocka)\n' +
-            'include(utils/install_gtest)\n' +
-            'include(settings/set_global_settings)\n' +
-            'include(settings/set_library_settings)\n' +
-            'include(settings/set_binary_settings)\n' +
-            'make_var_readonly(WORKSPACE_DIR ${CURRENT_DIR})\n' +
-            `make_var_readonly(WORKSPACE_INCLUDE_DIR \${WORKSPACE_DIR}/${options.globalIncludeDir})\n` +
-            `make_var_readonly(WORKSPACE_LIBRARY_DIR \${WORKSPACE_DIR}/${options.libsDir})\n` +
-            'include_directories(SYSTEM ${WORKSPACE_LIBRARY_DIR})\n' +
-            'set(CMAKE_INCLUDE_PATH ${WORKSPACE_INCLUDE_DIR})\n' +
-            `set(CMAKE_LIBRARY_PATH \${WORKSPACE_DIR}/dist/${options.libsDir})\n` +
-            'set_global_settings()\n';
+            `cmake_minimum_required(VERSION 3.21)\n` +
+            `\n` +
+            `include(${options.cmakeConfigDir}/${options.workspaceName}.cmake)\n` +
+            `\n` +
+            `project(${options.workspaceName} ${options.language})\n` +
+            `\n` +
+            'macro(find_package)\n' +
+            '    if(NOT "${ARGV0}" IN_LIST LIBRARIES)\n' +
+            '        message(STATUS "using native find_package for ${ARGV0}: ${ARGV}")\n' +
+            '        _find_package(${ARGV})\n' +
+            '    endif()\n' +
+            'endmacro()\n' +
+            '\n' +
+            'foreach(SUB_DIRECTORY ${SUB_DIRECTORIES})\n' +
+            '    message("Adding subdirectory: ${SUB_DIRECTORY}")\n' +
+            '    add_subdirectory(${SUB_DIRECTORY})\n' +
+            'endforeach()\n';
         expect(readRootConfig).toBe(normalizeLineEndings(expectedRootConfig));
     });
 });

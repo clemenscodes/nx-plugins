@@ -1,32 +1,28 @@
 import type { Tree } from '@nx/devkit';
-import type { InitGeneratorSchema } from '@/config';
+import type { InitSchema } from '@/config';
+import { getDefaultInitGeneratorOptions } from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { generateCmakeConfigFiles } from './generateCmakeConfigFiles';
 import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
 
 describe('generateCmakeConfigFiles', () => {
     let tree: Tree;
-    let options: InitGeneratorSchema;
+    let options: InitSchema;
     let expectedCmakeSettingsFiles: string[];
     let expectedCmakeUtilsFiles: string[];
 
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
-        options = {
-            language: 'C',
-            cmakeConfigDir: '.cmake',
-            globalIncludeDir: 'include',
-            appsDir: 'bin',
-            libsDir: 'libs',
-            addClangPreset: true,
-            skipFormat: false,
-        };
+        options = getDefaultInitGeneratorOptions();
         expectedCmakeSettingsFiles = [
             'set_binary_settings.cmake',
             'set_compiler_settings.cmake',
+            'set_policies.cmake',
             'set_global_settings.cmake',
             'set_library_settings.cmake',
             'set_project_settings.cmake',
+            'set_package_version.cmake',
+            'set_library_install_destination.cmake',
         ];
         expectedCmakeUtilsFiles = [
             'install_cmocka.cmake',
@@ -35,24 +31,25 @@ describe('generateCmakeConfigFiles', () => {
             'link_gtest.cmake',
             'link_shared_library.cmake',
             'link_static_library.cmake',
-            'make_var_readonly.cmake',
+            'link_library.cmake',
             'print_variables.cmake',
         ];
     });
 
-    it('should generate cmake config in cmake', async () => {
+    it('should generate cmake config in cmakeConfigDir', async () => {
         generateCmakeConfigFiles(tree, options);
         const cmakeChildren = tree.children(options.cmakeConfigDir);
-        const expectedCmakeChildren = ['settings', 'utils'];
-        expect(cmakeChildren).toStrictEqual(expectedCmakeChildren);
-    });
-
-    it('should generate cmake config in .cmake', async () => {
-        options.cmakeConfigDir = '.cmake';
-        generateCmakeConfigFiles(tree, options);
-        const cmakeChildren = tree.children('.cmake');
-        const expectedCmakeChildren = ['settings', 'utils'];
-        expect(cmakeChildren).toStrictEqual(expectedCmakeChildren);
+        const expectedCmakeChildren = [
+            'settings',
+            'utils',
+            `${options.workspaceName}.cmake`,
+            'subdirectories.cmake',
+            'libraries.cmake',
+            'modules.cmake',
+        ];
+        expect(cmakeChildren).toStrictEqual(
+            expect.arrayContaining(expectedCmakeChildren),
+        );
     });
 
     it('should generate cmake config files', async () => {
@@ -63,8 +60,74 @@ describe('generateCmakeConfigFiles', () => {
         const cmakeUtilsFiles = tree.children(
             `${options.cmakeConfigDir}/utils`,
         );
-        expect(cmakeSettingsFiles).toStrictEqual(expectedCmakeSettingsFiles);
-        expect(cmakeUtilsFiles).toStrictEqual(expectedCmakeUtilsFiles);
+        expect(cmakeSettingsFiles).toStrictEqual(
+            expect.arrayContaining(expectedCmakeSettingsFiles),
+        );
+        expect(cmakeSettingsFiles.length).toStrictEqual(
+            expectedCmakeSettingsFiles.length,
+        );
+        expect(cmakeUtilsFiles).toStrictEqual(
+            expect.arrayContaining(expectedCmakeUtilsFiles),
+        );
+        expect(cmakeUtilsFiles.length).toStrictEqual(
+            expectedCmakeUtilsFiles.length,
+        );
+    });
+
+    it('should generate cmake/__workspaceName__.cmake correctly', async () => {
+        generateCmakeConfigFiles(tree, options);
+        const file = `${options.cmakeConfigDir}/${options.workspaceName}.cmake`;
+        const readFile = readFileWithTree(tree, file);
+        const expectedFile =
+            `get_filename_component(ROOT "\${CMAKE_CURRENT_LIST_FILE}/../${options.relativeCmakeConfigPath}" REALPATH)\n` +
+            `list(APPEND CMAKE_MODULE_PATH \${ROOT}/${options.cmakeConfigDir})\n` +
+            '\n' +
+            `include(modules)\n` +
+            '\n' +
+            'set_policies()\n' +
+            'set_global_settings()\n';
+        expect(readFile).toStrictEqual(expectedFile);
+    });
+
+    it('should generate cmake/modules.cmake correctly', async () => {
+        generateCmakeConfigFiles(tree, options);
+        const file = `${options.cmakeConfigDir}/modules.cmake`;
+        const readFile = readFileWithTree(tree, file);
+        const expectedFile =
+            'include(FetchContent)\n' +
+            'include(settings/set_global_settings)\n' +
+            'include(settings/set_library_settings)\n' +
+            'include(settings/set_binary_settings)\n' +
+            'include(settings/set_policies)\n' +
+            'include(settings/set_library_install_destination)\n' +
+            'include(settings/set_package_version)\n' +
+            'include(utils/print_variables)\n' +
+            'include(utils/link_shared_library)\n' +
+            'include(utils/link_static_library)\n' +
+            'include(utils/link_cmocka)\n' +
+            'include(utils/link_gtest)\n' +
+            'include(utils/link_library)\n' +
+            'include(utils/install_cmocka)\n' +
+            'include(utils/install_gtest)\n' +
+            'include(libraries)\n' +
+            'include(subdirectories)\n';
+        expect(readFile).toStrictEqual(expectedFile);
+    });
+
+    it('should generate cmake/libraries.cmake correctly', async () => {
+        generateCmakeConfigFiles(tree, options);
+        const file = `${options.cmakeConfigDir}/libraries.cmake`;
+        const readFile = readFileWithTree(tree, file);
+        const expectedFile = 'set(LIBRARIES)\n';
+        expect(readFile).toStrictEqual(expectedFile);
+    });
+
+    it('should generate cmake/subdirectories.cmake correctly', async () => {
+        generateCmakeConfigFiles(tree, options);
+        const file = `${options.cmakeConfigDir}/subdirectories.cmake`;
+        const readFile = readFileWithTree(tree, file);
+        const expectedFile = 'set(SUB_DIRECTORIES)\n';
+        expect(readFile).toStrictEqual(expectedFile);
     });
 
     it('should generate cmake/settings/set_binary_settings.cmake correctly', async () => {
@@ -80,9 +143,11 @@ describe('generateCmakeConfigFiles', () => {
             '        PROPERTIES\n' +
             '        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}"\n' +
             '    )\n' +
-            '    target_include_directories(${PROJECT} PRIVATE ${${PROJECT}_INCLUDE_DIR} ${WORKSPACE_INCLUDE_DIR})\n' +
-            '    target_include_directories(${PROJECT} PRIVATE ${${PROJECT}_INCLUDE_DIR}/include ${WORKSPACE_INCLUDE_DIR})\n' +
-            '    target_include_directories(${PROJECT} PRIVATE ${${PROJECT}_INCLUDE_DIR}/src ${WORKSPACE_INCLUDE_DIR})\n' +
+            '    target_include_directories(${PROJECT}\n' +
+            '        PUBLIC\n' +
+            '        $<BUILD_INTERFACE:${${PROJECT}_INCLUDE_DIR}/include>\n' +
+            '        $<INSTALL_INTERFACE:include>\n' +
+            '    )\n' +
             'endfunction()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
@@ -150,17 +215,41 @@ describe('generateCmakeConfigFiles', () => {
         const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'function(set_global_settings)\n' +
-            '    set(CMAKE_MINIMUM_REQUIRED_VERSION 3.21.0 CACHE INTERNAL "")\n' +
-            '    set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")\n' +
-            '    set(CMAKE_CXX_STANDARD 17 CACHE INTERNAL "")\n' +
-            '    set(CMAKE_CXX_EXTENSIONS OFF CACHE INTERNAL "")\n' +
-            '    set(CMAKE_CXX_STANDARD_REQUIRED ON CACHE INTERNAL "")\n' +
-            '    set(CMAKE_CXX_STANDARD_LIBRARIES "-lstdc++" CACHE INTERNAL "")\n' +
-            '\n' +
-            '    if (NOT CMAKE_BUILD_TYPE)\n' +
-            '        set(CMAKE_BUILD_TYPE Debug CACHE INTERNAL "")\n' +
-            '    endif ()\n' +
+            '    set(WORKSPACE_INCLUDE_DIR ${ROOT}/include PARENT_SCOPE)\n' +
+            '    set(CMAKE_EXPORT_COMPILE_COMMANDS ON PARENT_SCOPE)\n' +
+            '    set(CMAKE_CXX_STANDARD 17 PARENT_SCOPE)\n' +
+            '    set(CMAKE_CXX_EXTENSIONS OFF PARENT_SCOPE)\n' +
+            '    set(CMAKE_CXX_STANDARD_REQUIRED ON PARENT_SCOPE)\n' +
+            '    set(CMAKE_CXX_STANDARD_LIBRARIES "-lstdc++" PARENT_SCOPE)\n' +
             'endfunction()\n';
+        expect(readFile).toStrictEqual(expectedFile);
+    });
+
+    it('should generate cmake/settings/set_library_install_destination.cmake correctly', async () => {
+        generateCmakeConfigFiles(tree, options);
+        const file = `${options.cmakeConfigDir}/settings/set_library_install_destination.cmake`;
+        const readFile = readFileWithTree(tree, file);
+        const expectedFile =
+            'macro(set_library_install_destination PROJECT)\n' +
+            '    set(${PROJECT}_INSTALL_CMAKEDIR ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT})\n' +
+            '    install(TARGETS ${PROJECT}\n' +
+            '        EXPORT ${PROJECT}_Targets\n' +
+            '        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}\n' +
+            '        COMPONENT ${PROJECT}_Runtime\n' +
+            '        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}\n' +
+            '        COMPONENT ${PROJECT}_Runtime\n' +
+            '        NAMELINK_COMPONENT ${PROJECT}_Development\n' +
+            '        ARCHIVE DESTINATION ${CMAKE_INSTALL_BINDIR}\n' +
+            '        COMPONENT ${PROJECT}_Development\n' +
+            '        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}\n' +
+            '    )\n' +
+            '    install(EXPORT ${PROJECT}_Targets\n' +
+            '        FILE ${PROJECT}_Targets.cmake\n' +
+            '        NAMESPACE ${PROJECT}::\n' +
+            '        DESTINATION ${${PROJECT}_INSTALL_CMAKEDIR}\n' +
+            '        COMPONENT ${PROJECT}_DEVELOPMENT\n' +
+            '    )\n' +
+            'endmacro()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
 
@@ -172,27 +261,40 @@ describe('generateCmakeConfigFiles', () => {
             'include(settings/set_project_settings)\n' +
             '\n' +
             'function(set_library_settings PROJECT SOURCE_DIR)\n' +
-            '    add_library(${PROJECT} SHARED ${${PROJECT}_SOURCES})\n' +
-            '    add_library(${PROJECT}_static STATIC ${${PROJECT}_SOURCES})\n' +
-            '    set_target_properties(${PROJECT} ${PROJECT}_static PROPERTIES PREFIX "")\n' +
-            '    set_target_properties(${PROJECT}_static PROPERTIES OUTPUT_NAME ${PROJECT})\n' +
-            '    set_target_properties(${PROJECT} ${PROJECT}_static\n' +
+            '    add_library(${PROJECT} ${${PROJECT}_SOURCES})\n' +
+            '    add_library(${PROJECT}::${PROJECT} ALIAS ${PROJECT})\n' +
+            '    set_target_properties(${PROJECT}\n' +
             '        PROPERTIES\n' +
+            '        PREFIX ""\n' +
+            '        EXPORT_NAME ${PROJECT}\n' +
             '        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib"\n' +
             '        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib"\n' +
             '        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/bin"\n' +
             '    )\n' +
-            '    target_include_directories(${PROJECT} PUBLIC ${${PROJECT}_INCLUDE_DIR} ${WORKSPACE_INCLUDE_DIR})\n' +
-            '    target_include_directories(${PROJECT}_static PUBLIC ${${PROJECT}_INCLUDE_DIR} ${WORKSPACE_INCLUDE_DIR})\n' +
-            '    target_include_directories(${PROJECT} PUBLIC ${${PROJECT}_INCLUDE_DIR}/include ${WORKSPACE_INCLUDE_DIR})\n' +
-            '    target_include_directories(${PROJECT}_static PUBLIC ${${PROJECT}_INCLUDE_DIR}/include ${WORKSPACE_INCLUDE_DIR})\n' +
-            '    target_include_directories(${PROJECT} PUBLIC ${${PROJECT}_INCLUDE_DIR}/src ${WORKSPACE_INCLUDE_DIR})\n' +
-            '    target_include_directories(${PROJECT}_static PUBLIC ${${PROJECT}_INCLUDE_DIR}/src ${WORKSPACE_INCLUDE_DIR})\n' +
+            '    target_include_directories(${PROJECT}\n' +
+            '        PUBLIC\n' +
+            '        $<BUILD_INTERFACE:${${PROJECT}_INCLUDE_DIR}/include>\n' +
+            '        $<INSTALL_INTERFACE:include>\n' +
+            '    )\n' +
             '    if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")\n' +
             '        set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE CACHE INTERNAL "")\n' +
             '        set(CMAKE_IMPORT_LIBRARY_PREFIX "" PARENT_SCOPE)\n' +
             '    endif()\n' +
             'endfunction()\n';
+        expect(readFile).toStrictEqual(expectedFile);
+    });
+
+    it('should generate cmake/settings/set_policies.cmake correctly', async () => {
+        generateCmakeConfigFiles(tree, options);
+        const file = `${options.cmakeConfigDir}/settings/set_policies.cmake`;
+        const readFile = readFileWithTree(tree, file);
+        const expectedFile =
+            'macro(set_policies)\n' +
+            '    cmake_policy(SET CMP0003 NEW)\n' +
+            '    cmake_policy(SET CMP0011 NEW)\n' +
+            '    cmake_policy(SET CMP0054 NEW)\n' +
+            '    cmake_policy(SET CMP0057 NEW)\n' +
+            'endmacro()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
 
@@ -215,13 +317,26 @@ describe('generateCmakeConfigFiles', () => {
         expect(readFile).toStrictEqual(expectedFile);
     });
 
+    it('should generate cmake/utils/link_library.cmake correctly', async () => {
+        generateCmakeConfigFiles(tree, options);
+        const file = `${options.cmakeConfigDir}/utils/link_library.cmake`;
+        const readFile = readFileWithTree(tree, file);
+        const expectedFile =
+            'function(link_library PROJECT LIBRARY)\n' +
+            '    list(APPEND CMAKE_PREFIX_PATH ${ROOT}/dist/libs/${LIBRARY})\n' +
+            '    find_package(lib${LIBRARY} CONFIG REQUIRED)\n' +
+            '    target_link_libraries(${PROJECT} PUBLIC lib${LIBRARY}::lib${LIBRARY})\n' +
+            'endfunction()\n';
+        expect(readFile).toStrictEqual(expectedFile);
+    });
+
     it('should generate cmake/utils/install_cmocka.cmake correctly', async () => {
         generateCmakeConfigFiles(tree, options);
         const file = `${options.cmakeConfigDir}/utils/install_cmocka.cmake`;
         const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'function(install_cmocka)\n' +
-            '    set(FETCHCONTENT_BASE_DIR ${CMAKE_LIBRARY_PATH}/cmocka)\n' +
+            '    set(FETCHCONTENT_BASE_DIR ${ROOT}/dist/libs/cmocka)\n' +
             '\n' +
             '    FetchContent_Declare(\n' +
             '        cmocka\n' +
@@ -250,7 +365,7 @@ describe('generateCmakeConfigFiles', () => {
         const readFile = readFileWithTree(tree, file);
         const expectedFile =
             'function(install_gtest)\n' +
-            '    set(FETCHCONTENT_BASE_DIR ${CMAKE_LIBRARY_PATH}/gtest)\n' +
+            '    set(FETCHCONTENT_BASE_DIR ${ROOT}/dist/libs/gtest)\n' +
             '\n' +
             '    FetchContent_Declare(\n' +
             '        googletest\n' +
@@ -274,12 +389,11 @@ describe('generateCmakeConfigFiles', () => {
             'include(utils/install_cmocka)\n' +
             '\n' +
             'function(link_cmocka PROJECT)\n' +
-            '    install_cmocka()\n' +
-            '    include_directories(${cmocka_SOURCE_DIR}/include)\n' +
+            '    target_include_directories(${PROJECT} PUBLIC ${cmocka_SOURCE_DIR}/include)\n' +
             '    if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")\n' +
-            '        target_link_libraries(${PROJECT} cmocka-static -Wl,-export_dynamic)\n' +
+            '        target_link_libraries(${PROJECT} PUBLIC cmocka-static -Wl,-export_dynamic)\n' +
             '    else()\n' +
-            '        target_link_libraries(${PROJECT} cmocka-static -Wl,--copy-dt-needed-entries)\n' +
+            '        target_link_libraries(${PROJECT} PUBLIC cmocka-static -Wl,--copy-dt-needed-entries)\n' +
             '    endif()\n' +
             '    add_test(UnitTests ${PROJECT})\n' +
             'endfunction()\n';
@@ -294,12 +408,11 @@ describe('generateCmakeConfigFiles', () => {
             'include(utils/install_gtest)\n' +
             '\n' +
             'function(link_gtest PROJECT)\n' +
-            '    install_gtest()\n' +
-            '    include_directories(${googletest_SOURCE_DIR}/googletest/include/gtest)\n' +
+            '    target_include_directories(${PROJECT} PUBLIC ${googletest_SOURCE_DIR}/googletest/include/gtest)\n' +
             '    if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")\n' +
-            '        target_link_libraries(${PROJECT} GTest::gtest_main -Wl,-export_dynamic)\n' +
+            '        target_link_libraries(${PROJECT} PUBLIC GTest::gtest_main -Wl,-export_dynamic)\n' +
             '    else()\n' +
-            '        target_link_libraries(${PROJECT} GTest::gtest_main -Wl,--copy-dt-needed-entries)\n' +
+            '        target_link_libraries(${PROJECT} PUBLIC GTest::gtest_main -Wl,--copy-dt-needed-entries)\n' +
             '    endif()\n' +
             'endfunction()\n';
         expect(readFile).toStrictEqual(expectedFile);
@@ -348,39 +461,9 @@ describe('generateCmakeConfigFiles', () => {
             'function(link_static_library PROJECT LIB)\n' +
             '    set(PREFIX "lib")\n' +
             '    set(LIB_WITH_PREFIX ${PREFIX}${LIB})\n' +
-            '    add_library(${LIB_WITH_PREFIX} STATIC IMPORTED)\n' +
-            '    set_target_properties(${LIB_WITH_PREFIX} PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_PATH}/${LIB}/${CMAKE_BUILD_TYPE}/lib/${LIB_WITH_PREFIX}.a)\n' +
-            '    target_link_libraries(${PROJECT} ${LIB_WITH_PREFIX})\n' +
             '    set(LIB_DIR ${WORKSPACE_LIBRARY_DIR}/${LIB})\n' +
-            '    target_include_directories(${PROJECT} PRIVATE ${LIB_DIR})\n' +
-            '    target_include_directories(${PROJECT} PRIVATE ${LIB_DIR}/include)\n' +
-            '    target_include_directories(${PROJECT} PRIVATE ${LIB_DIR}/src)\n' +
+            '    target_link_libraries(${PROJECT} PUBLIC ${LIB_WITH_PREFIX}::${LIB_WITH_PREFIX})\n' +
             'endfunction()\n';
-        expect(readFile).toStrictEqual(expectedFile);
-    });
-
-    it('should generate cmake/utils/make_var_readonly.cmake correctly', async () => {
-        generateCmakeConfigFiles(tree, options);
-        const file = `${options.cmakeConfigDir}/utils/make_var_readonly.cmake`;
-        const readFile = readFileWithTree(tree, file);
-        const expectedFile =
-            'macro(make_var_readonly VAR)\n' +
-            '  # Set the variable itself\n' +
-            '  set("${VAR}" "${ARGN}")\n' +
-            "  # Store the variable's value for restore it upon modifications.\n" +
-            '  set("_${VAR}_readonly_val")\n' +
-            '  # Register a watcher for a variable\n' +
-            '  variable_watch("${VAR}" readonly_guard)\n' +
-            'endmacro()\n' +
-            '\n' +
-            '# Watcher for a variable which emulates readonly property.\n' +
-            'macro(readonly_guard VAR access value current_list_file stack)\n' +
-            '  if ("${access}" STREQUAL "MODIFIED_ACCESS")\n' +
-            '    message(WARNING "Attempt to change readonly variable \'${VAR}\'!")\n' +
-            '    # Restore a value of the variable to the initial one.\n' +
-            '    set(${VAR} "${_${VAR}_readonly_val}")\n' +
-            '  endif()\n' +
-            'endmacro()\n';
         expect(readFile).toStrictEqual(expectedFile);
     });
 

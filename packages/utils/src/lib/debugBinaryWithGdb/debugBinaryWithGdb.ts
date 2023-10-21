@@ -1,7 +1,6 @@
 import { checkCommandExists } from '../checkCommandExists/checkCommandExists';
-import { getGdb } from '../getGdb/getGdb';
 import { getGdbArguments } from '../getGdbArguments/getGdbArguments';
-import { DebugExecutorSchema, GDB } from '@/config';
+import { DebugExecutorSchema, GDB, getGdb } from '@/config';
 import { runCommand } from '../runCommand/runCommand';
 
 export const debugBinaryWithGdb = (

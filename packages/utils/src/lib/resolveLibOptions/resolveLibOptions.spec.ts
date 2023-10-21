@@ -1,9 +1,9 @@
-import type { LibGeneratorSchema, LibOptions } from '@/config';
+import type { LibGeneratorSchema, LibSchema } from '@/config';
 import { resolveLibOptions } from './resolveLibOptions';
 
 describe('resolveLibOptions', () => {
     let options: LibGeneratorSchema;
-    let expectedOptions: LibOptions;
+    let expectedOptions: LibSchema;
 
     beforeEach(() => {
         options = {
@@ -15,14 +15,18 @@ describe('resolveLibOptions', () => {
             ...options,
             constantName: 'BASE',
             snakeCaseName: 'base',
+            snakeCaseLibName: 'libbase',
+            snakeCaseProjectName: 'base',
+            camelCaseProjectName: 'base',
             camelCaseName: 'base',
             className: 'Base',
+            workspaceName: 'workspace',
+            cmakeConfigDir: '.cmake',
             languageExtension: 'c',
             relativeRootPath: '../../',
+            appsDir: 'bin',
+            libsDir: 'packages',
             cmakeC: 'C',
-            includeGoogleTest: '',
-            setupTests: '',
-            baseTest: '',
             testLib: 'cmocka',
             testName: 'testbase',
             libName: 'libbase',
@@ -38,29 +42,6 @@ describe('resolveLibOptions', () => {
     it('should resolve options correctly when generateTests is true and language is C', () => {
         options.generateTests = true;
         expectedOptions.generateTests = true;
-        expectedOptions.setupTests = 'add_test(UnitTests testbase)';
-        expectedOptions.baseTest =
-            'static int setup(void **state) {\n' +
-            '\t(void) state;\n' +
-            '\treturn 0;\n' +
-            '}\n' +
-            '\n' +
-            'static int teardown(void **state) {\n' +
-            '\t(void) state;\n' +
-            '\treturn 0;\n' +
-            '}\n' +
-            '\n' +
-            'static void test_base(void **state) {\n' +
-            '\t(void) state;\n' +
-            '\tbase();\n' +
-            '}\n' +
-            '\n' +
-            'int main(void) {\n' +
-            '\tconst struct CMUnitTest base_tests[] = {\n' +
-            '\t\tcmocka_unit_test(test_base),\n' +
-            '\t};\n' +
-            '\treturn cmocka_run_group_tests(base_tests, setup, teardown);\n' +
-            '}\n';
         const result = resolveLibOptions(options);
         expect(result).toStrictEqual(expectedOptions);
     });
@@ -83,10 +64,6 @@ describe('resolveLibOptions', () => {
         expectedOptions.languageExtension = 'cpp';
         expectedOptions.cmakeC = 'CXX';
         expectedOptions.testLib = 'gtest';
-        expectedOptions.includeGoogleTest = 'include(GoogleTest)';
-        expectedOptions.setupTests = 'gtest_discover_tests(testbase)';
-        expectedOptions.baseTest =
-            'TEST(libbase, test_base) {\n\tEXPECT_EQ(base(), 0);\n}\n';
         const result = resolveLibOptions(options);
         expect(result).toStrictEqual(expectedOptions);
     });

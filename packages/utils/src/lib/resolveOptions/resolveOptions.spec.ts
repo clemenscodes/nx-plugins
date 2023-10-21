@@ -1,11 +1,22 @@
-import type { GeneratorBaseOptions } from '@/config';
+import {
+    getDefaultInitGeneratorOptions,
+    type GeneratorBaseOptions,
+} from '@/config';
+import type { Tree } from '@nx/devkit';
 import { resolveOptions } from './resolveOptions';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
+import { initGenerator } from '../initGenerator/initGenerator';
+import * as devkit from '@nx/devkit';
 
 describe('resolveOptions', () => {
+    let tree: Tree;
     let options: GeneratorBaseOptions;
     let expected: Required<GeneratorBaseOptions>;
 
-    beforeEach(() => {
+    beforeEach(async () => {
+        tree = createTreeWithEmptyWorkspace();
+        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
+        await initGenerator(tree, getDefaultInitGeneratorOptions());
         options = {
             name: 'exampleName',
             language: 'C++',
@@ -16,6 +27,10 @@ describe('resolveOptions', () => {
             constantName: 'EXAMPLE_NAME',
             snakeCaseName: 'example_name',
             camelCaseName: 'exampleName',
+            cmakeConfigDir: '.cmake',
+            workspaceName: 'workspace',
+            appsDir: 'bin',
+            libsDir: 'packages',
             className: 'ExampleName',
             languageExtension: 'cpp',
             cmakeC: 'CXX',

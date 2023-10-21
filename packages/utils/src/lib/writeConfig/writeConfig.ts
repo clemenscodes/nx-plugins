@@ -1,8 +1,8 @@
 import type { NxJsonConfiguration } from '@nx/devkit';
 import type {
-    InitGeneratorSchema,
     PluginConfig,
     NxCmakePluginConfig,
+    InitGeneratorSchema,
 } from '@/config';
 import { PLUGIN_NAME } from '@/config';
 
@@ -11,12 +11,12 @@ export const writeConfig = (
     updatedNxJson: NxJsonConfiguration,
     options: InitGeneratorSchema,
 ): NxJsonConfiguration => {
-    const { globalIncludeDir, cmakeConfigDir, language } = options;
+    const { cmakeConfigDir, language, workspaceName } = options;
     const nxPluginConfig: PluginConfig = {
         [PLUGIN_NAME]: {
             language,
-            globalIncludeDir,
             cmakeConfigDir,
+            workspaceName,
         },
     };
 
@@ -42,11 +42,6 @@ export const writeConfig = (
         PLUGIN_NAME
     ] as NxCmakePluginConfig;
 
-    if (!existingPluginConfig.globalIncludeDir) {
-        existingPluginConfig['globalIncludeDir'] = globalIncludeDir;
-        updatedPluginConfig['globalIncludeDir'] = globalIncludeDir;
-    }
-
     if (!existingPluginConfig.cmakeConfigDir) {
         existingPluginConfig['cmakeConfigDir'] = cmakeConfigDir;
         updatedPluginConfig['cmakeConfigDir'] = cmakeConfigDir;
@@ -55,6 +50,11 @@ export const writeConfig = (
     if (!existingPluginConfig.language) {
         existingPluginConfig['language'] = language;
         updatedPluginConfig['language'] = language;
+    }
+
+    if (!existingPluginConfig.workspaceName) {
+        existingPluginConfig['workspaceName'] = workspaceName;
+        updatedPluginConfig['workspaceName'] = workspaceName;
     }
 
     return updatedNxJson;

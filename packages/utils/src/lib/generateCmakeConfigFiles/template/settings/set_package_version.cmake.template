@@ -1,0 +1,7 @@
+macro(set_package_version PROJECT VERSION)
+    include(CMakePackageConfigHelpers)
+    write_basic_package_version_file("${PROJECT}ConfigVersion.cmake"
+        VERSION ${VERSION}
+        COMPATIBILITY SameMajorVersion
+    )
+endmacro()

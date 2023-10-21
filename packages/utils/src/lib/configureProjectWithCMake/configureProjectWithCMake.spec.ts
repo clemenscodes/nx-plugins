@@ -1,6 +1,6 @@
 import { configureProjectWithCMake } from './configureProjectWithCMake';
 import { type CmakeExecutorSchema, LINUX_CMAKE } from '@/config';
-import * as getCmakeModule from '../getCmake/getCmake';
+import * as configModule from '@/config';
 import * as getCmakeCommandArgumentsModule from '../getCmakeCommandArguments/getCmakeCommandArguments';
 import * as runCommandModule from '../runCommand/runCommand';
 
@@ -24,7 +24,7 @@ describe('buildProjectWithMake', () => {
             getCmakeCommandArgumentsModule,
             'getCmakeCommandArguments',
         );
-        getCmakeMock = jest.spyOn(getCmakeModule, 'getCmake');
+        getCmakeMock = jest.spyOn(configModule, 'getCmake');
     });
 
     afterEach(() => {

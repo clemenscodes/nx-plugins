@@ -1,11 +1,11 @@
 import { getConfigFile } from '@/file';
 
-export const getStyleArgument = async (
+export const getStyleArgument = (
     workspaceRoot: string,
     projectRoot: string,
     clangFormatFile: string,
-): Promise<string> => {
-    const configFile = await getConfigFile(
+): string => {
+    const configFile = getConfigFile(
         workspaceRoot,
         projectRoot,
         clangFormatFile,

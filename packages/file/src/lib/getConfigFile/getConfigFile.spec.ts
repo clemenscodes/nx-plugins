@@ -1,6 +1,6 @@
 import { getConfigFile } from './getConfigFile';
-import * as fileExistsModule from '../fileExists/fileExists';
 import { join } from 'path';
+import * as fileExistsModule from '../fileExists/fileExists';
 
 describe('getConfigFile', () => {
     let workspaceRoot: string;
@@ -19,36 +19,28 @@ describe('getConfigFile', () => {
         jest.restoreAllMocks();
     });
 
-    it('should return config file from project if it exists', async () => {
-        fileExistsMock.mockResolvedValueOnce(true);
-        const result = await getConfigFile(
-            workspaceRoot,
-            projectRoot,
-            configFile,
-        );
+    it('should return config file from project if it exists', () => {
+        fileExistsMock.mockReturnValueOnce(true);
+        const result = getConfigFile(workspaceRoot, projectRoot, configFile);
         const expectedPath = join(workspaceRoot, projectRoot, configFile);
         expect(result).toBe(expectedPath);
     });
 
-    it('should return config file from root if in project it does not exist', async () => {
-        fileExistsMock.mockResolvedValueOnce(false);
-        fileExistsMock.mockResolvedValueOnce(true);
-        const result = await getConfigFile(
-            workspaceRoot,
-            projectRoot,
-            configFile,
-        );
+    it('should return config file from root if in project it does not exist', () => {
+        fileExistsMock.mockReturnValueOnce(false);
+        fileExistsMock.mockReturnValueOnce(true);
+        const result = getConfigFile(workspaceRoot, projectRoot, configFile);
         const expectedPath = join(workspaceRoot, configFile);
         expect(result).toBe(expectedPath);
     });
 
-    it('should error if config file does not exist', async () => {
-        fileExistsMock.mockResolvedValueOnce(false);
-        fileExistsMock.mockResolvedValueOnce(false);
-        await expect(
+    it('should error if config file does not exist', () => {
+        fileExistsMock.mockReturnValueOnce(false);
+        fileExistsMock.mockReturnValueOnce(false);
+        expect(() =>
             getConfigFile(workspaceRoot, projectRoot, configFile),
-        ).rejects.toThrowError(
-            `Could not find .clang-format. Please generate a preset using nx-cmake:init or provide your own.`,
+        ).toThrowError(
+            `Could not find ${configFile}. Please generate a preset using nx-cmake:init or provide your own.`,
         );
     });
 });

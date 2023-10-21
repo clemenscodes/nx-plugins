@@ -10,6 +10,7 @@ describe('createNodesFunction', () => {
     let getProjectConfigurationReturnMock: Record<string, ProjectConfiguration>;
     let getProjectTypeReturnMock: [CProjectType, C];
     let root: string;
+    let options: unknown;
     let projectConfigurationFile: string;
     let context: CreateNodesContext;
 
@@ -114,7 +115,11 @@ describe('createNodesFunction', () => {
     });
 
     it('should return nodes based on the provided project configuration file', () => {
-        const result = createNodesFunction(projectConfigurationFile, context);
+        const result = createNodesFunction(
+            projectConfigurationFile,
+            options,
+            context,
+        );
         expect(result).toEqual({ projects: getProjectConfigurationReturnMock });
         expect(mockGetProjectType).toHaveBeenCalledWith(
             projectConfigurationFile,

@@ -1,12 +1,14 @@
 import type { InitGeneratorSchema } from '@/config';
 import type { Tree } from '@nx/devkit';
-import { checkNxVersion } from '../checkNxVersion/checkNxVersion';
 import { generateClangPreset } from '../generateClangPreset/generateClangPreset';
 import { generateCmakeConfigFiles } from '../generateCmakeConfigFiles/generateCmakeConfigFiles';
-import { generateGlobalIncludeDir } from '../generateGlobalIncludeDir/generateGlobalIncludeDir';
 import { generateRootConfig } from '../generateRootConfig/generateRootConfig';
-import { getRequiredVersionOfNx } from '../getRequiredVersionOfNx/getRequiredVersionOfNx';
 import { getUpdatedNxJson } from '../getUpdatedNxJson/getUpdatedNxJson';
+import {
+    checkNxVersion,
+    getRequiredVersionOfNx,
+    resolveInitOptions,
+} from '@/config';
 import {
     readNxJson,
     updateNxJson,
@@ -26,14 +28,17 @@ export async function initGenerator(tree: Tree, options: InitGeneratorSchema) {
             ],
         });
     }
+    const resolvedOptions = resolveInitOptions(options);
     const nxJson = readNxJson(tree);
     if (!nxJson) {
         throw new Error(`Failed to read nx.json`);
     }
-    const [updatedNxJson, updatedOptions] = getUpdatedNxJson(nxJson, options);
+    const [updatedNxJson, updatedOptions] = getUpdatedNxJson(
+        nxJson,
+        resolvedOptions,
+    );
     updateNxJson(tree, updatedNxJson);
     generateCmakeConfigFiles(tree, updatedOptions);
-    generateGlobalIncludeDir(tree, updatedOptions);
     generateRootConfig(tree, updatedOptions);
     generateClangPreset(tree, updatedOptions);
     if (!options.skipFormat) {

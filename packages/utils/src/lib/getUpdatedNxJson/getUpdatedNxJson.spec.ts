@@ -1,4 +1,7 @@
-import type { InitGeneratorSchema } from '@/config';
+import {
+    getDefaultInitGeneratorOptions,
+    type InitGeneratorSchema,
+} from '@/config';
 import type { NxJsonConfiguration } from '@nx/devkit';
 import { getUpdatedNxJson } from './getUpdatedNxJson';
 
@@ -24,15 +27,7 @@ describe('getUpdatedNxJson', () => {
             },
         } as NxJsonConfiguration;
 
-        mockOptions = {
-            language: 'C',
-            cmakeConfigDir: '.cmake',
-            globalIncludeDir: 'include',
-            appsDir: 'bin',
-            libsDir: 'libs',
-            addClangPreset: true,
-            skipFormat: false,
-        };
+        mockOptions = getDefaultInitGeneratorOptions();
 
         mockUpdatedNxJson = {
             extends: 'nx/presets/npm.json',
@@ -44,7 +39,7 @@ describe('getUpdatedNxJson', () => {
                     options: {
                         cacheableOperations: [
                             'cmake',
-                            'build',
+                            'compile',
                             'test',
                             'lint',
                             'fmt',
@@ -56,8 +51,8 @@ describe('getUpdatedNxJson', () => {
                 '@nx/js': { analyzeSourceFiles: true },
                 'nx-cmake': {
                     cmakeConfigDir: '.cmake',
-                    globalIncludeDir: 'include',
                     language: 'C',
+                    workspaceName: 'workspace',
                 },
             },
             generators: {
@@ -74,8 +69,8 @@ describe('getUpdatedNxJson', () => {
             },
             targetDefaults: {
                 cmake: { dependsOn: ['^cmake'], inputs: ['cmake'] },
-                build: {
-                    dependsOn: ['^cmake', '^build', 'cmake'],
+                compile: {
+                    dependsOn: ['^cmake', '^compile', 'cmake'],
                     inputs: ['default'],
                 },
                 fmt: { dependsOn: [], inputs: ['clangFormat'] },
@@ -83,9 +78,9 @@ describe('getUpdatedNxJson', () => {
                     dependsOn: ['cmake'],
                     inputs: ['clangTidy'],
                 },
-                test: { dependsOn: ['build'], inputs: ['default'] },
-                debug: { dependsOn: ['build'], inputs: ['default'] },
-                execute: { dependsOn: ['build'], inputs: ['default'] },
+                test: { dependsOn: ['compile'], inputs: ['default'] },
+                debug: { dependsOn: ['compile'], inputs: ['default'] },
+                execute: { dependsOn: ['compile'], inputs: ['default'] },
             },
             namedInputs: {
                 clangFormat: [

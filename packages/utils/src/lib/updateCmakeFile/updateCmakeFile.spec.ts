@@ -1,20 +1,24 @@
 import type { Tree } from '@nx/devkit';
-import type { LibGeneratorSchema, LinkSchema } from '@/config';
+import type { LibSchema, LinkSchema } from '@/config';
+import { getDefaultInitGeneratorOptions } from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import {
-    getCmakeLink,
-    getSourceCmakeFile,
-    getUpdatedCmakeFileContent,
-    updateCmakeFile,
-} from './updateCmakeFile';
-import * as devkit from '@nx/devkit';
 import { libGenerator } from '../libGenerator/libGenerator';
 import { normalizeLineEndings } from '../normalizeLineEndings/normalizeLineEndings';
 import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
+import { initGenerator } from '../initGenerator/initGenerator';
+import { join } from 'path';
+import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
+import { trimLib } from '../trimLib/trimLib';
+import {
+    getCmakeLink,
+    getSourceCmakeFile,
+    updateCmakeFile,
+} from './updateCmakeFile';
+import * as devkit from '@nx/devkit';
 
 describe('updateCmakeFile', () => {
     let tree: Tree;
-    let libOptions: LibGeneratorSchema;
+    let libOptions: LibSchema;
     let linkOptions: LinkSchema;
     let expectedCmakeFile: string;
     let expectedCmakeFileContent: string;
@@ -22,79 +26,120 @@ describe('updateCmakeFile', () => {
 
     beforeEach(async () => {
         tree = createTreeWithEmptyWorkspace();
-        libOptions = {
+        libOptions = resolveLibOptions({
             name: 'link',
             language: 'C++',
             generateTests: true,
-        };
-        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
-        await libGenerator(tree, libOptions);
-        expectedCmakeFile = 'packages/link/CMakeLists.txt';
-        expectedCmakeFileContent =
-            'include("../../CMakeLists.txt")\n' +
-            '\n' +
-            'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
-            'set_project_settings(liblink ${CMAKE_CURRENT_SOURCE_DIR})\n' +
-            'project(liblink CXX)\n' +
-            'set_library_settings(liblink ${CMAKE_CURRENT_SOURCE_DIR})\n';
-        expectedUpdatedCmakeFileContent =
-            'include("../../CMakeLists.txt")\n' +
-            '\n' +
-            'cmake_minimum_required(VERSION ${CMAKE_MINIMUM_REQUIRED_VERSION})\n' +
-            'set_project_settings(liblink ${CMAKE_CURRENT_SOURCE_DIR})\n' +
-            'project(liblink CXX)\n' +
-            'set_library_settings(liblink ${CMAKE_CURRENT_SOURCE_DIR})\n' +
-            'link_shared_library(${CMAKE_PROJECT_NAME} target)\n';
-        libOptions.name = 'target';
-        await libGenerator(tree, libOptions);
+        });
         linkOptions = {
             source: 'liblink',
             target: 'libtarget',
-            link: 'shared',
             sourceProjectRoot: 'packages/link',
+            targetProjectRoot: 'packages/target',
         };
+        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
+        await initGenerator(tree, getDefaultInitGeneratorOptions());
+        await libGenerator(tree, libOptions);
+        expectedCmakeFile = 'packages/link/CMakeLists.txt';
+        expectedCmakeFileContent =
+            `include(${libOptions.relativeRootPath}${libOptions.cmakeConfigDir}/${libOptions.workspaceName}.cmake)\n` +
+            'include(cmake/version.cmake)\n' +
+            '\n' +
+            'cmake_minimum_required(VERSION 3.21)\n' +
+            '\n' +
+            'set(PROJECT_TYPE LIB)\n' +
+            `set(LANGUAGE ${libOptions.cmakeC})\n` +
+            '\n' +
+            `set_project_settings(${libOptions.libName} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
+            '\n' +
+            `project(${libOptions.libName} LANGUAGES \${LANGUAGE} VERSION \${${libOptions.libName}_VERSION})\n` +
+            '\n' +
+            `set_library_settings(${libOptions.libName} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
+            '\n' +
+            'include(GNUInstallDirs)\n' +
+            '\n' +
+            `set_library_install_destination(${libOptions.libName})\n` +
+            '\n' +
+            `set_package_version(${libOptions.libName} \${${libOptions.libName}_VERSION})\n` +
+            '\n' +
+            'configure_package_config_file(\n' +
+            '    cmake/liblinkConfig.cmake.in\n' +
+            '    ${CMAKE_CURRENT_BINARY_DIR}/liblinkConfig.cmake\n' +
+            '    INSTALL_DESTINATION ${liblink_INSTALL_CMAKEDIR}\n' +
+            ')\n' +
+            '\n' +
+            'export(\n' +
+            `    EXPORT ${libOptions.libName}_Targets\n` +
+            `    NAMESPACE ${libOptions.libName}::\n` +
+            `    FILE \${CMAKE_CURRENT_BINARY_DIR}/${libOptions.libName}_Targets.cmake\n` +
+            ')\n' +
+            '\n' +
+            `export(PACKAGE ${libOptions.libName})\n` +
+            '\n' +
+            'install(FILES\n' +
+            `    \${CMAKE_CURRENT_BINARY_DIR}/${libOptions.libName}Config.cmake\n` +
+            `    \${CMAKE_CURRENT_BINARY_DIR}/${libOptions.libName}ConfigVersion.cmake\n` +
+            `    DESTINATION \${${libOptions.libName}_INSTALL_CMAKEDIR}\n` +
+            ')\n';
+        expectedUpdatedCmakeFileContent =
+            `include(${libOptions.relativeRootPath}${libOptions.cmakeConfigDir}/${libOptions.workspaceName}.cmake)\n` +
+            'include(cmake/version.cmake)\n' +
+            '\n' +
+            'cmake_minimum_required(VERSION 3.21)\n' +
+            '\n' +
+            'set(PROJECT_TYPE LIB)\n' +
+            `set(LANGUAGE ${libOptions.cmakeC})\n` +
+            '\n' +
+            `set_project_settings(${libOptions.libName} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
+            '\n' +
+            `project(${libOptions.libName} LANGUAGES \${LANGUAGE} VERSION \${${libOptions.libName}_VERSION})\n` +
+            '\n' +
+            `set_library_settings(${libOptions.libName} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
+            '\n' +
+            'include(GNUInstallDirs)\n' +
+            '\n' +
+            `set_library_install_destination(${libOptions.libName})\n` +
+            '\n' +
+            `set_package_version(${libOptions.libName} \${${libOptions.libName}_VERSION})\n` +
+            '\n' +
+            'configure_package_config_file(\n' +
+            '    cmake/liblinkConfig.cmake.in\n' +
+            '    ${CMAKE_CURRENT_BINARY_DIR}/liblinkConfig.cmake\n' +
+            '    INSTALL_DESTINATION ${liblink_INSTALL_CMAKEDIR}\n' +
+            ')\n' +
+            '\n' +
+            'export(\n' +
+            `    EXPORT ${libOptions.libName}_Targets\n` +
+            `    NAMESPACE ${libOptions.libName}::\n` +
+            `    FILE \${CMAKE_CURRENT_BINARY_DIR}/${libOptions.libName}_Targets.cmake\n` +
+            ')\n' +
+            '\n' +
+            `export(PACKAGE ${libOptions.libName})\n` +
+            '\n' +
+            'install(FILES\n' +
+            `    \${CMAKE_CURRENT_BINARY_DIR}/${libOptions.libName}Config.cmake\n` +
+            `    \${CMAKE_CURRENT_BINARY_DIR}/${libOptions.libName}ConfigVersion.cmake\n` +
+            `    DESTINATION \${${libOptions.libName}_INSTALL_CMAKEDIR}\n` +
+            ')\n' +
+            '\n' +
+            `link_library(\${CMAKE_PROJECT_NAME} ${trimLib(
+                linkOptions.target,
+            )})\n`;
+        libOptions.name = 'target';
+        await libGenerator(tree, libOptions);
     });
 
-    it('should generate the correct CMake shared link', () => {
-        const link = 'shared';
+    it('should generate the correct CMake command', () => {
         const target = 'myTarget';
-        const cmakeLink = getCmakeLink(link, target);
-        const expected = `link_${link}_library($\{CMAKE_PROJECT_NAME} ${target})\n`;
-        expect(cmakeLink).toBe(expected);
-    });
-
-    it('should generate the correct CMake shared link for a library', () => {
-        const link = 'shared';
-        const target = 'libtarget';
-        const cmakeLink = getCmakeLink(link, target);
-        const expected = `link_${link}_library($\{CMAKE_PROJECT_NAME} target)\n`;
-        expect(cmakeLink).toBe(expected);
-    });
-
-    it('should generate the correct CMake shared link', () => {
-        const link = 'static';
-        const target = 'myTarget';
-        const cmakeLink = getCmakeLink(link, target);
-        const expected = `link_${link}_library($\{CMAKE_PROJECT_NAME} ${target})\n`;
+        const cmakeLink = getCmakeLink(target);
+        const expected = `link_library($\{CMAKE_PROJECT_NAME} ${target})\n`;
         expect(cmakeLink).toBe(expected);
     });
 
     it('should generate the correct source CMake file path', () => {
-        const sourceProjectRoot = '/path/to/source/project';
+        const sourceProjectRoot = join('/path/to/source/project');
         const cmakeFile = getSourceCmakeFile(sourceProjectRoot);
-        expect(cmakeFile).toBe('/path/to/source/project/CMakeLists.txt');
-    });
-
-    it('should get updated CMake file content correctly', () => {
-        const oldContent = 'Old CMake content';
-        const newContent = 'New CMake content';
-        const updatedContent = getUpdatedCmakeFileContent(
-            oldContent,
-            newContent,
-        );
-        expect(normalizeLineEndings(updatedContent)).toBe(
-            oldContent + newContent,
-        );
+        expect(cmakeFile).toBe(join('/path/to/source/project/CMakeLists.txt'));
     });
 
     it('should update cmake file', () => {

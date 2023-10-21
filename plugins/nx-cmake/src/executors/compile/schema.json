@@ -1,0 +1,20 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "version": 2,
+    "title": "Compile executor",
+    "description": "Compile a C or C++ project with Make",
+    "type": "object",
+    "properties": {
+        "args": {
+            "description": "Optional arguments which will be forwarded to cmake --build",
+            "type": "array"
+        },
+        "release": {
+            "description": "Whether to comile in release mode",
+            "type": "boolean",
+            "default": false
+        }
+    },
+    "outputCapture": "direct-nodejs",
+    "required": []
+}

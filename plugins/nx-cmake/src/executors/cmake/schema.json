@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/schema",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "version": 2,
     "title": "CMake executor",
     "description": "Build a C or C++ project with CMake",
@@ -10,7 +10,7 @@
             "type": "array"
         },
         "release": {
-            "description": "Whether to build in release mode",
+            "description": "Whether to configure in release mode",
             "type": "boolean",
             "default": false
         }

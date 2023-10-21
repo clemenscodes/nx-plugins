@@ -1,15 +1,17 @@
 import type { Tree } from '@nx/devkit';
 import type { LibGeneratorSchema } from '@/config';
+import { getDefaultInitGeneratorOptions } from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { readProjectConfiguration } from '@nx/devkit';
 import { libGenerator } from './libGenerator';
+import { initGenerator } from '../initGenerator/initGenerator';
 import * as devkit from '@nx/devkit';
 
 describe('lib generator', () => {
     let tree: Tree;
     let options: LibGeneratorSchema;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         tree = createTreeWithEmptyWorkspace();
         options = {
             name: 'test',
@@ -17,6 +19,7 @@ describe('lib generator', () => {
             generateTests: true,
         };
         jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
+        await initGenerator(tree, getDefaultInitGeneratorOptions());
     });
 
     afterEach(() => {

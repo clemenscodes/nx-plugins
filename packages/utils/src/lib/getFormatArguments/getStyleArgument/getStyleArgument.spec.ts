@@ -1,3 +1,4 @@
+import { CLANG_FORMAT_CONFIG_FILE } from '@/config';
 import { getStyleArgument } from './getStyleArgument';
 import * as fileModule from '@/file';
 
@@ -13,44 +14,39 @@ describe('getStyleArgument', () => {
         clangFormatFile = '.clang-format';
         getConfigFileMock = jest
             .spyOn(fileModule, 'getConfigFile')
-            .mockImplementation(async (workspaceRoot, projectRoot) => {
-                return `${workspaceRoot}/${projectRoot}/.clang-format`;
+            .mockImplementation((workspaceRoot, projectRoot) => {
+                return `${workspaceRoot}/${projectRoot}/${CLANG_FORMAT_CONFIG_FILE}`;
             });
     });
 
-    it('should return the correct style argument', async () => {
-        const result = await getStyleArgument(
+    it('should return the correct style argument', () => {
+        const result = getStyleArgument(
             workspaceRoot,
             projectRoot,
             clangFormatFile,
         );
         expect(result).toBe(
-            `--style=file:${workspaceRoot}/${projectRoot}/.clang-format`,
+            `--style=file:${workspaceRoot}/${projectRoot}/${CLANG_FORMAT_CONFIG_FILE}`,
         );
     });
 
-    it('should return the correct style argument', async () => {
-        const result = await getStyleArgument(
+    it('should return the correct style argument', () => {
+        const result = getStyleArgument(
             workspaceRoot,
             projectRoot,
             clangFormatFile,
         );
         expect(result).toBe(
-            `--style=file:${workspaceRoot}/${projectRoot}/.clang-format`,
+            `--style=file:${workspaceRoot}/${projectRoot}/${CLANG_FORMAT_CONFIG_FILE}`,
         );
     });
 
-    it('should error if config file does not exist', async () => {
+    it('should error if config file does not exist', () => {
         getConfigFileMock.mockImplementation(() => {
             throw new Error();
         });
-        await expect(
-            async () =>
-                await getStyleArgument(
-                    workspaceRoot,
-                    projectRoot,
-                    '.clang-format',
-                ),
-        ).rejects.toThrowError();
+        expect(() =>
+            getStyleArgument(workspaceRoot, projectRoot, '.clang-format'),
+        ).toThrowError();
     });
 });
