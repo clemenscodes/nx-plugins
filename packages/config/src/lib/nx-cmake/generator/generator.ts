@@ -1,5 +1,5 @@
 import type { WorkspaceLayout } from '../../nx';
-import type { C, CMakeC, GoogleTestInclude } from '..';
+import type { C, CMakeC } from '..';
 
 export type InitGeneratorSchema = {
     language: C;
@@ -28,6 +28,7 @@ export type GeneratorBaseOptions = {
     cmakeConfigDir?: string;
     workspaceName?: string;
     libsDir?: string;
+    appsDir?: string;
     cmakeC?: CMakeC;
 };
 
@@ -37,12 +38,12 @@ export type LibGeneratorSchema = GeneratorBaseOptions & {
 
 export type LibSchema = Required<LibGeneratorSchema> & {
     testLib: 'gtest' | 'cmocka';
-    setupTests: string;
     projectRoot: string;
     libName: string;
     testName: string;
-    includeGoogleTest: GoogleTestInclude;
-    baseTest: string;
+    snakeCaseLibName: string;
+    snakeCaseProjectName: string;
+    camelCaseProjectName: string;
 };
 
 export type LinkGeneratorSchema = {

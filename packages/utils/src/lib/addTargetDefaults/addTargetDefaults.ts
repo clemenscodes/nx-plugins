@@ -20,6 +20,9 @@ export const addTargetDefaults = (
         pluginTargetDefaults,
         targetDefaultsWithDependsOn,
     );
-    updatedNxJson.targetDefaults = targetsWithInputs;
+    updatedNxJson.targetDefaults = {
+        ...updatedNxJson.targetDefaults,
+        ...targetsWithInputs,
+    };
     return updatedNxJson;
 };

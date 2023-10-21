@@ -62,10 +62,16 @@ describe('updateCmakeFile', () => {
             '\n' +
             `set_package_version(${libOptions.libName} \${${libOptions.libName}_VERSION})\n` +
             '\n' +
+            'configure_package_config_file(\n' +
+            '    cmake/liblinkConfig.cmake.in\n' +
+            '    ${CMAKE_CURRENT_BINARY_DIR}/liblinkConfig.cmake\n' +
+            '    INSTALL_DESTINATION ${liblink_INSTALL_CMAKEDIR}\n' +
+            ')\n' +
+            '\n' +
             'export(\n' +
             `    EXPORT ${libOptions.libName}_Targets\n` +
             `    NAMESPACE ${libOptions.libName}::\n` +
-            `    FILE \${CMAKE_CURRENT_BINARY_DIR}/${libOptions.libName}Config.cmake\n` +
+            `    FILE \${CMAKE_CURRENT_BINARY_DIR}/${libOptions.libName}_Targets.cmake\n` +
             ')\n' +
             '\n' +
             `export(PACKAGE ${libOptions.libName})\n` +
@@ -96,10 +102,16 @@ describe('updateCmakeFile', () => {
             '\n' +
             `set_package_version(${libOptions.libName} \${${libOptions.libName}_VERSION})\n` +
             '\n' +
+            'configure_package_config_file(\n' +
+            '    cmake/liblinkConfig.cmake.in\n' +
+            '    ${CMAKE_CURRENT_BINARY_DIR}/liblinkConfig.cmake\n' +
+            '    INSTALL_DESTINATION ${liblink_INSTALL_CMAKEDIR}\n' +
+            ')\n' +
+            '\n' +
             'export(\n' +
             `    EXPORT ${libOptions.libName}_Targets\n` +
             `    NAMESPACE ${libOptions.libName}::\n` +
-            `    FILE \${CMAKE_CURRENT_BINARY_DIR}/${libOptions.libName}Config.cmake\n` +
+            `    FILE \${CMAKE_CURRENT_BINARY_DIR}/${libOptions.libName}_Targets.cmake\n` +
             ')\n' +
             '\n' +
             `export(PACKAGE ${libOptions.libName})\n` +

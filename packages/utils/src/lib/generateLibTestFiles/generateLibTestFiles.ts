@@ -13,10 +13,11 @@ export const generateLibTestFiles = (
     }
     const { appsDir } = getWorkspaceLayout();
     const { testName } = resolvedLibOptions;
+    const testDir = `${appsDir}/${testName}`;
     generateFiles(
         tree,
         join(__dirname, 'template'),
-        `${appsDir}/${testName}`,
+        testDir,
         resolvedLibOptions,
     );
 };

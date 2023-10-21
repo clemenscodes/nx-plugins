@@ -22,15 +22,15 @@ describe('getTargetDefaults', () => {
                 inputs: ['clangTidy'],
             },
             test: {
-                dependsOn: ['build'],
+                dependsOn: ['compile'],
                 inputs: ['default'],
             },
             execute: {
-                dependsOn: ['build'],
+                dependsOn: ['compile'],
                 inputs: ['default'],
             },
             debug: {
-                dependsOn: ['build'],
+                dependsOn: ['compile'],
                 inputs: ['default'],
             },
         };

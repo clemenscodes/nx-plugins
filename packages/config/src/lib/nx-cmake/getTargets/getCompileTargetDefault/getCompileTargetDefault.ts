@@ -1,9 +1,15 @@
+import { CmakeTargetName } from '../getCmakeTargetDefault/getCmakeTargetDefault';
+
 export const COMPILE_TARGET_NAME = 'compile';
 
 export type CompileTargetName = typeof COMPILE_TARGET_NAME;
 
 export type CompileTargetConfiguration = {
-    dependsOn: ['^cmake', '^compile', 'cmake'];
+    dependsOn: [
+        `^${CmakeTargetName}`,
+        `^${CompileTargetName}`,
+        CmakeTargetName,
+    ];
     inputs: ['default'];
 };
 

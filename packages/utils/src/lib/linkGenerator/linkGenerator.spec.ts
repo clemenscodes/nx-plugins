@@ -12,8 +12,8 @@ import { linkGenerator } from './linkGenerator';
 import { libGenerator } from '../libGenerator/libGenerator';
 import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
 import { initGenerator } from '../initGenerator/initGenerator';
-import * as devkit from '@nx/devkit';
 import { trimLib } from '../trimLib/trimLib';
+import * as devkit from '@nx/devkit';
 
 describe('link generator', () => {
     let tree: Tree;
@@ -61,10 +61,16 @@ describe('link generator', () => {
             '\n' +
             `set_package_version(${options.libName} \${${options.libName}_VERSION})\n` +
             '\n' +
+            'configure_package_config_file(\n' +
+            '    cmake/liblinkConfig.cmake.in\n' +
+            '    ${CMAKE_CURRENT_BINARY_DIR}/liblinkConfig.cmake\n' +
+            '    INSTALL_DESTINATION ${liblink_INSTALL_CMAKEDIR}\n' +
+            ')\n' +
+            '\n' +
             'export(\n' +
             `    EXPORT ${options.libName}_Targets\n` +
             `    NAMESPACE ${options.libName}::\n` +
-            `    FILE \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}Config.cmake\n` +
+            `    FILE \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}_Targets.cmake\n` +
             ')\n' +
             '\n' +
             `export(PACKAGE ${options.libName})\n` +
@@ -96,10 +102,16 @@ describe('link generator', () => {
             '\n' +
             `set_package_version(${options.libName} \${${options.libName}_VERSION})\n` +
             '\n' +
+            'configure_package_config_file(\n' +
+            '    cmake/liblinkConfig.cmake.in\n' +
+            '    ${CMAKE_CURRENT_BINARY_DIR}/liblinkConfig.cmake\n' +
+            '    INSTALL_DESTINATION ${liblink_INSTALL_CMAKEDIR}\n' +
+            ')\n' +
+            '\n' +
             'export(\n' +
             `    EXPORT ${options.libName}_Targets\n` +
             `    NAMESPACE ${options.libName}::\n` +
-            `    FILE \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}Config.cmake\n` +
+            `    FILE \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}_Targets.cmake\n` +
             ')\n' +
             '\n' +
             `export(PACKAGE ${options.libName})\n` +

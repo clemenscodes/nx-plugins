@@ -15,7 +15,7 @@ describe('getTestTargetDefault', () => {
 
     beforeEach(() => {
         expectedConfiguration = {
-            dependsOn: ['build'],
+            dependsOn: ['compile'],
             inputs: ['default'],
         };
     });

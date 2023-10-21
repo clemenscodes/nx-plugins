@@ -15,7 +15,7 @@ describe('getDebugTargetDefault', () => {
 
     beforeEach(() => {
         expectedConfiguration = {
-            dependsOn: ['build'],
+            dependsOn: ['compile'],
             inputs: ['default'],
         };
     });

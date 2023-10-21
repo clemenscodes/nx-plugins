@@ -76,10 +76,16 @@ describe('generateLibFiles', () => {
             '\n' +
             `set_package_version(${options.libName} \${${options.libName}_VERSION})\n` +
             '\n' +
+            'configure_package_config_file(\n' +
+            `    cmake/${options.libName}Config.cmake.in\n` +
+            `    \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}Config.cmake\n` +
+            `    INSTALL_DESTINATION \${${options.libName}_INSTALL_CMAKEDIR}\n` +
+            ')\n' +
+            '\n' +
             'export(\n' +
             `    EXPORT ${options.libName}_Targets\n` +
             `    NAMESPACE ${options.libName}::\n` +
-            `    FILE \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}Config.cmake\n` +
+            `    FILE \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}_Targets.cmake\n` +
             ')\n' +
             '\n' +
             `export(PACKAGE ${options.libName})\n` +
@@ -164,10 +170,16 @@ describe('generateLibFiles', () => {
             '\n' +
             `set_package_version(${options.libName} \${${options.libName}_VERSION})\n` +
             '\n' +
+            'configure_package_config_file(\n' +
+            `    cmake/${options.libName}Config.cmake.in\n` +
+            `    \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}Config.cmake\n` +
+            `    INSTALL_DESTINATION \${${options.libName}_INSTALL_CMAKEDIR}\n` +
+            ')\n' +
+            '\n' +
             'export(\n' +
             `    EXPORT ${options.libName}_Targets\n` +
             `    NAMESPACE ${options.libName}::\n` +
-            `    FILE \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}Config.cmake\n` +
+            `    FILE \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}_Targets.cmake\n` +
             ')\n' +
             '\n' +
             `export(PACKAGE ${options.libName})\n` +

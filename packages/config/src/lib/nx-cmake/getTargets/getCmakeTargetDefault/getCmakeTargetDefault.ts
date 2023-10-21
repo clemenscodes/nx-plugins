@@ -3,7 +3,7 @@ export const CMAKE_TARGET_NAME = 'cmake';
 export type CmakeTargetName = typeof CMAKE_TARGET_NAME;
 
 export type CmakeTargetConfiguration = {
-    dependsOn: ['^cmake'];
+    dependsOn: [`^${CmakeTargetName}`];
     inputs: ['cmake'];
 };
 

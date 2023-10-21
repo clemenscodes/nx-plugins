@@ -1,4 +1,4 @@
 @PACKAGE_INIT@
 
-include(${ROOT}/dist/<%= libsDir %>/<%= name %>/<%= libName %>-export-Config.cmake)
 include(CMakeFindDependencyMacro)
+include(${ROOT}/dist/<%= projectRoot %>/<%= libName %>_Targets.cmake)

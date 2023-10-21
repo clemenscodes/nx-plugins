@@ -4,6 +4,7 @@ import { names } from '@nx/devkit';
 import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
 import { trimLib } from '../trimLib/trimLib';
 import { writeFileWithTree } from '../writeFileWithTree/writeFileWithTree';
+import { trimTest } from '../trimTest/trimTest';
 
 export const getIncludeDirective = (project: string): string => {
     const includeDirective = `#include "${project}.h"`;
@@ -19,7 +20,8 @@ export const getIncludeFile = (
 };
 
 export const getProjectMacroDefinition = (project: string): string => {
-    const trimmedProjectName = trimLib(project);
+    const trimmedLibProjectName = trimLib(project);
+    const trimmedProjectName = trimTest(trimmedLibProjectName);
     const { constantName } = names(project);
     const { constantName: trimmedConstantName } = names(trimmedProjectName);
     const projectMacroDefinition = `_${constantName}_${trimmedConstantName}`;
@@ -39,10 +41,9 @@ export const getUpdatedIncludeFileContent = (
     }
     const [start, appendBeforeThis] = includeFileContent.split(macroDefinition);
     const updatedIncludeFileContent = [
-        ...(start ? [start] : []),
-        macroDefinition,
+        ...(start ? [start] : [macroDefinition]),
         includeDirective,
-        appendBeforeThis,
+        ...(appendBeforeThis ? [appendBeforeThis] : []),
     ].join('\n');
     return updatedIncludeFileContent;
 };

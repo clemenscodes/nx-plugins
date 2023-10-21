@@ -9,6 +9,4 @@
 #include <setjmp.h>
 #include <cmocka.h>
 <% } %>
-#include "<%= libName %>.h"
-
 #endif

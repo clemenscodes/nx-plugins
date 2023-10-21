@@ -8,10 +8,6 @@ export type CMakeC = 'C' | 'CXX';
 
 export type CTag = 'c' | 'cpp';
 
-export type Link = 'shared' | 'static';
-
-export type GoogleTestInclude = 'include(GoogleTest)' | '';
-
 export type Deps = {
     sourceProject: string;
     dependsOnProject: string;

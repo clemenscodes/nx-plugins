@@ -27,8 +27,10 @@ configure_package_config_file(
 export(
     EXPORT <%= libName %>_Targets
     NAMESPACE <%= libName %>::
-    FILE ${CMAKE_CURRENT_BINARY_DIR}/<%= libName %>Config.cmake
+    FILE ${CMAKE_CURRENT_BINARY_DIR}/<%= libName %>_Targets.cmake
 )
+
+export(PACKAGE <%= libName %>)
 
 install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/<%= libName %>Config.cmake

@@ -35,14 +35,9 @@ export { addLibProjectConfig } from './lib/addLibProjectConfig/addLibProjectConf
 export { addTestProjectConfig } from './lib/addTestProjectConfig/addTestProjectConfig';
 export { generateLibFiles } from './lib/generateLibFiles/generateLibFiles';
 export { generateLibTestFiles } from './lib/generateLibTestFiles/generateLibTestFiles';
-export { getBaseCmockaTest } from './lib/getBaseCmockaTest/getBaseCmockaTest';
-export { getBaseGoogleTest } from './lib/getBaseGoogleTest/getBaseGoogleTest';
-export { getBaseTest } from './lib/getBaseTest/getBaseTest';
-export { getGoogleTestInclude } from './lib/getGoogleTestInclude/getGoogleTestInclude';
 export { getLibName } from './lib/getLibName/getLibName';
 export { getTestLib } from './lib/getTestLib/getTestLib';
 export { getTestName } from './lib/getTestName/getTestName';
-export { getTestSetup } from './lib/getTestSetup/getTestSetup';
 export { resolveLibOptions } from './lib/resolveLibOptions/resolveLibOptions';
 export { resolveLinkOptions } from './lib/resolveLinkOptions/resolveLinkOptions';
 export { updateIncludeFile } from './lib/updateIncludeFile/updateIncludeFile';

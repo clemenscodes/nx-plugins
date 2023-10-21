@@ -1,4 +1,7 @@
-import { getDefaultInitGeneratorOptions, type GeneratorBaseOptions } from '@/config';
+import {
+    getDefaultInitGeneratorOptions,
+    type GeneratorBaseOptions,
+} from '@/config';
 import type { Tree } from '@nx/devkit';
 import { resolveOptions } from './resolveOptions';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
@@ -26,6 +29,7 @@ describe('resolveOptions', () => {
             camelCaseName: 'exampleName',
             cmakeConfigDir: '.cmake',
             workspaceName: 'workspace',
+            appsDir: 'bin',
             libsDir: 'packages',
             className: 'ExampleName',
             languageExtension: 'cpp',

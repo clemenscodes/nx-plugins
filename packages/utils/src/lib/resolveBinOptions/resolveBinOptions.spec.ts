@@ -29,6 +29,8 @@ describe('resolveBinOptions ', () => {
             camelCaseName: 'base',
             className: 'Base',
             cmakeConfigDir: '.cmake',
+            appsDir: 'bin',
+            libsDir: 'packages',
             workspaceName: 'workspace',
             languageExtension: 'cpp',
             relativeRootPath: '../../',

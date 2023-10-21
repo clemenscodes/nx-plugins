@@ -73,36 +73,33 @@ describe('generateLibTestFiles', () => {
             '#include <setjmp.h>\n' +
             '#include <cmocka.h>\n' +
             '\n' +
-            '#include "libtest.h"\n' +
-            '\n' +
             '#endif\n';
 
         expectedSourceFile =
             '#include "testtest.h"\n' +
             '\n' +
             'static int setup(void **state) {\n' +
-            '\t(void) state;\n' +
-            '\treturn 0;\n' +
+            '    (void) state;\n' +
+            '    return 0;\n' +
             '}\n' +
             '\n' +
             'static int teardown(void **state) {\n' +
-            '\t(void) state;\n' +
-            '\treturn 0;\n' +
+            '    (void) state;\n' +
+            '    return 0;\n' +
             '}\n' +
             '\n' +
             'static void test_test(void **state) {\n' +
-            '\t(void) state;\n' +
-            '\ttest();\n' +
+            '    (void) state;\n' +
+            '    test();\n' +
             '}\n' +
             '\n' +
             'int main(void) {\n' +
-            '\tconst struct CMUnitTest test_tests[] = {\n' +
-            '\t\tcmocka_unit_test(test_test),\n' +
-            '\t};\n' +
-            '\treturn cmocka_run_group_tests(test_tests, setup, teardown);\n' +
+            '    const struct CMUnitTest test_tests[] = {\n' +
+            '        cmocka_unit_test(test_test),\n' +
+            '    };\n' +
+            '    return cmocka_run_group_tests(test_tests, setup, teardown);\n' +
             '}\n' +
             '\n';
-
         expectedListsFile =
             'include(../../.cmake/workspace.cmake)\n' +
             '\n' +
@@ -116,8 +113,6 @@ describe('generateLibTestFiles', () => {
             'project(testtest LANGUAGES ${LANGUAGE})\n' +
             '\n' +
             'set_binary_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
-            '\n' +
-            'link_library(${CMAKE_PROJECT_NAME} test)\n' +
             '\n' +
             'enable_testing()\n' +
             '\n' +
@@ -184,14 +179,12 @@ describe('generateLibTestFiles', () => {
             '\n' +
             '#include <gtest/gtest.h>\n' +
             '\n' +
-            '#include "libtest.h"\n' +
-            '\n' +
             '#endif\n';
         expectedSourceFile =
             '#include "testtest.h"\n' +
             '\n' +
             'TEST(libtest, test_test) {\n' +
-            '\tEXPECT_EQ(test(), 0);\n' +
+            '    EXPECT_EQ(test(), 0);\n' +
             '}\n' +
             '\n';
         expectedListsFile =
@@ -208,13 +201,12 @@ describe('generateLibTestFiles', () => {
             '\n' +
             'set_binary_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             '\n' +
-            'link_library(${CMAKE_PROJECT_NAME} test)\n' +
-            '\n' +
             'enable_testing()\n' +
             '\n' +
             'install_gtest()\n' +
             '\n' +
             'link_gtest(${CMAKE_PROJECT_NAME})\n' +
+            '\n' +
             'include(GoogleTest)\n' +
             'gtest_discover_tests(testtest)\n';
 

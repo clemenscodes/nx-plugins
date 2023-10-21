@@ -1,15 +1,17 @@
+import { CompileTargetName } from '../getCompileTargetDefault/getCompileTargetDefault';
+
 export const EXECUTE_TARGET_NAME = 'execute';
 
 export type ExecuteTargetName = typeof EXECUTE_TARGET_NAME;
 
 export type ExecuteTargetConfiguration = {
-    dependsOn: ['build'];
+    dependsOn: [CompileTargetName];
     inputs: ['default'];
 };
 
 export const getExecuteTargetDefault = (): ExecuteTargetConfiguration => {
     const executeTargetDefault: ExecuteTargetConfiguration = {
-        dependsOn: ['build'],
+        dependsOn: ['compile'],
         inputs: ['default'],
     };
     return executeTargetDefault;

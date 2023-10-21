@@ -8,33 +8,8 @@ describe('addTargetDefaults', () => {
     beforeEach(() => {
         updatedNxJson = {
             targetDefaults: {
-                cmake: {
-                    dependsOn: ['^cmake'],
-                    inputs: ['cmake'],
-                },
-                compile: {
-                    dependsOn: ['^cmake', '^compile', 'cmake'],
-                    inputs: ['default'],
-                },
-                fmt: {
-                    dependsOn: [],
-                    inputs: ['clangFormat'],
-                },
-                lint: {
-                    dependsOn: ['cmake'],
-                    inputs: ['clangTidy'],
-                },
-                test: {
-                    dependsOn: ['build'],
-                    inputs: ['default'],
-                },
-                debug: {
-                    dependsOn: ['build'],
-                    inputs: ['default'],
-                },
-                execute: {
-                    dependsOn: ['build'],
-                    inputs: ['default'],
+                build: {
+                    dependsOn: ['^build'],
                 },
             },
         };
@@ -58,15 +33,15 @@ describe('addTargetDefaults', () => {
                     inputs: ['clangTidy'],
                 },
                 test: {
-                    dependsOn: ['build'],
+                    dependsOn: ['compile'],
                     inputs: ['default'],
                 },
                 debug: {
-                    dependsOn: ['build'],
+                    dependsOn: ['compile'],
                     inputs: ['default'],
                 },
                 execute: {
-                    dependsOn: ['build'],
+                    dependsOn: ['compile'],
                     inputs: ['default'],
                 },
             },
@@ -90,8 +65,17 @@ describe('addTargetDefaults', () => {
         expect(result).toEqual(expectedNxJson);
     });
 
-    it('should not modify targetDefaults if defaults are already present', () => {
+    it('should not remove existing targetDefaults', () => {
         const result = addTargetDefaults(updatedNxJson);
+        if (!expectedNxJson.targetDefaults) {
+            expectedNxJson.targetDefaults = {};
+        }
+        if (!expectedNxJson.targetDefaults['build']) {
+            expectedNxJson.targetDefaults['build'] = {};
+        }
+        expectedNxJson.targetDefaults['build'] = {
+            dependsOn: ['^build'],
+        };
         expect(result).toEqual(expectedNxJson);
     });
 
@@ -102,6 +86,15 @@ describe('addTargetDefaults', () => {
         if (!updatedNxJson.targetDefaults) {
             updatedNxJson.targetDefaults = {};
         }
+        if (!updatedNxJson.targetDefaults['cmake']) {
+            updatedNxJson.targetDefaults['cmake'] = {};
+        }
+        if (!expectedNxJson.targetDefaults['build']) {
+            expectedNxJson.targetDefaults['build'] = {};
+        }
+        expectedNxJson.targetDefaults['build'] = {
+            dependsOn: ['^build'],
+        };
         updatedNxJson.targetDefaults['cmake'].dependsOn = ['something else'];
         expectedNxJson.targetDefaults['cmake'].dependsOn = [
             'something else',

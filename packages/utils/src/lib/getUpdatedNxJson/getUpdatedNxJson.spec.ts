@@ -78,9 +78,9 @@ describe('getUpdatedNxJson', () => {
                     dependsOn: ['cmake'],
                     inputs: ['clangTidy'],
                 },
-                test: { dependsOn: ['build'], inputs: ['default'] },
-                debug: { dependsOn: ['build'], inputs: ['default'] },
-                execute: { dependsOn: ['build'], inputs: ['default'] },
+                test: { dependsOn: ['compile'], inputs: ['default'] },
+                debug: { dependsOn: ['compile'], inputs: ['default'] },
+                execute: { dependsOn: ['compile'], inputs: ['default'] },
             },
             namedInputs: {
                 clangFormat: [

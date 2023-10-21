@@ -1,9 +1,11 @@
+import { CmakeTargetName } from '../getCmakeTargetDefault/getCmakeTargetDefault';
+
 export const LINT_TARGET_NAME = 'lint';
 
 export type LintTargetName = typeof LINT_TARGET_NAME;
 
 export type LintTargetConfiguration = {
-    dependsOn: ['cmake'];
+    dependsOn: [CmakeTargetName];
     inputs: ['clangTidy'];
 };
 

@@ -1,5 +1,4 @@
 {
-    "$schema": "./node_modules/nx/schemas/nx-schema.json",
     "extends": "nx/presets/npm.json",
     "defaultProject": "nx-cmake",
     "tasksRunnerOptions": {
@@ -29,6 +28,7 @@
             "workspaceName": "workspace"
         }
     },
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
     "workspaceLayout": {
         "appsDir": "bin",
         "libsDir": "packages"
@@ -41,8 +41,7 @@
             "cache": true
         },
         "build": {
-            "dependsOn": ["^build"],
-            "inputs": ["default"]
+            "dependsOn": ["^build"]
         },
         "compile": {
             "dependsOn": ["^cmake", "^compile", "cmake"],
@@ -59,16 +58,16 @@
             "cache": true
         },
         "test": {
-            "dependsOn": ["build"],
+            "dependsOn": ["build", "compile"],
             "inputs": ["default"],
             "cache": true
         },
         "execute": {
-            "dependsOn": ["build"],
+            "dependsOn": ["build", "compile"],
             "inputs": ["default"]
         },
         "debug": {
-            "dependsOn": ["build"],
+            "dependsOn": ["build", "compile"],
             "inputs": ["default"]
         }
     },

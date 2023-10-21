@@ -12,7 +12,7 @@ export const resolveOptions = <
 >(
     options: T,
 ): K => {
-    const { libsDir } = getWorkspaceLayout();
+    const { appsDir, libsDir } = getWorkspaceLayout();
     const { language } = options;
     const resolvedName = names(options.name);
     const { name, constantName, propertyName, className } = resolvedName;
@@ -36,6 +36,7 @@ export const resolveOptions = <
         workspaceName,
         cmakeConfigDir,
         libsDir,
+        appsDir,
         cmakeC,
     } as K;
 
