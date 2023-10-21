@@ -48,6 +48,7 @@ describe('getGccDependenciesCommand', () => {
     });
 
     it('should generate the correct gcc c++ dependency command', () => {
+        tag = 'cpp';
         const result = getGccDependenciesCommand(
             fileName,
             projectRoot,
