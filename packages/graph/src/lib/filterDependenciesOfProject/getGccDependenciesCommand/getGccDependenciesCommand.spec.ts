@@ -19,14 +19,11 @@ describe('getGccDependenciesCommand', () => {
         getIncludeDirectoriesFlagReturnMock = '-I libs/someProject/include';
         jest.spyOn(configModule, 'isWindows').mockReturnValue(false);
         jest.spyOn(configModule, 'isDarwin').mockReturnValue(false);
+        jest.spyOn(configModule, 'getGcc').mockReturnValue(LINUX_GCC[0]);
         jest.spyOn(
             getIncludeDirectoriesFlagModule,
             'getIncludeDirectoriesFlag',
         ).mockReturnValue(getIncludeDirectoriesFlagReturnMock);
-    });
-
-    afterEach(() => {
-        jest.restoreAllMocks();
     });
 
     it('linux should generate the correct gcc c dependency command', () => {
@@ -39,6 +36,27 @@ describe('getGccDependenciesCommand', () => {
         const expectedCmd =
             `${LINUX_GCC[0]} ` +
             `-x c ` +
+            `-MM ` +
+            `${fileName} ` +
+            `-I projectA ` +
+            `-I projectA/include ` +
+            `-I projectA/src ` +
+            `-I dist/libs/gtest/googletest-src/googletest/include ` +
+            `-I dist/libs/cmocka/cmocka-src/include ` +
+            `${getIncludeDirectoriesFlagReturnMock}`;
+        expect(result).toBe(expectedCmd);
+    });
+
+    it('should generate the correct gcc c++ dependency command', () => {
+        const result = getGccDependenciesCommand(
+            fileName,
+            projectRoot,
+            libsDir,
+            tag,
+        );
+        const expectedCmd =
+            `${LINUX_GCC[0]} ` +
+            `-x c++ ` +
             `-MM ` +
             `${fileName} ` +
             `-I projectA ` +
