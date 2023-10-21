@@ -26,7 +26,7 @@ describe('getGccDependenciesCommand', () => {
     });
 
     afterEach(() => {
-        jest.restoreAllMocks;
+        jest.restoreAllMocks();
     });
 
     it('linux should generate the correct gcc c dependency command', () => {

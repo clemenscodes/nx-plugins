@@ -1,8 +1,8 @@
 import { getGcc } from './getGcc';
+import { LINUX_GCC, DARWIN_GCC, WINDOWS_GCC, GCC } from '../getPrograms';
 import * as fileModule from '@/file';
 import * as isWindowsModule from '../../../isWindows/isWindows';
 import * as isDarwinModule from '../../../isDarwin/isDarwin';
-import { LINUX_GCC, DARWIN_GCC, WINDOWS_GCC, GCC } from '../getPrograms';
 
 describe('getGcc', () => {
     let isWindowsMock: jest.SpyInstance;
