@@ -1,4 +1,5 @@
 import type { FilteredProject } from '@/config';
+import { normalizePath } from '@nx/devkit';
 
 export const getProjectFromFile = (
     file: string,
@@ -8,9 +9,11 @@ export const getProjectFromFile = (
         return null;
     }
 
+    const unixPath = normalizePath(file);
+
     const project = projects.find(({ root, sourceRoot }) => {
-        const isInSourceRoot = file.startsWith(`${sourceRoot}/`);
-        const isInProjectRoot = file.startsWith(`${root}/`);
+        const isInSourceRoot = unixPath.startsWith(`${sourceRoot}/`);
+        const isInProjectRoot = unixPath.startsWith(`${root}/`);
         if (isInSourceRoot) {
             return true;
         }
