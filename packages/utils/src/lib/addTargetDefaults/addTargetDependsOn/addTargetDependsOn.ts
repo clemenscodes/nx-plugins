@@ -3,7 +3,7 @@ import type {
     TargetConfigurationWithDependsOn,
 } from '@/types';
 import type { TargetName, TargetDefaults } from '@/config';
-import { mergeArrays } from '../../mergeArrays/mergeArrays';
+import { mergeArrays } from '@/util';
 
 export const addTargetDependsOn = (
     targetDefaults: NonNullable<NxTargetDefaults>,

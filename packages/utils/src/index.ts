@@ -1,7 +1,3 @@
-export { checkCommandExists } from './lib/checkCommandExists/checkCommandExists';
-export { executeCommandForFiles } from './lib/executeCommandForFiles/executeCommandForFiles';
-export { executeCommand } from './lib/executeCommand/executeCommand';
-export { runCommand } from './lib/runCommand/runCommand';
 export { testExecutor } from './lib/testExecutor/testExecutor';
 export { lintExecutor } from './lib/lintExecutor/lintExecutor';
 export { fmtExecutor } from './lib/fmtExecutor/fmtExecutor';

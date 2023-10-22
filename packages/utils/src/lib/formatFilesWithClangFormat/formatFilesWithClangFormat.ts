@@ -1,8 +1,7 @@
 import { getFormatArguments } from '../getFormatArguments/getFormatArguments';
 import { getProjectFiles, filterSourceFiles } from '@/file';
 import { CLANG_FORMAT, FormatExecutorSchema, getClangFormat } from '@/config';
-import { checkCommandExists } from '../checkCommandExists/checkCommandExists';
-import { executeCommandForFiles } from '../executeCommandForFiles/executeCommandForFiles';
+import { executeCommandForFiles, checkCommandExists } from '@/util';
 
 export const formatFilesWithClangFormat = (
     workspaceRoot: string,

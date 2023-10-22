@@ -2,7 +2,7 @@ import { configureProjectWithCMake } from './configureProjectWithCMake';
 import { type CmakeExecutorSchema, LINUX_CMAKE } from '@/config';
 import * as configModule from '@/config';
 import * as getCmakeCommandArgumentsModule from '../getCmakeCommandArguments/getCmakeCommandArguments';
-import * as runCommandModule from '../runCommand/runCommand';
+import * as utilsModule from '@/util';
 
 describe('buildProjectWithMake', () => {
     let workspaceRoot: string;
@@ -19,7 +19,7 @@ describe('buildProjectWithMake', () => {
             args: [],
             release: false,
         };
-        runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
+        runCommandMock = jest.spyOn(utilsModule, 'runCommand');
         getCmakeCommandArgumentsMock = jest.spyOn(
             getCmakeCommandArgumentsModule,
             'getCmakeCommandArguments',

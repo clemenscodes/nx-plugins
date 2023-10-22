@@ -3,7 +3,7 @@ import { compileProjectWithCMake } from './compileProjectWithCMake';
 import { join } from 'path';
 import * as fileModule from '@/file';
 import * as configModule from '@/config';
-import * as runCommandModule from '../runCommand/runCommand';
+import * as utilsModule from '@/util';
 
 describe('compileProjectWithCMake', () => {
     let workspaceRoot: string;
@@ -19,7 +19,7 @@ describe('compileProjectWithCMake', () => {
             args: [],
             release: false,
         };
-        runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
+        runCommandMock = jest.spyOn(utilsModule, 'runCommand');
         getCmakeMock = jest.spyOn(configModule, 'getCmake');
         jest.spyOn(fileModule, 'fileExists').mockReturnValue(true);
     });

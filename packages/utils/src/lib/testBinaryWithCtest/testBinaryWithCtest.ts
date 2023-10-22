@@ -1,8 +1,8 @@
-import { checkCommandExists } from '../checkCommandExists/checkCommandExists';
 import { getCtestArguments } from '../getCtestArguments/getCtestArguments';
 import { CTEST, TestExecutorSchema, getCtest } from '@/config';
 import { runCommandFromDirectory } from '../runCommandFromDirectory/runCommandFromDirectory';
 import { join } from 'path';
+import { checkCommandExists } from '@/util';
 
 export const testBinaryWithCtest = (
     workspaceRoot: string,

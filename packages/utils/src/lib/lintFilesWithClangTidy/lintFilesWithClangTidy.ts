@@ -1,8 +1,7 @@
 import { getProjectFiles, filterSourceFiles } from '@/file';
 import { getLintArguments } from '../getLintArguments/getLintArguments';
 import { CLANG_TIDY, LintExecutorSchema, getClangTidy } from '@/config';
-import { checkCommandExists } from '../checkCommandExists/checkCommandExists';
-import { runCommand } from '../runCommand/runCommand';
+import { checkCommandExists, runCommand } from '@/util';
 
 export const lintFilesWithClangTidy = (
     workspaceRoot: string,

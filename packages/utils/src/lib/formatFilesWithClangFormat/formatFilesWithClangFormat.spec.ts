@@ -5,8 +5,6 @@ import {
 } from '@/config';
 import { formatFilesWithClangFormat } from './formatFilesWithClangFormat';
 import * as getFormatArgumentsModule from '../getFormatArguments/getFormatArguments';
-import * as checkCommandExistsModule from '../checkCommandExists/checkCommandExists';
-import * as executeCommandForFilesModule from '../executeCommandForFiles/executeCommandForFiles';
 import * as fileModule from '@/file';
 import * as configModule from '@/config';
 import * as utilsModule from '@/util';
@@ -38,10 +36,10 @@ describe('formatFilesWithClangFormat', () => {
         );
         getProjectFilesMock = jest.spyOn(fileModule, 'getProjectFiles');
         checkCommandExistsMock = jest
-            .spyOn(checkCommandExistsModule, 'checkCommandExists')
+            .spyOn(utilsModule, 'checkCommandExists')
             .mockImplementation(jest.fn());
         executeCommandForFilesMock = jest.spyOn(
-            executeCommandForFilesModule,
+            utilsModule,
             'executeCommandForFiles',
         );
         isWindowsMock = jest

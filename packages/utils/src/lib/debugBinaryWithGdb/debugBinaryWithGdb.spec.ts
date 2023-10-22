@@ -1,8 +1,6 @@
 import { DebugExecutorSchema, GDB, LINUX_GDB } from '@/config';
 import { debugBinaryWithGdb } from './debugBinaryWithGdb';
 import { join } from 'path';
-import * as runCommandModule from '../runCommand/runCommand';
-import * as checkCommandExistsModule from './../checkCommandExists/checkCommandExists';
 import * as fileModule from '@/file';
 import * as configModule from '@/config';
 import * as utilsModule from '@/util';
@@ -29,9 +27,9 @@ describe('debugBinaryWithGdb', () => {
         getGdbReturnMock = LINUX_GDB[0];
         jest.spyOn(fileModule, 'fileExists').mockReturnValue(true);
         jest.spyOn(configModule, 'getGdb').mockReturnValue(getGdbReturnMock);
-        runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
+        runCommandMock = jest.spyOn(utilsModule, 'runCommand');
         checkCommandExistsMock = jest
-            .spyOn(checkCommandExistsModule, 'checkCommandExists')
+            .spyOn(utilsModule, 'checkCommandExists')
             .mockImplementation(jest.fn());
         isWindowsMock = jest
             .spyOn(utilsModule, 'isWindows')

@@ -1,7 +1,6 @@
-import { checkCommandExists } from '../checkCommandExists/checkCommandExists';
 import { getCmakeBuildCommandArguments } from '../getCmakeBuildCommandArguments/getCmakeBuildCommandArguments';
 import { CompileExecutorSchema, CMAKE, getCmake } from '@/config';
-import { runCommand } from '../runCommand/runCommand';
+import { runCommand, checkCommandExists } from '@/util';
 
 export const compileProjectWithCMake = (
     workspaceRoot: string,

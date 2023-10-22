@@ -1,9 +1,8 @@
 import type { CmakeExecutorSchema } from '@/config';
 import { getCmakeCommandArguments } from '../getCmakeCommandArguments/getCmakeCommandArguments';
 import { CMAKE, getCmake } from '@/config';
-import { checkCommandExists } from '../checkCommandExists/checkCommandExists';
-import { runCommand } from '../runCommand/runCommand';
 import { logger } from '@/log';
+import { runCommand, checkCommandExists } from '@/util';
 
 export const configureProjectWithCMake = (
     workspaceRoot: string,

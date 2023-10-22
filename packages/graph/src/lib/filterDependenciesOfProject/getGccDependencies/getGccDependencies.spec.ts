@@ -1,7 +1,7 @@
 import { getGccDependencies } from './getGccDependencies';
 import * as detectTestFrameworkModule from '../detectTestFramework/detectTestFramework';
 import * as installTestFrameworkModule from '../installTestFramework/installTestFramework';
-import * as utilsModule from '@/utils';
+import * as utilsModule from '@/util';
 import * as logModule from '@/log';
 
 describe('getGccDependencies', () => {

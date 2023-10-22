@@ -1,7 +1,6 @@
-import { checkCommandExists } from '../checkCommandExists/checkCommandExists';
 import { getGdbArguments } from '../getGdbArguments/getGdbArguments';
 import { DebugExecutorSchema, GDB, getGdb } from '@/config';
-import { runCommand } from '../runCommand/runCommand';
+import { checkCommandExists, runCommand } from '@/util';
 
 export const debugBinaryWithGdb = (
     workspaceRoot: string,

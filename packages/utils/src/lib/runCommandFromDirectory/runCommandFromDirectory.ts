@@ -1,6 +1,6 @@
-import { logger } from '@/log';
 import { SpawnSyncReturns, execSync } from 'child_process';
 import { output } from '@nx/devkit';
+import { logger } from '@/log';
 
 export const runCommandFromDirectory = (
     command: string,

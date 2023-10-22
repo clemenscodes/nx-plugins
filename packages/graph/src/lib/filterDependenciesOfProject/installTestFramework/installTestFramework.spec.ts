@@ -1,6 +1,6 @@
 import { installTestFramework } from './installTestFramework';
 import { join } from 'path';
-import * as utilsModule from '@/utils';
+import * as utilsModule from '@/util';
 
 describe('installTestFramework', () => {
     let runCommandSpy: jest.SpyInstance;

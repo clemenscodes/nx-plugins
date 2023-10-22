@@ -1,8 +1,6 @@
 import { lintFilesWithClangTidy } from './lintFilesWithClangTidy';
 import { CLANG_TIDY, LINUX_GCC, LintExecutorSchema } from '@/config';
 import * as getLintArgumentsModule from '../getLintArguments/getLintArguments';
-import * as runCommandModule from '../runCommand/runCommand';
-import * as checkCommandExistsModule from '../checkCommandExists/checkCommandExists';
 import * as fileModule from '@/file';
 import * as configModule from '@/config';
 import * as utilsModule from '@/util';
@@ -34,7 +32,7 @@ describe('lintFilesWithClangTidy', () => {
         );
         getProjectFilesMock = jest.spyOn(fileModule, 'getProjectFiles');
         checkCommandExistsMock = jest
-            .spyOn(checkCommandExistsModule, 'checkCommandExists')
+            .spyOn(utilsModule, 'checkCommandExists')
             .mockImplementation(jest.fn());
         isWindowsMock = jest
             .spyOn(utilsModule, 'isWindows')
@@ -45,7 +43,7 @@ describe('lintFilesWithClangTidy', () => {
         jest.spyOn(fileModule, 'fileExists').mockReturnValue(true);
         clangTidyMock = LINUX_GCC[0];
         jest.spyOn(configModule, 'getClangTidy').mockReturnValue(clangTidyMock);
-        runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
+        runCommandMock = jest.spyOn(utilsModule, 'runCommand');
         lintArgsMock = ['--config-file=your_config_file', '-p=your_build_path'];
         sourceFilesMock = ['/path/to/file1.cpp', '/path/to/file2.cpp'];
     });

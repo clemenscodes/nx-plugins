@@ -1,7 +1,6 @@
 import { CTEST, LINUX_CTEST, TestExecutorSchema } from '@/config';
 import { testBinaryWithCtest } from './testBinaryWithCtest';
 import { join } from 'path';
-import * as checkCommandExistsModule from '../checkCommandExists/checkCommandExists';
 import * as runCommandFromDirectoryModule from '../runCommandFromDirectory/runCommandFromDirectory';
 import * as fileModule from '@/file';
 import * as configModule from '@/config';
@@ -31,7 +30,7 @@ describe('buildProjectWithCMake', () => {
         jest.spyOn(fileModule, 'fileExists').mockReturnValue(true);
         jest.spyOn(configModule, 'getCtest').mockReturnValue(LINUX_CTEST[0]);
         checkCommandExistsMock = jest
-            .spyOn(checkCommandExistsModule, 'checkCommandExists')
+            .spyOn(utilsModule, 'checkCommandExists')
             .mockImplementation(jest.fn());
         isWindowsMock = jest
             .spyOn(utilsModule, 'isWindows')
