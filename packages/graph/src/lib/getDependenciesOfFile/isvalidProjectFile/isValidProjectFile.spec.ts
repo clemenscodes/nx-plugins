@@ -1,4 +1,4 @@
-import type { CTag } from '@/config';
+import type { CTag } from '@/types';
 import { isValidProjectFile } from './isValidProjectFile';
 
 describe('isValidProjectFile', () => {

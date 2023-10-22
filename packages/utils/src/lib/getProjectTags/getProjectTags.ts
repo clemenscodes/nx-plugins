@@ -1,8 +1,8 @@
 import type { ProjectConfiguration } from '@nx/devkit';
-import type { C } from '@/config';
-import { CProjectType } from '@/config';
+import type { C } from '@/types';
+import { CProjectType } from '@/types';
 import { PLUGIN_NAME } from '@/config';
-import { getLanguageExtension } from '../getLanguageExtension/getLanguageExtension';
+import { getLanguageExtension } from '@/util';
 
 export const getProjectTags = (
     projectType: CProjectType,

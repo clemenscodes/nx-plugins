@@ -1,7 +1,7 @@
 import type { NxJsonConfiguration } from '@nx/devkit';
 import { PLUGIN_NAME } from '@/config';
 import { getPluginConfig } from './getPluginConfig';
-import * as getNxJsonConfigurationModule from '../getNxJsonConfiguration/getNxJsonConfiguration';
+import * as utilsModule from '@/util';
 
 describe('getPluginConfig', () => {
     let mockNxJsonConfig: NxJsonConfiguration;
@@ -18,7 +18,7 @@ describe('getPluginConfig', () => {
             },
         };
         getNxJsonConfigurationSpy = jest.spyOn(
-            getNxJsonConfigurationModule,
+            utilsModule,
             'getNxJsonConfiguration',
         );
     });

@@ -1,4 +1,4 @@
-import type { C } from '@/config';
+import type { C } from '@/types';
 import { output } from '@nx/devkit';
 
 export const getLanguageVariant = (configFileContent: string): C => {

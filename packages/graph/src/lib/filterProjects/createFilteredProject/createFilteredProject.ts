@@ -1,5 +1,5 @@
 import type { ProjectConfiguration } from '@nx/devkit';
-import { FilteredProject } from '@/config';
+import { FilteredProject } from '@/types';
 import { getProjectTypeFromConfig } from '@/utils';
 import { getTag } from '../getTag/getTag';
 

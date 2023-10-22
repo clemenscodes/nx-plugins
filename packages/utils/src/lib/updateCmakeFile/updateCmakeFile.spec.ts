@@ -3,18 +3,17 @@ import type { LibSchema, LinkSchema } from '@/config';
 import { getDefaultInitGeneratorOptions } from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { libGenerator } from '../libGenerator/libGenerator';
-import { normalizeLineEndings } from '../normalizeLineEndings/normalizeLineEndings';
 import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
 import { initGenerator } from '../initGenerator/initGenerator';
 import { join } from 'path';
 import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
-import { trimLib } from '../trimLib/trimLib';
 import {
     getCmakeLink,
     getSourceCmakeFile,
     updateCmakeFile,
 } from './updateCmakeFile';
 import * as devkit from '@nx/devkit';
+import { trimLib, normalizeLineEndings } from '@/util';
 
 describe('updateCmakeFile', () => {
     let tree: Tree;

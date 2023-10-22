@@ -1,4 +1,4 @@
-import type { Graph } from '@/config';
+import type { Graph } from '@/types';
 import type { RawProjectGraphDependency } from '@nx/devkit';
 import { DependencyType } from '@nx/devkit';
 import { transitiveReductionToGraph } from './transitiveReductionToGraph';

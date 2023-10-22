@@ -1,15 +1,13 @@
 import { getProjectRoot } from './getProjectRoot';
-import { CProjectType } from '@/config';
-import * as workspaceLayoutModule from '../getWorkspaceLayout/getWorkspaceLayout';
+import { CProjectType } from '@/types';
+import * as utilsModule from '@/util';
 
 describe('getProjectRoot', () => {
     beforeEach(() => {
-        jest.spyOn(workspaceLayoutModule, 'getWorkspaceLayout').mockReturnValue(
-            {
-                appsDir: 'apps',
-                libsDir: 'libs',
-            },
-        );
+        jest.spyOn(utilsModule, 'getWorkspaceLayout').mockReturnValue({
+            appsDir: 'apps',
+            libsDir: 'libs',
+        });
     });
 
     afterEach(() => {

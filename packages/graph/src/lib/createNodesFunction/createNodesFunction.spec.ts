@@ -1,7 +1,7 @@
 import type { CreateNodesContext, ProjectConfiguration } from '@nx/devkit';
-import type { C } from '@/config';
+import type { C } from '@/types';
 import { createNodesFunction } from './createNodesFunction';
-import { CProjectType } from '@/config';
+import { CProjectType } from '@/types';
 import * as utilsModule from '@/utils';
 
 describe('createNodesFunction', () => {

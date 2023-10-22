@@ -5,11 +5,11 @@ import { addCacheableTargets } from '../addCacheableTargets/addCacheableTargets'
 import { addCmakeNamedInput } from '../addCmakeNamedInput/addCmakeNamedInput';
 import { addCmakePlugin } from '../addCmakePlugin/addCmakePlugin';
 import { setWorkspaceLayout } from '../setWorkspaceLayout/setWorkspaceLayout';
-import { formatNxJson } from '../formatNxJson/formatNxJson';
 import { addClangFormatNamedInput } from '../addClangFormatNamedInput/addClangFormatNamedInput';
 import { addClangTidyNamedInput } from '../addClangTidyNamedInput/addClangTidyNamedInput';
 import { writeConfig } from '../writeConfig/writeConfig';
 import { writeGeneratorConfig } from '../writeGeneratorConfig/writeGeneratorConfig';
+import { formatNxJson } from '@/util';
 
 export const getUpdatedNxJson = (
     nxJson: NxJsonConfiguration,

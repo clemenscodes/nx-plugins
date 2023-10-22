@@ -9,7 +9,7 @@ import {
     PLUGIN_NAME,
     TEST_TARGET_NAME,
 } from '@/config';
-import { CProjectType } from '@/config';
+import { CProjectType } from '@/types';
 
 export const defaultConfiguration = {
     defaultConfiguration: 'debug',

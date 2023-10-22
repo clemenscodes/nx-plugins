@@ -7,7 +7,7 @@ import { filterFilesToProcess } from '../filterFilesToProcess/filterFilesToProce
 import { filterProjects } from '../filterProjects/filterProjects';
 import { getDependencies } from '../getDependencies/getDependencies';
 import { reduceDependenciesTransitively } from '../reduceDependenciesTransitively/reduceDependenciesTransitively';
-import { getWorkspaceLayout } from '@/utils';
+import { getWorkspaceLayout } from '@/util';
 
 export const createDependencies: CreateDependencies = (
     _options,

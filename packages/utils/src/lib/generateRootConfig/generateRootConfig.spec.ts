@@ -3,8 +3,8 @@ import type { InitGeneratorSchema } from '@/config';
 import { getDefaultInitGeneratorOptions } from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { generateRootConfig } from './generateRootConfig';
-import { normalizeLineEndings } from '../normalizeLineEndings/normalizeLineEndings';
 import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
+import { normalizeLineEndings } from '@/util';
 
 describe('generateRootConfig', () => {
     let tree: Tree;

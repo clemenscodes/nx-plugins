@@ -1,4 +1,4 @@
-import type { C } from '@/config';
+import type { C } from '@/types';
 import { getTestLib } from './getTestLib';
 
 describe('getTestLib', () => {

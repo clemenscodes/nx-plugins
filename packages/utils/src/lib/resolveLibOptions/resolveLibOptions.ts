@@ -1,12 +1,14 @@
 import type { LibGeneratorSchema, LibSchema } from '@/config';
 import { offsetFromRoot } from '@nx/devkit';
-import { getLibName } from '../getLibName/getLibName';
-import { getTestLib } from '../getTestLib/getTestLib';
-import { getTestName } from '../getTestName/getTestName';
-import { CProjectType } from '@/config';
+import { CProjectType } from '@/types';
 import { resolveOptions } from '../resolveOptions/resolveOptions';
 import { getProjectRoot } from '../getProjectRoot/getProjectRoot';
-import { snakeCaseToCamelCase } from '../snakeCaseToCamelCase/snakeCaseToCamelCase';
+import {
+    getLibName,
+    getTestName,
+    getTestLib,
+    snakeCaseToCamelCase,
+} from '@/util';
 
 export const resolveLibOptions = (options: LibGeneratorSchema): LibSchema => {
     const resolvedOptions = resolveOptions<LibGeneratorSchema, LibSchema>(

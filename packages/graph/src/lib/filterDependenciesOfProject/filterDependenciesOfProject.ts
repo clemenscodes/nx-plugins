@@ -1,5 +1,5 @@
 import type { FileData, RawProjectGraphDependency } from '@nx/devkit';
-import type { FilteredProject } from '@/config';
+import type { FilteredProject } from '@/types';
 import { workspaceRoot } from '@nx/devkit';
 import { filterGccDependencyOutput } from '../filterGccDependencyOutput/filterGccDependencyOutput';
 import { getDependenciesOfFile } from '../getDependenciesOfFile/getDependenciesOfFile';

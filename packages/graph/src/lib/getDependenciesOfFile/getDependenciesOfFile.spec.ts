@@ -1,6 +1,6 @@
 import type { RawProjectGraphDependency } from '@nx/devkit';
 import { getDependenciesOfFile } from './getDependenciesOfFile';
-import { CProjectType, FilteredProject } from '@/config';
+import { CProjectType, FilteredProject } from '@/types';
 import { DependencyType } from '@nx/devkit';
 
 describe('getDependenciesOfFile', () => {

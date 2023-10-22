@@ -1,4 +1,4 @@
-import { CProjectType } from '@/config';
+import { CProjectType } from '@/types';
 import { output } from '@nx/devkit';
 
 export const getProjectTypeFromConfigFileContent = (

@@ -1,10 +1,10 @@
 import type { GeneratorBaseOptions } from '@/config';
-import { getLanguageExtension } from '../getLanguageExtension/getLanguageExtension';
 import { getProjectRoot } from '../getProjectRoot/getProjectRoot';
-import { CProjectType, getCmakeC } from '@/config';
+import { getCmakeC } from '@/config';
+import { CProjectType } from '@/types';
 import { names, offsetFromRoot } from '@nx/devkit';
 import { getPluginConfig } from '../getPluginConfig/getPluginConfig';
-import { getWorkspaceLayout } from '../getWorkspaceLayout/getWorkspaceLayout';
+import { getLanguageExtension, getWorkspaceLayout } from '@/util';
 
 export const resolveOptions = <
     T extends GeneratorBaseOptions,

@@ -7,12 +7,11 @@ import type { Tree } from '@nx/devkit';
 import { getDefaultInitGeneratorOptions } from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
-import { normalizeLineEndings } from '../normalizeLineEndings/normalizeLineEndings';
 import { linkGenerator } from './linkGenerator';
 import { libGenerator } from '../libGenerator/libGenerator';
 import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
 import { initGenerator } from '../initGenerator/initGenerator';
-import { trimLib } from '../trimLib/trimLib';
+import { trimLib, normalizeLineEndings } from '@/util';
 import * as devkit from '@nx/devkit';
 
 describe('link generator', () => {

@@ -1,5 +1,5 @@
 import type { ProjectConfiguration } from '@nx/devkit';
-import { CProjectType } from '@/config';
+import { CProjectType } from '@/types';
 import { getProjectTypeFromConfig } from './getProjectTypeFromConfig';
 
 describe('getProjectTypeFromConfig', () => {

@@ -1,4 +1,4 @@
-import { CProjectType } from '@/config';
+import { CProjectType } from '@/types';
 import { getProjectTypeAndVariant } from './getProjectTypeAndVariant';
 import * as fs from 'fs';
 

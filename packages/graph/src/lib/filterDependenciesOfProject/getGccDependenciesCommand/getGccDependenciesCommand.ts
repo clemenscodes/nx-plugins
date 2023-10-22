@@ -1,4 +1,5 @@
-import { getGcc, type CTag } from '@/config';
+import type { CTag } from '@/types';
+import { getGcc } from '@/config';
 import { getCmockaInclude } from '../getCmockaInclude/getCmockaInclude';
 import { getGtestInclude } from '../getGtestInclude/getGtestInclude';
 import { getIncludeDirectoriesFlag } from '../getIncludeDirectoriesFlag/getIncludeDirectoriesFlag';

@@ -1,7 +1,6 @@
 import { CTEST, LINUX_CTEST, TestExecutorSchema } from '@/config';
 import { testBinaryWithCtest } from './testBinaryWithCtest';
 import { join } from 'path';
-import * as runCommandFromDirectoryModule from '../runCommandFromDirectory/runCommandFromDirectory';
 import * as fileModule from '@/file';
 import * as configModule from '@/config';
 import * as utilsModule from '@/util';
@@ -24,7 +23,7 @@ describe('buildProjectWithCMake', () => {
             outputOnFailure: true,
         };
         runCommandFromDirectoryMock = jest.spyOn(
-            runCommandFromDirectoryModule,
+            utilsModule,
             'runCommandFromDirectory',
         );
         jest.spyOn(fileModule, 'fileExists').mockReturnValue(true);

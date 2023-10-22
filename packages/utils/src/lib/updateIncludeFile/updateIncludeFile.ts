@@ -2,9 +2,8 @@ import type { Tree } from '@nx/devkit';
 import type { LinkSchema } from '@/config';
 import { names } from '@nx/devkit';
 import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
-import { trimLib } from '../trimLib/trimLib';
 import { writeFileWithTree } from '../writeFileWithTree/writeFileWithTree';
-import { trimTest } from '../trimTest/trimTest';
+import { trimLib, trimTest } from '@/util';
 
 export const getIncludeDirective = (project: string): string => {
     const includeDirective = `#include "${project}.h"`;

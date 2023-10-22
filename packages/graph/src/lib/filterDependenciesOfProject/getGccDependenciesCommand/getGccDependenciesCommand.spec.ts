@@ -1,4 +1,4 @@
-import type { CTag } from '@/config';
+import type { CTag } from '@/types';
 import { LINUX_GCC } from '@/config';
 import { getGccDependenciesCommand } from './getGccDependenciesCommand';
 import * as configModule from '@/config';

@@ -1,4 +1,4 @@
-import type { FilteredProject } from '@/config';
+import type { FilteredProject } from '@/types';
 import { normalizePath } from '@nx/devkit';
 
 export const getProjectFromFile = (

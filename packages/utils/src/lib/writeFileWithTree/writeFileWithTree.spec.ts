@@ -6,8 +6,8 @@ import {
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { writeFileWithTree } from './writeFileWithTree';
 import { libGenerator } from '../libGenerator/libGenerator';
-import * as devkit from '@nx/devkit';
 import { initGenerator } from '../initGenerator/initGenerator';
+import * as devkit from '@nx/devkit';
 
 describe('writeFileWithTree', () => {
     let tree: Tree;

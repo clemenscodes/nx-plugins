@@ -1,5 +1,4 @@
-import type { WorkspaceLayout } from '@/types';
-import type { C, CMakeC } from '..';
+import type { C, CMakeC, WorkspaceLayout } from '@/types';
 
 export type InitGeneratorSchema = {
     language: C;

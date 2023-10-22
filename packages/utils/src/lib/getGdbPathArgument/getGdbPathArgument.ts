@@ -1,5 +1,5 @@
+import { trimLib } from '@/util';
 import { join } from 'path';
-import { trimLib } from '../trimLib/trimLib';
 
 export const getGdbPathArgument = (
     workspaceRoot: string,

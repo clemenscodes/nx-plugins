@@ -1,8 +1,8 @@
 import type { Tree } from '@nx/devkit';
 import { generateFiles } from '@nx/devkit';
 import { join } from 'path';
-import { getWorkspaceLayout } from '../getWorkspaceLayout/getWorkspaceLayout';
 import { LibSchema } from '@/config';
+import { getWorkspaceLayout } from '@/util';
 
 export const generateLibTestFiles = (
     tree: Tree,

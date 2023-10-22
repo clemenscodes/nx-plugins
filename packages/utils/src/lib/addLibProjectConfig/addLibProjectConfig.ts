@@ -1,6 +1,7 @@
 import type { Tree } from '@nx/devkit';
 import { addProjectConfiguration } from '@nx/devkit';
-import { CProjectType, LibSchema } from '@/config';
+import { LibSchema } from '@/config';
+import { CProjectType } from '@/types';
 import { getProjectTargets } from '../getProjectTargets/getProjectTargets';
 import { addProjectRootToSubDirectories } from '../addProjectRootToSubDirectories/addProjectRootToSubDirectories';
 

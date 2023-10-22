@@ -3,11 +3,11 @@ import type {
     BinGeneratorSchema,
     BinSchema,
 } from '@/config';
-import { CProjectType } from '@/config';
+import { CProjectType } from '@/types';
 import { offsetFromRoot } from '@nx/devkit';
-import { getLibName } from '../getLibName/getLibName';
 import { getProjectRoot } from '../getProjectRoot/getProjectRoot';
 import { resolveOptions } from '../resolveOptions/resolveOptions';
+import { getLibName } from '@/util';
 
 export const resolveBinOptions = (options: BinGeneratorSchema): BinSchema => {
     const resolvedOptions = resolveOptions<BinGeneratorSchema, BinSchema>(

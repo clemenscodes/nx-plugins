@@ -1,4 +1,4 @@
-import { CProjectType } from '@/config';
+import { CProjectType } from '@/types';
 
 export const getProjectName = (type: CProjectType, root: string): string => {
     const projectNameSplit = root.split('/');

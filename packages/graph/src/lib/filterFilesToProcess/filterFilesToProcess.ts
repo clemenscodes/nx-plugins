@@ -1,5 +1,5 @@
 import type { ProjectFileMap } from '@nx/devkit';
-import type { FilteredProject } from '@/config';
+import type { FilteredProject } from '@/types';
 
 export const filterFilesToProcess = (
     filesToProcess: ProjectFileMap,

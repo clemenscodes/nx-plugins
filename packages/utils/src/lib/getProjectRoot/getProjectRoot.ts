@@ -1,5 +1,5 @@
-import { CProjectType } from '@/config';
-import { getWorkspaceLayout } from '../getWorkspaceLayout/getWorkspaceLayout';
+import { CProjectType } from '@/types';
+import { getWorkspaceLayout } from '@/util';
 
 export const getProjectRoot = (
     projectName: string,

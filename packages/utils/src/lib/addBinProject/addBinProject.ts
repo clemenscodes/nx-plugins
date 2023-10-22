@@ -1,7 +1,7 @@
 import type { Tree } from '@nx/devkit';
 import type { BinSchema } from '@/config';
 import { addProjectConfiguration } from '@nx/devkit';
-import { CProjectType } from '@/config';
+import { CProjectType } from '@/types';
 import { getProjectTargets } from '../getProjectTargets/getProjectTargets';
 import { addProjectRootToSubDirectories } from '../addProjectRootToSubDirectories/addProjectRootToSubDirectories';
 

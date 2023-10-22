@@ -1,5 +1,5 @@
 import type { ProjectFileMap } from '@nx/devkit';
-import { CProjectType, type FilteredProject } from '@/config';
+import { CProjectType, type FilteredProject } from '@/types';
 import { filterFilesToProcess } from './filterFilesToProcess';
 
 describe('filterFilesToProcess', () => {
