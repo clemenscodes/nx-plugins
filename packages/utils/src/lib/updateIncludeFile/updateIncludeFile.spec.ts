@@ -4,8 +4,8 @@ import { getDefaultInitGeneratorOptions } from '@/config';
 import { updateIncludeFile } from './updateIncludeFile';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { libGenerator } from '../libGenerator/libGenerator';
-import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
 import { initGenerator } from '../initGenerator/initGenerator';
+import { readFileWithTree } from '@/util';
 import * as devkit from '@nx/devkit';
 
 describe('updateIncludeFile', () => {

@@ -45,7 +45,5 @@ export { getProjectTargets } from './lib/getProjectTargets/getProjectTargets';
 export { getProjectTypeAndVariant } from './lib/getProjectTypeAndVariant/getProjectTypeAndVariant';
 export { getProjectTypeFromConfig } from './lib/getProjectTypeFromConfig/getProjectTypeFromConfig';
 export { getProjectTypeWithTree } from './lib/getProjectTypeWithTree/getProjectTypeWithTree';
-export { readFileWithTree } from './lib/readFileWithTree/readFileWithTree';
 export { resolveOptions } from './lib/resolveOptions/resolveOptions';
-export { writeFileWithTree } from './lib/writeFileWithTree/writeFileWithTree';
 export { getPluginConfig } from './lib/getPluginConfig/getPluginConfig';

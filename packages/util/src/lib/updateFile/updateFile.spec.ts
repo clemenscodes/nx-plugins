@@ -1,30 +1,21 @@
 import type { Tree } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import { initGenerator } from '../initGenerator/initGenerator';
-import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
 import { updateFile } from './updateFileFile';
-import {
-    InitGeneratorSchema,
-    PROJECT_FILE,
-    getDefaultInitGeneratorOptions,
-} from '@/config';
-import * as devkit from '@nx/devkit';
+import { writeFileWithTree } from '../writeFileWithTree/writeFileWithTree';
 
 describe('updateFile', () => {
     let tree: Tree;
-    let initOptions: InitGeneratorSchema;
     let oldContent: string;
     let file: string;
     let content: string;
     let expected: string;
 
     beforeEach(async () => {
-        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
         tree = createTreeWithEmptyWorkspace();
-        file = PROJECT_FILE;
-        initOptions = getDefaultInitGeneratorOptions();
-        await initGenerator(tree, initOptions);
-        oldContent = readFileWithTree(tree, file);
+        file = 'some_file.txt';
+        content = 'some new content\n';
+        oldContent = writeFileWithTree(tree, file, content);
+        expected = oldContent + '\n' + content;
     });
 
     it('should update file', () => {

@@ -7,7 +7,7 @@ import {
 import type { Tree } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { generateClangPreset } from './generateClangPreset';
-import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
+import { readFileWithTree } from '@/util';
 
 describe('generateClangPreset', () => {
     let tree: Tree;

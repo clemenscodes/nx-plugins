@@ -3,7 +3,6 @@ import type { LibSchema, LinkSchema } from '@/config';
 import { getDefaultInitGeneratorOptions } from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { libGenerator } from '../libGenerator/libGenerator';
-import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
 import { initGenerator } from '../initGenerator/initGenerator';
 import { join } from 'path';
 import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
@@ -13,7 +12,7 @@ import {
     updateCmakeFile,
 } from './updateCmakeFile';
 import * as devkit from '@nx/devkit';
-import { trimLib, normalizeLineEndings } from '@/util';
+import { trimLib, normalizeLineEndings, readFileWithTree } from '@/util';
 
 describe('updateCmakeFile', () => {
     let tree: Tree;

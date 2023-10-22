@@ -3,7 +3,7 @@ import type { InitSchema } from '@/config';
 import { getDefaultInitGeneratorOptions } from '@/config';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { generateCmakeConfigFiles } from './generateCmakeConfigFiles';
-import { readFileWithTree } from '../readFileWithTree/readFileWithTree';
+import { readFileWithTree } from '@/util';
 
 describe('generateCmakeConfigFiles', () => {
     let tree: Tree;

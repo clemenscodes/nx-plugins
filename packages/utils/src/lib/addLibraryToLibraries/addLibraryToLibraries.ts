@@ -1,8 +1,8 @@
 import type { Tree } from '@nx/devkit';
 import { join } from 'path';
 import { getPluginConfig } from '../getPluginConfig/getPluginConfig';
-import { updateFile } from '../updateFile/updateFileFile';
 import { logger } from '@/log';
+import { updateFile } from '@/util';
 
 export const addLibraryToLibraries = (tree: Tree, libraryName: string) => {
     const { cmakeConfigDir } = getPluginConfig();

@@ -1,3 +1,6 @@
+export { readFileWithTree } from './lib/readFileWithTree/readFileWithTree';
+export { updateFile } from './lib/updateFile/updateFileFile';
+export { writeFileWithTree } from './lib/writeFileWithTree/writeFileWithTree';
 export { getWorkspaceLayout } from './lib/getWorkspaceLayout/getWorkspaceLayout';
 export { runCommandFromDirectory } from './lib/runCommandFromDirectory/runCommandFromDirectory';
 export { snakeCaseToCamelCase } from './lib/snakeCaseToCamelCase/snakeCaseToCamelCase';
