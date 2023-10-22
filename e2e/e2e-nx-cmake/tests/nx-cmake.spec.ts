@@ -20,7 +20,7 @@ describe(plugin, () => {
         execSync(cmd, {
             cwd: projectDirectory,
             stdio: 'inherit',
-            env: { ...process.env },
+            env: { ...process.env, NX_DAEMON: 'false' },
         });
     };
 
