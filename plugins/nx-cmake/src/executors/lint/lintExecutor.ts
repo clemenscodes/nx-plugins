@@ -1,6 +1,6 @@
 import { logger } from '@/log';
 import { extractRootsFromExecutorContext } from '@/util';
-import { lintFilesWithClangTidy } from '../../utils/lintFilesWithClangTidy/lintFilesWithClangTidy';
+import { lintFilesWithClangTidy } from './lintFilesWithClangTidy/lintFilesWithClangTidy';
 import { Executor } from '@nx/devkit';
 import { LintExecutorSchema } from '../executor';
 

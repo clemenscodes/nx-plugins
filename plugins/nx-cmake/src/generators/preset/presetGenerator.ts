@@ -1,5 +1,5 @@
 import type { Tree } from '@nx/devkit';
-import { generateReadMe } from '../../utils/generateReadMe/generateReadMe';
+import { generateReadMe } from '../init/generateReadMe/generateReadMe';
 import {
     addDependenciesToPackageJson,
     installPackagesTask,

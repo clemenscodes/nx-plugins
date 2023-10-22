@@ -1,8 +1,8 @@
 import { logger } from '@/log';
 import { extractRootsFromExecutorContext } from '@/util';
-import { testBinaryWithCtest } from '../../utils/testBinaryWithCtest/testBinaryWithCtest';
 import { Executor } from '@nx/devkit';
 import { TestExecutorSchema } from '../executor';
+import { testBinaryWithCtest } from './testBinaryWithCtest/testBinaryWithCtest';
 
 export const testExecutor: Executor<TestExecutorSchema> = async function* (
     options,

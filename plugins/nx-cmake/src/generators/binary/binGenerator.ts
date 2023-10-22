@@ -1,11 +1,11 @@
 import type { Tree } from '@nx/devkit';
 import { formatFiles } from '@nx/devkit';
-import { addBinProject } from '../../utils/addBinProject/addBinProject';
-import { generateBinFiles } from '../../utils/generateBinFiles/generateBinFiles';
-import { resolveBinOptions } from '../../utils/resolveBinOptions/resolveBinOptions';
 import libGenerator from '../library/libGenerator';
 import linkGenerator from '../link/linkGenerator';
 import { BinGeneratorSchema } from '../generator';
+import { addBinProject } from './addBinProject/addBinProject';
+import { generateBinFiles } from './generateBinFiles/generateBinFiles';
+import { resolveBinOptions } from './resolveBinOptions/resolveBinOptions';
 
 export async function binGenerator(tree: Tree, options: BinGeneratorSchema) {
     const resolvedOptions = resolveBinOptions(options);

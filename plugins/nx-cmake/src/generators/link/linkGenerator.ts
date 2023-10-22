@@ -1,9 +1,9 @@
 import type { Tree } from '@nx/devkit';
-import { resolveLinkOptions } from '../../utils/resolveLinkOptions/resolveLinkOptions';
-import { updateCmakeConfigInFile } from '../../utils/updateCmakeConfigInFile/updateCmakeConfigInFile';
-import { updateCmakeFile } from '../../utils/updateCmakeFile/updateCmakeFile';
-import { updateIncludeFile } from '../../utils/updateIncludeFile/updateIncludeFile';
+import { updateCmakeConfigInFile } from './updateCmakeConfigInFile/updateCmakeConfigInFile';
+import { updateCmakeFile } from './updateCmakeFile/updateCmakeFile';
 import { LinkGeneratorSchema } from '../generator';
+import { resolveLinkOptions } from './resolveLinkOptions/resolveLinkOptions';
+import { updateIncludeFile } from './updateIncludeFile/updateIncludeFile';
 
 export function linkGenerator(tree: Tree, options: LinkGeneratorSchema) {
     const resolvedOptions = resolveLinkOptions(tree, options);
