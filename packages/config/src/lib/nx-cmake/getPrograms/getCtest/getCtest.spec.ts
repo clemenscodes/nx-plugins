@@ -1,13 +1,12 @@
-import { getCtest } from './getCtest';
-import * as fileModule from '@/file';
-import * as isWindowsModule from '../../../isWindows/isWindows';
-import * as isDarwinModule from '../../../isDarwin/isDarwin';
 import {
     LINUX_CTEST,
     DARWIN_CTEST,
     WINDOWS_CTEST,
     CTEST,
 } from '../getPrograms';
+import { getCtest } from './getCtest';
+import * as fileModule from '@/file';
+import * as utilsModule from '@/util';
 
 describe('getCtest', () => {
     let isWindowsMock: jest.SpyInstance;
@@ -16,10 +15,10 @@ describe('getCtest', () => {
 
     beforeEach(() => {
         isWindowsMock = jest
-            .spyOn(isWindowsModule, 'isWindows')
+            .spyOn(utilsModule, 'isWindows')
             .mockReturnValue(false);
         isDarwinMock = jest
-            .spyOn(isDarwinModule, 'isDarwin')
+            .spyOn(utilsModule, 'isDarwin')
             .mockReturnValue(false);
         fileExistsMock = jest.spyOn(fileModule, 'fileExists');
     });

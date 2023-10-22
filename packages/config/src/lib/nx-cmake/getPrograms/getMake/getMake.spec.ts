@@ -1,8 +1,7 @@
 import { getMake } from './getMake';
-import * as fileModule from '@/file';
-import * as isWindowsModule from '../../../isWindows/isWindows';
-import * as isDarwinModule from '../../../isDarwin/isDarwin';
 import { LINUX_MAKE, DARWIN_MAKE, WINDOWS_MAKE, MAKE } from '../getPrograms';
+import * as fileModule from '@/file';
+import * as utilsModule from '@/util';
 
 describe('getMake', () => {
     let isWindowsMock: jest.SpyInstance;
@@ -11,10 +10,10 @@ describe('getMake', () => {
 
     beforeEach(() => {
         isWindowsMock = jest
-            .spyOn(isWindowsModule, 'isWindows')
+            .spyOn(utilsModule, 'isWindows')
             .mockReturnValue(false);
         isDarwinMock = jest
-            .spyOn(isDarwinModule, 'isDarwin')
+            .spyOn(utilsModule, 'isDarwin')
             .mockReturnValue(false);
         fileExistsMock = jest.spyOn(fileModule, 'fileExists');
     });

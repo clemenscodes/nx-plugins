@@ -1,10 +1,11 @@
 import { CTEST, LINUX_CTEST, TestExecutorSchema } from '@/config';
 import { testBinaryWithCtest } from './testBinaryWithCtest';
 import { join } from 'path';
-import * as fileModule from '@/file';
 import * as checkCommandExistsModule from '../checkCommandExists/checkCommandExists';
-import * as configModule from '@/config';
 import * as runCommandFromDirectoryModule from '../runCommandFromDirectory/runCommandFromDirectory';
+import * as fileModule from '@/file';
+import * as configModule from '@/config';
+import * as utilsModule from '@/util';
 
 describe('buildProjectWithCMake', () => {
     let workspaceRoot: string;
@@ -33,10 +34,10 @@ describe('buildProjectWithCMake', () => {
             .spyOn(checkCommandExistsModule, 'checkCommandExists')
             .mockImplementation(jest.fn());
         isWindowsMock = jest
-            .spyOn(configModule, 'isWindows')
+            .spyOn(utilsModule, 'isWindows')
             .mockReturnValue(false);
         isDarwinMock = jest
-            .spyOn(configModule, 'isDarwin')
+            .spyOn(utilsModule, 'isDarwin')
             .mockReturnValue(false);
     });
 

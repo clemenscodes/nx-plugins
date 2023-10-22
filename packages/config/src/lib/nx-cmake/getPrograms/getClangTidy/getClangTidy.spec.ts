@@ -1,13 +1,12 @@
-import { getClangTidy } from './getClangTidy';
-import * as fileModule from '@/file';
-import * as isWindowsModule from '../../../isWindows/isWindows';
-import * as isDarwinModule from '../../../isDarwin/isDarwin';
 import {
     LINUX_CLANG_TIDY,
     DARWIN_CLANG_TIDY,
     WINDOWS_CLANG_TIDY,
     CLANG_TIDY,
 } from '../getPrograms';
+import { getClangTidy } from './getClangTidy';
+import * as fileModule from '@/file';
+import * as utilsModule from '@/util';
 
 describe('getClangTidy', () => {
     let isWindowsMock: jest.SpyInstance;
@@ -16,10 +15,10 @@ describe('getClangTidy', () => {
 
     beforeEach(() => {
         isWindowsMock = jest
-            .spyOn(isWindowsModule, 'isWindows')
+            .spyOn(utilsModule, 'isWindows')
             .mockReturnValue(false);
         isDarwinMock = jest
-            .spyOn(isDarwinModule, 'isDarwin')
+            .spyOn(utilsModule, 'isDarwin')
             .mockReturnValue(false);
         fileExistsMock = jest.spyOn(fileModule, 'fileExists');
     });

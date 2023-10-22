@@ -23,6 +23,7 @@
                     {
                         "ignoredDependencies": [
                             "@/config",
+                            "@/util",
                             "@/file",
                             "@/log",
                             "@/types"

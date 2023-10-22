@@ -99,6 +99,15 @@
         ]
     },
     "generators": {
+        "@nx/js": {
+            "library": {
+                "projectNameAndRootFormat": "derived",
+                "minimal": true,
+                "simpleName": true,
+                "bundler": "tsc",
+                "unitTestRunner": "jest"
+            }
+        },
         "nx-cmake": {
             "binary": {
                 "language": "C",

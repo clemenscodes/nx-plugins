@@ -7,8 +7,7 @@ import {
     WINDOWS_GCC,
 } from '../getPrograms';
 import * as fileExistsModule from '@/file';
-import * as isDarwinModule from '../../../isDarwin/isDarwin';
-import * as isWindowsModule from '../../../isWindows/isWindows';
+import * as utilsModule from '@/util';
 
 describe('getProgram', () => {
     let program: Program;
@@ -20,10 +19,10 @@ describe('getProgram', () => {
     beforeEach(() => {
         program = GCC;
         isDarwinMock = jest
-            .spyOn(isDarwinModule, 'isDarwin')
+            .spyOn(utilsModule, 'isDarwin')
             .mockReturnValue(false);
         isWindowsMock = jest
-            .spyOn(isWindowsModule, 'isWindows')
+            .spyOn(utilsModule, 'isWindows')
             .mockReturnValue(false);
         fileExistsMock = jest
             .spyOn(fileExistsModule, 'fileExists')

@@ -2,6 +2,7 @@ import type { CTag } from '@/config';
 import { LINUX_GCC } from '@/config';
 import { getGccDependenciesCommand } from './getGccDependenciesCommand';
 import * as configModule from '@/config';
+import * as utilsModule from '@/util';
 import * as getIncludeDirectoriesFlagModule from '../getIncludeDirectoriesFlag/getIncludeDirectoriesFlag';
 
 describe('getGccDependenciesCommand', () => {
@@ -17,8 +18,8 @@ describe('getGccDependenciesCommand', () => {
         tag = 'c';
         libsDir = 'libs';
         getIncludeDirectoriesFlagReturnMock = '-I libs/someProject/include';
-        jest.spyOn(configModule, 'isWindows').mockReturnValue(false);
-        jest.spyOn(configModule, 'isDarwin').mockReturnValue(false);
+        jest.spyOn(utilsModule, 'isWindows').mockReturnValue(false);
+        jest.spyOn(utilsModule, 'isDarwin').mockReturnValue(false);
         jest.spyOn(configModule, 'getGcc').mockReturnValue(LINUX_GCC[0]);
         jest.spyOn(
             getIncludeDirectoriesFlagModule,

@@ -1,8 +1,7 @@
 import { fileExists } from '@/file';
 import { assertIsValidProgramName } from '../assertIsValidProgramName/assertIsValidProgramName';
 import { Program, PROGRAMS } from '../getPrograms';
-import { isDarwin } from '../../../isDarwin/isDarwin';
-import { isWindows } from '../../../isWindows/isWindows';
+import { isDarwin, isWindows } from '@/util';
 
 export const getFirstMatch = (
     program: Program,

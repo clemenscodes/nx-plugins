@@ -5,8 +5,9 @@ import {
     WINDOWS_GCC,
     WINDOWS_MAKE,
 } from '@/config';
-import * as configModule from '@/config';
 import { join } from 'path';
+import * as configModule from '@/config';
+import * as utilsModule from '@/util';
 
 describe('getCmakeCommandArguments', () => {
     let workspaceRoot: string;
@@ -26,7 +27,7 @@ describe('getCmakeCommandArguments', () => {
             release: false,
         };
         isWindowsMock = jest
-            .spyOn(configModule, 'isWindows')
+            .spyOn(utilsModule, 'isWindows')
             .mockReturnValue(false);
         getGccMock = jest
             .spyOn(configModule, 'getGcc')

@@ -1,10 +1,11 @@
 import { DebugExecutorSchema, GDB, LINUX_GDB } from '@/config';
 import { debugBinaryWithGdb } from './debugBinaryWithGdb';
 import { join } from 'path';
-import * as fileModule from '@/file';
-import * as configModule from '@/config';
 import * as runCommandModule from '../runCommand/runCommand';
 import * as checkCommandExistsModule from './../checkCommandExists/checkCommandExists';
+import * as fileModule from '@/file';
+import * as configModule from '@/config';
+import * as utilsModule from '@/util';
 
 describe('debugBinaryWithGdb', () => {
     let workspaceRoot: string;
@@ -33,10 +34,10 @@ describe('debugBinaryWithGdb', () => {
             .spyOn(checkCommandExistsModule, 'checkCommandExists')
             .mockImplementation(jest.fn());
         isWindowsMock = jest
-            .spyOn(configModule, 'isWindows')
+            .spyOn(utilsModule, 'isWindows')
             .mockReturnValue(false);
         isDarwinMock = jest
-            .spyOn(configModule, 'isDarwin')
+            .spyOn(utilsModule, 'isDarwin')
             .mockReturnValue(false);
     });
 

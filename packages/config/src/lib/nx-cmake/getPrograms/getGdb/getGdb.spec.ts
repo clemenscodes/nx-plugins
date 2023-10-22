@@ -1,8 +1,7 @@
 import { getGdb } from './getGdb';
-import * as fileModule from '@/file';
-import * as isWindowsModule from '../../../isWindows/isWindows';
-import * as isDarwinModule from '../../../isDarwin/isDarwin';
 import { LINUX_GDB, DARWIN_GDB, WINDOWS_GDB, GDB } from '../getPrograms';
+import * as fileModule from '@/file';
+import * as utilsModule from '@/util';
 
 describe('getGdb', () => {
     let isWindowsMock: jest.SpyInstance;
@@ -11,10 +10,10 @@ describe('getGdb', () => {
 
     beforeEach(() => {
         isWindowsMock = jest
-            .spyOn(isWindowsModule, 'isWindows')
+            .spyOn(utilsModule, 'isWindows')
             .mockReturnValue(false);
         isDarwinMock = jest
-            .spyOn(isDarwinModule, 'isDarwin')
+            .spyOn(utilsModule, 'isDarwin')
             .mockReturnValue(false);
         fileExistsMock = jest.spyOn(fileModule, 'fileExists');
     });

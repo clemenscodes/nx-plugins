@@ -4,11 +4,12 @@ import {
     CLANG_FORMAT_CONFIG_FILE,
 } from '@/config';
 import { formatFilesWithClangFormat } from './formatFilesWithClangFormat';
-import * as fileModule from '@/file';
 import * as getFormatArgumentsModule from '../getFormatArguments/getFormatArguments';
-import * as configModule from '@/config';
 import * as checkCommandExistsModule from '../checkCommandExists/checkCommandExists';
 import * as executeCommandForFilesModule from '../executeCommandForFiles/executeCommandForFiles';
+import * as fileModule from '@/file';
+import * as configModule from '@/config';
+import * as utilsModule from '@/util';
 
 describe('formatFilesWithClangFormat', () => {
     let workspaceRoot: string;
@@ -44,10 +45,10 @@ describe('formatFilesWithClangFormat', () => {
             'executeCommandForFiles',
         );
         isWindowsMock = jest
-            .spyOn(configModule, 'isWindows')
+            .spyOn(utilsModule, 'isWindows')
             .mockReturnValue(false);
         isDarwinMock = jest
-            .spyOn(configModule, 'isDarwin')
+            .spyOn(utilsModule, 'isDarwin')
             .mockReturnValue(false);
         jest.spyOn(fileModule, 'fileExists').mockReturnValue(true);
         jest.spyOn(configModule, 'getClangFormat').mockReturnValue(

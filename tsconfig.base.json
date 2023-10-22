@@ -24,6 +24,7 @@
             "@/mocks": ["packages/mocks/src/index.ts"],
             "@/testing": ["packages/testing/src/index.ts"],
             "@/types": ["packages/types/src/index.ts"],
+            "@/util": ["packages/util/src/index.ts"],
             "@/utils": ["packages/utils/src/index.ts"],
             "nx-cmake": ["plugins/nx-cmake/src/index.ts"]
         }

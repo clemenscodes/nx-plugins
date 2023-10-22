@@ -1,10 +1,11 @@
 import { lintFilesWithClangTidy } from './lintFilesWithClangTidy';
 import { CLANG_TIDY, LINUX_GCC, LintExecutorSchema } from '@/config';
-import * as fileModule from '@/file';
 import * as getLintArgumentsModule from '../getLintArguments/getLintArguments';
-import * as configModule from '@/config';
 import * as runCommandModule from '../runCommand/runCommand';
 import * as checkCommandExistsModule from '../checkCommandExists/checkCommandExists';
+import * as fileModule from '@/file';
+import * as configModule from '@/config';
+import * as utilsModule from '@/util';
 
 describe('lintFilesWithClangTidy', () => {
     let workspaceRoot: string;
@@ -36,10 +37,10 @@ describe('lintFilesWithClangTidy', () => {
             .spyOn(checkCommandExistsModule, 'checkCommandExists')
             .mockImplementation(jest.fn());
         isWindowsMock = jest
-            .spyOn(configModule, 'isWindows')
+            .spyOn(utilsModule, 'isWindows')
             .mockReturnValue(false);
         isDarwinMock = jest
-            .spyOn(configModule, 'isDarwin')
+            .spyOn(utilsModule, 'isDarwin')
             .mockReturnValue(false);
         jest.spyOn(fileModule, 'fileExists').mockReturnValue(true);
         clangTidyMock = LINUX_GCC[0];

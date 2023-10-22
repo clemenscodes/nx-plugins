@@ -1,4 +1,4 @@
-import { isWindows } from '@/config';
+import { isWindows } from '@/util';
 import { executeCommand } from '../executeCommand/executeCommand';
 
 const checkCommandExistsWindows = (command: string): boolean => {

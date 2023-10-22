@@ -1,8 +1,7 @@
 import { getGcc } from './getGcc';
 import { LINUX_GCC, DARWIN_GCC, WINDOWS_GCC, GCC } from '../getPrograms';
 import * as fileModule from '@/file';
-import * as isWindowsModule from '../../../isWindows/isWindows';
-import * as isDarwinModule from '../../../isDarwin/isDarwin';
+import * as utilsModule from '@/util';
 
 describe('getGcc', () => {
     let isWindowsMock: jest.SpyInstance;
@@ -11,10 +10,10 @@ describe('getGcc', () => {
 
     beforeEach(() => {
         isWindowsMock = jest
-            .spyOn(isWindowsModule, 'isWindows')
+            .spyOn(utilsModule, 'isWindows')
             .mockReturnValue(false);
         isDarwinMock = jest
-            .spyOn(isDarwinModule, 'isDarwin')
+            .spyOn(utilsModule, 'isDarwin')
             .mockReturnValue(false);
         fileExistsMock = jest.spyOn(fileModule, 'fileExists');
     });

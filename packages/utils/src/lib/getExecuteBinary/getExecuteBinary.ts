@@ -1,5 +1,6 @@
-import { ExecuteExecutorSchema, isWindows } from '@/config';
+import { ExecuteExecutorSchema } from '@/config';
 import { fileExists } from '@/file';
+import { isWindows } from '@/util';
 import { join } from 'path';
 
 export const getExecuteBinary = (

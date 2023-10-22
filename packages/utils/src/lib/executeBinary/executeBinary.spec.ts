@@ -3,7 +3,7 @@ import { join } from 'path';
 import { ExecuteExecutorSchema } from '@/config';
 import * as fileModule from '@/file';
 import * as runCommandModule from '../runCommand/runCommand';
-import * as configModule from '@/config';
+import * as utilsModule from '@/util';
 
 describe('executeBinary', () => {
     let workspaceRoot: string;
@@ -25,7 +25,7 @@ describe('executeBinary', () => {
 
         runCommandMock = jest.spyOn(runCommandModule, 'runCommand');
         isWindowsMock = jest
-            .spyOn(configModule, 'isWindows')
+            .spyOn(utilsModule, 'isWindows')
             .mockReturnValue(false);
         fileExistsMock = jest
             .spyOn(fileModule, 'fileExists')

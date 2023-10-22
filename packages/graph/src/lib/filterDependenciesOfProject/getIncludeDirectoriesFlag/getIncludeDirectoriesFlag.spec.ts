@@ -1,6 +1,6 @@
 import { getIncludeDirectoriesFlag } from './getIncludeDirectoriesFlag';
 import * as fileModule from '@/file';
-import * as configModule from '@/config';
+import * as utilsModule from '@/util';
 
 describe('getIncludeDirectoriesFlag', () => {
     let getIncludeDirectoriesMock: jest.SpyInstance;
@@ -11,8 +11,8 @@ describe('getIncludeDirectoriesFlag', () => {
         getIncludeDirectoriesMock = jest
             .spyOn(fileModule, 'getIncludeDirectories')
             .mockReturnValue(mockIncludeDirectories);
-        jest.spyOn(configModule, 'isWindows').mockReturnValue(false);
-        jest.spyOn(configModule, 'isDarwin').mockReturnValue(false);
+        jest.spyOn(utilsModule, 'isWindows').mockReturnValue(false);
+        jest.spyOn(utilsModule, 'isDarwin').mockReturnValue(false);
     });
 
     afterEach(() => {
