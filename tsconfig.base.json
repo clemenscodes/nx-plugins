@@ -19,6 +19,7 @@
             "@/file": ["packages/file/src/index.ts"],
             "@/graph": ["packages/graph/src/index.ts"],
             "@/log": ["packages/log/src/index.ts"],
+            "@/testing": ["packages/testing/src/index.ts"],
             "@/utils": ["packages/utils/src/index.ts"],
             "nx-cmake": ["plugins/nx-cmake/src/index.ts"]
         }
