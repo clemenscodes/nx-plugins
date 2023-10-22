@@ -2,8 +2,8 @@ import type { Tree } from '@nx/devkit';
 import { addLibraryToLibraries } from './addLibraryToLibraries';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import * as devkit from '@nx/devkit';
-import { getDefaultInitGeneratorOptions } from '../../config';
 import initGenerator from '../../generators/init/initGenerator';
+import { getDefaultInitGeneratorOptions } from '../../generators/init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 
 describe('addLibraryToLibraries', () => {
     let tree: Tree;

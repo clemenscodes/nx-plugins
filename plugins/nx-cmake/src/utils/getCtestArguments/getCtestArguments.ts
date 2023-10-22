@@ -1,4 +1,4 @@
-import { TestExecutorSchema } from '../../config';
+import { TestExecutorSchema } from '../../executors/executor';
 import { getCtestConfigArgument } from '../getCtestConfigArgument/getCtestConfigArgument';
 import { getOutputOnFailureArgument } from '../getOutputOnFailureArgument/getOutputOnFailureArgument';
 

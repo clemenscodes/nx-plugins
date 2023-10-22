@@ -2,8 +2,9 @@ import { debugBinaryWithGdb } from './debugBinaryWithGdb';
 import { join } from 'path';
 import * as fileModule from '@/file';
 import * as utilsModule from '@/util';
-import { DebugExecutorSchema, LINUX_GDB, GDB } from '../../config';
+import { LINUX_GDB, GDB } from '../../config';
 import * as getGdbModule from '../../config/getPrograms/getGdb/getGdb';
+import { DebugExecutorSchema } from '../../executors/executor';
 
 describe('debugBinaryWithGdb', () => {
     let workspaceRoot: string;

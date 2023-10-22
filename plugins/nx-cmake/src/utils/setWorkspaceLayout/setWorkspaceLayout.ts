@@ -1,5 +1,5 @@
 import type { NxJsonConfiguration } from '@nx/devkit';
-import { InitGeneratorSchema } from '../../config';
+import { InitGeneratorSchema } from '../../generators/generator';
 
 export const setWorkspaceLayout = (
     nxJson: NxJsonConfiguration,

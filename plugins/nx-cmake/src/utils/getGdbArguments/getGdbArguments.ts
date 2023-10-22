@@ -1,4 +1,4 @@
-import { DebugExecutorSchema } from '../../config';
+import { DebugExecutorSchema } from '../../executors/executor';
 import { getGdbPathArgument } from '../getGdbPathArgument/getGdbPathArgument';
 
 export const getGdbArguments = (

@@ -1,4 +1,4 @@
-import { CompileExecutorSchema } from '../../config';
+import { CompileExecutorSchema } from '../../executors/executor';
 import { getCmakeBuildConfigArgument } from '../getCmakeBuildConfigArgument/getCmakeBuildConfigArgument';
 import { getCmakeBuildPathArgument } from '../getCmakeBuildPathArgument/getCmakeBuildPathArgument';
 

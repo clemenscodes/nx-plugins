@@ -1,4 +1,5 @@
-import { CompileExecutorSchema, CMAKE, getCmake } from '../../config';
+import { CMAKE, getCmake } from '../../config';
+import { CompileExecutorSchema } from '../../executors/executor';
 import { getCmakeBuildCommandArguments } from '../getCmakeBuildCommandArguments/getCmakeBuildCommandArguments';
 import { runCommand, checkCommandExists } from '@/util';
 

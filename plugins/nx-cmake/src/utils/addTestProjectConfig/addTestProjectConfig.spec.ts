@@ -4,12 +4,9 @@ import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { addTestProjectConfig } from './addTestProjectConfig';
 import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
 import * as devkit from '@nx/devkit';
-import {
-    LibGeneratorSchema,
-    LibSchema,
-    getDefaultInitGeneratorOptions,
-} from '../../config';
 import initGenerator from '../../generators/init/initGenerator';
+import { LibGeneratorSchema, LibSchema } from '../../generators/generator';
+import { getDefaultInitGeneratorOptions } from '../../generators/init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 
 describe('addTestProjectConfig', () => {
     let tree: Tree;

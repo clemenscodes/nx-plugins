@@ -1,7 +1,8 @@
 import { join } from 'path';
 import { logger } from '@/log';
 import { isWindows } from '@/util';
-import { CmakeExecutorSchema, getGcc, getMake } from '../../config';
+import { getGcc, getMake } from '../../config';
+import { CmakeExecutorSchema } from '../../executors/executor';
 
 export const getCmakeCommandArguments = (
     workspaceRoot: string,

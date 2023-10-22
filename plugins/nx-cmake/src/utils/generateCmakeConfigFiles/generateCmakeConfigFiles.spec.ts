@@ -2,8 +2,8 @@ import type { Tree } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { generateCmakeConfigFiles } from './generateCmakeConfigFiles';
 import { readFileWithTree } from '@/util';
-import { getDefaultInitGeneratorOptions } from '../../config/generator/init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
-import { InitSchema } from '../../config';
+import { InitSchema } from '../../generators/generator';
+import { getDefaultInitGeneratorOptions } from '../../generators/init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 
 describe('generateCmakeConfigFiles', () => {
     let tree: Tree;

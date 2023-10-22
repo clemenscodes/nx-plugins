@@ -3,7 +3,7 @@ import { addProjectConfiguration } from '@nx/devkit';
 import { CProjectType } from '@/types';
 import { getProjectTargets } from '../getProjectTargets/getProjectTargets';
 import { addProjectRootToSubDirectories } from '../addProjectRootToSubDirectories/addProjectRootToSubDirectories';
-import { LibSchema } from '../../config/generator/generator';
+import { LibSchema } from '../../generators/generator';
 
 export const addLibProjectConfig = (
     tree: Tree,

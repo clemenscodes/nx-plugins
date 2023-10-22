@@ -2,8 +2,9 @@ import { lintFilesWithClangTidy } from './lintFilesWithClangTidy';
 import * as getLintArgumentsModule from '../getLintArguments/getLintArguments';
 import * as fileModule from '@/file';
 import * as utilsModule from '@/util';
-import { CLANG_TIDY, LINUX_GCC, LintExecutorSchema } from '../../config';
+import { CLANG_TIDY, LINUX_GCC } from '../../config';
 import * as getClangTidyModule from '../../config/getPrograms/getClangTidy/getClangTidy';
+import { LintExecutorSchema } from '../../executors/executor';
 
 describe('lintFilesWithClangTidy', () => {
     let workspaceRoot: string;

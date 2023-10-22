@@ -1,9 +1,7 @@
 import type { NxJsonConfiguration } from '@nx/devkit';
 import { getUpdatedNxJson } from './getUpdatedNxJson';
-import {
-    InitGeneratorSchema,
-    getDefaultInitGeneratorOptions,
-} from '../../config';
+import { InitGeneratorSchema } from '../../generators/generator';
+import { getDefaultInitGeneratorOptions } from '../../generators/init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 
 describe('getUpdatedNxJson', () => {
     let mockNxJson: NxJsonConfiguration;

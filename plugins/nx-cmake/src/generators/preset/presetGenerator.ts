@@ -5,8 +5,9 @@ import {
     installPackagesTask,
     runTasksInSerial,
 } from '@nx/devkit';
-import { getDefaultInitGeneratorOptions, PLUGIN_NAME } from '../../config';
 import initGenerator from '../init/initGenerator';
+import { PLUGIN_NAME } from '../../config';
+import { getDefaultInitGeneratorOptions } from '../init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 
 export async function presetGenerator(tree: Tree) {
     const initOptions = getDefaultInitGeneratorOptions();

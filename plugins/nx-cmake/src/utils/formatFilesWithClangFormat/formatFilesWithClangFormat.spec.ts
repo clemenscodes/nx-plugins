@@ -2,12 +2,9 @@ import { formatFilesWithClangFormat } from './formatFilesWithClangFormat';
 import * as getFormatArgumentsModule from '../getFormatArguments/getFormatArguments';
 import * as fileModule from '@/file';
 import * as utilsModule from '@/util';
-import {
-    CLANG_FORMAT_CONFIG_FILE,
-    FormatExecutorSchema,
-    LINUX_CLANG_FORMAT,
-} from '../../config';
+import { CLANG_FORMAT_CONFIG_FILE, LINUX_CLANG_FORMAT } from '../../config';
 import * as getClangFormatModule from '../../config/getPrograms/getClangFormat/getClangFormat';
+import { FormatExecutorSchema } from '../../executors/executor';
 
 describe('formatFilesWithClangFormat', () => {
     let workspaceRoot: string;

@@ -1,6 +1,4 @@
 export * from './name';
-export * from './generator';
-export * from './executor';
 export * from './projectFilePattern';
 export * from './settings';
 export * from './version';

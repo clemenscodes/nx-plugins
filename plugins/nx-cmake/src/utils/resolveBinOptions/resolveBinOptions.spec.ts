@@ -2,12 +2,9 @@ import type { Tree } from '@nx/devkit';
 import { resolveBinOptions } from './resolveBinOptions';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import * as devkit from '@nx/devkit';
-import {
-    BinGeneratorSchema,
-    BinSchema,
-    getDefaultInitGeneratorOptions,
-} from '../../config';
 import initGenerator from '../../generators/init/initGenerator';
+import { BinGeneratorSchema, BinSchema } from '../../generators/generator';
+import { getDefaultInitGeneratorOptions } from '../../generators/init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 
 describe('resolveBinOptions ', () => {
     let options: BinGeneratorSchema;

@@ -2,11 +2,9 @@ import type { Tree } from '@nx/devkit';
 import { resolveOptions } from './resolveOptions';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import * as devkit from '@nx/devkit';
-import {
-    GeneratorBaseOptions,
-    getDefaultInitGeneratorOptions,
-} from '../../config';
 import initGenerator from '../../generators/init/initGenerator';
+import { GeneratorBaseOptions } from '../../generators/generator';
+import { getDefaultInitGeneratorOptions } from '../../generators/init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 
 describe('resolveOptions', () => {
     let tree: Tree;

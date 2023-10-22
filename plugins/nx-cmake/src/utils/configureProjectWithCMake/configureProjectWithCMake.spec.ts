@@ -1,8 +1,9 @@
 import { configureProjectWithCMake } from './configureProjectWithCMake';
 import * as getCmakeCommandArgumentsModule from '../getCmakeCommandArguments/getCmakeCommandArguments';
 import * as utilsModule from '@/util';
-import { CmakeExecutorSchema, LINUX_CMAKE } from '../../config';
 import * as getCmakeModule from '../../config/getPrograms/getCmake/getCmake';
+import { LINUX_CMAKE } from '../../config';
+import { CmakeExecutorSchema } from '../../executors/executor';
 
 describe('buildProjectWithMake', () => {
     let workspaceRoot: string;

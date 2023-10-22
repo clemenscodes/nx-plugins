@@ -1,4 +1,4 @@
-import { ExecuteExecutorSchema } from '../../config';
+import { ExecuteExecutorSchema } from '../../executors/executor';
 
 export const getBinaryArguments = (
     options: ExecuteExecutorSchema,

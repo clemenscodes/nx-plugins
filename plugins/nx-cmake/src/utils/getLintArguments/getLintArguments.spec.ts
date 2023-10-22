@@ -1,6 +1,7 @@
 import { getLintArguments } from './getLintArguments';
 import * as getClangTidyConfigArgumentModule from './getClangTidyConfigArgument/getClangTidyConfigArgument';
-import { LintExecutorSchema, CLANG_FORMAT_CONFIG_FILE } from '../../config';
+import { CLANG_FORMAT_CONFIG_FILE } from '../../config';
+import { LintExecutorSchema } from '../../executors/executor';
 
 describe('getLintArguments', () => {
     let workspaceRoot: string;

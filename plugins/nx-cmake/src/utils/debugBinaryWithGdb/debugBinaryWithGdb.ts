@@ -1,4 +1,5 @@
-import { DebugExecutorSchema, GDB, getGdb } from '../../config';
+import { GDB, getGdb } from '../../config';
+import { DebugExecutorSchema } from '../../executors/executor';
 import { getGdbArguments } from '../getGdbArguments/getGdbArguments';
 import { checkCommandExists, runCommand } from '@/util';
 

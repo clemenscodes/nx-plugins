@@ -4,8 +4,9 @@ import { generateBinFiles } from './generateBinFiles';
 import { resolveBinOptions } from '../resolveBinOptions/resolveBinOptions';
 import * as devkit from '@nx/devkit';
 import { readFileWithTree } from '@/util';
-import { BinSchema, getDefaultInitGeneratorOptions } from '../../config';
 import initGenerator from '../../generators/init/initGenerator';
+import { BinSchema } from '../../generators/generator';
+import { getDefaultInitGeneratorOptions } from '../../generators/init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 
 describe('generateBinFiles', () => {
     let tree: Tree;

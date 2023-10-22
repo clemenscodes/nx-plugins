@@ -1,6 +1,6 @@
 import { offsetFromRoot } from '@nx/devkit';
-import { InitGeneratorSchema, InitSchema } from '../../generator';
 import { getCmakeC } from '../getCmakeC/getCmakeC';
+import { InitGeneratorSchema, InitSchema } from '../../generator';
 
 export const resolveInitOptions = (
     options: InitGeneratorSchema,

@@ -8,7 +8,7 @@ import {
     snakeCaseToCamelCase,
     getProjectRoot,
 } from '@/util';
-import { LibGeneratorSchema, LibSchema } from '../../config';
+import { LibGeneratorSchema, LibSchema } from '../../generators/generator';
 
 export const resolveLibOptions = (options: LibGeneratorSchema): LibSchema => {
     const resolvedOptions = resolveOptions<LibGeneratorSchema, LibSchema>(

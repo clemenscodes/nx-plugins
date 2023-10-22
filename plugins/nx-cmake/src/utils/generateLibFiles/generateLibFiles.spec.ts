@@ -4,8 +4,9 @@ import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
 import { generateLibFiles } from './generateLibFiles';
 import * as devkit from '@nx/devkit';
 import { readFileWithTree } from '@/util';
-import { LibSchema, getDefaultInitGeneratorOptions } from '../../config';
 import initGenerator from '../../generators/init/initGenerator';
+import { LibSchema } from '../../generators/generator';
+import { getDefaultInitGeneratorOptions } from '../../generators/init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 
 describe('generateLibFiles', () => {
     let tree: Tree;

@@ -2,16 +2,16 @@ import type { Tree } from '@nx/devkit';
 import { resolveLinkOptions } from './resolveLinkOptions';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import * as devkit from '@nx/devkit';
+import binGenerator from '../../generators/binary/binGenerator';
+import initGenerator from '../../generators/init/initGenerator';
+import libGenerator from '../../generators/library/libGenerator';
 import {
     LinkGeneratorSchema,
     LibGeneratorSchema,
     BinGeneratorSchema,
-    getDefaultInitGeneratorOptions,
     LinkSchema,
-} from '../../config';
-import binGenerator from '../../generators/binary/binGenerator';
-import initGenerator from '../../generators/init/initGenerator';
-import libGenerator from '../../generators/library/libGenerator';
+} from '../../generators/generator';
+import { getDefaultInitGeneratorOptions } from '../../generators/init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 
 describe('resolveLinkOptions', () => {
     let tree: Tree;

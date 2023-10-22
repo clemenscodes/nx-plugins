@@ -1,7 +1,8 @@
 import { logger } from '@/log';
 import { extractRootsFromExecutorContext } from '@/util';
-import { Executor, LintExecutorSchema } from '../../config';
 import { lintFilesWithClangTidy } from '../../utils/lintFilesWithClangTidy/lintFilesWithClangTidy';
+import { Executor } from '@nx/devkit';
+import { LintExecutorSchema } from '../executor';
 
 export const lintExecutor: Executor<LintExecutorSchema> = async function* (
     options,

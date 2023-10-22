@@ -1,12 +1,12 @@
 import type { NxJsonConfiguration } from '@nx/devkit';
 import { writeGeneratorConfig } from './writeGeneratorConfig';
 import {
-    InitGeneratorSchema,
     NxCmakeGeneratorConfig,
     PluginGeneratorConfig,
-    getDefaultInitGeneratorOptions,
     PLUGIN_NAME,
 } from '../../config';
+import { InitGeneratorSchema } from '../../generators/generator';
+import { getDefaultInitGeneratorOptions } from '../../generators/init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 
 describe('writeGeneratorConfig', () => {
     let nxJson: NxJsonConfiguration;

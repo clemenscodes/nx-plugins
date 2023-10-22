@@ -1,7 +1,7 @@
 import type { Tree } from '@nx/devkit';
 import { generateFiles } from '@nx/devkit';
 import { join } from 'path';
-import { BinSchema } from '../../config';
+import { BinSchema } from '../../generators/generator';
 
 export const generateBinFiles = (tree: Tree, options: BinSchema) => {
     const { projectRoot } = options;

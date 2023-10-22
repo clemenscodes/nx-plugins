@@ -2,8 +2,9 @@ import { testBinaryWithCtest } from './testBinaryWithCtest';
 import { join } from 'path';
 import * as fileModule from '@/file';
 import * as utilsModule from '@/util';
-import { TestExecutorSchema, LINUX_CTEST, CTEST } from '../../config';
 import * as getCtestModule from '../../config/getPrograms/getCtest/getCtest';
+import { LINUX_CTEST, CTEST } from '../../config';
+import { TestExecutorSchema } from '../../executors/executor';
 
 describe('buildProjectWithCMake', () => {
     let workspaceRoot: string;

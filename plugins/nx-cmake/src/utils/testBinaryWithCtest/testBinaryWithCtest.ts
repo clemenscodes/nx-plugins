@@ -1,7 +1,8 @@
 import { getCtestArguments } from '../getCtestArguments/getCtestArguments';
 import { join } from 'path';
 import { checkCommandExists, runCommandFromDirectory } from '@/util';
-import { TestExecutorSchema, CTEST, getCtest } from '../../config';
+import { CTEST, getCtest } from '../../config';
+import { TestExecutorSchema } from '../../executors/executor';
 
 export const testBinaryWithCtest = (
     workspaceRoot: string,

@@ -1,4 +1,4 @@
-import { LibGeneratorSchema, LibSchema } from '../../config';
+import { LibGeneratorSchema, LibSchema } from '../../generators/generator';
 import { resolveLibOptions } from './resolveLibOptions';
 
 describe('resolveLibOptions', () => {

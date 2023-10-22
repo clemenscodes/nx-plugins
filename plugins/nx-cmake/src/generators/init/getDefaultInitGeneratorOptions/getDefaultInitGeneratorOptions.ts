@@ -1,4 +1,4 @@
-import { InitGeneratorSchema, InitSchema } from '../../generator';
+import { InitSchema, InitGeneratorSchema } from '../../generator';
 import { resolveInitOptions } from '../resolveInitOptions/resolveInitOptions';
 
 export const getDefaultInitGeneratorOptions = (): InitSchema => {

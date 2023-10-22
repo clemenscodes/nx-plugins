@@ -2,7 +2,7 @@ import { executeBinary } from './executeBinary';
 import { join } from 'path';
 import * as fileModule from '@/file';
 import * as utilsModule from '@/util';
-import { ExecuteExecutorSchema } from '../../config';
+import { ExecuteExecutorSchema } from '../../executors/executor';
 
 describe('executeBinary', () => {
     let workspaceRoot: string;

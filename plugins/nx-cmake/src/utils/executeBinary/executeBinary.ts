@@ -1,7 +1,7 @@
 import { getExecuteBinary } from '../getExecuteBinary/getExecuteBinary';
 import { getBinaryArguments } from '../getBinaryArguments/getBinaryArguments';
 import { runCommand } from '@/util';
-import { ExecuteExecutorSchema } from '../../config';
+import { ExecuteExecutorSchema } from '../../executors/executor';
 
 export const executeBinary = (
     workspaceRoot: string,

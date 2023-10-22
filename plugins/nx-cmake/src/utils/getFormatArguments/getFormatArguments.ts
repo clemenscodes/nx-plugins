@@ -1,7 +1,8 @@
 import { getStyleArgument } from './getStyleArgument/getStyleArgument';
 import { getEditFileInPlaceArgument } from './getEditFilesInPlaceArgument/getEditFilesInPlaceArgument';
 import { getVerboseArgument } from './getVerboseArgument/getVerboseArgument';
-import { FormatExecutorSchema, CLANG_FORMAT_CONFIG_FILE } from '../../config';
+import { CLANG_FORMAT_CONFIG_FILE } from '../../config';
+import { FormatExecutorSchema } from '../../executors/executor';
 
 export const getFormatArguments = (
     workspaceRoot: string,

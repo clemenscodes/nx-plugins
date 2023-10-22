@@ -1,7 +1,8 @@
 import type { Tree } from '@nx/devkit';
 import { join } from 'path';
 import { trimLib, updateFile, writeFileWithTree } from '@/util';
-import { PROJECT_FILE, LinkSchema } from '../../config';
+import { PROJECT_FILE } from '../../config';
+import { LinkSchema } from '../../generators/generator';
 
 export const getCmakeLink = (target: string): string => {
     const trimmedTarget = trimLib(target);

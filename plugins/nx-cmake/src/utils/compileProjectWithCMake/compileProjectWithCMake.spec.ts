@@ -2,8 +2,9 @@ import { compileProjectWithCMake } from './compileProjectWithCMake';
 import { join } from 'path';
 import * as fileModule from '@/file';
 import * as utilsModule from '@/util';
-import { CompileExecutorSchema, LINUX_CMAKE } from '../../config';
 import * as getCmakeModule from '../../config/getPrograms/getCmake/getCmake';
+import { LINUX_CMAKE } from '../../config';
+import { CompileExecutorSchema } from '../../executors/executor';
 
 describe('compileProjectWithCMake', () => {
     let workspaceRoot: string;

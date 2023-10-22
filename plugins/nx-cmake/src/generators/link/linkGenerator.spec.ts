@@ -3,15 +3,15 @@ import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { linkGenerator } from './linkGenerator';
 import { trimLib, normalizeLineEndings, readFileWithTree } from '@/util';
 import * as devkit from '@nx/devkit';
+import { resolveLibOptions } from '../../utils/resolveLibOptions/resolveLibOptions';
+import initGenerator from '../init/initGenerator';
+import { libGenerator } from '../library/libGenerator';
 import {
     LibGeneratorSchema,
     LibSchema,
     LinkGeneratorSchema,
-    getDefaultInitGeneratorOptions,
-} from '../../config';
-import { resolveLibOptions } from '../../utils/resolveLibOptions/resolveLibOptions';
-import initGenerator from '../init/initGenerator';
-import { libGenerator } from '../library/libGenerator';
+} from '../generator';
+import { getDefaultInitGeneratorOptions } from '../init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 
 describe('link generator', () => {
     let tree: Tree;

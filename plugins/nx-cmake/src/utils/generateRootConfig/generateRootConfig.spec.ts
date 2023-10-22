@@ -2,10 +2,8 @@ import type { Tree } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { generateRootConfig } from './generateRootConfig';
 import { normalizeLineEndings, readFileWithTree } from '@/util';
-import {
-    InitGeneratorSchema,
-    getDefaultInitGeneratorOptions,
-} from '../../config';
+import { InitGeneratorSchema } from '../../generators/generator';
+import { getDefaultInitGeneratorOptions } from '../../generators/init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 
 describe('generateRootConfig', () => {
     let tree: Tree;

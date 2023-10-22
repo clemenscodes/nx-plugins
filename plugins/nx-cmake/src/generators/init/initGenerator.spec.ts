@@ -1,13 +1,11 @@
 import type { Tree } from '@nx/devkit';
 import { output } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import {
-    InitGeneratorSchema,
-    getDefaultInitGeneratorOptions,
-} from '../../config';
 import initGenerator from './initGenerator';
 import * as checkNxVersionModule from '../../config/checkNxVersion/checkNxVersion';
 import * as devkit from '@nx/devkit';
+import { InitGeneratorSchema } from '../generator';
+import { getDefaultInitGeneratorOptions } from './getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 
 describe('init generator', () => {
     let tree: Tree;

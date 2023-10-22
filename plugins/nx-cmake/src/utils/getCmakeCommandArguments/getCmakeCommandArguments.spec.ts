@@ -1,14 +1,10 @@
 import { getCmakeCommandArguments } from './getCmakeCommandArguments';
 import { join } from 'path';
 import * as utilsModule from '@/util';
-import {
-    CmakeExecutorSchema,
-    LINUX_GCC,
-    WINDOWS_MAKE,
-    WINDOWS_GCC,
-} from '../../config';
+import { LINUX_GCC, WINDOWS_MAKE, WINDOWS_GCC } from '../../config';
 import * as getMakeModule from '../../config/getPrograms/getMake/getMake';
 import * as getGccModule from '../../config/getPrograms/getGcc/getGcc';
+import { CmakeExecutorSchema } from '../../executors/executor';
 
 describe('getCmakeCommandArguments', () => {
     let workspaceRoot: string;

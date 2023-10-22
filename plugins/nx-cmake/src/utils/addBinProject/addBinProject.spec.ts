@@ -4,11 +4,9 @@ import { addBinProject } from './addBinProject';
 import { resolveBinOptions } from '../resolveBinOptions/resolveBinOptions';
 import { readProjectConfiguration } from '@nx/devkit';
 import * as devkit from '@nx/devkit';
-import {
-    BinGeneratorSchema,
-    getDefaultInitGeneratorOptions,
-} from '../../config';
 import initGenerator from '../../generators/init/initGenerator';
+import { BinGeneratorSchema } from '../../generators/generator';
+import { getDefaultInitGeneratorOptions } from '../../generators/init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 
 describe('addBinProject', () => {
     let tree: Tree;

@@ -6,7 +6,8 @@ import {
     getProjectRoot,
     getWorkspaceLayout,
 } from '@/util';
-import { GeneratorBaseOptions, getCmakeC } from '../../config';
+import { getCmakeC } from '../../generators/init/getCmakeC/getCmakeC';
+import { GeneratorBaseOptions } from '../../generators/generator';
 
 export const resolveOptions = <
     T extends GeneratorBaseOptions,

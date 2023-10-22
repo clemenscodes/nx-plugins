@@ -1,7 +1,8 @@
 import { logger } from '@/log';
 import { extractRootsFromExecutorContext } from '@/util';
-import { CompileExecutorSchema, Executor } from '../../config';
 import { compileProjectWithCMake } from '../../utils/compileProjectWithCMake/compileProjectWithCMake';
+import { Executor } from '@nx/devkit';
+import { CompileExecutorSchema } from '../executor';
 
 export const compileExecutor: Executor<CompileExecutorSchema> =
     async function* (options, ctx) {

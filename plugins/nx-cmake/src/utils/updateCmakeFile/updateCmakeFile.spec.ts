@@ -9,13 +9,10 @@ import {
 } from './updateCmakeFile';
 import * as devkit from '@nx/devkit';
 import { trimLib, normalizeLineEndings, readFileWithTree } from '@/util';
-import {
-    LibSchema,
-    LinkSchema,
-    getDefaultInitGeneratorOptions,
-} from '../../config';
 import initGenerator from '../../generators/init/initGenerator';
 import libGenerator from '../../generators/library/libGenerator';
+import { LibSchema, LinkSchema } from '../../generators/generator';
+import { getDefaultInitGeneratorOptions } from '../../generators/init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 
 describe('updateCmakeFile', () => {
     let tree: Tree;

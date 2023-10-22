@@ -1,4 +1,5 @@
-import { FormatExecutorSchema, CLANG_FORMAT_CONFIG_FILE } from '../../config';
+import { CLANG_FORMAT_CONFIG_FILE } from '../../config';
+import { FormatExecutorSchema } from '../../executors/executor';
 import { getFormatArguments } from './getFormatArguments';
 import * as getStyleArgumentModule from './getStyleArgument/getStyleArgument';
 

@@ -3,13 +3,10 @@ import { updateIncludeFile } from './updateIncludeFile';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { readFileWithTree } from '@/util';
 import * as devkit from '@nx/devkit';
-import {
-    LibGeneratorSchema,
-    LinkSchema,
-    getDefaultInitGeneratorOptions,
-} from '../../config';
 import initGenerator from '../../generators/init/initGenerator';
 import libGenerator from '../../generators/library/libGenerator';
+import { LibGeneratorSchema, LinkSchema } from '../../generators/generator';
+import { getDefaultInitGeneratorOptions } from '../../generators/init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 
 describe('updateIncludeFile', () => {
     let tree: Tree;

@@ -4,14 +4,14 @@ import { updateCmakeConfigInFile } from './updateCmakeConfigInFile';
 import { resolveLinkOptions } from '../resolveLinkOptions/resolveLinkOptions';
 import * as devkit from '@nx/devkit';
 import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
+import initGenerator from '../../generators/init/initGenerator';
+import libGenerator from '../../generators/library/libGenerator';
 import {
     LibGeneratorSchema,
     LibSchema,
     LinkSchema,
-    getDefaultInitGeneratorOptions,
-} from '../../config';
-import initGenerator from '../../generators/init/initGenerator';
-import libGenerator from '../../generators/library/libGenerator';
+} from '../../generators/generator';
+import { getDefaultInitGeneratorOptions } from '../../generators/init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 
 describe('updateCmakeConfigInFile', () => {
     let tree: Tree;

@@ -4,7 +4,7 @@ import { CProjectType } from '@/types';
 import { getProjectTargets } from '../getProjectTargets/getProjectTargets';
 import { addProjectRootToSubDirectories } from '../addProjectRootToSubDirectories/addProjectRootToSubDirectories';
 import { getWorkspaceLayout } from '@/util';
-import { LibSchema } from '../../config';
+import { LibSchema } from '../../generators/generator';
 
 export const addTestProjectConfig = (
     tree: Tree,

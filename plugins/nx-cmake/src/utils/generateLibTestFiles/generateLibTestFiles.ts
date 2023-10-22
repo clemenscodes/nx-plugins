@@ -2,7 +2,7 @@ import type { Tree } from '@nx/devkit';
 import { generateFiles } from '@nx/devkit';
 import { join } from 'path';
 import { getWorkspaceLayout } from '@/util';
-import { LibSchema } from '../../config';
+import { LibSchema } from '../../generators/generator';
 
 export const generateLibTestFiles = (
     tree: Tree,

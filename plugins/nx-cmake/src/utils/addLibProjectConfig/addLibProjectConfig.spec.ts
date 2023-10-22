@@ -4,12 +4,9 @@ import { readProjectConfiguration } from '@nx/devkit';
 import { addLibProjectConfig } from './addLibProjectConfig';
 import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
 import * as devkit from '@nx/devkit';
-import {
-    LibGeneratorSchema,
-    LibSchema,
-    getDefaultInitGeneratorOptions,
-} from '../../config';
 import initGenerator from '../../generators/init/initGenerator';
+import { LibGeneratorSchema, LibSchema } from '../../generators/generator';
+import { getDefaultInitGeneratorOptions } from '../../generators/init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 
 describe('addLibProjectConfig', () => {
     let tree: Tree;

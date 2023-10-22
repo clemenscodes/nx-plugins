@@ -6,7 +6,7 @@ import {
     BinGeneratorSchema,
     BinSchema,
     LinkGeneratorSchema,
-} from '../../config';
+} from '../../generators/generator';
 
 export const resolveBinOptions = (options: BinGeneratorSchema): BinSchema => {
     const resolvedOptions = resolveOptions<BinGeneratorSchema, BinSchema>(

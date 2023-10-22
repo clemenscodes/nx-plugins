@@ -33,7 +33,7 @@
         "appsDir": "bin",
         "libsDir": "packages"
     },
-    "plugins": [],
+    "plugins": ["nx-cmake"],
     "targetDefaults": {
         "cmake": {
             "dependsOn": ["^cmake"],

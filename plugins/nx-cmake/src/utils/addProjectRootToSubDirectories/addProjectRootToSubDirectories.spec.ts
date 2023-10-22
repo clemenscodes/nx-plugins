@@ -2,8 +2,8 @@ import type { Tree } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { addProjectRootToSubDirectories } from './addProjectRootToSubDirectories';
 import * as devkit from '@nx/devkit';
-import { getDefaultInitGeneratorOptions } from '../../config';
 import initGenerator from '../../generators/init/initGenerator';
+import { getDefaultInitGeneratorOptions } from '../../generators/init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 
 describe('addProjectRootToSubDirectories', () => {
     let tree: Tree;

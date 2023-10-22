@@ -9,7 +9,7 @@ import { addClangTidyNamedInput } from '../addClangTidyNamedInput/addClangTidyNa
 import { writeConfig } from '../writeConfig/writeConfig';
 import { writeGeneratorConfig } from '../writeGeneratorConfig/writeGeneratorConfig';
 import { formatNxJson } from '@/util';
-import { InitGeneratorSchema } from '../../config';
+import { InitGeneratorSchema } from '../../generators/generator';
 
 export const getUpdatedNxJson = (
     nxJson: NxJsonConfiguration,

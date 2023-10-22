@@ -1,7 +1,9 @@
 import { logger } from '@/log';
 import { extractRootsFromExecutorContext } from '@/util';
-import { FormatExecutorSchema, FMT_TARGET_NAME, Executor } from '../../config';
 import { formatFilesWithClangFormat } from '../../utils/formatFilesWithClangFormat/formatFilesWithClangFormat';
+import { Executor } from '@nx/devkit';
+import { FMT_TARGET_NAME } from '../../config';
+import { FormatExecutorSchema } from '../executor';
 
 export const fmtExecutor: Executor<FormatExecutorSchema> = async function* (
     options,

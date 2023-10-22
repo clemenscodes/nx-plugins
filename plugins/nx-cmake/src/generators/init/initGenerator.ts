@@ -6,16 +6,13 @@ import {
     output,
     formatFiles,
 } from '@nx/devkit';
-import {
-    InitGeneratorSchema,
-    checkNxVersion,
-    getRequiredVersionOfNx,
-    resolveInitOptions,
-} from '../../config';
+import { checkNxVersion, getRequiredVersionOfNx } from '../../config';
 import { getUpdatedNxJson } from '../../utils/getUpdatedNxJson/getUpdatedNxJson';
 import { generateClangPreset } from '../../utils/generateClangPreset/generateClangPreset';
 import { generateCmakeConfigFiles } from '../../utils/generateCmakeConfigFiles/generateCmakeConfigFiles';
 import { generateRootConfig } from '../../utils/generateRootConfig/generateRootConfig';
+import { InitGeneratorSchema } from '../generator';
+import { resolveInitOptions } from './resolveInitOptions/resolveInitOptions';
 
 export async function initGenerator(tree: Tree, options: InitGeneratorSchema) {
     if (!checkNxVersion(NX_VERSION)) {

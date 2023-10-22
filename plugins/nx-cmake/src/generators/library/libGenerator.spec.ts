@@ -3,11 +3,9 @@ import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { readProjectConfiguration } from '@nx/devkit';
 import { libGenerator } from './libGenerator';
 import * as devkit from '@nx/devkit';
-import {
-    LibGeneratorSchema,
-    getDefaultInitGeneratorOptions,
-} from '../../config';
 import initGenerator from '../init/initGenerator';
+import { LibGeneratorSchema } from '../generator';
+import { getDefaultInitGeneratorOptions } from '../init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 
 describe('lib generator', () => {
     let tree: Tree;

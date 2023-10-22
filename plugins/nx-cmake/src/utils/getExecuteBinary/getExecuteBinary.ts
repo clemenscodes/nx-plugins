@@ -1,7 +1,7 @@
 import { fileExists } from '@/file';
 import { isWindows } from '@/util';
 import { join } from 'path';
-import { ExecuteExecutorSchema } from '../../config';
+import { ExecuteExecutorSchema } from '../../executors/executor';
 
 export const getExecuteBinary = (
     workspaceRoot: string,

@@ -1,7 +1,8 @@
 import { logger } from '@/log';
 import { extractRootsFromExecutorContext } from '@/util';
-import { ExecuteExecutorSchema, Executor } from '../../config';
 import { executeBinary } from '../../utils/executeBinary/executeBinary';
+import { Executor } from '@nx/devkit';
+import { ExecuteExecutorSchema } from '../executor';
 
 export const executeExecutor: Executor<ExecuteExecutorSchema> =
     async function* (options, ctx) {
