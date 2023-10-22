@@ -1,5 +1,5 @@
 {
-    "name": "@/config",
+    "name": "config",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "root": "packages/config",
     "sourceRoot": "packages/config/src",
