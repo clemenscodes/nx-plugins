@@ -67,10 +67,10 @@ describe(plugin, () => {
 
     afterAll(() => {
         // Cleanup the test project
-        // rmSync(projectDirectory, {
-        //     recursive: true,
-        //     force: true,
-        // });
+        rmSync(projectDirectory, {
+            recursive: true,
+            force: true,
+        });
     });
 
     it('should be installed', () => {
@@ -82,7 +82,7 @@ describe(plugin, () => {
         let projectName: string;
 
         describe(`nx-cmake:init`, () => {
-            it('should initialize', async () => {
+            it('should initialize', () => {
                 const cmd = `nx g nx-cmake:init --no-interactive`;
                 execCmd(cmd);
             });
@@ -94,14 +94,14 @@ describe(plugin, () => {
             });
 
             describe('nx-cmake:bin', () => {
-                it('should generate C binary', async () => {
+                it('should generate C binary', () => {
                     const cmd = `nx g nx-cmake:bin --name=${projectName} --language=C --no-interactive`;
                     execCmd(cmd);
                 });
             });
 
             describe('nx-cmake:lib', () => {
-                it('should generate C library', async () => {
+                it('should generate C library', () => {
                     projectName += '-lib';
                     const cmd = `nx g nx-cmake:lib --name=${projectName} --language=C --no-interactive`;
                     execCmd(cmd);
@@ -134,8 +134,8 @@ describe(plugin, () => {
             });
 
             describe('nx-cmake:link', () => {
-                it('should link C library', async () => {
-                    const cmd = `nx g nx-cmake:link --source=lib${projectName} --target=lib${projectName}-lib --link=static --no-interactive`;
+                it('should link C library', () => {
+                    const cmd = `nx g nx-cmake:link --source=lib${projectName} --target=lib${projectName}-lib --no-interactive`;
                     execCmd(cmd);
                 });
             });
@@ -193,14 +193,14 @@ describe(plugin, () => {
             });
 
             describe('nx-cmake:bin', () => {
-                it('should generate C++ binary', async () => {
+                it('should generate C++ binary', () => {
                     const cmd = `nx g nx-cmake:bin --name=${projectName} --language=C++ --no-interactive`;
                     execCmd(cmd);
                 });
             });
 
             describe('nx-cmake:lib', () => {
-                it('should generate C++ library', async () => {
+                it('should generate C++ library', () => {
                     projectName += '-lib';
                     const cmd = `nx g ${plugin}:lib --name=${projectName} --language=C++ --no-interactive`;
                     execCmd(cmd);
@@ -233,8 +233,8 @@ describe(plugin, () => {
             });
 
             describe('nx-cmake:link', () => {
-                it('should link C++ library', async () => {
-                    const cmd = `nx g nx-cmake:link --source=lib${projectName} --target=lib${projectName}-lib --link=static --no-interactive`;
+                it('should link C++ library', () => {
+                    const cmd = `nx g nx-cmake:link --source=lib${projectName} --target=lib${projectName}-lib --no-interactive`;
                     execCmd(cmd);
                 });
             });

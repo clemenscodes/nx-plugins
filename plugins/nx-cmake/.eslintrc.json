@@ -25,7 +25,10 @@
                             "@/config",
                             "@/file",
                             "@/graph",
-                            "@/utils"
+                            "@/utils",
+                            "@/util",
+                            "@/types",
+                            "@/log"
                         ],
                         "includeTransitiveDependencies": true
                     }

@@ -1,33 +1,33 @@
 {
     "generators": {
         "init": {
-            "factory": "./src/generators/init/generator",
+            "factory": "./src/generators/init/initGenerator",
             "schema": "./src/generators/init/schema.json",
             "description": "Initialize CMake support.",
             "aliases": ["install", "i"]
         },
         "binary": {
-            "factory": "./src/generators/binary/generator",
+            "factory": "./src/generators/binary/binGenerator",
             "schema": "./src/generators/binary/schema.json",
             "x-type": "application",
             "description": "Generate a C or C++ binary.",
             "aliases": ["b", "bin"]
         },
         "library": {
-            "factory": "./src/generators/library/generator",
+            "factory": "./src/generators/library/libGenerator",
             "schema": "./src/generators/library/schema.json",
             "x-type": "library",
             "description": "Generate a C or C++ libary and link it to another library or binary.",
             "aliases": ["l", "lib"]
         },
         "link": {
-            "factory": "./src/generators/link/generator",
+            "factory": "./src/generators/link/linkGenerator",
             "schema": "./src/generators/link/schema.json",
             "description": "Link a C or C++ library.",
             "aliases": ["ld"]
         },
         "preset": {
-            "factory": "./src/generators/preset/generator",
+            "factory": "./src/generators/preset/presetGenerator",
             "schema": "./src/generators/preset/schema.json",
             "description": "Generate an Nx workspace using nx-cmake for CMake, C and C++ support.",
             "x-use-standalone-layout": true,
