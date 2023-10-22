@@ -1,9 +1,5 @@
 import type { NxJsonConfiguration, TargetConfiguration } from '@nx/devkit';
 
-export type WorkspaceLayout = Required<
-    NonNullable<NxJsonConfiguration['workspaceLayout']>
->;
-
 export type NxPluginsConfig = NxJsonConfiguration['pluginsConfig'];
 
 export type NxGeneratorConfig = NxJsonConfiguration['generators'];
@@ -26,4 +22,8 @@ export type TargetDefaultsWithDependsOn = Record<
 export type TargetDefaultsWithInputs = Record<
     string,
     TargetConfigurationWithInputs
+>;
+
+export type WorkspaceLayout = Required<
+    NonNullable<NxJsonConfiguration['workspaceLayout']>
 >;

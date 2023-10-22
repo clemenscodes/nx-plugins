@@ -20,7 +20,7 @@ describe(plugin, () => {
         execSync(cmd, {
             cwd: projectDirectory,
             stdio: 'inherit',
-            env: { ...process.env, NX_DAEMON: 'false' },
+            env: { ...process.env },
         });
     };
 
@@ -67,10 +67,10 @@ describe(plugin, () => {
 
     afterAll(() => {
         // Cleanup the test project
-        // rmSync(projectDirectory, {
-        //     recursive: true,
-        //     force: true,
-        // });
+        rmSync(projectDirectory, {
+            recursive: true,
+            force: true,
+        });
     });
 
     it('should be installed', () => {
@@ -135,7 +135,7 @@ describe(plugin, () => {
 
             describe('nx-cmake:link', () => {
                 it('should link C library', async () => {
-                    const cmd = `nx g nx-cmake:link --source=lib${projectName} --target=lib${projectName}-lib --link=static --no-interactive`;
+                    const cmd = `nx g nx-cmake:link --source=lib${projectName} --target=lib${projectName}-lib --no-interactive`;
                     execCmd(cmd);
                 });
             });
@@ -234,7 +234,7 @@ describe(plugin, () => {
 
             describe('nx-cmake:link', () => {
                 it('should link C++ library', async () => {
-                    const cmd = `nx g nx-cmake:link --source=lib${projectName} --target=lib${projectName}-lib --link=static --no-interactive`;
+                    const cmd = `nx g nx-cmake:link --source=lib${projectName} --target=lib${projectName}-lib --no-interactive`;
                     execCmd(cmd);
                 });
             });
