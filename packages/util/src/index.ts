@@ -1,3 +1,9 @@
+export { getProjectTypeWithTree } from './lib/getProjectTypeWithTree/getProjectTypeWithTree';
+export { getProjectRoot } from './lib/getProjectRoot/getProjectRoot';
+export { getProjectName } from './lib/getProjectName/getProjectName';
+export { getProjectConfigurationType } from './lib/getProjectConfigurationType/getProjectConfigurationType';
+export { getProjectTypeFromConfig } from './lib/getProjectTypeFromConfig/getProjectTypeFromConfig';
+export { getProjectFromFile } from './lib/getProjectFromFile/getProjectFromFile';
 export { readFileWithTree } from './lib/readFileWithTree/readFileWithTree';
 export { updateFile } from './lib/updateFile/updateFileFile';
 export { writeFileWithTree } from './lib/writeFileWithTree/writeFileWithTree';
