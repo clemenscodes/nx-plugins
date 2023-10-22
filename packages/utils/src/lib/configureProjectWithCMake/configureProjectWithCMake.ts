@@ -3,7 +3,7 @@ import { getCmakeCommandArguments } from '../getCmakeCommandArguments/getCmakeCo
 import { CMAKE, getCmake } from '@/config';
 import { checkCommandExists } from '../checkCommandExists/checkCommandExists';
 import { runCommand } from '../runCommand/runCommand';
-import { logger } from '../logger/logger';
+import { logger } from '@/log';
 
 export const configureProjectWithCMake = (
     workspaceRoot: string,

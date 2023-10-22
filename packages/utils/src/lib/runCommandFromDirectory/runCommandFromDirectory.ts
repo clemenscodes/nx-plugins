@@ -1,4 +1,4 @@
-import { logger } from '../logger/logger';
+import { logger } from '@/log';
 import { SpawnSyncReturns, execSync } from 'child_process';
 import { output } from '@nx/devkit';
 

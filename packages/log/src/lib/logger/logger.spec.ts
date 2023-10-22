@@ -1,7 +1,7 @@
 import { output } from '@nx/devkit';
 import { logger } from './logger';
 
-describe('runCommand', () => {
+describe('logger', () => {
     let outputLogMock: jest.SpyInstance;
 
     beforeEach(() => {

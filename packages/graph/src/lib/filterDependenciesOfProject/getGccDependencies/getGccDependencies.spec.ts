@@ -2,6 +2,7 @@ import { getGccDependencies } from './getGccDependencies';
 import * as detectTestFrameworkModule from '../detectTestFramework/detectTestFramework';
 import * as installTestFrameworkModule from '../installTestFramework/installTestFramework';
 import * as utilsModule from '@/utils';
+import * as logModule from '@/log';
 
 describe('getGccDependencies', () => {
     let executeCommandSpy: jest.SpyInstance;
@@ -25,7 +26,7 @@ describe('getGccDependencies', () => {
             installTestFrameworkModule,
             'installTestFramework',
         );
-        loggerMock = jest.spyOn(utilsModule, 'logger');
+        loggerMock = jest.spyOn(logModule, 'logger');
     });
 
     afterEach(() => {

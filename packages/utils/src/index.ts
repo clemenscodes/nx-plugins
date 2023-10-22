@@ -64,4 +64,3 @@ export { getNxJsonConfiguration } from './lib/getNxJsonConfiguration/getNxJsonCo
 export { getPluginConfig } from './lib/getPluginConfig/getPluginConfig';
 export { normalizeLineEndings } from './lib/normalizeLineEndings/normalizeLineEndings';
 export { snakeCaseToCamelCase } from './lib/snakeCaseToCamelCase/snakeCaseToCamelCase';
-export { logger } from './lib/logger/logger';

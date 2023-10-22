@@ -2,7 +2,7 @@ import { TestExecutorSchema } from '@/config';
 import type { ExecutorContext } from '@nx/devkit';
 import { extractRootsFromExecutorContext } from '../extractRootsFromExecutorContext/extractRootsFromExecutorContext';
 import { testBinaryWithCtest } from '../testBinaryWithCtest/testBinaryWithCtest';
-import { logger } from '../logger/logger';
+import { logger } from '@/log';
 
 export async function* testExecutor(
     options: TestExecutorSchema,

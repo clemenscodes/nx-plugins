@@ -1,7 +1,7 @@
 import type { CmakeExecutorSchema, Executor } from '@/config';
 import { configureProjectWithCMake } from '../configureProjectWithCMake/configureProjectWithCMake';
 import { extractRootsFromExecutorContext } from '../extractRootsFromExecutorContext/extractRootsFromExecutorContext';
-import { logger } from '../logger/logger';
+import { logger } from '@/log';
 
 export const cmakeExecutor: Executor<CmakeExecutorSchema> = async function* (
     options,

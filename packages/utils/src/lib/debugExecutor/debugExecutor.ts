@@ -1,7 +1,7 @@
 import type { DebugExecutorSchema, Executor } from '@/config';
 import { debugBinaryWithGdb } from '../debugBinaryWithGdb/debugBinaryWithGdb';
 import { extractRootsFromExecutorContext } from '../extractRootsFromExecutorContext/extractRootsFromExecutorContext';
-import { logger } from '../logger/logger';
+import { logger } from '@/log';
 
 export const debugExecutor: Executor<DebugExecutorSchema> = async function* (
     options,

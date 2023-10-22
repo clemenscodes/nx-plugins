@@ -1,6 +1,6 @@
 import { type Tree } from '@nx/devkit';
 import { normalizeLineEndings } from '../normalizeLineEndings/normalizeLineEndings';
-import { logger } from '../logger/logger';
+import { logger } from '@/log';
 
 export const writeFileWithTree = (
     tree: Tree,

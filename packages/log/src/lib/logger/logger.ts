@@ -1,7 +1,8 @@
 import { output } from '@nx/devkit';
+import { isVerbose } from '../isVerbose/isVerbose';
 
 export const logger = (title: string, ...messages: string[]) => {
-    if (process.env['NX_VERBOSE_LOGGING'] === 'true') {
+    if (isVerbose()) {
         output.log({ title, bodyLines: messages });
     }
 };

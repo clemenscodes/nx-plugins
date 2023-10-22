@@ -1,5 +1,5 @@
 import { readFileSync } from 'fs';
-import { logger } from '../logger/logger';
+import { logger } from '@/log';
 
 export const readFile = (file: string) => {
     logger(`Reading file ${file}`);
