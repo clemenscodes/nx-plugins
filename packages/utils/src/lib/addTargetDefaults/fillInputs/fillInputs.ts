@@ -1,10 +1,9 @@
-import {
-    assertIsTargetName,
-    type TargetDefaults,
-    type TargetDefaultsWithDependsOn,
-    type TargetDefaultsWithInputs,
-} from '@/config';
+import { assertIsTargetName, type TargetDefaults } from '@/config';
 import { addTargetInputs } from '../addTargetInputs/addTargetInputs';
+import type {
+    TargetDefaultsWithDependsOn,
+    TargetDefaultsWithInputs,
+} from '@/types';
 
 export const fillInputs = <T extends TargetDefaults>(
     targets: T,

@@ -1,4 +1,4 @@
-import type { WorkspaceLayout } from '../../nx';
+import type { WorkspaceLayout } from '@/types';
 import type { C, CMakeC } from '..';
 
 export type InitGeneratorSchema = {

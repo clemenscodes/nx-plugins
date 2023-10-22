@@ -1,9 +1,6 @@
-import {
-    assertIsTargetName,
-    type NxTargetDefaults,
-    type TargetDefaults,
-    type TargetDefaultsWithDependsOn,
-} from '@/config';
+import type { NxTargetDefaults, TargetDefaultsWithDependsOn } from '@/types';
+import type { TargetDefaults } from '@/config';
+import { assertIsTargetName } from '@/config';
 import { addTargetDependsOn } from '../addTargetDependsOn/addTargetDependsOn';
 
 export const fillDependsOn = <T extends TargetDefaults>(

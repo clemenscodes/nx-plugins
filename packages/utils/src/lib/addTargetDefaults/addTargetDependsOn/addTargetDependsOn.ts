@@ -1,9 +1,8 @@
 import type {
     NxTargetDefaults,
-    TargetName,
     TargetConfigurationWithDependsOn,
-    TargetDefaults,
-} from '@/config';
+} from '@/types';
+import type { TargetName, TargetDefaults } from '@/config';
 import { mergeArrays } from '../../mergeArrays/mergeArrays';
 
 export const addTargetDependsOn = (

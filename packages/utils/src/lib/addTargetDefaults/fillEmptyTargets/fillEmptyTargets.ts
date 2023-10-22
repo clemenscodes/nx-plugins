@@ -1,8 +1,6 @@
-import {
-    assertIsTargetName,
-    type NxTargetDefaults,
-    type TargetDefaults,
-} from '@/config';
+import type { NxTargetDefaults } from '@/types';
+import type { TargetDefaults } from '@/config';
+import { assertIsTargetName } from '@/config';
 import { addTargetDefault } from '../addTargetDefault/addTargetDefault';
 
 export const fillEmptyTargets = <T extends TargetDefaults>(

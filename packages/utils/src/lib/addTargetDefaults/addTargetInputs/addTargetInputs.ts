@@ -1,9 +1,5 @@
-import type {
-    NxTargetDefaults,
-    TargetConfigurationWithInputs,
-    TargetDefaults,
-    TargetName,
-} from '@/config';
+import type { NxTargetDefaults, TargetConfigurationWithInputs } from '@/types';
+import type { TargetDefaults, TargetName } from '@/config';
 import { mergeArrays } from '../../mergeArrays/mergeArrays';
 
 export const addTargetInputs = (

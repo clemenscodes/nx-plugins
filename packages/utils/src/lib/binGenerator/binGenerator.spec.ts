@@ -4,8 +4,8 @@ import { getDefaultInitGeneratorOptions } from '@/config';
 import { readProjectConfiguration } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { binGenerator } from './binGenerator';
-import * as devkit from '@nx/devkit';
 import { initGenerator } from '../initGenerator/initGenerator';
+import * as devkit from '@nx/devkit';
 
 describe('bin generator', () => {
     let tree: Tree;

@@ -1,9 +1,6 @@
-import {
-    type TargetName,
-    type NxTargetDefaults,
-    getTargetDefaults,
-    TargetDefaults,
-} from '@/config';
+import type { NxTargetDefaults } from '@/types';
+import type { TargetName } from '@/config';
+import { getTargetDefaults, TargetDefaults } from '@/config';
 
 export const addTargetDefault = (
     targetDefaults: NxTargetDefaults,

@@ -16,10 +16,14 @@
         "baseUrl": ".",
         "paths": {
             "@/config": ["packages/config/src/index.ts"],
+            "@/executors": ["packages/executors/src/index.ts"],
             "@/file": ["packages/file/src/index.ts"],
+            "@/generators": ["packages/generators/src/index.ts"],
             "@/graph": ["packages/graph/src/index.ts"],
             "@/log": ["packages/log/src/index.ts"],
+            "@/mocks": ["packages/mocks/src/index.ts"],
             "@/testing": ["packages/testing/src/index.ts"],
+            "@/types": ["packages/types/src/index.ts"],
             "@/utils": ["packages/utils/src/index.ts"],
             "nx-cmake": ["plugins/nx-cmake/src/index.ts"]
         }

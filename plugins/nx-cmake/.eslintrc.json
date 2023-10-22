@@ -26,6 +26,7 @@
                             "@/file",
                             "@/graph",
                             "@/utils",
+                            "@/types",
                             "@/log"
                         ],
                         "includeTransitiveDependencies": true

@@ -1,6 +1,6 @@
-import { NxGeneratorConfig, NxPluginsConfig } from '../nx';
+import type { NxGeneratorConfig, NxPluginsConfig } from '@/types';
+import type { C } from '.';
 import { PLUGIN_NAME } from './name';
-import { C } from '.';
 
 export type BaseGeneratorOptions = {
     language: C;
