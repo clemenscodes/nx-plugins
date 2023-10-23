@@ -307,7 +307,6 @@ jobs:
                       -t lint build test
 
             - name: Run E2E Agents (unix)
-              id: agents
               if: needs.agents.result != 'failure' &&
                   needs.agents.result != 'cancelled' &&
                   needs.agents.result != 'skipped' &&
