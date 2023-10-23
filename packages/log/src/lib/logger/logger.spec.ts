@@ -1,13 +1,11 @@
-import { output } from '@nx/devkit';
+import { mockNxOutput } from '@/mocks';
 import { logger } from './logger';
 
 describe('logger', () => {
     let outputLogMock: jest.SpyInstance;
 
     beforeEach(() => {
-        outputLogMock = jest
-            .spyOn(output, 'log')
-            .mockImplementationOnce(jest.fn());
+        outputLogMock = mockNxOutput('log').mockImplementationOnce(jest.fn());
     });
 
     afterEach(() => {

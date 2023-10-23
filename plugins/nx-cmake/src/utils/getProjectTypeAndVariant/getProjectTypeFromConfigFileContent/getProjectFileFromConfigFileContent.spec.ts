@@ -1,6 +1,6 @@
 import { CProjectType } from '@/types';
+import { mockNxOutput } from '@/mocks';
 import { getProjectTypeFromConfigFileContent } from './getProjectFileFromConfigFileContent';
-import { output } from '@nx/devkit';
 
 describe('getProjectTypeFromConfigFileContent', () => {
     let content: string;
@@ -9,7 +9,7 @@ describe('getProjectTypeFromConfigFileContent', () => {
 
     beforeEach(() => {
         projectType = CProjectType.Test;
-        nxErrorOutputMock = jest.spyOn(output, 'error');
+        nxErrorOutputMock = mockNxOutput('error');
     });
 
     it('should return Test for content with enable_testing()', () => {

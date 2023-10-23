@@ -1,10 +1,9 @@
 import type { Tree } from '@nx/devkit';
-import { output } from '@nx/devkit';
-import initGenerator from './initGenerator';
-import * as checkNxVersionModule from '../../config/checkNxVersion/checkNxVersion';
+import { mockNxOutput, setupWorkspace } from '@/mocks';
 import { InitGeneratorSchema } from '../generator';
 import { getDefaultInitGeneratorOptions } from './getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
-import { setupWorkspace } from '@/mocks';
+import initGenerator from './initGenerator';
+import * as checkNxVersionModule from '../../config/checkNxVersion/checkNxVersion';
 
 describe('init generator', () => {
     let tree: Tree;
@@ -17,8 +16,8 @@ describe('init generator', () => {
         tree = setupWorkspace();
         options = getDefaultInitGeneratorOptions();
         checkNxVersionMock = jest.spyOn(checkNxVersionModule, 'checkNxVersion');
-        nxOutputWarnMock = jest.spyOn(output, 'warn');
-        nxOutputErrorMock = jest.spyOn(output, 'error');
+        nxOutputWarnMock = mockNxOutput('warn');
+        nxOutputErrorMock = mockNxOutput('error');
     });
 
     afterEach(() => {
