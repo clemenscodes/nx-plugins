@@ -27,6 +27,7 @@
                             "@/util",
                             "@/mocks",
                             "@/types",
+                            "@/command",
                             "@/log"
                         ],
                         "includeTransitiveDependencies": true

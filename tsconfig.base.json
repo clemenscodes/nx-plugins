@@ -15,6 +15,7 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
+            "@/command": ["packages/command/src/index.ts"],
             "@/file": ["packages/file/src/index.ts"],
             "@/log": ["packages/log/src/index.ts"],
             "@/mocks": ["packages/mocks/src/index.ts"],

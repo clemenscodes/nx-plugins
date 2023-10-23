@@ -1,6 +1,6 @@
 import { commandExists } from './commandExists';
 import * as executeCommandModule from '../executeCommand/executeCommand';
-import * as isWindowsModule from '../isWindows/isWindows';
+import * as utilsModule from '@/util';
 
 describe('commandExists', () => {
     let executeCommandMock: jest.SpyInstance;
@@ -9,7 +9,7 @@ describe('commandExists', () => {
     beforeEach(() => {
         executeCommandMock = jest.spyOn(executeCommandModule, 'executeCommand');
         isWindowsMock = jest
-            .spyOn(isWindowsModule, 'isWindows')
+            .spyOn(utilsModule, 'isWindows')
             .mockReturnValue(false);
     });
 

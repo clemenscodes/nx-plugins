@@ -1,8 +1,8 @@
 import { getGccDependencies } from './getGccDependencies';
 import * as detectTestFrameworkModule from '../detectTestFramework/detectTestFramework';
 import * as installTestFrameworkModule from '../installTestFramework/installTestFramework';
-import * as utilsModule from '@/util';
 import * as logModule from '@/log';
+import * as commandModule from '@/command';
 
 describe('getGccDependencies', () => {
     let executeCommandSpy: jest.SpyInstance;
@@ -17,7 +17,7 @@ describe('getGccDependencies', () => {
         cmd = 'gcc-command';
         projectRoot = 'project-root';
         workspaceRoot = '/workspace/root';
-        executeCommandSpy = jest.spyOn(utilsModule, 'executeCommand');
+        executeCommandSpy = jest.spyOn(commandModule, 'executeCommand');
         detectTestFrameworkSpy = jest.spyOn(
             detectTestFrameworkModule,
             'detectTestFramework',

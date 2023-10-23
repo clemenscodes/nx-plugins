@@ -1,10 +1,11 @@
 import { formatFilesWithClangFormat } from './formatFilesWithClangFormat';
+import { FormatExecutorSchema } from '../../../executors/executor';
+import { CLANG_FORMAT_CONFIG_FILE, LINUX_CLANG_FORMAT } from '../../../config';
 import * as getFormatArgumentsModule from '../getFormatArguments/getFormatArguments';
+import * as getClangFormatModule from '../../../config/getPrograms/getClangFormat/getClangFormat';
 import * as fileModule from '@/file';
 import * as utilsModule from '@/util';
-import { CLANG_FORMAT_CONFIG_FILE, LINUX_CLANG_FORMAT } from '../../../config';
-import * as getClangFormatModule from '../../../config/getPrograms/getClangFormat/getClangFormat';
-import { FormatExecutorSchema } from '../../../executors/executor';
+import * as commandModule from '@/command';
 
 describe('formatFilesWithClangFormat', () => {
     let workspaceRoot: string;
@@ -33,10 +34,10 @@ describe('formatFilesWithClangFormat', () => {
         );
         getProjectFilesMock = jest.spyOn(fileModule, 'getProjectFiles');
         checkCommandExistsMock = jest
-            .spyOn(utilsModule, 'checkCommandExists')
+            .spyOn(commandModule, 'checkCommandExists')
             .mockImplementation(jest.fn());
         executeCommandForFilesMock = jest.spyOn(
-            utilsModule,
+            commandModule,
             'executeCommandForFiles',
         );
         isWindowsMock = jest

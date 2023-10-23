@@ -1,6 +1,6 @@
 import { getExecuteBinary } from '../getExecuteBinary/getExecuteBinary';
 import { getBinaryArguments } from '../getBinaryArguments/getBinaryArguments';
-import { runCommand } from '@/util';
+import { runCommand } from '@/command';
 import { ExecuteExecutorSchema } from '../../executor';
 
 export const executeBinary = (
