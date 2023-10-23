@@ -1,6 +1,6 @@
 import type { Tree } from '@nx/devkit';
 import { logger } from '@/log';
-import { normalizeLineEndings } from '../normalizeLineEndings/normalizeLineEndings';
+import { normalizeLineEndings } from '@/util';
 
 export const readFileWithTree = (tree: Tree, file: string): string => {
     logger(`Reading file ${file} using tree`);

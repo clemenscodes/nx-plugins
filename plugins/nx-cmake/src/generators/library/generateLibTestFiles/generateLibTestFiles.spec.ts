@@ -1,12 +1,12 @@
 import type { Tree } from '@nx/devkit';
 import { readProjectConfiguration } from '@nx/devkit';
+import { setupWorkspace } from '@/mocks';
+import { readFileWithTree } from '@/file';
 import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
 import { generateLibTestFiles } from './generateLibTestFiles';
-import { readFileWithTree } from '@/util';
 import { LibGeneratorSchema, LibSchema } from '../../generator';
 import { getDefaultInitGeneratorOptions } from '../../init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 import initGenerator from '../../init/initGenerator';
-import { setupWorkspace } from '@/mocks';
 
 describe('generateLibTestFiles', () => {
     let tree: Tree;

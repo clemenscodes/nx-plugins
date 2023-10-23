@@ -2,7 +2,7 @@ import { type Tree } from '@nx/devkit';
 import { join } from 'path';
 import { getPluginConfig } from '../getPluginConfig/getPluginConfig';
 import { logger } from '@/log';
-import { updateFile } from '@/util';
+import { updateFile } from '@/file';
 
 export const addProjectRootToSubDirectories = (
     tree: Tree,

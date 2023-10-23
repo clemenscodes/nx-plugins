@@ -10,3 +10,6 @@ export { getNestedFiles } from './lib/getNestedFiles/getNestedFiles';
 export { getProjectFiles } from './lib/getProjectFiles/getProjectFiles';
 export { pathIsDirectory } from './lib/pathIsDirectory/pathIsDirectory';
 export { readAllFilesOfDirectory } from './lib/readAllFilesOfDirectory/readAllFilesOfDirectory';
+export { readFileWithTree } from './lib/readFileWithTree/readFileWithTree';
+export { updateFile } from './lib/updateFile/updateFileFile';
+export { writeFileWithTree } from './lib/writeFileWithTree/writeFileWithTree';

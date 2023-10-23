@@ -1,16 +1,17 @@
 import type { Tree } from '@nx/devkit';
+import { trimLib, normalizeLineEndings } from '@/util';
+import { setupWorkspace } from '@/mocks';
+import { readFileWithTree } from '@/file';
 import { linkGenerator } from './linkGenerator';
-import { trimLib, normalizeLineEndings, readFileWithTree } from '@/util';
-import initGenerator from '../init/initGenerator';
-import { libGenerator } from '../library/libGenerator';
+import { getDefaultInitGeneratorOptions } from '../init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
+import { resolveLibOptions } from '../library/resolveLibOptions/resolveLibOptions';
 import {
     LibGeneratorSchema,
     LibSchema,
     LinkGeneratorSchema,
 } from '../generator';
-import { getDefaultInitGeneratorOptions } from '../init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
-import { resolveLibOptions } from '../library/resolveLibOptions/resolveLibOptions';
-import { setupWorkspace } from '@/mocks';
+import initGenerator from '../init/initGenerator';
+import libGenerator from '../library/libGenerator';
 
 describe('link generator', () => {
     let tree: Tree;

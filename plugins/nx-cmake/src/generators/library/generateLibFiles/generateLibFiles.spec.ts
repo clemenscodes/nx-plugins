@@ -1,11 +1,11 @@
 import type { Tree } from '@nx/devkit';
+import { setupWorkspace } from '@/mocks';
+import { readFileWithTree } from '@/file';
 import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
 import { generateLibFiles } from './generateLibFiles';
-import { readFileWithTree } from '@/util';
 import { LibSchema } from '../../generator';
 import { getDefaultInitGeneratorOptions } from '../../init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 import initGenerator from '../../init/initGenerator';
-import { setupWorkspace } from '@/mocks';
 
 describe('generateLibFiles', () => {
     let tree: Tree;

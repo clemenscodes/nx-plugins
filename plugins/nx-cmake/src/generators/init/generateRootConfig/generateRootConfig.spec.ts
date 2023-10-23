@@ -1,7 +1,8 @@
 import type { Tree } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
+import { normalizeLineEndings } from '@/util';
+import { readFileWithTree } from '@/file';
 import { generateRootConfig } from './generateRootConfig';
-import { normalizeLineEndings, readFileWithTree } from '@/util';
 import { InitGeneratorSchema } from '../../generator';
 import { getDefaultInitGeneratorOptions } from '../getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 

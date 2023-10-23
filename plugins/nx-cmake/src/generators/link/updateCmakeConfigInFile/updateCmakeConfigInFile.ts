@@ -1,6 +1,6 @@
 import type { Tree } from '@nx/devkit';
 import { join } from 'path';
-import { updateFile, writeFileWithTree } from '@/util';
+import { updateFile, writeFileWithTree } from '@/file';
 import { LinkSchema } from '../../generator';
 
 export const getFindDependencyStatements = (

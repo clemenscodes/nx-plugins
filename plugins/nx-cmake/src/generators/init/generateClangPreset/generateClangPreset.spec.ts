@@ -1,13 +1,14 @@
 import type { Tree } from '@nx/devkit';
+import { readFileWithTree } from '@/file';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { generateClangPreset } from './generateClangPreset';
-import { readFileWithTree } from '@/util';
+import { InitGeneratorSchema } from '../../generator';
+import { getDefaultInitGeneratorOptions } from '../getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 import {
     CLANG_FORMAT_CONFIG_FILE,
     CLANG_TIDY_CONFIG_FILE,
 } from '../../../config';
-import { InitGeneratorSchema } from '../../generator';
-import { getDefaultInitGeneratorOptions } from '../getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
+
 describe('generateClangPreset', () => {
     let tree: Tree;
     let options: InitGeneratorSchema;

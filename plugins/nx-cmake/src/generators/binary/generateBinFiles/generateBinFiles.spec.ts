@@ -1,11 +1,11 @@
 import type { Tree } from '@nx/devkit';
+import { setupWorkspace } from '@/mocks';
+import { readFileWithTree } from '@/file';
 import { generateBinFiles } from './generateBinFiles';
 import { resolveBinOptions } from '../resolveBinOptions/resolveBinOptions';
-import { readFileWithTree } from '@/util';
 import { BinSchema } from '../../generator';
 import { getDefaultInitGeneratorOptions } from '../../init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 import initGenerator from '../../init/initGenerator';
-import { setupWorkspace } from '@/mocks';
 
 describe('generateBinFiles', () => {
     let tree: Tree;

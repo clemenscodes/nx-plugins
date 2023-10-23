@@ -1,17 +1,18 @@
 import type { Tree } from '@nx/devkit';
 import { join } from 'path';
+import { trimLib, normalizeLineEndings } from '@/util';
+import { readFileWithTree } from '@/file';
+import { setupWorkspace } from '@/mocks';
+import { LibSchema, LinkSchema } from '../../generator';
+import { getDefaultInitGeneratorOptions } from '../../init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
+import { resolveLibOptions } from '../../library/resolveLibOptions/resolveLibOptions';
 import {
     getCmakeLink,
     getSourceCmakeFile,
     updateCmakeFile,
 } from './updateCmakeFile';
-import { trimLib, normalizeLineEndings, readFileWithTree } from '@/util';
 import initGenerator from '../../init/initGenerator';
 import libGenerator from '../../library/libGenerator';
-import { LibSchema, LinkSchema } from '../../generator';
-import { getDefaultInitGeneratorOptions } from '../../init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
-import { resolveLibOptions } from '../../library/resolveLibOptions/resolveLibOptions';
-import { setupWorkspace } from '@/mocks';
 
 describe('updateCmakeFile', () => {
     let tree: Tree;
