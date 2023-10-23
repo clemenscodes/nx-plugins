@@ -247,6 +247,126 @@ jobs:
               if: steps.cache.outputs.cache-hit != 'true'
               run: pnpm install --no-frozen-lockfile
 
+            - name: Start Agents (unix)
+              if: needs.agents.result != 'failure' &&
+                  needs.agents.result != 'cancelled' &&
+                  needs.agents.result != 'skipped' &&
+                  matrix.os != 'windows-latest'
+              run: npx nx-cloud start-ci-run --stop-agents-after=e2e
+
+            - name: Run Test Agents (unix)
+              id: agents
+              if: needs.agents.result != 'failure' &&
+                  needs.agents.result != 'cancelled' &&
+                  needs.agents.result != 'skipped' &&
+                  matrix.os != 'windows-latest'
+              run: |
+                  pnpm nx affected \
+                      --nx-bail \
+                      --base=$NX_BASE \
+                      --head=$NX_HEAD \
+                      --configuration=ci \
+                      --output-style=stream \
+                      --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT \
+                      --no-cloud \
+                      -t lint build test
+
+            - name: Run Tests (windows)
+              if: matrix.os == 'windows-latest'
+              run: |
+                  pnpm nx affected `
+                      --nx-bail `
+                      --base=$env:NX_BASE `
+                      --head=$env:NX_HEAD `
+                      --configuration=ci `
+                      --output-style=stream `
+                      --parallel=$env:NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT `
+                      --no-cloud `
+                      -t lint build test
+
+            - name: Stop Agents
+              if: always()
+              run: npx nx-cloud stop-all-agents
+
+            - name: Upload coverage reports to Codecov
+              if: matrix.os == 'ubuntu-latest'
+              uses: codecov/codecov-action@v3
+              env:
+                  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    e2e:
+        name: E2E [${{ matrix.os }}]
+        needs: [main, agents]
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                os: [windows-latest, ubuntu-latest, macos-latest]
+                e2e: [e2e-create-nx-cmake, e2e-nx-cmake]
+            fail-fast: false
+        env:
+            NX_CLOUD_DISTRIBUTED_EXECUTION: false
+            NX_CACHE_DIRECTORY: tmp/${{ matrix.os }}
+        permissions:
+            contents: read
+            actions: read
+        steps:
+            - name: Checkout [Pull Request]
+              uses: actions/checkout@v3
+              if: github.event_name == 'pull_request'
+              with:
+                  ref: ${{ github.event.pull_request.head.sha }}
+                  fetch-depth: 0
+
+            - name: Checkout [Main]
+              uses: actions/checkout@v3
+              if: github.event_name != 'pull_request'
+              with:
+                  fetch-depth: 0
+
+            - name: Derive SHAs
+              uses: nrwl/nx-set-shas@v3
+
+            - name: Install Node
+              uses: actions/setup-node@v3
+              with:
+                  node-version: lts/*
+
+            - name: Install pnpm
+              uses: pnpm/action-setup@v2
+              id: pnpm-install
+              with:
+                  version: latest
+                  run_install: false
+
+            - name: Get pnpm store directory
+              id: pnpm-cache
+              shell: bash
+              run: |
+                  echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+            - name: Restore pnpm cache
+              uses: actions/cache/restore@v3
+              id: cache
+              with:
+                  path: |
+                      ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+                      node_modules/
+                  key: ${{ matrix.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  restore-keys: |
+                      ${{ matrix.os }}-pnpm-store-
+
+            - name: Nx cache
+              uses: actions/cache@v3
+              id: nx_cache
+              with:
+                  path: ${{ env.NX_CACHE_DIRECTORY }}
+                  key: ${{ matrix.os }}-nx-cache-${{ hashFiles('tmp/**') }}
+                  restore-keys: |
+                      ${{ matrix.os }}-nx-cache
+
+            - name: Install dependencies
+              if: steps.cache.outputs.cache-hit != 'true'
+              run: pnpm install --no-frozen-lockfile
+
             - name: Install linux dependencies (ubuntu-latest)
               if: matrix.os == 'ubuntu-latest'
               run: |
@@ -282,97 +402,22 @@ jobs:
                       clang-tools-extra:u
                       gdb:u
 
-            - name: Start Agents (unix)
-              if: needs.agents.result != 'failure' &&
-                  needs.agents.result != 'cancelled' &&
-                  needs.agents.result != 'skipped' &&
-                  matrix.os != 'windows-latest'
-              run: npx nx-cloud start-ci-run --stop-agents-after=e2e
-
-            - name: Run Test Agents (unix)
-              id: agents
-              if: needs.agents.result != 'failure' &&
-                  needs.agents.result != 'cancelled' &&
-                  needs.agents.result != 'skipped' &&
-                  matrix.os != 'windows-latest'
-              run: |
-                  pnpm nx affected \
-                      --nx-bail \
-                      --base=$NX_BASE \
-                      --head=$NX_HEAD \
-                      --configuration=ci \
-                      --output-style=stream \
-                      --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT \
-                      --no-cloud \
-                      -t lint build test
-
-            - name: Run Test Agents (windows)
-              if: matrix.os == 'windows-latest'
-              run: |
-                  pnpm nx affected `
-                      --nx-bail `
-                      --base=$env:NX_BASE `
-                      --head=$env:NX_HEAD `
-                      --configuration=ci `
-                      --output-style=stream `
-                      --parallel=$env:NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT `
-                      --no-cloud `
-                      -t lint build test
-
-            - name: Stop Agents
-              if: always()
-              run: npx nx-cloud stop-all-agents
-
-            - name: Run E2E Agents (unix)
-              if: needs.agents.result != 'failure' &&
-                  needs.agents.result != 'cancelled' &&
-                  needs.agents.result != 'skipped' &&
-                  matrix.os != 'windows-latest'
+            - name: Run E2E Agents
               env:
                   NX_CLOUD_DISTRIBUTED_EXECUTION: 'false'
                   npm_config_registry: http://localhost:4873
+              shell: bash
               run: |
-                  pnpm nx start-local-registry verdaccio
-                  SKIP=true pnpm nx affected \
-                      --nx-bail \
-                      --base=$NX_BASE \
-                      --head=$NX_HEAD \
+                  pnpm nx e2e ${{ matrix.e2e }} \
                       --configuration=ci \
                       --output-style=stream \
-                      --parallel=2 \
-                      --no-cloud \
-                      -t e2e
-                  pnpm nx stop-local-registry verdaccio
-
-            - name: Run E2E Agents (windows)
-              if: matrix.os == 'windows-latest'
-              env:
-                  NX_CLOUD_DISTRIBUTED_EXECUTION: 'false'
-                  npm_config_registry: http://localhost:4873
-              run: |
-                  pnpm nx start-local-registry verdaccio
-                  $env:SKIP = "true"
-                  pnpm nx affected `
-                      --nx-bail `
-                      --base=$env:NX_BASE `
-                      --head=$env:NX_HEAD `
-                      --configuration=ci `
-                      --output-style=stream `
-                      --parallel=2 `
-                      --no-cloud `
-                      -t e2e
-                  pnpm nx stop-local-registry verdaccio
-
-            - name: Upload coverage reports to Codecov
-              if: matrix.os == 'ubuntu-latest'
-              uses: codecov/codecov-action@v3
-              env:
-                  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+                      --parallel=1 \
+                      --no-cloud
 
     publish:
         name: Publish
         runs-on: ubuntu-latest
-        needs: [main, agents]
+        needs: [e2e]
         env:
             NX_CLOUD_DISTRIBUTED_EXECUTION: false
             NX_SKIP_NX_CACHE: true
