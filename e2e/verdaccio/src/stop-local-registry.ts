@@ -8,6 +8,9 @@ const stopLocalRegistry = () => {
 };
 
 function main() {
+    if (process.env.SKIP) {
+        exit(0);
+    }
     stopLocalRegistry();
     unsetLocalRegistry();
     exit(0);

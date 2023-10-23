@@ -304,7 +304,26 @@ jobs:
                       --output-style=stream \
                       --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT \
                       --no-cloud \
-                      -t lint build test e2e
+                      -t lint build test
+
+            - name: Run E2E Agents (unix)
+              id: agents
+              if: needs.agents.result != 'failure' &&
+                  needs.agents.result != 'cancelled' &&
+                  needs.agents.result != 'skipped' &&
+                  matrix.os != 'windows-latest'
+              run: |
+                  pnpm nx start-local-registry verdaccio
+                  SKIP=true pnpm nx affected \
+                      --nx-bail \
+                      --base=$NX_BASE \
+                      --head=$NX_HEAD \
+                      --configuration=ci \
+                      --output-style=stream \
+                      --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT \
+                      --no-cloud \
+                      -t e2e
+                  pnpm nx stop-local-registry verdaccio
 
             - name: Run Test Agents (windows)
               if: matrix.os == 'windows-latest'
@@ -317,7 +336,23 @@ jobs:
                       --output-style=stream `
                       --parallel=$env:NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT `
                       --no-cloud `
-                      -t lint build test e2e
+                      -t lint build test
+
+            - name: Run E2E Agents (windows)
+              if: matrix.os == 'windows-latest'
+              run: |
+                  pnpm nx start-local-registry verdaccio
+                  $env:SKIP = "true"
+                  pnpm nx affected `
+                      --nx-bail `
+                      --base=$env:NX_BASE `
+                      --head=$env:NX_HEAD `
+                      --configuration=ci `
+                      --output-style=stream `
+                      --parallel=$env:NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT `
+                      --no-cloud `
+                      -t e2e
+                  pnpm nx stop-local-registry verdaccio
 
             - name: Stop Agents
               if: always()

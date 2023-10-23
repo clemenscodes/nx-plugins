@@ -19,6 +19,9 @@ const startLocalRegistry = () => {
 };
 
 function main() {
+    if (process.env.SKIP) {
+        exit(0);
+    }
     startLocalRegistry();
     setLocalRegistry();
     publishPackages();
