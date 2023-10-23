@@ -339,7 +339,7 @@ jobs:
                       --head=$NX_HEAD \
                       --configuration=ci \
                       --output-style=stream \
-                      --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT \
+                      --parallel=1 \
                       --no-cloud \
                       -t e2e
                   pnpm nx stop-local-registry verdaccio
@@ -358,7 +358,7 @@ jobs:
                       --head=$env:NX_HEAD `
                       --configuration=ci `
                       --output-style=stream `
-                      --parallel=$env:NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT `
+                      --parallel=1 `
                       --no-cloud `
                       -t e2e
                   pnpm nx stop-local-registry verdaccio
