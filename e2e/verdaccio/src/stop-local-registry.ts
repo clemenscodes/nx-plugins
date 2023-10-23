@@ -9,6 +9,7 @@ const stopLocalRegistry = () => {
 
 function main() {
     if (process.env.SKIP) {
+        console.log('Skipping stop')
         exit(0);
     }
     stopLocalRegistry();

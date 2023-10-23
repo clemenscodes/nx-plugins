@@ -330,6 +330,7 @@ jobs:
                   matrix.os != 'windows-latest'
               env:
                   NX_CLOUD_DISTRIBUTED_EXECUTION: 'false'
+                  npm_config_registry: http://localhost:4873
               run: |
                   pnpm nx start-local-registry verdaccio
                   SKIP=true pnpm nx affected \
@@ -347,6 +348,7 @@ jobs:
               if: matrix.os == 'windows-latest'
               env:
                   NX_CLOUD_DISTRIBUTED_EXECUTION: 'false'
+                  npm_config_registry: http://localhost:4873
               run: |
                   pnpm nx start-local-registry verdaccio
                   $env:SKIP = "true"

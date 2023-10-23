@@ -19,6 +19,7 @@ const startLocalRegistry = () => {
 
 function main() {
     if (process.env.SKIP) {
+        console.log('Skipping start')
         exit(0);
     }
     startLocalRegistry();
