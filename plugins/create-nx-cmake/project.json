@@ -52,7 +52,7 @@
         },
         "publish": {
             "dependsOn": ["build"],
-            "command": "node tools/scripts/publish.mjs create-nx-cmake {args.ver} {args.tag}"
+            "command": "node e2e/verdaccio/src/publish.mjs create-nx-cmake {args.ver} {args.tag}"
         },
         "version": {
             "executor": "@jscutlery/semver:version",
