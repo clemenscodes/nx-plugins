@@ -13,6 +13,8 @@
                     "fmt",
                     "compile"
                 ],
+                "canTrackAnalytics": false,
+                "showUsageWarnings": true,
                 "accessToken": "ZTBkM2I2MjYtNTc4Mi00YjUxLTkzNDAtZWFlYjg1OGY0Y2UxfHJlYWQtd3JpdGU=",
                 "useDaemonProcess": false
             }
@@ -29,6 +31,9 @@
         }
     },
     "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "affected": {
+        "defaultBase": "origin/main"
+    },
     "workspaceLayout": {
         "appsDir": "bin",
         "libsDir": "packages"

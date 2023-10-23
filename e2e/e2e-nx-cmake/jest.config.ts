@@ -10,6 +10,6 @@ export default {
     },
     moduleFileExtensions: ['ts', 'js', 'html'],
     coverageDirectory: '../../coverage/e2e/e2e-nx-cmake',
-    globalSetup: '../../tools/scripts/start-local-registry.ts',
-    globalTeardown: '../../tools/scripts/stop-local-registry.ts',
+    globalSetup: '../verdaccio/src/start-local-registry.ts',
+    globalTeardown: '../verdaccio/src/stop-local-registry.ts',
 };

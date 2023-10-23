@@ -22,6 +22,11 @@
                     "packages/mocks/**/*.ts",
                     "packages/mocks/package.json"
                 ]
+            },
+            "configurations": {
+                "ci": {
+                    "maxWarnings": 0
+                }
             }
         },
         "test": {
@@ -34,6 +39,7 @@
             "configurations": {
                 "ci": {
                     "ci": true,
+                    "coverageReporters": ["lcov"],
                     "codeCoverage": true
                 }
             }

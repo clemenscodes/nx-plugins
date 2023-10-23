@@ -60,8 +60,5 @@
         "@swc/helpers": "0.5.3",
         "create-nx-workspace": "16.10.0",
         "tslib": "^2.6.2"
-    },
-    "nx": {
-        "includedScripts": []
     }
 }

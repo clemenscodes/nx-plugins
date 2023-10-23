@@ -88,7 +88,7 @@ export function startLocalRegistry({
 
 export default async () => {
     // local registry target to run
-    const localRegistryTarget = 'nx-plugins:local-registry';
+    const localRegistryTarget = 'verdaccio:local-registry';
     // storage folder for the local registry
     const storage = './tmp/local-registry/storage';
 

@@ -1,12 +1,12 @@
 {
-    "name": "nx-plugins",
-    "$schema": "node_modules/nx/schemas/project-schema.json",
+    "name": "verdaccio",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "targets": {
         "local-registry": {
             "executor": "@nx/js:verdaccio",
             "options": {
                 "port": 4873,
-                "config": ".verdaccio/config.yml",
+                "config": "e2e/verdaccio/config.yml",
                 "storage": "tmp/local-registry/storage"
             }
         }
