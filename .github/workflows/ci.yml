@@ -294,7 +294,7 @@ jobs:
               env:
                   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     e2e:
-        name: E2E [${{ matrix.os }}]
+        name: E2E [${{ matrix.e2e }} ${{ matrix.os }}]
         needs: [main, agents]
         runs-on: ${{ matrix.os }}
         strategy:
@@ -402,7 +402,7 @@ jobs:
                       clang-tools-extra:u
                       gdb:u
 
-            - name: Run E2E Agents
+            - name: Run E2E ${{ matrix.e2e }}
               env:
                   NX_CLOUD_DISTRIBUTED_EXECUTION: 'false'
                   npm_config_registry: http://localhost:4873
@@ -410,7 +410,6 @@ jobs:
               run: |
                   pnpm nx e2e ${{ matrix.e2e }} \
                       --configuration=ci \
-                      --output-style=stream \
                       --parallel=1 \
                       --no-cloud
 
