@@ -1,10 +1,16 @@
-/**
- * This script stops the local registry for e2e testing purposes.
- * It is meant to be called in jest's globalTeardown.
- */
+import { execSync } from 'node:child_process';
+import { port } from './lib/port';
+import { unsetLocalRegistry } from './lib/unsetLocalRegistry';
+import { exit } from 'node:process';
 
-export default () => {
-    if (global.stopLocalRegistry) {
-        global.stopLocalRegistry();
-    }
+const stopLocalRegistry = () => {
+    execSync(`npx kill-port ${port}`);
 };
+
+function main() {
+    stopLocalRegistry();
+    unsetLocalRegistry();
+    exit(0);
+}
+
+main();

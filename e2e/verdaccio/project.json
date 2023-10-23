@@ -2,10 +2,24 @@
     "name": "verdaccio",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "targets": {
+        "start-local-registry": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "ts-node e2e/verdaccio/src/start-local-registry.ts"
+            }
+        },
+        "stop-local-registry": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "ts-node e2e/verdaccio/src/stop-local-registry.ts"
+            }
+        },
         "local-registry": {
             "executor": "@nx/js:verdaccio",
             "options": {
                 "port": 4873,
+                "clear": true,
+                "location": "none",
                 "config": "e2e/verdaccio/config.yml",
                 "storage": "tmp/local-registry/storage"
             }

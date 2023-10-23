@@ -40,13 +40,16 @@
     },
     "plugins": ["nx-cmake"],
     "targetDefaults": {
+        "build": {
+            "dependsOn": ["lint", "^build"]
+        },
+        "publish": {
+            "dependsOn": ["build"]
+        },
         "cmake": {
             "dependsOn": ["^cmake"],
             "inputs": ["cmake"],
             "cache": true
-        },
-        "build": {
-            "dependsOn": ["^build"]
         },
         "compile": {
             "dependsOn": ["^cmake", "^compile", "cmake"],

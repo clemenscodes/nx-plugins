@@ -5,7 +5,25 @@
     "sourceRoot": "plugins/nx-cmake/src",
     "projectType": "library",
     "targets": {
+        "lint": {
+            "executor": "@nx/eslint:lint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": [
+                    "plugins/nx-cmake/**/*.ts",
+                    "plugins/nx-cmake/package.json",
+                    "plugins/nx-cmake/generators.json",
+                    "plugins/nx-cmake/executors.json"
+                ]
+            },
+            "configurations": {
+                "ci": {
+                    "maxWarnings": 0
+                }
+            }
+        },
         "build": {
+            "dependsOn": ["lint", "^build"],
             "executor": "@nx/js:tsc",
             "outputs": ["{options.outputPath}"],
             "options": {
@@ -40,23 +58,6 @@
             },
             "configurations": {
                 "ci": {}
-            }
-        },
-        "lint": {
-            "executor": "@nx/eslint:lint",
-            "outputs": ["{options.outputFile}"],
-            "options": {
-                "lintFilePatterns": [
-                    "plugins/nx-cmake/**/*.ts",
-                    "plugins/nx-cmake/package.json",
-                    "plugins/nx-cmake/generators.json",
-                    "plugins/nx-cmake/executors.json"
-                ]
-            },
-            "configurations": {
-                "ci": {
-                    "maxWarnings": 0
-                }
             }
         },
         "test": {

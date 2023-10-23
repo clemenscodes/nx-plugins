@@ -4,12 +4,12 @@
     "projectType": "application",
     "sourceRoot": "e2e/e2e-create-nx-cmake/tests",
     "targets": {
-        "e2e": {
-            "dependsOn": ["^build"],
+        "run-e2e": {
+            "dependsOn": ["^start-local-registry", "^test"],
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
             "options": {
-                "jestConfig": "e2e/e2e-create-nx-cmake/jest.config.ts",
+                "jestConfig": "e2e/{projectName}/jest.config.ts",
                 "passWithNoTests": true,
                 "runInBand": true
             },
@@ -20,11 +20,19 @@
                 }
             }
         },
+        "finish-e2e": {
+            "dependsOn": ["run-e2e"],
+            "command": "nx stop-local-registry verdaccio"
+        },
+        "e2e": {
+            "dependsOn": ["finish-e2e"],
+            "executor": "nx:noop"
+        },
         "lint": {
             "executor": "@nx/eslint:lint",
             "outputs": ["{options.outputFile}"],
             "options": {
-                "lintFilePatterns": ["e2e/e2e-create-nx-cmake/**/*.ts"]
+                "lintFilePatterns": ["e2e/{projectName}/**/*.ts"]
             },
             "configurations": {
                 "ci": {
@@ -33,5 +41,5 @@
             }
         }
     },
-    "implicitDependencies": ["nx-cmake"]
+    "implicitDependencies": ["verdaccio", "create-nx-cmake"]
 }
