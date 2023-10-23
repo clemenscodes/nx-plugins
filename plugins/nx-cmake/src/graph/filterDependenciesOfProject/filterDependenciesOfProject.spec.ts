@@ -3,6 +3,8 @@ import { CProjectType, type FilteredProject } from '@/types';
 import { DependencyType } from '@nx/devkit';
 import { filterDependenciesOfProject } from './filterDependenciesOfProject';
 import * as getGccDependenciesModule from './getGccDependencies/getGccDependencies';
+import * as getGccModule from '../../config/getPrograms/getGcc/getGcc';
+import { LINUX_GCC } from '../../config';
 
 describe('filterDependenciesOfProject', () => {
     let project: FilteredProject;
@@ -11,6 +13,7 @@ describe('filterDependenciesOfProject', () => {
     let filesToProcess: FileData[];
     let expectedProjectDependencies: RawProjectGraphDependency[];
     let getGccDependenciesMock: jest.SpyInstance;
+    let getGccMock: jest.SpyInstance;
 
     beforeEach(() => {
         project = {
@@ -84,6 +87,7 @@ describe('filterDependenciesOfProject', () => {
             getGccDependenciesModule,
             'getGccDependencies',
         );
+        getGccMock = jest.spyOn(getGccModule, 'getGcc');
     });
 
     afterEach(() => {
@@ -91,6 +95,7 @@ describe('filterDependenciesOfProject', () => {
     });
 
     it('should filter dependencies of project', () => {
+        getGccMock.mockReturnValue(LINUX_GCC[0]);
         getGccDependenciesMock.mockReturnValueOnce(
             'testparser.o: packages/parser/test/include/testparser.h \\\n' +
                 ' include/libcmocka.h dist/packages/cmocka/cmocka-src/include/cmocka.h \\\n' +
