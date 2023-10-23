@@ -305,7 +305,6 @@ jobs:
         env:
             NX_CLOUD_DISTRIBUTED_EXECUTION: false
             NX_CACHE_DIRECTORY: tmp/${{ matrix.os }}
-            npm_config_registry: http://localhost:4873
         permissions:
             contents: read
             actions: read
@@ -405,6 +404,8 @@ jobs:
 
             - name: Run ${{ matrix.e2e }} [unix]
               if: matrix.os != 'windows-latest'
+              env:
+                  npm_config_registry: http://localhost:4873
               run: |
                   pnpm nx e2e ${{ matrix.e2e }} \
                       --configuration=ci \
@@ -413,6 +414,8 @@ jobs:
 
             - name: Run ${{ matrix.e2e }} [windows]
               if: matrix.os == 'windows-latest'
+              env:
+                  npm_config_registry: http://localhost:4873
               run: |
                   pnpm nx e2e ${{ matrix.e2e }} `
                       --configuration=ci `
