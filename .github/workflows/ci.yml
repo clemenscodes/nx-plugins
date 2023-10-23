@@ -304,7 +304,7 @@ jobs:
                       --output-style=stream \
                       --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT \
                       --no-cloud \
-                      -t e2e
+                      -t lint build test e2e
 
             - name: Run Test Agents (windows)
               if: matrix.os == 'windows-latest'
@@ -317,7 +317,7 @@ jobs:
                       --output-style=stream `
                       --parallel=$env:NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT `
                       --no-cloud `
-                      -t e2e
+                      -t lint build test e2e
 
             - name: Stop Agents
               if: always()
