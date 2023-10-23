@@ -305,6 +305,7 @@ jobs:
         env:
             NX_CLOUD_DISTRIBUTED_EXECUTION: false
             NX_CACHE_DIRECTORY: tmp/${{ matrix.os }}
+            npm_config_registry: http://localhost:4873
         permissions:
             contents: read
             actions: read
@@ -402,15 +403,20 @@ jobs:
                       clang-tools-extra:u
                       gdb:u
 
-            - name: Run ${{ matrix.e2e }}
-              env:
-                  NX_CLOUD_DISTRIBUTED_EXECUTION: 'false'
-                  npm_config_registry: http://localhost:4873
-              shell: bash
+            - name: Run ${{ matrix.e2e }} [unix]
+              if: matrix.os != 'windows-latest'
               run: |
                   pnpm nx e2e ${{ matrix.e2e }} \
                       --configuration=ci \
                       --parallel=1 \
+                      --no-cloud
+
+            - name: Run ${{ matrix.e2e }} [windows]
+              if: matrix.os == 'windows-latest'
+              run: |
+                  pnpm nx e2e ${{ matrix.e2e }} `
+                      --configuration=ci `
+                      --parallel=1 `
                       --no-cloud
 
     publish:
