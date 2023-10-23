@@ -1,12 +1,11 @@
 import type { Tree } from '@nx/devkit';
-import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
 import { generateLibFiles } from './generateLibFiles';
-import * as devkit from '@nx/devkit';
 import { readFileWithTree } from '@/util';
 import { LibSchema } from '../../generator';
 import { getDefaultInitGeneratorOptions } from '../../init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 import initGenerator from '../../init/initGenerator';
+import { setupWorkspace } from '@/mocks';
 
 describe('generateLibFiles', () => {
     let tree: Tree;
@@ -23,8 +22,7 @@ describe('generateLibFiles', () => {
     let expectedReadMeFile: string;
 
     beforeEach(async () => {
-        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
-        tree = createTreeWithEmptyWorkspace();
+        tree = setupWorkspace();
         await initGenerator(tree, getDefaultInitGeneratorOptions());
         options = resolveLibOptions({
             name: 'test',

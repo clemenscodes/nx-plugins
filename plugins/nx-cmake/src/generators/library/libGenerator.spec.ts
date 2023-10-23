@@ -1,24 +1,22 @@
 import type { Tree } from '@nx/devkit';
-import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { readProjectConfiguration } from '@nx/devkit';
 import { libGenerator } from './libGenerator';
-import * as devkit from '@nx/devkit';
 import initGenerator from '../init/initGenerator';
 import { LibGeneratorSchema } from '../generator';
 import { getDefaultInitGeneratorOptions } from '../init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
+import { setupWorkspace } from '@/mocks';
 
 describe('lib generator', () => {
     let tree: Tree;
     let options: LibGeneratorSchema;
 
     beforeEach(async () => {
-        tree = createTreeWithEmptyWorkspace();
+        tree = setupWorkspace();
         options = {
             name: 'test',
             language: 'C++',
             generateTests: true,
         };
-        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
         await initGenerator(tree, getDefaultInitGeneratorOptions());
     });
 

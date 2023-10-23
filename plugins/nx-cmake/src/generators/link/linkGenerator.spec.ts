@@ -1,8 +1,6 @@
 import type { Tree } from '@nx/devkit';
-import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { linkGenerator } from './linkGenerator';
 import { trimLib, normalizeLineEndings, readFileWithTree } from '@/util';
-import * as devkit from '@nx/devkit';
 import initGenerator from '../init/initGenerator';
 import { libGenerator } from '../library/libGenerator';
 import {
@@ -12,6 +10,7 @@ import {
 } from '../generator';
 import { getDefaultInitGeneratorOptions } from '../init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 import { resolveLibOptions } from '../library/resolveLibOptions/resolveLibOptions';
+import { setupWorkspace } from '@/mocks';
 
 describe('link generator', () => {
     let tree: Tree;
@@ -23,7 +22,7 @@ describe('link generator', () => {
     let expectedUpdatedCmakeFileContent: string;
 
     beforeEach(async () => {
-        tree = createTreeWithEmptyWorkspace();
+        tree = setupWorkspace();
         libOptions = {
             name: 'link',
             language: 'C++',
@@ -34,7 +33,6 @@ describe('link generator', () => {
             target: 'libtarget',
         };
         options = resolveLibOptions(libOptions);
-        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
         await initGenerator(tree, getDefaultInitGeneratorOptions());
         await libGenerator(tree, libOptions);
         expectedCmakeFile = 'packages/link/CMakeLists.txt';

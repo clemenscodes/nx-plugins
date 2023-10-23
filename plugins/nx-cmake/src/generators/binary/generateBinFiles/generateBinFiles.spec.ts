@@ -1,12 +1,11 @@
 import type { Tree } from '@nx/devkit';
-import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { generateBinFiles } from './generateBinFiles';
 import { resolveBinOptions } from '../resolveBinOptions/resolveBinOptions';
-import * as devkit from '@nx/devkit';
 import { readFileWithTree } from '@/util';
 import { BinSchema } from '../../generator';
 import { getDefaultInitGeneratorOptions } from '../../init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 import initGenerator from '../../init/initGenerator';
+import { setupWorkspace } from '@/mocks';
 
 describe('generateBinFiles', () => {
     let tree: Tree;
@@ -49,8 +48,7 @@ describe('generateBinFiles', () => {
     };
 
     beforeEach(async () => {
-        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
-        tree = createTreeWithEmptyWorkspace();
+        tree = setupWorkspace();
         await initGenerator(tree, getDefaultInitGeneratorOptions());
         options = resolveBinOptions({
             name: 'test',

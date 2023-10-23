@@ -1,21 +1,19 @@
 import type { Tree } from '@nx/devkit';
 import type { WorkspaceLayout } from '@/types';
-import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { readNxJson } from '@nx/devkit';
 import { presetGenerator } from './presetGenerator';
-import * as devkit from '@nx/devkit';
+import { setupWorkspace } from '@/mocks';
 
 describe('preset generator', () => {
     let tree: Tree;
     let expectedWorkspaceLayout: WorkspaceLayout;
 
     beforeEach(() => {
-        tree = createTreeWithEmptyWorkspace();
+        tree = setupWorkspace();
         expectedWorkspaceLayout = {
             appsDir: 'bin',
             libsDir: 'libs',
         };
-        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
     });
 
     afterEach(() => {

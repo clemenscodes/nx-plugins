@@ -1,7 +1,5 @@
 import type { Tree } from '@nx/devkit';
 import { resolveLinkOptions } from './resolveLinkOptions';
-import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import * as devkit from '@nx/devkit';
 import binGenerator from '../../binary/binGenerator';
 import {
     LinkGeneratorSchema,
@@ -12,6 +10,7 @@ import {
 import { getDefaultInitGeneratorOptions } from '../../init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 import initGenerator from '../../init/initGenerator';
 import libGenerator from '../../library/libGenerator';
+import { setupWorkspace } from '@/mocks';
 
 describe('resolveLinkOptions', () => {
     let tree: Tree;
@@ -20,7 +19,7 @@ describe('resolveLinkOptions', () => {
     let binOptions: BinGeneratorSchema;
 
     beforeEach(async () => {
-        tree = createTreeWithEmptyWorkspace();
+        tree = setupWorkspace();
         options = {
             source: 'liblink',
             target: 'libtarget',
@@ -35,7 +34,6 @@ describe('resolveLinkOptions', () => {
             language: 'C++',
             generateTests: true,
         };
-        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
         await initGenerator(tree, getDefaultInitGeneratorOptions());
     });
 

@@ -1,18 +1,17 @@
 import type { Tree } from '@nx/devkit';
-import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { join } from 'path';
 import {
     getCmakeLink,
     getSourceCmakeFile,
     updateCmakeFile,
 } from './updateCmakeFile';
-import * as devkit from '@nx/devkit';
 import { trimLib, normalizeLineEndings, readFileWithTree } from '@/util';
 import initGenerator from '../../init/initGenerator';
 import libGenerator from '../../library/libGenerator';
 import { LibSchema, LinkSchema } from '../../generator';
 import { getDefaultInitGeneratorOptions } from '../../init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 import { resolveLibOptions } from '../../library/resolveLibOptions/resolveLibOptions';
+import { setupWorkspace } from '@/mocks';
 
 describe('updateCmakeFile', () => {
     let tree: Tree;
@@ -23,7 +22,7 @@ describe('updateCmakeFile', () => {
     let expectedUpdatedCmakeFileContent: string;
 
     beforeEach(async () => {
-        tree = createTreeWithEmptyWorkspace();
+        tree = setupWorkspace();
         libOptions = resolveLibOptions({
             name: 'link',
             language: 'C++',
@@ -35,7 +34,6 @@ describe('updateCmakeFile', () => {
             sourceProjectRoot: 'packages/link',
             targetProjectRoot: 'packages/target',
         };
-        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
         await initGenerator(tree, getDefaultInitGeneratorOptions());
         await libGenerator(tree, libOptions);
         expectedCmakeFile = 'packages/link/CMakeLists.txt';
