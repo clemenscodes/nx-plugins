@@ -12,7 +12,6 @@ const startLocalRegistry = () => {
         detached: true,
         env: {
             ...process.env,
-            NX_CLOUD_DISTRIBUTED_EXECUTION: 'false',
         },
     }).unref();
     console.log('Local registry started on port ' + port);
