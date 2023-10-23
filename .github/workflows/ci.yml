@@ -306,26 +306,6 @@ jobs:
                       --no-cloud \
                       -t lint build test
 
-            - name: Run E2E Agents (unix)
-              if: needs.agents.result != 'failure' &&
-                  needs.agents.result != 'cancelled' &&
-                  needs.agents.result != 'skipped' &&
-                  matrix.os != 'windows-latest'
-              env:
-                  NX_CLOUD_DISTRIBUTED_EXECUTION: 'false'
-              run: |
-                  pnpm nx start-local-registry verdaccio
-                  SKIP=true pnpm nx affected \
-                      --nx-bail \
-                      --base=$NX_BASE \
-                      --head=$NX_HEAD \
-                      --configuration=ci \
-                      --output-style=stream \
-                      --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT \
-                      --no-cloud \
-                      -t e2e
-                  pnpm nx stop-local-registry verdaccio
-
             - name: Run Test Agents (windows)
               if: matrix.os == 'windows-latest'
               run: |
@@ -339,10 +319,30 @@ jobs:
                       --no-cloud `
                       -t lint build test
 
+            - name: Stop Agents
+              if: always()
+              run: npx nx-cloud stop-all-agents
+
+            - name: Run E2E Agents (unix)
+              if: needs.agents.result != 'failure' &&
+                  needs.agents.result != 'cancelled' &&
+                  needs.agents.result != 'skipped' &&
+                  matrix.os != 'windows-latest'
+              run: |
+                  pnpm nx start-local-registry verdaccio
+                  SKIP=true pnpm nx affected \
+                      --nx-bail \
+                      --base=$NX_BASE \
+                      --head=$NX_HEAD \
+                      --configuration=ci \
+                      --output-style=stream \
+                      --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT \
+                      --no-cloud \
+                      -t e2e
+                  pnpm nx stop-local-registry verdaccio
+
             - name: Run E2E Agents (windows)
               if: matrix.os == 'windows-latest'
-              env:
-                  NX_CLOUD_DISTRIBUTED_EXECUTION: 'false'
               run: |
                   pnpm nx start-local-registry verdaccio
                   $env:SKIP = "true"
@@ -356,10 +356,6 @@ jobs:
                       --no-cloud `
                       -t e2e
                   pnpm nx stop-local-registry verdaccio
-
-            - name: Stop Agents
-              if: always()
-              run: npx nx-cloud stop-all-agents
 
             - name: Upload coverage reports to Codecov
               if: matrix.os == 'ubuntu-latest'
