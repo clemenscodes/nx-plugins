@@ -380,6 +380,10 @@ jobs:
               uses: actions/download-artifact@v3
               with:
                   name: dist
+                  path: dist
+
+            - name: Debug dist
+              run: ls -la dist
 
             - name: Install linux dependencies (ubuntu-latest)
               if: matrix.os == 'ubuntu-latest'
@@ -475,6 +479,7 @@ jobs:
               uses: actions/download-artifact@v3
               with:
                   name: dist
+                  path: dist
 
             - name: Start registry
               run: pnpm nx start-local-registry verdaccio
@@ -589,6 +594,7 @@ jobs:
               uses: actions/download-artifact@v3
               with:
                   name: dist
+                  path: dist
 
             - name: Check npm auth
               if: startsWith(github.ref, 'refs/heads/main')
