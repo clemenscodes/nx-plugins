@@ -478,11 +478,11 @@ jobs:
 
             - name: Run e2e
               env:
-                  npm_config_registry: http://0.0.0.0:4873
+                  npm_config_registry: http://localhost:4873
                   NX_NO_CLOUD: true
+                  SKIP: true
               run: |
                   pnpm nx start-local-registry verdaccio
-                  $env:SKIP = "true"
                   pnpm nx affected `
                     --nx-bail `
                     --base=$env:NX_BASE `
