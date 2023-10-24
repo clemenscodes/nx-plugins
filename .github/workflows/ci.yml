@@ -478,9 +478,6 @@ jobs:
                   name: dist
                   path: dist
 
-            - name: Start registry
-              run: pnpm nx start-local-registry verdaccio
-
             - name: Install MSYS2 (windows-latest)
               run: |
                   Add-Content $env:GITHUB_PATH "C:\msys64"
@@ -514,9 +511,6 @@ jobs:
                     --configuration=ci `
                     --parallel=1 `
                     -t e2e
-
-            - name: Stop registry
-              run: pnpm nx stop-local-registry verdaccio
 
     publish:
         name: Publish
