@@ -1,4 +1,4 @@
-import { fork, spawn } from 'node:child_process';
+import { spawn } from 'node:child_process';
 import { localRegistryTarget } from './lib/localRegistryTarget';
 import { port } from './lib/port';
 import { setLocalRegistry } from './lib/setLocalRegistry';
@@ -8,7 +8,7 @@ import { exit } from 'process';
 import { registry } from './lib/registry';
 
 const startLocalRegistry = () => {
-    fork('nx', [localRegistryTarget, project], {
+    spawn('nx', [localRegistryTarget, project], {
         stdio: 'inherit',
         detached: true,
         env: {
@@ -24,10 +24,12 @@ function main() {
         console.log('Skipping start');
         exit(0);
     }
-    startLocalRegistry();
-    setLocalRegistry();
-    publishPackages();
-    exit(0);
+    (async () => {
+        startLocalRegistry();
+        setLocalRegistry();
+        await publishPackages();
+        exit(0);
+    })()
 }
 
 main();
