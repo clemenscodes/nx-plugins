@@ -605,8 +605,8 @@ jobs:
 
     cleanup:
         name: Cleanup
-        runs-on: ubuntu-latest
         needs: [publish]
+        runs-on: ubuntu-latest
         steps:
             - name: Delete Artifacts
               uses: geekyeggo/delete-artifact@v2
