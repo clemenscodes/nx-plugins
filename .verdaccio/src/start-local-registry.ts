@@ -1,4 +1,4 @@
-import { spawn } from 'child_process';
+import { spawn } from 'node:child_process';
 import { localRegistryTarget } from './lib/localRegistryTarget';
 import { port } from './lib/port';
 import { setLocalRegistry } from './lib/setLocalRegistry';
