@@ -1,4 +1,4 @@
-import { spawn } from 'node:child_process';
+import { fork, spawn } from 'node:child_process';
 import { localRegistryTarget } from './lib/localRegistryTarget';
 import { port } from './lib/port';
 import { setLocalRegistry } from './lib/setLocalRegistry';
@@ -7,8 +7,8 @@ import { project } from './lib/project';
 import { exit } from 'process';
 
 const startLocalRegistry = () => {
-    spawn('nx', [localRegistryTarget, project], {
-        stdio: 'pipe',
+    fork('nx', [localRegistryTarget, project], {
+        stdio: 'inherit',
         detached: true,
         env: {
             ...process.env,

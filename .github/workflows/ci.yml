@@ -456,6 +456,11 @@ jobs:
               if: steps.cache.outputs.cache-hit != 'true'
               run: pnpm install --no-frozen-lockfile
 
+            - name: Start registry
+              env:
+                  npm_config_registry: http://localhost:4873
+              run: pnpm nx start-local-registry verdaccio
+
             - name: Install MSYS2 (windows-latest)
               run: |
                   Add-Content $env:GITHUB_PATH "C:\msys64"
@@ -475,11 +480,6 @@ jobs:
                       clang:u
                       clang-tools-extra:u
                       gdb:u
-
-            - name: Start registry
-              env:
-                  npm_config_registry: http://localhost:4873
-              run: pnpm nx start-local-registry verdaccio
 
             - name: Run e2e
               env:
