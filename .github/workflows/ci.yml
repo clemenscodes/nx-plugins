@@ -501,7 +501,6 @@ jobs:
             - name: Run e2e
               env:
                   NX_NO_CLOUD: true
-                  SKIP: true
               run: |
                   pnpm nx affected `
                     --nx-bail `
