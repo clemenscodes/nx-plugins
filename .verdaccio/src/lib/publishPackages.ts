@@ -28,5 +28,3 @@ export const publishPackages = async () => {
         throw e;
     }
 };
-
-publishPackages();

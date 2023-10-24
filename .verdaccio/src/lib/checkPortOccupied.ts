@@ -16,7 +16,8 @@ export const checkPortOccupied = async (
             return true;
         }
         try {
-            const server = net.createServer().listen(port);
+            const hostname = process.env.CI ? '0.0.0.0' : 'localhost';
+            const server = net.createServer().listen(port, hostname);
             server.on('error', (e) => {
                 if ('code' in e && e.code === 'EADDRINUSE') {
                     server.close();
