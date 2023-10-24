@@ -4,7 +4,14 @@ import { unsetLocalRegistry } from './lib/unsetLocalRegistry';
 import { exit } from 'node:process';
 
 const stopLocalRegistry = () => {
-    execSync(`npx kill-port ${port}`);
+    execSync(`npx kill-port ${port}`, {
+        env: {
+            ...process.env,
+            npm_config_registry: 'https://registry.npmjs.com',
+        },
+        stdio: 'inherit',
+        encoding: 'utf-8',
+    });
 };
 
 function main() {
