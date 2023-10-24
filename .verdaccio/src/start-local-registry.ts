@@ -7,10 +7,6 @@ import { project } from './lib/project';
 import { exit } from 'process';
 
 const startLocalRegistry = () => {
-    if (process.env.SKIP) {
-        console.log('Skipping start');
-        exit(0);
-    }
     fork(require.resolve('nx'), [localRegistryTarget, project], {
         stdio: 'inherit',
         detached: true,
@@ -21,9 +17,15 @@ const startLocalRegistry = () => {
     console.log('Local registry started on port ' + port);
 };
 
-(async () => {
+function main() {
+    if (process.env.SKIP) {
+        console.log('Skipping start');
+        exit(0);
+    }
     startLocalRegistry();
     setLocalRegistry();
-    await publishPackages();
+    publishPackages();
     exit(0);
-})();
+}
+
+main();

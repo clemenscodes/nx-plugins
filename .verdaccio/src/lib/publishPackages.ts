@@ -4,9 +4,9 @@ import { registry } from './registry';
 import { checkPortOccupied } from './checkPortOccupied';
 import { port } from './port';
 
-export const publishPackages = async () => {
+export const publishPackages = () => {
     try {
-        const isOccupied = await checkPortOccupied(30, 1000, port);
+        const isOccupied = checkPortOccupied(30, 1000, port);
         if (isOccupied) {
             execSync(`nx run-many -t publish --exclude ${project}`, {
                 stdio: 'inherit',

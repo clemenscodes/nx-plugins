@@ -9,7 +9,7 @@ const stopLocalRegistry = () => {
         encoding: 'utf-8',
         env: {
             ...process.env,
-            npm_config_regisry: 'https://registry.npmjs.com',
+            npm_config_registry: 'https://registry.npmjs.com',
         },
     });
 };

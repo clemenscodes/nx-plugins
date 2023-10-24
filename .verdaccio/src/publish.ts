@@ -49,7 +49,7 @@ try {
 }
 
 // Execute "npm publish" to publish
-execSync(`npm publish --access public --tag ${tag} --registry ${registry}`, {
+execSync(`npm publish --access public --tag ${tag}`, {
     encoding: 'utf-8',
     stdio: 'inherit',
     env: {
