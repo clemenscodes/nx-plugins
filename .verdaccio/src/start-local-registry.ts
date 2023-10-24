@@ -29,7 +29,7 @@ function main() {
         setLocalRegistry();
         await publishPackages();
         exit(0);
-    })()
+    })();
 }
 
 main();
