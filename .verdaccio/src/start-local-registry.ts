@@ -7,7 +7,7 @@ import { project } from './lib/project';
 import { exit } from 'process';
 
 const startLocalRegistry = () => {
-    spawn(require.resolve('nx'), [localRegistryTarget, project], {
+    spawn(require.resolve('pnpm'), ['nx', localRegistryTarget, project], {
         stdio: 'inherit',
         detached: true,
         env: {
