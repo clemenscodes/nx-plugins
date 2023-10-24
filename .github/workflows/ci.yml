@@ -457,6 +457,7 @@ jobs:
               run: pnpm install --no-frozen-lockfile
 
             - name: Start registry
+              shell: bash
               run: pnpm nx start-local-registry verdaccio
 
             - name: Install MSYS2 (windows-latest)
@@ -483,6 +484,7 @@ jobs:
               env:
                   NX_NO_CLOUD: true
                   SKIP: true
+              shell: bash
               run: |
                   pnpm nx affected `
                     --nx-bail `
@@ -494,6 +496,7 @@ jobs:
                     -t e2e
 
             - name: Stop registry
+              shell: bash
               run: pnpm nx stop-local-registry verdaccio
 
     publish:
