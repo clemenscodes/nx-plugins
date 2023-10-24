@@ -28,3 +28,6 @@ log:
 
 publish:
     allow_offline: true # set offline to true to allow publish offline
+
+listen:
+    - 0.0.0.0:4873
