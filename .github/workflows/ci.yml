@@ -383,7 +383,7 @@ jobs:
 
             - name: Run ${{ matrix.e2e }}
               env:
-                  npm_config_registry: http://0.0.0.0:4873
+                  npm_config_registry: http://localhost:4873
                   NX_NO_CLOUD: true
               run: pnpm nx e2e ${{ matrix.e2e }} --configuration=ci --parallel=1
 

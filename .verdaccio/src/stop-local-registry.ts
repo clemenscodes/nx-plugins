@@ -4,6 +4,7 @@ import { unsetLocalRegistry } from './lib/unsetLocalRegistry';
 import { exit } from 'node:process';
 
 const stopLocalRegistry = () => {
+    process.env.npm_config_registry = 'https://registry.npmjs.com'
     execSync(`npx kill-port ${port}`);
 };
 
