@@ -439,18 +439,18 @@ jobs:
                   path: |
                       ${{ steps.pnpm-cache.outputs.STORE_PATH }}
                       node_modules/
-                  key: ${{ matrix.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  key: windows-latest-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
                   restore-keys: |
-                      ${{ matrix.os }}-pnpm-store-
+                      windows-latest-pnpm-store-
 
             - name: Nx cache
               uses: actions/cache@v3
               id: nx_cache
               with:
                   path: ${{ env.NX_CACHE_DIRECTORY }}
-                  key: ${{ matrix.os }}-nx-cache-${{ hashFiles('tmp/**') }}
+                  key: windows-latest-nx-cache-${{ hashFiles('tmp/**') }}
                   restore-keys: |
-                      ${{ matrix.os }}-nx-cache
+                      windows-latest-nx-cache
 
             - name: Install dependencies
               if: steps.cache.outputs.cache-hit != 'true'
@@ -483,7 +483,14 @@ jobs:
               run: |
                   pnpm nx start-local-registry verdaccio
                   $env:SKIP = "true"
-                  pnpm nx run-many -t e2e --configuration=ci --parallel=1
+                  pnpm nx affected `
+                    --nx-bail `
+                    --base=$env:NX_BASE `
+                    --head=$env:NX_HEAD `
+                    --output-style=stream `
+                    --configuration=ci `
+                    --parallel=1 `
+                    -t e2e `
                   pnpm nx stop-local-registry
 
     publish:
