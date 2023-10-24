@@ -7,7 +7,7 @@ import { project } from './lib/project';
 import { exit } from 'process';
 
 const startLocalRegistry = () => {
-    spawn(require.resolve('pnpm'), ['nx', localRegistryTarget, project], {
+    spawn(require.resolve('nx'), [localRegistryTarget, project], {
         stdio: 'inherit',
         detached: true,
         env: {
@@ -17,7 +17,7 @@ const startLocalRegistry = () => {
     console.log('Local registry started on port ' + port);
 };
 
-async function main() {
+(async () => {
     if (process.env.SKIP) {
         console.log('Skipping start');
         exit(0);
@@ -26,6 +26,4 @@ async function main() {
     setLocalRegistry();
     await publishPackages();
     exit(0);
-}
-
-main();
+})();
