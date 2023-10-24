@@ -478,6 +478,12 @@ jobs:
                   name: dist
                   path: dist
 
+            - name: Run e2e
+              env:
+                  NX_NO_CLOUD: true
+              shell: bash
+              run: pnpm nx local-registry verdaccio &
+
             - name: Install MSYS2 (windows-latest)
               run: |
                   Add-Content $env:GITHUB_PATH "C:\msys64"
@@ -497,6 +503,7 @@ jobs:
                       clang:u
                       clang-tools-extra:u
                       gdb:u
+
 
             - name: Run e2e
               env:
