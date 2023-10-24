@@ -1,3 +1,4 @@
+import { hostname } from './hostname';
 import * as net from 'net';
 
 const sleep = (ms: number): Promise<void> => {
@@ -16,7 +17,6 @@ export const checkPortOccupied = async (
             return true;
         }
         try {
-            const hostname = process.env.CI ? '0.0.0.0' : 'localhost';
             const server = net.createServer().listen(port, hostname);
             server.on('error', (e) => {
                 if ('code' in e && e.code === 'EADDRINUSE') {
