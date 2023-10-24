@@ -1,6 +1,7 @@
 import { execSync } from 'child_process';
 import { readFileSync, writeFileSync } from 'fs';
 import { readCachedProjectGraph } from '@nx/devkit';
+import { registry } from './lib/registry';
 
 function invariant(condition: boolean, message: string) {
     if (!condition) {
@@ -45,8 +46,11 @@ try {
     console.error(`Error reading package.json file from library build output.`);
 }
 
+const cmd = `npm publish --access public --tag ${tag} --registry ${registry}`;
+
 // Execute "npm publish" to publish
-execSync(`npm publish --access public --tag ${tag}`, {
+console.log(`Executing ${cmd}`);
+execSync(cmd, {
     encoding: 'utf-8',
     stdio: 'inherit',
     env: {

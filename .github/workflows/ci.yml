@@ -382,9 +382,6 @@ jobs:
                   name: dist
                   path: dist
 
-            - name: Debug dist
-              run: ls -la dist
-
             - name: Install linux dependencies (ubuntu-latest)
               if: matrix.os == 'ubuntu-latest'
               run: |
