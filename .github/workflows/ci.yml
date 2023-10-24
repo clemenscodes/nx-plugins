@@ -385,7 +385,10 @@ jobs:
             - name: Run ${{ matrix.e2e }}
               env:
                   NX_NO_CLOUD: true
-              run: pnpm nx e2e ${{ matrix.e2e }} --configuration=ci --parallel=1
+              run: |
+                  nx start-local-registry verdaccio
+                  SKIP=true pnpm nx e2e ${{ matrix.e2e }} --configuration=ci --parallel=1
+                  nx stop-local-registry verdaccio
 
     e2e-windows:
         name: e2e [windows]
@@ -457,7 +460,6 @@ jobs:
               run: pnpm install --no-frozen-lockfile
 
             - name: Start registry
-              shell: bash
               run: pnpm nx start-local-registry verdaccio
 
             - name: Install MSYS2 (windows-latest)
@@ -484,7 +486,6 @@ jobs:
               env:
                   NX_NO_CLOUD: true
                   SKIP: true
-              shell: bash
               run: |
                   pnpm nx affected `
                     --nx-bail `
@@ -496,7 +497,6 @@ jobs:
                     -t e2e
 
             - name: Stop registry
-              shell: bash
               run: pnpm nx stop-local-registry verdaccio
 
     publish:
