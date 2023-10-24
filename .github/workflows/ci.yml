@@ -383,7 +383,6 @@ jobs:
 
             - name: Run ${{ matrix.e2e }}
               env:
-                  npm_config_registry: http://localhost:4873
                   NX_NO_CLOUD: true
               run: pnpm nx e2e ${{ matrix.e2e }} --configuration=ci --parallel=1
 
@@ -457,8 +456,6 @@ jobs:
               run: pnpm install --no-frozen-lockfile
 
             - name: Start registry
-              env:
-                  npm_config_registry: http://localhost:4873
               run: pnpm nx start-local-registry verdaccio
 
             - name: Install MSYS2 (windows-latest)
@@ -483,7 +480,6 @@ jobs:
 
             - name: Run e2e
               env:
-                  npm_config_registry: http://localhost:4873
                   NX_NO_CLOUD: true
                   SKIP: true
               run: |
@@ -497,8 +493,6 @@ jobs:
                     -t e2e
 
             - name: Stop registry
-              env:
-                  npm_config_registry: http://localhost:4873
               run: pnpm nx stop-local-registry verdaccio
 
     publish:

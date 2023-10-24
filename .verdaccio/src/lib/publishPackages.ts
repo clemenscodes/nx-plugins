@@ -4,39 +4,9 @@ import { registry } from './registry';
 import { checkPortOccupied } from './checkPortOccupied';
 import { port } from './port';
 
-const sleep = (ms: number): Promise<void> => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-};
-
-const retryOperation = async (
-    maxRetries: number,
-    delayMs: number,
-    callback: (port: number) => Promise<boolean>,
-): Promise<void> => {
-    let retries = 0;
-    while (retries < maxRetries) {
-        try {
-            callback(port);
-            break;
-        } catch (error) {
-            if (error instanceof Error) {
-                console.error(
-                    `Attempt ${retries + 1} failed: ${error.message}`,
-                );
-                await sleep(delayMs);
-                retries++;
-            }
-            throw error;
-        }
-    }
-};
-
 export const publishPackages = async () => {
-    const maxRetries = 30;
-    const delayMs = 1000;
     try {
-        await retryOperation(maxRetries, delayMs, checkPortOccupied);
-        const isOccupied = await checkPortOccupied(port);
+        const isOccupied = await checkPortOccupied(30, 1000, port);
         if (isOccupied) {
             execSync(`nx run-many -t publish --exclude ${project}`, {
                 stdio: 'inherit',
@@ -58,3 +28,5 @@ export const publishPackages = async () => {
         throw e;
     }
 };
+
+publishPackages();
