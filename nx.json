@@ -43,9 +43,6 @@
         "build": {
             "dependsOn": ["lint", "^build"]
         },
-        "publish": {
-            "dependsOn": ["build"]
-        },
         "cmake": {
             "dependsOn": ["^cmake"],
             "inputs": ["cmake"],
