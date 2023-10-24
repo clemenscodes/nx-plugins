@@ -7,7 +7,7 @@ import { project } from './lib/project';
 import { exit } from 'process';
 
 const startLocalRegistry = () => {
-    fork(require.resolve('nx'), [localRegistryTarget, project], {
+    fork('nx', [localRegistryTarget, project], {
         stdio: 'inherit',
         detached: true,
         env: {
