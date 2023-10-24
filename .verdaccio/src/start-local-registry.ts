@@ -11,7 +11,7 @@ const startLocalRegistry = () => {
         console.log('Skipping start');
         exit(0);
     }
-    spawn('nx', [localRegistryTarget, project], {
+    spawn('pnpm', ['nx', localRegistryTarget, project], {
         stdio: 'inherit',
         detached: true,
         env: {
