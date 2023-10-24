@@ -1,11 +1,15 @@
 import { hostname } from './hostname';
 import * as net from 'net';
 
-export const checkPortOccupied = (
+const sleep = async (ms: number) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
+export const checkPortOccupied = async (
     maxRetries: number,
     delayMs: number,
     port: number,
-): boolean => {
+): Promise<boolean> => {
     let retries = 0;
     let started = false;
     while (retries < maxRetries) {
@@ -27,7 +31,7 @@ export const checkPortOccupied = (
                 console.error(
                     `Attempt ${retries + 1} failed: ${error.message}`,
                 );
-                setTimeout(() => {}, delayMs);
+                await sleep(delayMs);
                 retries++;
             }
         }

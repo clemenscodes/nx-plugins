@@ -17,14 +17,14 @@ const startLocalRegistry = () => {
     console.log('Local registry started on port ' + port);
 };
 
-function main() {
+async function main() {
     if (process.env.SKIP) {
         console.log('Skipping start');
         exit(0);
     }
     startLocalRegistry();
     setLocalRegistry();
-    publishPackages();
+    await publishPackages();
     exit(0);
 }
 
