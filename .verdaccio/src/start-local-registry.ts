@@ -1,4 +1,4 @@
-import { fork } from 'node:child_process';
+import { spawn } from 'node:child_process';
 import { localRegistryTarget } from './lib/localRegistryTarget';
 import { port } from './lib/port';
 import { setLocalRegistry } from './lib/setLocalRegistry';
@@ -7,7 +7,7 @@ import { project } from './lib/project';
 import { exit } from 'process';
 
 const startLocalRegistry = () => {
-    fork(require.resolve('nx'), [localRegistryTarget, project], {
+    spawn(require.resolve('nx'), [localRegistryTarget, project], {
         stdio: 'inherit',
         detached: true,
         env: {
