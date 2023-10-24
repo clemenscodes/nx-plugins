@@ -7,7 +7,7 @@ const stopLocalRegistry = () => {
     execSync(`npx kill-port ${port}`, {
         env: {
             ...process.env,
-            npm_config_registry: 'https://registry.npmjs.com',
+            npm_config_registry: 'https://registry.npmjs.org',
         },
         stdio: 'inherit',
         encoding: 'utf-8',
