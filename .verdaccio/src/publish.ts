@@ -3,6 +3,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import { readCachedProjectGraph } from '@nx/devkit';
 
 const registry = 'http://localhost:4873';
+process.env.npm_config_registry = registry;
 
 function invariant(condition: boolean, message: string) {
     if (!condition) {
@@ -48,4 +49,10 @@ try {
 }
 
 // Execute "npm publish" to publish
-execSync(`npm publish --access public --tag ${tag} --registry ${registry}`);
+execSync(`npm publish --access public --tag ${tag} --registry ${registry}`, {
+    encoding: 'utf-8',
+    stdio: 'inherit',
+    env: {
+        ...process.env,
+    },
+});

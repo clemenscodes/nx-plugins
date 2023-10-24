@@ -405,7 +405,8 @@ jobs:
             - name: Run ${{ matrix.e2e }}
               env:
                   npm_config_registry: http://localhost:4873
-              run: pnpm nx e2e ${{ matrix.e2e }} --configuration=ci --parallel=false --no-cloud
+                  NX_NO_CLOUD: true
+              run: pnpm nx e2e ${{ matrix.e2e }} --configuration=ci --parallel=1
 
     publish:
         name: Publish
