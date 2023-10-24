@@ -5,6 +5,7 @@ import { setLocalRegistry } from './lib/setLocalRegistry';
 import { publishPackages } from './lib/publishPackages';
 import { project } from './lib/project';
 import { exit } from 'process';
+import { registry } from './lib/registry';
 
 const startLocalRegistry = () => {
     fork('nx', [localRegistryTarget, project], {
@@ -12,6 +13,7 @@ const startLocalRegistry = () => {
         detached: true,
         env: {
             ...process.env,
+            npm_config_registry: registry,
         },
     }).unref();
     console.log('Local registry started on port ' + port);
