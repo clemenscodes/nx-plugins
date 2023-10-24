@@ -7,4 +7,4 @@ export default {
     name,
     createNodes,
     createDependencies,
-} satisfies NxPluginV2
+} satisfies NxPluginV2;
