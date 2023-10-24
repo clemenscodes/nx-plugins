@@ -504,7 +504,6 @@ jobs:
                       clang-tools-extra:u
                       gdb:u
 
-
             - name: Run e2e
               env:
                   NX_NO_CLOUD: true
