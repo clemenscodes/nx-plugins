@@ -476,13 +476,17 @@ jobs:
                       clang-tools-extra:u
                       gdb:u
 
+            - name: Start registry
+              env:
+                  npm_config_registry: http://localhost:4873
+              run: pnpm nx start-local-registry verdaccio
+
             - name: Run e2e
               env:
                   npm_config_registry: http://localhost:4873
                   NX_NO_CLOUD: true
                   SKIP: true
               run: |
-                  pnpm nx start-local-registry verdaccio
                   pnpm nx affected `
                     --nx-bail `
                     --base=$env:NX_BASE `
@@ -490,8 +494,12 @@ jobs:
                     --output-style=stream `
                     --configuration=ci `
                     --parallel=1 `
-                    -t e2e `
-                  pnpm nx stop-local-registry
+                    -t e2e
+
+            - name: Stop registry
+              env:
+                  npm_config_registry: http://localhost:4873
+              run: pnpm nx stop-local-registry verdaccio
 
     publish:
         name: Publish

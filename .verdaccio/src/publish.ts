@@ -2,9 +2,6 @@ import { execSync } from 'child_process';
 import { readFileSync, writeFileSync } from 'fs';
 import { readCachedProjectGraph } from '@nx/devkit';
 
-const registry = 'http://localhost:4873';
-process.env.npm_config_registry = registry;
-
 function invariant(condition: boolean, message: string) {
     if (!condition) {
         console.error(message);
@@ -54,5 +51,6 @@ execSync(`npm publish --access public --tag ${tag}`, {
     stdio: 'inherit',
     env: {
         ...process.env,
+        npm_config_registry: 'http://localhost:4873',
     },
 });

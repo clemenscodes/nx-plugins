@@ -2,24 +2,6 @@
     "name": "verdaccio",
     "$schema": "../node_modules/nx/schemas/project-schema.json",
     "targets": {
-        "publish": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "ts-node {projectRoot}/src/publish.ts {args.name} {args.ver} {args.tag}"
-            }
-        },
-        "start-local-registry": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "ts-node {projectRoot}/src/start-local-registry.ts"
-            }
-        },
-        "stop-local-registry": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "ts-node {projectRoot}/src/stop-local-registry.ts"
-            }
-        },
         "local-registry": {
             "executor": "@nx/js:verdaccio",
             "options": {
@@ -29,6 +11,15 @@
                 "config": "{projectRoot}/config.yml",
                 "storage": "{projectRoot}/tmp/local-registry/storage"
             }
+        },
+        "start-local-registry": {
+            "command": "ts-node {projectRoot}/src/start-local-registry.ts"
+        },
+        "stop-local-registry": {
+            "command": "ts-node {projectRoot}/src/stop-local-registry.ts"
+        },
+        "publish": {
+            "command": "ts-node {projectRoot}/src/publish.ts {args.name} {args.ver} {args.tag}"
         }
     }
 }
