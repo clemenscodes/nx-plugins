@@ -402,25 +402,10 @@ jobs:
                       clang-tools-extra:u
                       gdb:u
 
-            - name: Run ${{ matrix.e2e }} [unix]
-              if: matrix.os != 'windows-latest'
+            - name: Run ${{ matrix.e2e }}
               env:
                   npm_config_registry: http://localhost:4873
-              run: |
-                  pnpm nx e2e ${{ matrix.e2e }} \
-                      --configuration=ci \
-                      --parallel=1 \
-                      --no-cloud
-
-            - name: Run ${{ matrix.e2e }} [windows]
-              if: matrix.os == 'windows-latest'
-              env:
-                  npm_config_registry: http://localhost:4873
-              run: |
-                  pnpm nx e2e ${{ matrix.e2e }} `
-                      --configuration=ci `
-                      --parallel=1 `
-                      --no-cloud
+              run: pnpm nx e2e ${{ matrix.e2e }} --configuration=ci --parallel=false --no-cloud
 
     publish:
         name: Publish

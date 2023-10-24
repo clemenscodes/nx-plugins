@@ -1,11 +1,6 @@
-import { execSync } from 'node:child_process';
+import { runCommand } from '@/command';
+import { project } from './project';
 
 export const publishPackages = () => {
-    execSync('nx run-many --targets publish --ver 1.0.0 --tag e2e', {
-        env: {
-            ...process.env,
-            NX_CLOUD_DISTRIBUTED_EXECUTION: 'false',
-        },
-        stdio: 'inherit',
-    });
+    runCommand(`nx`, `run-many -t publish --exclude ${project}`);
 };

@@ -12,6 +12,8 @@ export type Graph = {
 };
 
 const plugin = 'nx-cmake';
+const registry = 'http://localhost:4873';
+process.env.npm_config_registry = registry;
 
 describe(plugin, () => {
     let projectDirectory: string;
@@ -62,7 +64,7 @@ describe(plugin, () => {
 
         // The plugin has been built and published to a local registry in the jest globalSetup
         // Install the plugin built with the latest source code into the test repo
-        execCmd(`npm install ${plugin}@e2e`);
+        execCmd(`npm install ${plugin}@e2e --registry ${registry}`);
     });
 
     afterAll(() => {
