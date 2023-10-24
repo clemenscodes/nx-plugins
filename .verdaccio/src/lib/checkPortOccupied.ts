@@ -27,9 +27,8 @@ export const checkPortOccupied = (
                 console.error(
                     `Attempt ${retries + 1} failed: ${error.message}`,
                 );
-                setTimeout(() => {
-                    retries++;
-                }, delayMs);
+                setTimeout(() => {}, delayMs);
+                retries++;
             }
         }
     }
