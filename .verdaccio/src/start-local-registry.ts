@@ -8,7 +8,7 @@ import { exit } from 'process';
 
 const startLocalRegistry = () => {
     spawn('nx', [localRegistryTarget, project], {
-        stdio: 'pipe',
+        stdio: 'inherit',
         detached: true,
         env: {
             ...process.env,

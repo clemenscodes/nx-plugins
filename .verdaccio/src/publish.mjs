@@ -51,7 +51,6 @@ process.chdir(outputPath);
 try {
     const json = JSON.parse(readFileSync(`package.json`).toString());
     json.version = version;
-    // json.name += '-e2e';
     writeFileSync(`package.json`, JSON.stringify(json, null, 2));
 } catch (e) {
     console.error(`Error reading package.json file from library build output.`);
