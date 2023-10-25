@@ -1,0 +1,6 @@
+macro(set_policies)
+    cmake_policy(SET CMP0003 NEW)
+    cmake_policy(SET CMP0011 NEW)
+    cmake_policy(SET CMP0054 NEW)
+    cmake_policy(SET CMP0057 NEW)
+endmacro()

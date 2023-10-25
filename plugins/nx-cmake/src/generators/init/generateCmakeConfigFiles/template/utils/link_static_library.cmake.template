@@ -1,0 +1,6 @@
+function(link_static_library PROJECT LIB)
+    set(PREFIX "lib")
+    set(LIB_WITH_PREFIX ${PREFIX}${LIB})
+    set(LIB_DIR ${WORKSPACE_LIBRARY_DIR}/${LIB})
+    target_link_libraries(${PROJECT} PUBLIC ${LIB_WITH_PREFIX}::${LIB_WITH_PREFIX})
+endfunction()

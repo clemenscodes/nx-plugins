@@ -1,0 +1,4 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+include(${ROOT}/dist/<%= projectRoot %>/<%= testName %>_Targets.cmake)

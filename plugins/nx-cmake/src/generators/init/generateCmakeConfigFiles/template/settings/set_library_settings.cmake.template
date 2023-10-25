@@ -1,0 +1,23 @@
+include(settings/set_project_settings)
+
+function(set_library_settings PROJECT SOURCE_DIR)
+    add_library(${PROJECT} ${${PROJECT}_SOURCES})
+    add_library(${PROJECT}::${PROJECT} ALIAS ${PROJECT})
+    set_target_properties(${PROJECT}
+        PROPERTIES
+        PREFIX ""
+        EXPORT_NAME ${PROJECT}
+        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib"
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib"
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/bin"
+    )
+    target_include_directories(${PROJECT}
+        PUBLIC
+        $<BUILD_INTERFACE:${${PROJECT}_INCLUDE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+    )
+    if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+        set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE CACHE INTERNAL "")
+        set(CMAKE_IMPORT_LIBRARY_PREFIX "" PARENT_SCOPE)
+    endif()
+endfunction()

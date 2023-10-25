@@ -1,0 +1,7 @@
+get_filename_component(ROOT "${CMAKE_CURRENT_LIST_FILE}/../<%= relativeCmakeConfigPath %>" REALPATH)
+list(APPEND CMAKE_MODULE_PATH ${ROOT}/<%= cmakeConfigDir %>)
+
+include(modules)
+
+set_policies()
+set_global_settings()

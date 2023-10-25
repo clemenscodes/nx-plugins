@@ -1,0 +1,54 @@
+{
+    "name": "types",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/types/src",
+    "projectType": "library",
+    "targets": {
+        "lint": {
+            "executor": "@nx/eslint:lint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": [
+                    "packages/types/**/*.ts",
+                    "packages/types/package.json"
+                ]
+            },
+            "configurations": {
+                "ci": {
+                    "maxWarnings": 0
+                }
+            }
+        },
+        "build": {
+            "dependsOn": ["lint", "^build"],
+            "executor": "@nx/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/packages/types",
+                "main": "packages/types/src/index.ts",
+                "tsConfig": "packages/types/tsconfig.lib.json",
+                "assets": []
+            },
+            "configurations": {
+                "ci": {}
+            }
+        },
+        "test": {
+            "dependsOn": ["build"],
+            "executor": "@nx/jest:jest",
+            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+            "options": {
+                "jestConfig": "packages/types/jest.config.ts",
+                "passWithNoTests": true
+            },
+            "configurations": {
+                "ci": {
+                    "ci": true,
+                    "coverageReporters": ["lcov"],
+                    "codeCoverage": true
+                }
+            }
+        }
+    },
+    "tags": []
+}

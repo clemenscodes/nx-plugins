@@ -22,10 +22,13 @@
                     "error",
                     {
                         "ignoredDependencies": [
-                            "@/config",
                             "@/file",
                             "@/graph",
-                            "@/utils"
+                            "@/util",
+                            "@/mocks",
+                            "@/types",
+                            "@/command",
+                            "@/log"
                         ],
                         "includeTransitiveDependencies": true
                     }

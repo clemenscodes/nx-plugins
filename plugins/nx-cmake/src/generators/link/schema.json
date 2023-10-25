@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/schema",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "Link",
     "title": "Linking generator",
     "description": "Link a library to another library or binary",
@@ -27,19 +27,6 @@
             },
             "x-prompt": "Which library do you want to link into the project?",
             "x-dropdown": "projects",
-            "x-priority": "important"
-        },
-        "link": {
-            "type": "string",
-            "description": "Whether to link the library statically or dynamically",
-            "aliases": ["linking", "l"],
-            "enum": ["shared", "static"],
-            "$default": {
-                "$source": "argv",
-                "index": 2
-            },
-            "default": "shared",
-            "x-prompt": "Static or shared library?",
             "x-priority": "important"
         },
         "skipFormat": {

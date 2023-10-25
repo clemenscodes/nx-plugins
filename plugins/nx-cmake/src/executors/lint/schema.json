@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/schema",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "version": 2,
     "title": "Lint executor",
     "description": "Lint a C or C++ project with clang-tidy",
@@ -10,7 +10,7 @@
             "type": "array"
         },
         "release": {
-            "description": "Whether to build in release mode",
+            "description": "Whether to lint in release mode",
             "type": "boolean",
             "default": false
         }

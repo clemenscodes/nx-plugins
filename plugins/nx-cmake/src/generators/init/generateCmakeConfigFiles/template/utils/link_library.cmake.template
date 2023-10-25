@@ -1,0 +1,5 @@
+function(link_library PROJECT LIBRARY)
+    list(APPEND CMAKE_PREFIX_PATH ${ROOT}/dist/<%= libsDir %>/${LIBRARY})
+    find_package(lib${LIBRARY} CONFIG REQUIRED)
+    target_link_libraries(${PROJECT} PUBLIC lib${LIBRARY}::lib${LIBRARY})
+endfunction()

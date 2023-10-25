@@ -1,6 +1,6 @@
 {
     "extends": "nx/presets/npm.json",
-    "defaultProject": "nx-cmake",
+    "defaultProject": "verdaccio",
     "tasksRunnerOptions": {
         "default": {
             "runner": "nx-cloud",
@@ -9,10 +9,12 @@
                     "cmake",
                     "build",
                     "test",
-                    "e2e",
                     "lint",
-                    "fmt"
+                    "fmt",
+                    "compile"
                 ],
+                "canTrackAnalytics": false,
+                "showUsageWarnings": true,
                 "accessToken": "ZTBkM2I2MjYtNTc4Mi00YjUxLTkzNDAtZWFlYjg1OGY0Y2UxfHJlYWQtd3JpdGU=",
                 "useDaemonProcess": false
             }
@@ -23,52 +25,55 @@
             "analyzeSourceFiles": true
         },
         "nx-cmake": {
-            "language": "C++",
-            "globalIncludeDir": "include",
-            "cmakeConfigDir": ".cmake"
+            "language": "C",
+            "cmakeConfigDir": ".cmake",
+            "workspaceName": "workspace"
         }
     },
     "$schema": "./node_modules/nx/schemas/nx-schema.json",
-    "generators": {
-        "nx-cmake": {
-            "binary": {
-                "language": "C++",
-                "generateTests": true
-            },
-            "library": {
-                "language": "C++",
-                "generateTests": true
-            }
-        }
+    "affected": {
+        "defaultBase": "origin/main"
     },
+    "workspaceLayout": {
+        "appsDir": "bin",
+        "libsDir": "packages"
+    },
+    "plugins": ["nx-cmake"],
     "targetDefaults": {
+        "build": {
+            "dependsOn": ["lint", "^build"]
+        },
         "cmake": {
             "dependsOn": ["^cmake"],
-            "inputs": ["cmake"]
+            "inputs": ["cmake"],
+            "cache": true
         },
-        "build": {
-            "dependsOn": ["^cmake", "^build", "cmake"],
-            "inputs": ["default"]
-        },
-        "debug": {
-            "dependsOn": ["build"],
-            "inputs": ["default"]
-        },
-        "execute": {
-            "dependsOn": ["build"],
-            "inputs": ["default"]
-        },
-        "test": {
-            "dependsOn": ["build"],
-            "inputs": ["default"]
-        },
-        "lint": {
-            "dependsOn": ["cmake"],
+        "compile": {
+            "dependsOn": ["^cmake", "^compile", "cmake"],
             "inputs": ["default"]
         },
         "fmt": {
             "dependsOn": [],
-            "inputs": ["clangFormat"]
+            "inputs": ["clangFormat"],
+            "cache": true
+        },
+        "lint": {
+            "dependsOn": ["cmake"],
+            "inputs": ["default", "clangTidy"],
+            "cache": true
+        },
+        "test": {
+            "dependsOn": ["build", "compile"],
+            "inputs": ["default"],
+            "cache": true
+        },
+        "execute": {
+            "dependsOn": ["build", "compile"],
+            "inputs": ["default"]
+        },
+        "debug": {
+            "dependsOn": ["build", "compile"],
+            "inputs": ["default"]
         }
     },
     "namedInputs": {
@@ -98,9 +103,25 @@
             "{workspaceRoot}/.clang-tidy.yaml"
         ]
     },
-    "plugins": ["nx-cmake"],
-    "workspaceLayout": {
-        "appsDir": "bin",
-        "libsDir": "packages"
+    "generators": {
+        "@nx/js": {
+            "library": {
+                "projectNameAndRootFormat": "derived",
+                "minimal": true,
+                "simpleName": true,
+                "bundler": "tsc",
+                "unitTestRunner": "jest"
+            }
+        },
+        "nx-cmake": {
+            "binary": {
+                "language": "C",
+                "generateTests": true
+            },
+            "library": {
+                "language": "C",
+                "generateTests": true
+            }
+        }
     }
 }

@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/schema",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "version": 2,
     "title": "Debug executor",
     "description": "Debug a C or C++ binary using gdb",
@@ -10,7 +10,7 @@
             "type": "array"
         },
         "release": {
-            "description": "Whether to build in release mode",
+            "description": "Whether to debug in release mode",
             "type": "boolean",
             "default": false
         }

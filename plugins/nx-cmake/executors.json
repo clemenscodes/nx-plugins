@@ -1,37 +1,37 @@
 {
     "executors": {
         "cmake": {
-            "implementation": "./src/executors/cmake/executor",
+            "implementation": "./src/executors/cmake/cmakeExecutor",
             "schema": "./src/executors/cmake/schema.json",
             "description": "Run CMake to produce a Makefile"
         },
-        "build": {
-            "implementation": "./src/executors/build/executor",
-            "schema": "./src/executors/build/schema.json",
+        "compile": {
+            "implementation": "./src/executors/compile/compileExecutor",
+            "schema": "./src/executors/compile/schema.json",
             "description": "Build the project with Make"
         },
         "test": {
-            "implementation": "./src/executors/test/executor",
+            "implementation": "./src/executors/test/testExecutor",
             "schema": "./src/executors/test/schema.json",
             "description": "Test the test binary"
         },
         "debug": {
-            "implementation": "./src/executors/debug/executor",
+            "implementation": "./src/executors/debug/debugExecutor",
             "schema": "./src/executors/debug/schema.json",
             "description": "Debug the test binary"
         },
         "lint": {
-            "implementation": "./src/executors/lint/executor",
+            "implementation": "./src/executors/lint/lintExecutor",
             "schema": "./src/executors/lint/schema.json",
             "description": "Lint the project"
         },
-        "format": {
-            "implementation": "./src/executors/format/executor",
-            "schema": "./src/executors/format/schema.json",
+        "fmt": {
+            "implementation": "./src/executors/fmt/fmtExecutor",
+            "schema": "./src/executors/fmt/schema.json",
             "description": "Format the project"
         },
         "execute": {
-            "implementation": "./src/executors/execute/executor",
+            "implementation": "./src/executors/execute/executeExecutor",
             "schema": "./src/executors/execute/schema.json",
             "description": "Execute the binary"
         }

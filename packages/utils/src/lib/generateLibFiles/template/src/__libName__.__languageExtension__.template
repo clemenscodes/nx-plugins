@@ -1,5 +1,0 @@
-#include <<%= name %>/include/<%= libName %>.h>
-
-int <%= camelCaseName %>(void) {
-    return 0;
-}

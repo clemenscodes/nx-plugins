@@ -10,6 +10,4 @@ export default {
     },
     moduleFileExtensions: ['ts', 'js', 'html'],
     coverageDirectory: '../../coverage/e2e/e2e-create-nx-cmake',
-    globalSetup: '../../tools/scripts/start-local-registry.ts',
-    globalTeardown: '../../tools/scripts/stop-local-registry.ts',
 };
