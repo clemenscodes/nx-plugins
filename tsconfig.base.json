@@ -21,6 +21,7 @@
             "@/mocks": ["packages/mocks/src/index.ts"],
             "@/types": ["packages/types/src/index.ts"],
             "@/util": ["packages/util/src/index.ts"],
+            "@/verdaccio": ["packages/verdaccio/src/index.ts"],
             "nx-cmake": ["plugins/nx-cmake/src/index.ts"]
         }
     },

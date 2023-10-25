@@ -6,4 +6,4 @@ if [ -n "$SKIP_TESTS" ]; then
     exit 0
 fi
 
-FORCE_COLOR=true pnpm run ci
+FORCE_COLOR=true pnpm ci:test

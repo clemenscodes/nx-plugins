@@ -1,10 +1,10 @@
 import { ChildProcess, execSync } from 'child_process';
-import { port } from './port';
+import { port } from '../config/port';
 import { unsetLocalRegistry } from './unsetLocalRegistry';
 
 export const stopLocalRegistry = (childProcess: ChildProcess | null) => {
-    if (process.env.SKIP) {
-        console.log('Skipping start');
+    if (process.env['SKIP']) {
+        console.log('Skipping stop');
         return;
     }
     unsetLocalRegistry();

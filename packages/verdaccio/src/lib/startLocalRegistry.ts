@@ -1,11 +1,11 @@
 import { ChildProcess, spawn } from 'child_process';
 import { localRegistryTarget } from './localRegistryTarget';
-import { port } from './port';
-import { project } from './project';
+import { port } from '../config/port';
+import { project } from '../config/project';
 import { setLocalRegistry } from './setLocalRegistry';
 
 export const startLocalRegistry = (): ChildProcess | null => {
-    if (process.env.SKIP) {
+    if (process.env['SKIP']) {
         console.log('Skipping start');
         return null;
     }

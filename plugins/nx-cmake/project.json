@@ -77,7 +77,8 @@
             }
         },
         "publish": {
-            "command": "node .verdaccio/publish.mjs {projectName} 1.0.0 e2e"
+            "dependsOn": ["build"],
+            "command": "nx upload verdaccio --name={projectName} --ver=1.0.0 --tag=e2e"
         },
         "version": {
             "executor": "@jscutlery/semver:version",
