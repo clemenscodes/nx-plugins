@@ -77,7 +77,7 @@
             }
         },
         "publish": {
-            "command": "node .verdaccio/publish.mjs {projectName} --ver 1.0.0 --tag e2e"
+            "command": "node .verdaccio/publish.mjs {projectName} 1.0.0 e2e"
         },
         "version": {
             "executor": "@jscutlery/semver:version",
