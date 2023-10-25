@@ -408,10 +408,30 @@ jobs:
                       clang-tools-extra:u
                       gdb:u
 
-            - name: Run e2e
+            - name: Run e2e [unix]
               env:
                   NX_NO_CLOUD: true
+              if: matrix.os != 'windows-latest'
               run: pnpm nx affected-e2e
+
+            - name: Start registry [windows]
+              env:
+                  NX_NO_CLOUD: true
+              if: matrix.os == 'windows-latest'
+              run: pnpm nx local-registry &
+
+            - name: Run e2e [windows]
+              env:
+                  NX_NO_CLOUD: true
+                  SKIP: true
+              if: matrix.os != 'windows-latest'
+              run: pnpm nx affected-e2e
+
+            - name: Stop registry [windows]
+              env:
+                  NX_NO_CLOUD: true
+              if: matrix.os == 'windows-latest'
+              run: pnpm nx stop-local-registry
 
     publish:
         name: Publish
