@@ -389,6 +389,7 @@ jobs:
               run: tar xvf dist.tar
 
             - name: Start registry
+              shell: bash
               run: pnpm nx local-registry verdaccio &
 
             - name: Install linux dependencies (ubuntu-latest)
