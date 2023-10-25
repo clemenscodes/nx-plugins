@@ -372,9 +372,6 @@ jobs:
             - name: Untar dist
               run: tar xvf dist.tar
 
-            - name: Start registry
-              run: pnpm nx start-local-registry verdaccio &
-
             - name: Install linux dependencies (ubuntu-latest)
               if: matrix.os == 'ubuntu-latest'
               run: |
