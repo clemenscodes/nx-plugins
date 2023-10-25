@@ -491,7 +491,8 @@ jobs:
               run: tar xvf dist.tar
 
             - name: Start registry
-              run: pnpm nx start-local-registry verdaccio
+              shell: bash
+              run: pnpm nx local-registry verdaccio &
 
             - name: Install MSYS2 (windows-latest)
               run: |
@@ -516,7 +517,6 @@ jobs:
             - name: Run e2e
               env:
                   NX_NO_CLOUD: true
-                  SKIP: true
               run: |
                   pnpm nx affected `
                     --nx-bail `
@@ -528,6 +528,8 @@ jobs:
                     -t e2e
 
             - name: Stop registry
+              env:
+                  NX_NO_CLOUD: true
               run: pnpm nx stop-local-registry verdaccio
 
     publish:
