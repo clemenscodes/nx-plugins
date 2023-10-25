@@ -5,7 +5,7 @@
     "sourceRoot": "e2e/e2e-nx-cmake/tests",
     "targets": {
         "run-e2e": {
-            "dependsOn": ["^start-local-registry"],
+            "dependsOn": ["^start-local-registry", "^publish"],
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
             "options": {
