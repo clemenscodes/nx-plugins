@@ -414,21 +414,7 @@ jobs:
             - name: Run e2e
               env:
                   NX_NO_CLOUD: true
-                  SKIP: true
-              run: |
-                  pnpm nx affected \
-                    --nx-bail \
-                    --base=$NX_BASE \
-                    --head=$NX_HEAD \
-                    --output-style=stream \
-                    --configuration=ci \
-                    --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT \
-                    -t e2e
-
-            - name: Stop local registry
-              env:
-                  NX_NO_CLOUD: true
-              run: pnpm nx stop-local-registry verdaccio
+              run: pnpm nx affected-e2e
 
     publish:
         name: Publish
