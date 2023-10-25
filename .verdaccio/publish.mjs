@@ -61,7 +61,7 @@ const port = 4873;
 const registry = `http://${host}:${port}`;
 
 execSync(
-    `npm config set //${hostname}:${port}/:_authToken "secretVerdaccioToken"`,
+    `npm config set //${host}:${port}/:_authToken "secretVerdaccioToken"`,
     {
         encoding: 'utf-8',
         stdio: 'inherit',
