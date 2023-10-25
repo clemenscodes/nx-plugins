@@ -62,5 +62,6 @@ execSync(`npm publish --access public --tag ${tag}`, {
     stdio: 'inherit',
     env: {
         ...process.env,
+        npm_config_registry: 'http://localhost:4873'
     },
 });
