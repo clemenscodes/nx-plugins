@@ -2,6 +2,8 @@ import { execSync } from 'child_process';
 import { join, dirname } from 'path';
 import { mkdirSync, rmSync } from 'fs';
 
+process.env.npm_config_registry = 'http://localhost:4873';
+
 describe('create-nx-cmake', () => {
     let projectDirectory: string;
 

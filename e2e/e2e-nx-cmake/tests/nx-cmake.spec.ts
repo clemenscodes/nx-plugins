@@ -4,6 +4,8 @@ import { join, dirname } from 'path';
 import { mkdirSync, rmSync } from 'fs';
 import { readJsonFile } from '@nx/devkit';
 
+process.env.npm_config_registry = 'http://localhost:4873';
+
 export type Graph = {
     graph: {
         nodes: ProjectGraph['nodes'];
