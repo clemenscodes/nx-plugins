@@ -399,7 +399,6 @@ jobs:
             - name: Install windows dependencies (windows-latest)
               if: matrix.os == 'windows-latest'
               uses: msys2/setup-msys2@v2
-              shell: pwsh
               with:
                   msystem: UCRT64
                   update: true
