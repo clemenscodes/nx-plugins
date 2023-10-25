@@ -77,8 +77,7 @@
             }
         },
         "publish": {
-            "dependsOn": ["build"],
-            "command": "node .verdaccio/src/publish.mjs nx-cmake {args.ver} {args.tag}"
+            "command": "node .verdaccio/publish.mjs nx-cmake {args.ver} {args.tag}"
         },
         "version": {
             "executor": "@jscutlery/semver:version",
@@ -107,7 +106,6 @@
             }
         },
         "deploy": {
-            "dependsOn": ["build"],
             "executor": "nx:run-commands",
             "options": {
                 "cwd": "dist/{projectRoot}",

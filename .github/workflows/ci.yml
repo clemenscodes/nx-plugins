@@ -295,12 +295,16 @@ jobs:
               env:
                   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
+            - name: Tar dist
+              shell: bash
+              run: tar -cvf dist.tar dist
+
             - name: Upload dist
               if: matrix.os == 'ubuntu-latest'
               uses: actions/upload-artifact@v3
               with:
                   name: dist
-                  path: dist
+                  path: dist.tar
 
     e2e-unix:
         name: ${{ matrix.e2e }} [unix]
@@ -381,6 +385,10 @@ jobs:
               with:
                   name: dist
                   path: dist
+
+            - name: Untar dist
+              shell: bash
+              run: tar xvf dist.tar
 
             - name: Install linux dependencies (ubuntu-latest)
               if: matrix.os == 'ubuntu-latest'
@@ -477,6 +485,10 @@ jobs:
               with:
                   name: dist
                   path: dist
+
+            - name: Untar dist
+              shell: bash
+              run: tar xvf dist.tar
 
             - name: Start registry
               run: pnpm nx start-local-registry verdaccio
@@ -592,6 +604,10 @@ jobs:
               with:
                   name: dist
                   path: dist
+
+            - name: Untar dist
+              shell: bash
+              run: tar xvf dist.tar
 
             - name: Check npm auth
               if: startsWith(github.ref, 'refs/heads/main')

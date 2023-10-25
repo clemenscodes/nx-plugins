@@ -5,13 +5,15 @@
         "start-local-registry": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "ts-node .verdaccio/src/start-local-registry.ts"
+                "color": true,
+                "command": "ts-node {projectRoot}/src/start-local-registry.ts"
             }
         },
         "stop-local-registry": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "ts-node .verdaccio/src/stop-local-registry.ts"
+                "color": true,
+                "command": "ts-node {projectRoot}/src/stop-local-registry.ts"
             }
         },
         "local-registry": {
@@ -20,8 +22,8 @@
                 "port": 4873,
                 "clear": true,
                 "location": "none",
-                "config": ".verdaccio/config.yml",
-                "storage": "tmp/local-registry/storage"
+                "config": "{projectRoot}/config.yml",
+                "storage": "{projectRoot}/tmp/local-registry/storage"
             }
         }
     }
