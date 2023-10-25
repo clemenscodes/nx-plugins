@@ -1,12 +1,11 @@
 import type { ProjectConfiguration, Tree } from '@nx/devkit';
-import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { readProjectConfiguration } from '@nx/devkit';
 import { addLibProjectConfig } from './addLibProjectConfig';
 import { resolveLibOptions } from '../resolveLibOptions/resolveLibOptions';
-import * as devkit from '@nx/devkit';
 import { LibGeneratorSchema, LibSchema } from '../../generator';
 import { getDefaultInitGeneratorOptions } from '../../init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 import initGenerator from '../../init/initGenerator';
+import { setupWorkspace } from '@/mocks';
 
 describe('addLibProjectConfig', () => {
     let tree: Tree;
@@ -15,13 +14,12 @@ describe('addLibProjectConfig', () => {
     let expectedProjectConfiguration: ProjectConfiguration;
 
     beforeEach(async () => {
-        tree = createTreeWithEmptyWorkspace();
+        tree = setupWorkspace();
         options = {
             name: 'test',
             language: 'C++',
             generateTests: false,
         };
-        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
         await initGenerator(tree, getDefaultInitGeneratorOptions());
         resolvedOptions = resolveLibOptions(options);
         expectedProjectConfiguration = {

@@ -1,9 +1,8 @@
 import type { Tree } from '@nx/devkit';
-import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { addProjectRootToSubDirectories } from './addProjectRootToSubDirectories';
-import * as devkit from '@nx/devkit';
 import initGenerator from '../../generators/init/initGenerator';
 import { getDefaultInitGeneratorOptions } from '../../generators/init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
+import { setupWorkspace } from '@/mocks';
 
 describe('addProjectRootToSubDirectories', () => {
     let tree: Tree;
@@ -11,9 +10,8 @@ describe('addProjectRootToSubDirectories', () => {
     let expectedSubDirectoriesFile: string;
 
     beforeEach(async () => {
-        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
         projectRoot = `bin/project`;
-        tree = createTreeWithEmptyWorkspace();
+        tree = setupWorkspace();
         await initGenerator(tree, getDefaultInitGeneratorOptions());
         expectedSubDirectoriesFile =
             'set(SUB_DIRECTORIES)\n\n' +

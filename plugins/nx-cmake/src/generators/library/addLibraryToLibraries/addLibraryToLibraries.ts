@@ -1,7 +1,7 @@
 import type { Tree } from '@nx/devkit';
 import { join } from 'path';
 import { logger } from '@/log';
-import { updateFile } from '@/util';
+import { updateFile } from '@/file';
 import { getPluginConfig } from '../../../utils/getPluginConfig/getPluginConfig';
 
 export const addLibraryToLibraries = (tree: Tree, libraryName: string) => {

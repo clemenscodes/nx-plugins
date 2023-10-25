@@ -1,6 +1,7 @@
 import type { Tree } from '@nx/devkit';
 import { names } from '@nx/devkit';
-import { readFileWithTree, trimLib, trimTest, writeFileWithTree } from '@/util';
+import { trimLib, trimTest } from '@/util';
+import { readFileWithTree, writeFileWithTree } from '@/file';
 import { LinkSchema } from '../../generator';
 
 export const getIncludeDirective = (project: string): string => {

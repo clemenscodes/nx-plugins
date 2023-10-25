@@ -1,6 +1,6 @@
 import type { C } from '@/types';
+import { mockNxOutput } from '@/mocks';
 import { getLanguageVariant } from './getLanguageVariant';
-import { output } from '@nx/devkit';
 
 describe('getLanguageVariantFromConfigFileContent', () => {
     let configFileContent: string;
@@ -10,7 +10,7 @@ describe('getLanguageVariantFromConfigFileContent', () => {
     beforeEach(() => {
         configFileContent = 'set(LANGUAGE C)\n';
         expectedVariant = 'C';
-        nxErrorOutputMock = jest.spyOn(output, 'error');
+        nxErrorOutputMock = mockNxOutput('error');
     });
 
     afterEach(() => {

@@ -1,10 +1,11 @@
 import { debugBinaryWithGdb } from './debugBinaryWithGdb';
 import { join } from 'path';
+import { LINUX_GDB, GDB } from '../../../config';
+import { DebugExecutorSchema } from '../../../executors/executor';
+import * as getGdbModule from '../../../config/getPrograms/getGdb/getGdb';
 import * as fileModule from '@/file';
 import * as utilsModule from '@/util';
-import { LINUX_GDB, GDB } from '../../../config';
-import * as getGdbModule from '../../../config/getPrograms/getGdb/getGdb';
-import { DebugExecutorSchema } from '../../../executors/executor';
+import * as commandModule from '@/command';
 
 describe('debugBinaryWithGdb', () => {
     let workspaceRoot: string;
@@ -28,9 +29,9 @@ describe('debugBinaryWithGdb', () => {
         getGdbReturnMock = LINUX_GDB[0];
         jest.spyOn(fileModule, 'fileExists').mockReturnValue(true);
         jest.spyOn(getGdbModule, 'getGdb').mockReturnValue(getGdbReturnMock);
-        runCommandMock = jest.spyOn(utilsModule, 'runCommand');
+        runCommandMock = jest.spyOn(commandModule, 'runCommand');
         checkCommandExistsMock = jest
-            .spyOn(utilsModule, 'checkCommandExists')
+            .spyOn(commandModule, 'checkCommandExists')
             .mockImplementation(jest.fn());
         isWindowsMock = jest
             .spyOn(utilsModule, 'isWindows')

@@ -5,7 +5,9 @@ storage: ../tmp/local-registry/storage
 uplinks:
     npmjs:
         url: https://registry.npmjs.org/
-        maxage: 1m
+        maxage: 60m
+        max_fails: 20
+        fail_timeout: 2m
 
 packages:
     '**':
@@ -26,3 +28,9 @@ log:
 
 publish:
     allow_offline: true # set offline to true to allow publish offline
+
+server:
+    keepAliveTimeout: 60
+
+listen:
+    - 0.0.0.0:4873

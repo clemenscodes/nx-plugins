@@ -1,10 +1,9 @@
 import type { Tree } from '@nx/devkit';
 import { resolveOptions } from './resolveOptions';
-import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import * as devkit from '@nx/devkit';
 import initGenerator from '../../generators/init/initGenerator';
 import { GeneratorBaseOptions } from '../../generators/generator';
 import { getDefaultInitGeneratorOptions } from '../../generators/init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
+import { setupWorkspace } from '@/mocks';
 
 describe('resolveOptions', () => {
     let tree: Tree;
@@ -12,8 +11,7 @@ describe('resolveOptions', () => {
     let expected: Required<GeneratorBaseOptions>;
 
     beforeEach(async () => {
-        tree = createTreeWithEmptyWorkspace();
-        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
+        tree = setupWorkspace();
         await initGenerator(tree, getDefaultInitGeneratorOptions());
         options = {
             name: 'exampleName',

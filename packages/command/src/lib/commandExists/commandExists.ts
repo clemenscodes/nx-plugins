@@ -1,5 +1,5 @@
+import { isWindows } from '@/util';
 import { executeCommand } from '../executeCommand/executeCommand';
-import { isWindows } from '../isWindows/isWindows';
 
 const checkCommandExistsWindows = (command: string): boolean => {
     const cmd = `where.exe ${command}`;

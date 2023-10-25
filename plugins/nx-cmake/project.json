@@ -5,7 +5,25 @@
     "sourceRoot": "plugins/nx-cmake/src",
     "projectType": "library",
     "targets": {
+        "lint": {
+            "executor": "@nx/eslint:lint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": [
+                    "plugins/nx-cmake/**/*.ts",
+                    "plugins/nx-cmake/package.json",
+                    "plugins/nx-cmake/generators.json",
+                    "plugins/nx-cmake/executors.json"
+                ]
+            },
+            "configurations": {
+                "ci": {
+                    "maxWarnings": 0
+                }
+            }
+        },
         "build": {
+            "dependsOn": ["lint", "^build"],
             "executor": "@nx/js:tsc",
             "outputs": ["{options.outputPath}"],
             "options": {
@@ -42,23 +60,6 @@
                 "ci": {}
             }
         },
-        "lint": {
-            "executor": "@nx/eslint:lint",
-            "outputs": ["{options.outputFile}"],
-            "options": {
-                "lintFilePatterns": [
-                    "plugins/nx-cmake/**/*.ts",
-                    "plugins/nx-cmake/package.json",
-                    "plugins/nx-cmake/generators.json",
-                    "plugins/nx-cmake/executors.json"
-                ]
-            },
-            "configurations": {
-                "ci": {
-                    "maxWarnings": 0
-                }
-            }
-        },
         "test": {
             "dependsOn": ["build"],
             "executor": "@nx/jest:jest",
@@ -76,8 +77,8 @@
             }
         },
         "publish": {
-            "command": "node tools/scripts/publish.mjs nx-cmake {args.ver} {args.tag}",
-            "dependsOn": ["build"]
+            "dependsOn": ["build"],
+            "command": "nx upload verdaccio --name={projectName} --ver=1.0.0 --tag=e2e"
         },
         "version": {
             "executor": "@jscutlery/semver:version",
@@ -106,7 +107,6 @@
             }
         },
         "deploy": {
-            "dependsOn": ["build"],
             "executor": "nx:run-commands",
             "options": {
                 "cwd": "dist/{projectRoot}",

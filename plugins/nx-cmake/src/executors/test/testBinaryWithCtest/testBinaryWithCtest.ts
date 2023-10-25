@@ -1,6 +1,6 @@
 import { getCtestArguments } from '../getCtestArguments/getCtestArguments';
 import { join } from 'path';
-import { checkCommandExists, runCommandFromDirectory } from '@/util';
+import { checkCommandExists, runCommandFromDirectory } from '@/command';
 import { TestExecutorSchema } from '../../executor';
 import { getCtest } from '../../../config/getPrograms/getCtest/getCtest';
 import { CTEST } from '../../../config/getPrograms/getPrograms';

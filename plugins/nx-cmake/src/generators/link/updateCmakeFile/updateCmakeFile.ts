@@ -1,6 +1,7 @@
 import type { Tree } from '@nx/devkit';
 import { join } from 'path';
-import { trimLib, updateFile, writeFileWithTree } from '@/util';
+import { trimLib } from '@/util';
+import { updateFile, writeFileWithTree } from '@/file';
 import { PROJECT_FILE } from '../../../config';
 import { LinkSchema } from '../../generator';
 

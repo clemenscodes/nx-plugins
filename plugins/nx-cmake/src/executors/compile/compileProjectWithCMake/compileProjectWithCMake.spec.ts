@@ -1,10 +1,10 @@
 import { compileProjectWithCMake } from './compileProjectWithCMake';
 import { join } from 'path';
-import * as fileModule from '@/file';
-import * as utilsModule from '@/util';
-import * as getCmakeModule from '../../../config/getPrograms/getCmake/getCmake';
 import { LINUX_CMAKE } from '../../../config';
 import { CompileExecutorSchema } from '../../../executors/executor';
+import * as getCmakeModule from '../../../config/getPrograms/getCmake/getCmake';
+import * as fileModule from '@/file';
+import * as commandModule from '@/command';
 
 describe('compileProjectWithCMake', () => {
     let workspaceRoot: string;
@@ -20,7 +20,7 @@ describe('compileProjectWithCMake', () => {
             args: [],
             release: false,
         };
-        runCommandMock = jest.spyOn(utilsModule, 'runCommand');
+        runCommandMock = jest.spyOn(commandModule, 'runCommand');
         getCmakeMock = jest.spyOn(getCmakeModule, 'getCmake');
         jest.spyOn(fileModule, 'fileExists').mockReturnValue(true);
     });

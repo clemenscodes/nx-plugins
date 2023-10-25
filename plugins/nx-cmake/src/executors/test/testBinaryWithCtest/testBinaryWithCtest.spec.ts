@@ -1,10 +1,11 @@
 import { testBinaryWithCtest } from './testBinaryWithCtest';
 import { join } from 'path';
-import * as fileModule from '@/file';
-import * as utilsModule from '@/util';
-import * as getCtestModule from '../../../config/getPrograms/getCtest/getCtest';
 import { TestExecutorSchema } from '../../executor';
 import { CTEST, LINUX_CTEST } from '../../../config/getPrograms/getPrograms';
+import * as getCtestModule from '../../../config/getPrograms/getCtest/getCtest';
+import * as fileModule from '@/file';
+import * as utilsModule from '@/util';
+import * as commandModule from '@/command';
 
 describe('buildProjectWithCMake', () => {
     let workspaceRoot: string;
@@ -24,13 +25,13 @@ describe('buildProjectWithCMake', () => {
             outputOnFailure: true,
         };
         runCommandFromDirectoryMock = jest.spyOn(
-            utilsModule,
+            commandModule,
             'runCommandFromDirectory',
         );
         jest.spyOn(fileModule, 'fileExists').mockReturnValue(true);
         jest.spyOn(getCtestModule, 'getCtest').mockReturnValue(LINUX_CTEST[0]);
         checkCommandExistsMock = jest
-            .spyOn(utilsModule, 'checkCommandExists')
+            .spyOn(commandModule, 'checkCommandExists')
             .mockImplementation(jest.fn());
         isWindowsMock = jest
             .spyOn(utilsModule, 'isWindows')

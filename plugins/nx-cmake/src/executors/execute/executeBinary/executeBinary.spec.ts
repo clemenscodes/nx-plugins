@@ -1,8 +1,9 @@
 import { executeBinary } from './executeBinary';
 import { join } from 'path';
+import { ExecuteExecutorSchema } from '../../executor';
 import * as fileModule from '@/file';
 import * as utilsModule from '@/util';
-import { ExecuteExecutorSchema } from '../../executor';
+import * as commandModule from '@/command';
 
 describe('executeBinary', () => {
     let workspaceRoot: string;
@@ -22,7 +23,7 @@ describe('executeBinary', () => {
             release: false,
         };
 
-        runCommandMock = jest.spyOn(utilsModule, 'runCommand');
+        runCommandMock = jest.spyOn(commandModule, 'runCommand');
         isWindowsMock = jest
             .spyOn(utilsModule, 'isWindows')
             .mockReturnValue(false);

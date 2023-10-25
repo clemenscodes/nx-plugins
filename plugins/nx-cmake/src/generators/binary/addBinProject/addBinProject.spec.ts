@@ -1,12 +1,11 @@
 import type { ProjectConfiguration, Tree } from '@nx/devkit';
-import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { addBinProject } from './addBinProject';
 import { resolveBinOptions } from '../resolveBinOptions/resolveBinOptions';
 import { readProjectConfiguration } from '@nx/devkit';
-import * as devkit from '@nx/devkit';
 import { BinGeneratorSchema } from '../../generator';
 import { getDefaultInitGeneratorOptions } from '../../init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 import initGenerator from '../../init/initGenerator';
+import { setupWorkspace } from '@/mocks';
 
 describe('addBinProject', () => {
     let tree: Tree;
@@ -14,8 +13,7 @@ describe('addBinProject', () => {
     let expected: ProjectConfiguration;
 
     beforeEach(async () => {
-        tree = createTreeWithEmptyWorkspace();
-        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
+        tree = setupWorkspace();
         await initGenerator(tree, getDefaultInitGeneratorOptions());
         options = {
             name: 'test',

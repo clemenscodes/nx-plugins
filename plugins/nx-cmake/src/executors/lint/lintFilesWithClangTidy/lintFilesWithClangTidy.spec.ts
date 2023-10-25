@@ -1,10 +1,11 @@
 import { lintFilesWithClangTidy } from './lintFilesWithClangTidy';
+import { CLANG_TIDY, LINUX_GCC } from '../../../config';
+import { LintExecutorSchema } from '../../executor';
+import * as getClangTidyModule from '../../../config/getPrograms/getClangTidy/getClangTidy';
 import * as getLintArgumentsModule from '../getLintArguments/getLintArguments';
 import * as fileModule from '@/file';
 import * as utilsModule from '@/util';
-import { CLANG_TIDY, LINUX_GCC } from '../../../config';
-import * as getClangTidyModule from '../../../config/getPrograms/getClangTidy/getClangTidy';
-import { LintExecutorSchema } from '../../executor';
+import * as commandModule from '@/command';
 
 describe('lintFilesWithClangTidy', () => {
     let workspaceRoot: string;
@@ -33,7 +34,7 @@ describe('lintFilesWithClangTidy', () => {
         );
         getProjectFilesMock = jest.spyOn(fileModule, 'getProjectFiles');
         checkCommandExistsMock = jest
-            .spyOn(utilsModule, 'checkCommandExists')
+            .spyOn(commandModule, 'checkCommandExists')
             .mockImplementation(jest.fn());
         isWindowsMock = jest
             .spyOn(utilsModule, 'isWindows')
@@ -46,7 +47,7 @@ describe('lintFilesWithClangTidy', () => {
         jest.spyOn(getClangTidyModule, 'getClangTidy').mockReturnValue(
             clangTidyMock,
         );
-        runCommandMock = jest.spyOn(utilsModule, 'runCommand');
+        runCommandMock = jest.spyOn(commandModule, 'runCommand');
         lintArgsMock = ['--config-file=your_config_file', '-p=your_build_path'];
         sourceFilesMock = ['/path/to/file1.cpp', '/path/to/file2.cpp'];
     });

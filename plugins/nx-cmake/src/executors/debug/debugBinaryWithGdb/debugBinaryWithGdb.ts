@@ -1,6 +1,6 @@
+import { checkCommandExists, runCommand } from '@/command';
 import { DebugExecutorSchema } from '../../executor';
 import { getGdbArguments } from '../getGdbArguments/getGdbArguments';
-import { checkCommandExists, runCommand } from '@/util';
 import { getGdb } from '../../../config/getPrograms/getGdb/getGdb';
 import { GDB } from '../../../config/getPrograms/getPrograms';
 

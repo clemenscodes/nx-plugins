@@ -1,6 +1,6 @@
+import { runCommand, checkCommandExists } from '@/command';
 import { CompileExecutorSchema } from '../../executor';
 import { getCmakeBuildCommandArguments } from '../getCmakeBuildCommandArguments/getCmakeBuildCommandArguments';
-import { runCommand, checkCommandExists } from '@/util';
 import { CMAKE } from '../../../config/getPrograms/getPrograms';
 import { getCmake } from '../../../config/getPrograms/getCmake/getCmake';
 

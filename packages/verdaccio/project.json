@@ -1,0 +1,97 @@
+{
+    "name": "verdaccio",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "tags": ["e2e"],
+    "targets": {
+        "lint": {
+            "executor": "@nx/eslint:lint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": [
+                    "{projectRoot}/**/*.ts",
+                    "{projectRoot}/package.json"
+                ]
+            },
+            "configurations": {
+                "ci": {
+                    "maxWarnings": 0
+                }
+            }
+        },
+        "build": {
+            "dependsOn": ["lint", "^build"],
+            "executor": "@nx/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/{projectRoot}",
+                "main": "{projectRoot}/src/index.ts",
+                "tsConfig": "{projectRoot}/tsconfig.lib.json",
+                "assets": []
+            },
+            "configurations": {
+                "ci": {}
+            }
+        },
+        "test": {
+            "dependsOn": ["build"],
+            "executor": "@nx/jest:jest",
+            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+            "options": {
+                "jestConfig": "{projectRoot}/jest.config.ts",
+                "passWithNoTests": true
+            },
+            "configurations": {
+                "ci": {
+                    "ci": true,
+                    "coverageReporters": ["lcov"],
+                    "codeCoverage": true
+                }
+            }
+        },
+        "upload": {
+            "executor": "nx:run-commands",
+            "options": {
+                "color": true,
+                "command": "ts-node {projectRoot}/src/bin/publish.ts {args.name} {args.ver} {args.tag}"
+            }
+        },
+        "run-many-e2e": {
+            "executor": "nx:run-commands",
+            "options": {
+                "color": true,
+                "command": "ts-node {projectRoot}/src/bin/run-many-e2e.ts"
+            }
+        },
+        "affected-e2e": {
+            "executor": "nx:run-commands",
+            "options": {
+                "color": true,
+                "command": "ts-node {projectRoot}/src/bin/affected-e2e.ts"
+            }
+        },
+        "start-local-registry": {
+            "executor": "nx:run-commands",
+            "options": {
+                "color": true,
+                "command": "ts-node {projectRoot}/src/bin/start-local-registry.ts"
+            }
+        },
+        "stop-local-registry": {
+            "executor": "nx:run-commands",
+            "options": {
+                "color": true,
+                "command": "ts-node {projectRoot}/src/bin/stop-local-registry.ts"
+            }
+        },
+        "local-registry": {
+            "executor": "@nx/js:verdaccio",
+            "options": {
+                "port": 4873,
+                "clear": true,
+                "location": "none",
+                "config": "{projectRoot}/config.yml",
+                "storage": "tmp/local-registry/storage"
+            }
+        }
+    }
+}

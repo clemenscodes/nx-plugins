@@ -1,5 +1,5 @@
+import { mockNxOutput } from '@/mocks';
 import { runCommand } from './runCommand';
-import { output } from '@nx/devkit';
 import * as child_process from 'child_process';
 
 describe('runCommand', () => {
@@ -8,7 +8,7 @@ describe('runCommand', () => {
 
     beforeEach(() => {
         execSyncMock = jest.spyOn(child_process, 'execSync');
-        outputErrorMock = jest.spyOn(output, 'error');
+        outputErrorMock = mockNxOutput('error');
     });
 
     afterEach(() => {

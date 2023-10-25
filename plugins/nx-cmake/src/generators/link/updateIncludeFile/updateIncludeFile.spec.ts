@@ -1,8 +1,7 @@
 import type { Tree } from '@nx/devkit';
+import { setupWorkspace } from '@/mocks';
+import { readFileWithTree } from '@/file';
 import { updateIncludeFile } from './updateIncludeFile';
-import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import { readFileWithTree } from '@/util';
-import * as devkit from '@nx/devkit';
 import { LibGeneratorSchema, LinkSchema } from '../../generator';
 import { getDefaultInitGeneratorOptions } from '../../init/getDefaultInitGeneratorOptions/getDefaultInitGeneratorOptions';
 import initGenerator from '../../init/initGenerator';
@@ -18,13 +17,12 @@ describe('updateIncludeFile', () => {
     let expectedUpdatedIncludeFileContent: string;
 
     beforeEach(async () => {
-        tree = createTreeWithEmptyWorkspace();
+        tree = setupWorkspace();
         libOptions = {
             name: 'link',
             language: 'C++',
             generateTests: true,
         };
-        jest.spyOn(devkit, 'formatFiles').mockImplementation(jest.fn());
         await initGenerator(tree, getDefaultInitGeneratorOptions());
         await libGenerator(tree, libOptions);
         expectedIncludeFile = 'packages/link/include/liblink.h';

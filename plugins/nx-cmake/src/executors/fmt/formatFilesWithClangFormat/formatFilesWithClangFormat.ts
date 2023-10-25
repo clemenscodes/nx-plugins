@@ -1,6 +1,6 @@
 import { getFormatArguments } from '../getFormatArguments/getFormatArguments';
 import { getProjectFiles, filterSourceFiles } from '@/file';
-import { executeCommandForFiles, checkCommandExists } from '@/util';
+import { executeCommandForFiles, checkCommandExists } from '@/command';
 import { CLANG_FORMAT, getClangFormat } from '../../../config';
 import { FormatExecutorSchema } from '../../../executors/executor';
 

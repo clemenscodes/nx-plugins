@@ -11,22 +11,30 @@ coverage:
                 target: 90%
                 flags:
                     - create-nx-cmake
-            utils:
+            command:
                 target: 90%
                 flags:
-                    - utils
-            config:
-                target: 90%
-                flags:
-                    - config
-            graph:
-                target: 90%
-                flags:
-                    - graph
+                    - command
             file:
                 target: 90%
                 flags:
                     - file
+            log:
+                target: 90%
+                flags:
+                    - log
+            mocks:
+                target: 100%
+                flags:
+                    - mocks
+            util:
+                target: 90%
+                flags:
+                    - util
+            verdaccio:
+                target: 90%
+                flags:
+                    - verdaccio
         patch:
             default:
                 enabled: no
@@ -42,15 +50,21 @@ flags:
     create-nx-cmake:
         paths:
             - plugins/create-nx-cmake/src
-    utils:
+    command:
         paths:
-            - packages/utils/src
-    config:
-        paths:
-            - packages/config/src
-    graph:
-        paths:
-            - packages/graph/src
+            - packages/command/src
     file:
         paths:
             - packages/file/src
+    log:
+        paths:
+            - packages/log/src
+    mocks:
+        paths:
+            - packages/mocks/src
+    util:
+        paths:
+            - packages/util/src
+    verdaccio:
+        paths:
+            - packages/verdaccio/src

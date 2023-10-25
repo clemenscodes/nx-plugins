@@ -1,19 +1,8 @@
-/**
- * This is a minimal script to publish your package to "npm".
- * This is meant to be used as-is or customize as you see fit.
- *
- * This script is executed on "dist/path/to/library" as "cwd" by default.
- *
- * You might need to authenticate with NPM before running this script.
- */
-
 import { execSync } from 'child_process';
 import { readFileSync, writeFileSync } from 'fs';
+import { readCachedProjectGraph } from '@nx/devkit';
 
-import devkit from '@nx/devkit';
-const { readCachedProjectGraph } = devkit;
-
-function invariant(condition, message) {
+function invariant(condition: boolean, message: string) {
     if (!condition) {
         console.error(message);
         process.exit(1);
@@ -27,7 +16,7 @@ const [, , name, version, tag = 'next'] = process.argv;
 // A simple SemVer validation to validate the version
 const validVersion = /^\d+\.\d+\.\d+(-\w+\.\d+)?/;
 invariant(
-    version && validVersion.test(version),
+    !!version && validVersion.test(version),
     `No version provided or version did not match Semantic Versioning, expected: #.#.#-tag.# or #.#.#, got ${version}.`,
 );
 
@@ -35,11 +24,11 @@ const graph = readCachedProjectGraph();
 const project = graph.nodes[name];
 
 invariant(
-    project,
+    !!project,
     `Could not find project "${name}" in the workspace. Is the project.json configured correctly?`,
 );
 
-const outputPath = project.data?.targets?.build?.options?.outputPath;
+const outputPath = project.data?.targets?.['build']?.options?.outputPath;
 invariant(
     outputPath,
     `Could not find "build.options.outputPath" of project "${name}". Is project.json configured  correctly?`,
@@ -51,11 +40,33 @@ process.chdir(outputPath);
 try {
     const json = JSON.parse(readFileSync(`package.json`).toString());
     json.version = version;
-    // json.name += '-e2e';
     writeFileSync(`package.json`, JSON.stringify(json, null, 2));
 } catch (e) {
     console.error(`Error reading package.json file from library build output.`);
 }
 
+const host = 'localhost';
+const port = 4873;
+const registry = `http://${host}:${port}`;
+
+execSync(
+    `npm config set //${host}:${port}/:_authToken "secretVerdaccioToken"`,
+    {
+        encoding: 'utf-8',
+        stdio: 'inherit',
+        env: {
+            ...process.env,
+            npm_config_registry: registry,
+        },
+    },
+);
+
 // Execute "npm publish" to publish
-execSync(`npm publish --access public --tag ${tag}`);
+execSync(`npm publish --access public --tag ${tag} --registry ${registry}`, {
+    encoding: 'utf-8',
+    stdio: 'inherit',
+    env: {
+        ...process.env,
+        npm_config_registry: registry,
+    },
+});
