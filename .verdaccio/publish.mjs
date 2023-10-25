@@ -56,12 +56,28 @@ try {
     console.error(`Error reading package.json file from library build output.`);
 }
 
+const host = 'localhost';
+const port = 4873;
+const registry = `http://${host}:${port}`;
+
+execSync(
+    `npm config set //${hostname}:${port}/:_authToken "secretVerdaccioToken"`,
+    {
+        encoding: 'utf-8',
+        stdio: 'inherit',
+        env: {
+            ...process.env,
+            npm_config_registry: registry,
+        },
+    },
+);
+
 // Execute "npm publish" to publish
-execSync(`npm publish --access public --tag ${tag}`, {
+execSync(`npm publish --access public --tag ${tag} --registry ${registry}`, {
     encoding: 'utf-8',
     stdio: 'inherit',
     env: {
         ...process.env,
-        npm_config_registry: 'http://localhost:4873',
+        npm_config_registry: registry,
     },
 });
