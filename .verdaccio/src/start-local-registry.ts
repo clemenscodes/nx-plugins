@@ -24,7 +24,7 @@ function main() {
     }
     startLocalRegistry();
     setLocalRegistry();
-    publishPackages()
+    publishPackages();
     exit(0);
 }
 
