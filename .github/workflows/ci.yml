@@ -383,7 +383,6 @@ jobs:
               uses: actions/download-artifact@v3
               with:
                   name: dist
-                  path: dist.tar
 
             - name: Untar dist
               shell: bash
@@ -536,7 +535,6 @@ jobs:
               uses: actions/download-artifact@v3
               with:
                   name: dist
-                  path: dist.tar
 
             - name: Untar dist
               shell: bash
