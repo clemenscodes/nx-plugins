@@ -320,6 +320,9 @@ jobs:
         permissions:
             contents: read
             actions: read
+        defaults:
+            run:
+                shell: bash
         steps:
             - name: Checkout [Pull Request]
               uses: actions/checkout@v3
@@ -351,7 +354,6 @@ jobs:
 
             - name: Get pnpm store directory
               id: pnpm-cache
-              shell: bash
               run: |
                   echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
@@ -385,12 +387,10 @@ jobs:
                   name: dist
 
             - name: Untar dist
-              shell: bash
               run: tar xvf dist.tar
 
             - name: Start registry
-              shell: bash
-              run: pnpm nx local-registry verdaccio &
+              run: pnpm nx start-local-registry verdaccio &
 
             - name: Install linux dependencies (ubuntu-latest)
               if: matrix.os == 'ubuntu-latest'
@@ -427,8 +427,7 @@ jobs:
                       clang-tools-extra:u
                       gdb:u
 
-            - name: Run e2e [unix]
-              if: matrix.os != 'windows-latest'
+            - name: Run e2e
               env:
                   NX_NO_CLOUD: true
                   SKIP: true
@@ -442,26 +441,10 @@ jobs:
                     --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT \
                     -t e2e
 
-            - name: Run e2e [windows]
-              if: matrix.os == 'windows-latest'
-              env:
-                  NX_NO_CLOUD: true
-                  SKIP: true
-              run: |
-                  pnpm nx affected `
-                    --nx-bail `
-                    --base=$env:NX_BASE `
-                    --head=$env:NX_HEAD `
-                    --output-style=stream `
-                    --configuration=ci `
-                    --parallel=$env:NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT  `
-                    -t e2e
-
             - name: Stop local registry
               env:
                   NX_NO_CLOUD: true
-              run: |
-                  pnpm nx stop-local-registry verdaccio
+              run: pnpm nx stop-local-registry verdaccio
 
     publish:
         name: Publish
