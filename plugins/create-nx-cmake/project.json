@@ -51,7 +51,7 @@
             }
         },
         "publish": {
-            "command": "node .verdaccio/publish.mjs create-nx-cmake {args.ver} {args.tag}"
+            "command": "node .verdaccio/publish.mjs {projectName} --ver=1.0.0 --tag=e2e"
         },
         "version": {
             "executor": "@jscutlery/semver:version",
