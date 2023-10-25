@@ -26,6 +26,9 @@ jobs:
             contents: read
             actions: read
         runs-on: ${{ matrix.os }}
+        defaults:
+            run:
+                shell: bash
         steps:
             - name: Checkout [Pull Request]
               uses: actions/checkout@v3
@@ -57,9 +60,7 @@ jobs:
 
             - name: Get pnpm store directory
               id: pnpm-cache
-              shell: bash
-              run: |
-                  echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+              run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
             - name: Setup pnpm cache
               uses: actions/cache@v3
@@ -87,7 +88,6 @@ jobs:
         steps:
             - name: Calculate Matrix
               id: set-matrix
-              shell: bash
               run: |
                   AGENTS_JSON_ARRAY=$(node -e "
                     const agents = Array.from(new Array($NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT)).map((_, i) => i + 1);
@@ -103,6 +103,9 @@ jobs:
         permissions:
             contents: read
             actions: read
+        defaults:
+            run:
+                shell: bash
         strategy:
             matrix:
                 os:
@@ -141,9 +144,7 @@ jobs:
 
             - name: Get pnpm store directory
               id: pnpm-cache
-              shell: bash
-              run: |
-                  echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+              run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
             - name: Restore pnpm cache
               uses: actions/cache/restore@v3
@@ -187,6 +188,9 @@ jobs:
         permissions:
             contents: read
             actions: read
+        defaults:
+            run:
+                shell: bash
         runs-on: ${{ matrix.os }}
         needs: [set-agents, deps]
         steps:
@@ -220,9 +224,7 @@ jobs:
 
             - name: Get pnpm store directory
               id: pnpm-cache
-              shell: bash
-              run: |
-                  echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+              run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
             - name: Restore pnpm cache
               uses: actions/cache/restore@v3
@@ -257,10 +259,6 @@ jobs:
 
             - name: Run Test Agents (unix)
               id: agents
-              if: needs.agents.result != 'failure' &&
-                  needs.agents.result != 'cancelled' &&
-                  needs.agents.result != 'skipped' &&
-                  matrix.os != 'windows-latest'
               run: |
                   pnpm nx affected \
                       --nx-bail \
@@ -270,19 +268,6 @@ jobs:
                       --output-style=stream \
                       --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT \
                       --no-cloud \
-                      -t lint build test
-
-            - name: Run Tests (windows)
-              if: matrix.os == 'windows-latest'
-              run: |
-                  pnpm nx affected `
-                      --nx-bail `
-                      --base=$env:NX_BASE `
-                      --head=$env:NX_HEAD `
-                      --configuration=ci `
-                      --output-style=stream `
-                      --parallel=$env:NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT `
-                      --no-cloud `
                       -t lint build test
 
             - name: Stop Agents
@@ -296,7 +281,6 @@ jobs:
                   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
             - name: Tar dist
-              shell: bash
               run: tar -cvf dist.tar dist
 
             - name: Upload dist
@@ -354,8 +338,7 @@ jobs:
 
             - name: Get pnpm store directory
               id: pnpm-cache
-              run: |
-                  echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+              run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
             - name: Restore pnpm cache
               uses: actions/cache/restore@v3
@@ -495,7 +478,6 @@ jobs:
             - name: Get pnpm store directory
               if: startsWith(github.ref, 'refs/heads/main')
               id: pnpm-cache
-              shell: bash
               run: |
                   echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
@@ -521,7 +503,6 @@ jobs:
                   name: dist
 
             - name: Untar dist
-              shell: bash
               run: tar xvf dist.tar
 
             - name: Check npm auth
@@ -534,7 +515,6 @@ jobs:
 
             - name: Deploy packages
               if: startsWith(github.ref, 'refs/heads/main')
-              shell: bash
               run: pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t deploy --parallel 1
 
             - name: Delete Artifacts
