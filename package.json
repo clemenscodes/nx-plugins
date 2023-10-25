@@ -23,7 +23,7 @@
     "private": true,
     "devDependencies": {
         "@commitlint/cli": "^17.7.2",
-        "@commitlint/config-conventional": "^17.8.0",
+        "@commitlint/config-conventional": "^18.1.0",
         "@commitlint/config-nx-scopes": "^17.6.4",
         "@jscutlery/semver": "^3.3.0",
         "@nx/eslint-plugin": "17.0.0",
