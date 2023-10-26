@@ -47,9 +47,9 @@ Before getting started with this plugin, ensure you have the following tools ins
 - CMake v3.21 or higher – [Download CMake](https://cmake.org/download)
 - GCC (with POSIX thread model and mutex support)
 - Make
+- GDB
 - clang-format
 - clang-tidy
-- GDB
 
 #### Windows
 
