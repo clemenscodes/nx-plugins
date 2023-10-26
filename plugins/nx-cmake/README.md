@@ -43,13 +43,13 @@ This [Nx](https://nx.dev) plugin was developed to enhance the developer experien
 Before getting started with this plugin, ensure you have the following tools installed:
 
 - Nx v16.9 or higher (v2 plugin API)
-- Node.js LTS (Node.js v18.18 or later) – [Download Node.js](https://nodejs.org/)
+- Node.js LTS (Node.js v20.9.0 or later) – [Download Node.js](https://nodejs.org/)
 - CMake v3.21 or higher – [Download CMake](https://cmake.org/download)
 - GCC (with POSIX thread model and mutex support)
 - Make
+- GDB
 - clang-format
 - clang-tidy
-- GDB
 
 #### Windows
 

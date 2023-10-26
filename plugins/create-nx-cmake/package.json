@@ -10,5 +10,8 @@
     "typings": "./src/index.d.ts",
     "bin": {
         "create-nx-cmake": "./bin/index.js"
+    },
+    "engines": {
+        "node": "20"
     }
 }
