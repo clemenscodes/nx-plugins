@@ -118,8 +118,8 @@ importers:
   packages/command:
     dependencies:
       '@nx/devkit':
-        specifier: 17.0.0
-        version: 17.0.0(nx@17.0.2)
+        specifier: 17.0.2
+        version: 17.0.2(nx@17.0.2)
       tslib:
         specifier: ^2.3.0
         version: 2.6.2
@@ -127,8 +127,8 @@ importers:
   packages/file:
     dependencies:
       '@nx/devkit':
-        specifier: 17.0.0
-        version: 17.0.0(nx@17.0.2)
+        specifier: 17.0.2
+        version: 17.0.2(nx@17.0.2)
       tslib:
         specifier: ^2.3.0
         version: 2.6.2
@@ -136,8 +136,8 @@ importers:
   packages/log:
     dependencies:
       '@nx/devkit':
-        specifier: 17.0.0
-        version: 17.0.0(nx@17.0.2)
+        specifier: 17.0.2
+        version: 17.0.2(nx@17.0.2)
       tslib:
         specifier: ^2.3.0
         version: 2.6.2
@@ -145,8 +145,8 @@ importers:
   packages/mocks:
     dependencies:
       '@nx/devkit':
-        specifier: 17.0.0
-        version: 17.0.0(nx@17.0.2)
+        specifier: 17.0.2
+        version: 17.0.2(nx@17.0.2)
       tslib:
         specifier: ^2.3.0
         version: 2.6.2
@@ -154,8 +154,8 @@ importers:
   packages/types:
     dependencies:
       '@nx/devkit':
-        specifier: 17.0.0
-        version: 17.0.0(nx@17.0.2)
+        specifier: 17.0.2
+        version: 17.0.2(nx@17.0.2)
       tslib:
         specifier: ^2.3.0
         version: 2.6.2
@@ -163,8 +163,8 @@ importers:
   packages/util:
     dependencies:
       '@nx/devkit':
-        specifier: 17.0.0
-        version: 17.0.0(nx@17.0.2)
+        specifier: 17.0.2
+        version: 17.0.2(nx@17.0.2)
       tslib:
         specifier: ^2.3.0
         version: 2.6.2
@@ -172,8 +172,8 @@ importers:
   packages/verdaccio:
     dependencies:
       '@nx/devkit':
-        specifier: 17.0.0
-        version: 17.0.0(nx@17.0.2)
+        specifier: 17.0.2
+        version: 17.0.2(nx@17.0.2)
       tslib:
         specifier: ^2.3.0
         version: 2.6.2
@@ -190,8 +190,8 @@ importers:
   plugins/nx-cmake:
     dependencies:
       '@nx/devkit':
-        specifier: 17.0.0
-        version: 17.0.0(nx@17.0.2)
+        specifier: 17.0.2
+        version: 17.0.2(nx@17.0.2)
       tslib:
         specifier: ^2.6.2
         version: 2.6.2
@@ -236,7 +236,7 @@ packages:
       '@babel/helpers': 7.22.15
       '@babel/parser': 7.22.16
       '@babel/template': 7.22.15
-      '@babel/traverse': 7.22.17
+      '@babel/traverse': 7.23.2
       '@babel/types': 7.22.17
       convert-source-map: 1.9.0
       debug: 4.3.4
@@ -252,6 +252,16 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/types': 7.22.17
+      '@jridgewell/gen-mapping': 0.3.3
+      '@jridgewell/trace-mapping': 0.3.19
+      jsesc: 2.5.2
+    dev: true
+
+  /@babel/generator@7.23.0:
+    resolution: {integrity: sha512-lN85QRR+5IbYrMWM6Y4pE/noaQtg4pNiqeNGX60eqOfo6gtEj6uw/JagelB8vVztSd7R6M5n1+PQkDbHbBRU4g==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      '@babel/types': 7.23.0
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.19
       jsesc: 2.5.2
@@ -327,6 +337,11 @@ packages:
       - supports-color
     dev: true
 
+  /@babel/helper-environment-visitor@7.22.20:
+    resolution: {integrity: sha512-zfedSIzFhat/gFhWfHtgWvlec0nqB9YEIVrpuwjruLlXfUSnA8cJB0miHKwqDnQ7d32aKo2xt88/xZptwxbfhA==}
+    engines: {node: '>=6.9.0'}
+    dev: true
+
   /@babel/helper-environment-visitor@7.22.5:
     resolution: {integrity: sha512-XGmhECfVA/5sAt+H+xpSg0mfrHq6FzNr9Oxh7PSEBBRUb/mL7Kz3NICXb194rCqAEdxkhPT1a88teizAFyvk8Q==}
     engines: {node: '>=6.9.0'}
@@ -340,11 +355,19 @@ packages:
       '@babel/types': 7.22.17
     dev: true
 
+  /@babel/helper-function-name@7.23.0:
+    resolution: {integrity: sha512-OErEqsrxjZTJciZ4Oo+eoZqeW9UIiOcuYKRJA4ZAgV9myA+pOXhhmpfNCKjEH/auVfEYVFJ6y1Tc4r0eIApqiw==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      '@babel/template': 7.22.15
+      '@babel/types': 7.23.0
+    dev: true
+
   /@babel/helper-hoist-variables@7.22.5:
     resolution: {integrity: sha512-wGjk9QZVzvknA6yKIUURb8zY3grXCcOZt+/7Wcy8O2uctxhplmUPkOdlgoNhmdVee2c92JXbf1xpMtVNbfoxRw==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/types': 7.22.17
+      '@babel/types': 7.23.0
     dev: true
 
   /@babel/helper-member-expression-to-functions@7.22.15:
@@ -429,7 +452,7 @@ packages:
     resolution: {integrity: sha512-AsUnxuLhRYsisFiaJwvp1QF+I3KjD5FOxut14q/GzovUe6orHLesW2C7d754kRm53h5gqrz6sFl6sxc4BVtE/g==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/types': 7.22.17
+      '@babel/types': 7.23.0
     dev: true
 
   /@babel/helper-string-parser@7.22.5:
@@ -439,6 +462,11 @@ packages:
 
   /@babel/helper-validator-identifier@7.22.15:
     resolution: {integrity: sha512-4E/F9IIEi8WR94324mbDUMo074YTheJmd7eZF5vITTeYchqAi6sYXRLHUVsmkdmY4QjfKTcB2jB7dVP3NaBElQ==}
+    engines: {node: '>=6.9.0'}
+    dev: true
+
+  /@babel/helper-validator-identifier@7.22.20:
+    resolution: {integrity: sha512-Y4OZ+ytlatR8AI+8KZfKuL5urKp7qey08ha31L8b3BwewJAoJamTzyvxPR/5D+KkdJCGPq/+8TukHBlY10FX9A==}
     engines: {node: '>=6.9.0'}
     dev: true
 
@@ -461,7 +489,7 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/template': 7.22.15
-      '@babel/traverse': 7.22.17
+      '@babel/traverse': 7.23.2
       '@babel/types': 7.22.17
     transitivePeerDependencies:
       - supports-color
@@ -482,6 +510,14 @@ packages:
     hasBin: true
     dependencies:
       '@babel/types': 7.22.17
+    dev: true
+
+  /@babel/parser@7.23.0:
+    resolution: {integrity: sha512-vvPKKdMemU85V9WE/l5wZEmImpCtLqbnTvqDS2U1fJ96KrxoW7KrXhNsNCblQlg8Ck4b85yxdTyelsMUgFUXiw==}
+    engines: {node: '>=6.0.0'}
+    hasBin: true
+    dependencies:
+      '@babel/types': 7.23.0
     dev: true
 
   /@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression@7.22.15(@babel/core@7.22.17):
@@ -1431,22 +1467,22 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/code-frame': 7.22.13
-      '@babel/parser': 7.22.16
-      '@babel/types': 7.22.17
+      '@babel/parser': 7.23.0
+      '@babel/types': 7.23.0
     dev: true
 
-  /@babel/traverse@7.22.17:
-    resolution: {integrity: sha512-xK4Uwm0JnAMvxYZxOVecss85WxTEIbTa7bnGyf/+EgCL5Zt3U7htUpEOWv9detPlamGKuRzCqw74xVglDWpPdg==}
+  /@babel/traverse@7.23.2:
+    resolution: {integrity: sha512-azpe59SQ48qG6nu2CzcMLbxUudtN+dOM9kDbUqGq3HXUJRlo7i8fvPoxQUzYgLZ4cMVmuZgm8vvBpNeRhd6XSw==}
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/code-frame': 7.22.13
-      '@babel/generator': 7.22.15
-      '@babel/helper-environment-visitor': 7.22.5
-      '@babel/helper-function-name': 7.22.5
+      '@babel/generator': 7.23.0
+      '@babel/helper-environment-visitor': 7.22.20
+      '@babel/helper-function-name': 7.23.0
       '@babel/helper-hoist-variables': 7.22.5
       '@babel/helper-split-export-declaration': 7.22.6
-      '@babel/parser': 7.22.16
-      '@babel/types': 7.22.17
+      '@babel/parser': 7.23.0
+      '@babel/types': 7.23.0
       debug: 4.3.4
       globals: 11.12.0
     transitivePeerDependencies:
@@ -1459,6 +1495,15 @@ packages:
     dependencies:
       '@babel/helper-string-parser': 7.22.5
       '@babel/helper-validator-identifier': 7.22.15
+      to-fast-properties: 2.0.0
+    dev: true
+
+  /@babel/types@7.23.0:
+    resolution: {integrity: sha512-0oIyUfKoI3mSqMvsxBdclDwxXKXAUA8v/apZbc+iSyARYou1o8ZGDxbUYyLFoW2arqS2jDGqJuZvv1d/io1axg==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      '@babel/helper-string-parser': 7.22.5
+      '@babel/helper-validator-identifier': 7.22.20
       to-fast-properties: 2.0.0
     dev: true
 
@@ -2030,14 +2075,6 @@ packages:
       fastq: 1.15.0
     dev: true
 
-  /@nrwl/devkit@17.0.0(nx@17.0.2):
-    resolution: {integrity: sha512-HvV4GrohNxmN5niRu+XRWuy/gNXFkCLJTNqS3eeZ1h96BnVIiGQL6qHkXvwt0HShcse+Bn55BijKNO7JSo7oIQ==}
-    dependencies:
-      '@nx/devkit': 17.0.0(nx@17.0.2)
-    transitivePeerDependencies:
-      - nx
-    dev: false
-
   /@nrwl/devkit@17.0.2(nx@17.0.2):
     resolution: {integrity: sha512-zgqTFYmvs80D3T/TwmR/EBdV1OU2c96YYHngAe3DX8kXhjlV3dq+VPZVBROM0AzYLGaSckW3mHBhgL+JrDp5Pg==}
     dependencies:
@@ -2160,21 +2197,6 @@ packages:
       - '@swc/core'
       - debug
     dev: true
-
-  /@nx/devkit@17.0.0(nx@17.0.2):
-    resolution: {integrity: sha512-NqN+I3R+Gxuy+gf04cdMg1Wo29CyhT2F87Yvu2JU355BfB3MOAFfOrQpPQt5sPlZRloZCrz0K3c2uftNkGSMUg==}
-    peerDependencies:
-      nx: '>= 16 <= 18'
-    dependencies:
-      '@nrwl/devkit': 17.0.0(nx@17.0.2)
-      ejs: 3.1.9
-      enquirer: 2.3.6
-      ignore: 5.2.4
-      nx: 17.0.2(@swc-node/register@1.6.8)(@swc/core@1.3.95)
-      semver: 7.5.3
-      tmp: 0.2.1
-      tslib: 2.6.2
-    dev: false
 
   /@nx/devkit@17.0.2(nx@17.0.2):
     resolution: {integrity: sha512-gtJNrFtGZa96qAM4ijAvoCLj/LuUr+Jq91QITsYE4cvYL0qan4zGcAOBMclzpaXVN9pwpko+veDwHwnmp/SXTg==}
@@ -3466,7 +3488,7 @@ packages:
       '@babel/core': 7.22.17
       '@babel/helper-plugin-utils': 7.22.5
       '@babel/plugin-syntax-typescript': 7.22.5(@babel/core@7.22.17)
-      '@babel/traverse': 7.22.17
+      '@babel/traverse': 7.23.2
     transitivePeerDependencies:
       - supports-color
     dev: true
