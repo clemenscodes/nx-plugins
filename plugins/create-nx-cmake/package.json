@@ -3,7 +3,7 @@
     "version": "0.1.2",
     "dependencies": {
         "tslib": "^2.3.0",
-        "create-nx-workspace": "16.10.0"
+        "create-nx-workspace": "17.0.2"
     },
     "type": "commonjs",
     "main": "./src/index.js",
