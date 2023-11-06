@@ -2,6 +2,7 @@ import { fileExists } from '@/file';
 import { assertIsValidProgramName } from '../assertIsValidProgramName/assertIsValidProgramName';
 import { Program, PROGRAMS } from '../getPrograms';
 import { isDarwin, isWindows } from '@/util';
+import { logger } from '@/log';
 
 export const getFirstMatch = (
     program: Program,
@@ -12,7 +13,8 @@ export const getFirstMatch = (
             return path;
         }
     }
-    throw new Error(`${program} was not found on paths ${paths}`);
+    logger(`${program} was not found on default paths`);
+    return program;
 };
 
 export const getProgram = (program: Program): string => {
