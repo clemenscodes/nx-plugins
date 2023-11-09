@@ -14,6 +14,9 @@ importers:
       '@swc/helpers':
         specifier: 0.5.3
         version: 0.5.3
+      create-nx-workspace:
+        specifier: 17.0.2
+        version: 17.0.2
       tslib:
         specifier: ^2.6.2
         version: 2.6.2
