@@ -1,7 +1,7 @@
 {
     "name": "nx-cmake",
     "description": "An Nx plugin to add CMake, C and C++ support for Nx workspaces",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "license": "MIT",
     "type": "commonjs",
     "main": "./src/index.js",
@@ -34,6 +34,6 @@
     },
     "dependencies": {
         "tslib": "^2.6.2",
-        "@nx/devkit": "17.0.2"
+        "@nx/devkit": "17.1.1"
     }
 }
