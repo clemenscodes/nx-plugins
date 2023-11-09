@@ -15,8 +15,8 @@ importers:
         specifier: 0.5.3
         version: 0.5.3
       create-nx-workspace:
-        specifier: 17.0.2
-        version: 17.0.2
+        specifier: 17.1.1
+        version: 17.1.1
       tslib:
         specifier: ^2.6.2
         version: 2.6.2
@@ -181,8 +181,8 @@ importers:
   plugins/create-nx-cmake:
     dependencies:
       create-nx-workspace:
-        specifier: 17.0.2
-        version: 17.0.2
+        specifier: 17.1.1
+        version: 17.1.1
       tslib:
         specifier: ^2.3.0
         version: 2.6.2
@@ -4309,8 +4309,8 @@ packages:
       - ts-node
     dev: true
 
-  /create-nx-workspace@17.0.2:
-    resolution: {integrity: sha512-BNN+Xefp+a7/f3ByCrI6ry68xZQdFKg/EeMpC1qp1CZKyDcG4nSrWiYL3CCiRxA/efVVBeDx2U+7/oTBEvI5hw==}
+  /create-nx-workspace@17.1.1:
+    resolution: {integrity: sha512-QE5RlefMCnFI/fF7q7YyDmPc9UQzyKsnVm66ry8kt9V6OyZG0vA7bRxHKZGaWWEeqN1YEWc2poJmpwFjZNn4wA==}
     hasBin: true
     dependencies:
       axios: 1.5.1
