@@ -1,7 +1,6 @@
 {
     "name": "nx-cmake",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "root": "plugins/nx-cmake",
     "sourceRoot": "plugins/nx-cmake/src",
     "projectType": "library",
     "targets": {
@@ -65,14 +64,11 @@
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
             "options": {
-                "jestConfig": "plugins/nx-cmake/jest.config.ts",
-                "passWithNoTests": true
+                "jestConfig": "plugins/nx-cmake/jest.config.ts"
             },
             "configurations": {
                 "ci": {
-                    "ci": true,
-                    "coverageReporters": ["lcov"],
-                    "codeCoverage": true
+                    "coverageReporters": ["lcov"]
                 }
             }
         },
