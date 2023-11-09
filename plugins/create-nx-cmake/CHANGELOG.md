@@ -1,5 +1,14 @@
 # Changelog (create-nx-cmake)
 
+# [0.6.0](https://github.com/clemenscodes/nx-plugins/compare/create-nx-cmake-0.5.0...create-nx-cmake-0.6.0) (2023-11-09)
+
+
+### Features
+
+* **create-nx-cmake,nx-cmake:** support nx@17.1.1 ([9bd4ab1](https://github.com/clemenscodes/nx-plugins/commit/9bd4ab1e9c94422401be09c835a2d03d68f0f8de))
+
+
+
 # [0.5.0](https://github.com/clemenscodes/nx-plugins/compare/create-nx-cmake-0.1.2...create-nx-cmake-0.2.0) (2023-11-09)
 
 
