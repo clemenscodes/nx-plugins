@@ -80,7 +80,7 @@
             "options": {
                 "cwd": "dist/{projectRoot}",
                 "commands": [
-                    "case \"$(git log -1 --format=%s)\" in \"chore({projectName}): release v\"*) npm publish --access=public;; *) exit 0;; esac"
+                    "npm publish --access=public"
                 ]
             }
         }

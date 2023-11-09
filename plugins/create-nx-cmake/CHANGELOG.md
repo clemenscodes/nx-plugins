@@ -2,7 +2,6 @@
 
 # [0.5.0](https://github.com/clemenscodes/nx-plugins/compare/create-nx-cmake-0.1.2...create-nx-cmake-0.2.0) (2023-11-09)
 
-
 ### Bug Fixes
 
 * **create-nx-cmake,nx-cmake:** jscuterly:semver with nx 17 ([ec752d9](https://github.com/clemenscodes/nx-plugins/commit/ec752d9cb410e5f3f4dc94f3da5cef54a1d0e101))
