@@ -79,9 +79,7 @@
             "executor": "nx:run-commands",
             "options": {
                 "cwd": "dist/{projectRoot}",
-                "commands": [
-                    "npm publish --access=public"
-                ]
+                "commands": ["npm publish --access=public"]
             }
         }
     },
