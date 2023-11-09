@@ -49,8 +49,7 @@ describe('getCmake', () => {
 
     it('should error getting the program path when it doesnt exist', () => {
         fileExistsMock.mockReturnValue(false);
-        expect(() => getCmake()).toThrowError(
-            `${CMAKE} was not found on paths ${LINUX_CMAKE}`,
-        );
+        const cmake = getCmake();
+        expect(cmake).toBe(CMAKE);
     });
 });

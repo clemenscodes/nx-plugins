@@ -44,8 +44,7 @@ describe('getGdb', () => {
 
     it('should error getting the program path when it doesnt exist', () => {
         fileExistsMock.mockReturnValue(false);
-        expect(() => getGdb()).toThrowError(
-            `${GDB} was not found on paths ${LINUX_GDB}`,
-        );
+        const gdb = getGdb();
+        expect(gdb).toBe(GDB);
     });
 });

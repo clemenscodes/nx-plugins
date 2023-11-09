@@ -49,8 +49,7 @@ describe('getClangTidy', () => {
 
     it('should error getting the program path when it doesnt exist', () => {
         fileExistsMock.mockReturnValue(false);
-        expect(() => getClangTidy()).toThrowError(
-            `${CLANG_TIDY} was not found on paths ${LINUX_CLANG_TIDY}`,
-        );
+        const clangTidy = getClangTidy();
+        expect(clangTidy).toBe(CLANG_TIDY);
     });
 });

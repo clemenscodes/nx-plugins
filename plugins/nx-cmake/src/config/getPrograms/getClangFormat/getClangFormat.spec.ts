@@ -49,8 +49,7 @@ describe('getClangFormat', () => {
 
     it('should error getting the program path when it doesnt exist', () => {
         fileExistsMock.mockReturnValue(false);
-        expect(() => getClangFormat()).toThrowError(
-            `${CLANG_FORMAT} was not found on paths ${LINUX_CLANG_FORMAT}`,
-        );
+        const clangFormat = getClangFormat();
+        expect(clangFormat).toBe(CLANG_FORMAT);
     });
 });
