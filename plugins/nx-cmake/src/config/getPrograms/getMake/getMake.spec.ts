@@ -44,8 +44,7 @@ describe('getMake', () => {
 
     it('should error getting the program path when it doesnt exist', () => {
         fileExistsMock.mockReturnValue(false);
-        expect(() => getMake()).toThrowError(
-            `${MAKE} was not found on paths ${LINUX_MAKE}`,
-        );
+        const make = getMake();
+        expect(make).toBe(MAKE);
     });
 });

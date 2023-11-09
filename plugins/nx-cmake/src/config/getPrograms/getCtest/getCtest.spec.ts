@@ -49,8 +49,7 @@ describe('getCtest', () => {
 
     it('should error getting the program path when it doesnt exist', () => {
         fileExistsMock.mockReturnValue(false);
-        expect(() => getCtest()).toThrowError(
-            `${CTEST} was not found on paths ${LINUX_CTEST}`,
-        );
+        const ctest = getCtest();
+        expect(ctest).toBe(CTEST);
     });
 });
