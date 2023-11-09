@@ -57,7 +57,6 @@
         "version": {
             "executor": "@jscutlery/semver:version",
             "options": {
-                "preset": "conventional",
                 "syncVersions": false,
                 "allowEmptyRelease": false,
                 "noVerify": true,

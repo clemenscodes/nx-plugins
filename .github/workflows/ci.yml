@@ -493,11 +493,13 @@ jobs:
               run: pnpm install --no-frozen-lockfile
 
             - name: Download dist
+              if: startsWith(github.ref, 'refs/heads/main')
               uses: actions/download-artifact@v3
               with:
                   name: dist
 
             - name: Untar dist
+              if: startsWith(github.ref, 'refs/heads/main')
               run: tar xvf dist.tar
 
             - name: Check npm auth
