@@ -1,6 +1,6 @@
 # Changelog (create-nx-cmake)
 
-# [0.2.0](https://github.com/clemenscodes/nx-plugins/compare/create-nx-cmake-0.1.2...create-nx-cmake-0.2.0) (2023-11-09)
+# [0.5.0](https://github.com/clemenscodes/nx-plugins/compare/create-nx-cmake-0.1.2...create-nx-cmake-0.2.0) (2023-11-09)
 
 
 ### Bug Fixes
