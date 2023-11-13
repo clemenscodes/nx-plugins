@@ -24,7 +24,7 @@
     "devDependencies": {
         "@commitlint/cli": "^18.2.0",
         "@commitlint/config-conventional": "^18.1.0",
-        "@commitlint/config-nx-scopes": "^18.3.0",
+        "@commitlint/config-nx-scopes": "^18.4.0",
         "@jscutlery/semver": "^4.0.0",
         "@nx/eslint-plugin": "17.1.1",
         "@nx/jest": "17.1.1",
