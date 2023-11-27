@@ -28,8 +28,8 @@ importers:
         specifier: ^18.1.0
         version: 18.1.0
       '@commitlint/config-nx-scopes':
-        specifier: ^18.3.0
-        version: 18.3.0(nx@17.1.1)
+        specifier: ^18.4.3
+        version: 18.4.3(nx@17.1.1)
       '@jscutlery/semver':
         specifier: ^4.0.0
         version: 4.0.0(@nx/devkit@17.1.1)
@@ -1516,8 +1516,8 @@ packages:
       conventional-changelog-conventionalcommits: 7.0.2
     dev: true
 
-  /@commitlint/config-nx-scopes@18.3.0(nx@17.1.1):
-    resolution: {integrity: sha512-ysMNgCMAxWciQI9mDjRZfl/0uQJJxmkB02gu27+1pO6Xm/ih9WcACbL64jaS5X3Q8QcM4nk9NnpQYDbjo4wX6Q==}
+  /@commitlint/config-nx-scopes@18.4.3(nx@17.1.1):
+    resolution: {integrity: sha512-Pq6kGIL2cM6VPsxuMyp6rLguuromGmD+TnD1aJREKVzrStl0XKvW0+veSyyneWRRIP34k5whSAoflPk8eHe2KA==}
     engines: {node: '>=v18'}
     peerDependencies:
       nx: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
