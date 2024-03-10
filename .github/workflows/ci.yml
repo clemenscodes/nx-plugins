@@ -17,417 +17,417 @@ env:
     CI: true
 
 jobs:
-    # deps:
-    #     strategy:
-    #         matrix:
-    #             os: [ubuntu-latest, macos-latest, windows-latest]
-    #     name: Deps [${{ matrix.os }}]
-    #     permissions:
-    #         contents: read
-    #         actions: read
-    #     runs-on: ${{ matrix.os }}
-    #     defaults:
-    #         run:
-    #             shell: bash
-    #     steps:
-    #         - name: Checkout [Pull Request]
-    #           uses: actions/checkout@v4
-    #           if: github.event_name == 'pull_request'
-    #           with:
-    #               ref: ${{ github.event.pull_request.head.sha }}
-    #               fetch-depth: 0
-    #
-    #         - name: Checkout [Main]
-    #           uses: actions/checkout@v4
-    #           if: github.event_name != 'pull_request'
-    #           with:
-    #               fetch-depth: 0
-    #
-    #         - name: Derive SHAs
-    #           uses: nrwl/nx-set-shas@v4
-    #
-    #         - name: Install Node
-    #           uses: actions/setup-node@v4
-    #           with:
-    #               node-version: lts/*
-    #
-    #         - name: Install pnpm
-    #           uses: pnpm/action-setup@v3
-    #           id: pnpm-install
-    #           with:
-    #               version: latest
-    #               run_install: false
-    #
-    #         - name: Get pnpm store directory
-    #           id: pnpm-cache
-    #           run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-    #
-    #         - name: Setup pnpm cache
-    #           uses: actions/cache@v4
-    #           id: cache
-    #           with:
-    #               path: |
-    #                   ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-    #                   node_modules/
-    #               key: ${{ matrix.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-    #               restore-keys: |
-    #                   ${{ matrix.os }}-pnpm-store-
-    #
-    #         - name: Install dependencies
-    #           if: steps.cache.outputs.cache-hit != 'true'
-    #           run: pnpm install --no-frozen-lockfile
-    #
-    #         - name: Check format
-    #           run: pnpm nx format:check --all
-    #
-    # set-agents:
-    #     name: Set Agent Matrix
-    #     runs-on: ubuntu-latest
-    #     outputs:
-    #         matrix: ${{ steps.set-matrix.outputs.matrix }}
-    #     steps:
-    #         - name: Calculate Matrix
-    #           id: set-matrix
-    #           run: |
-    #               AGENTS_JSON_ARRAY=$(node -e "
-    #                 const agents = Array.from(new Array($NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT)).map((_, i) => i + 1);
-    #                 console.log(JSON.stringify(agents));
-    #               ")
-    #               echo $AGENTS_JSON_ARRAY
-    #               echo "matrix=$AGENTS_JSON_ARRAY" >> $GITHUB_OUTPUT
-    #
-    # agents:
-    #     name: Agent ${{ matrix.agent }} [${{ matrix.os }}]
-    #     needs: [set-agents, deps]
-    #     runs-on: ${{ matrix.os }}
-    #     permissions:
-    #         contents: read
-    #         actions: read
-    #     defaults:
-    #         run:
-    #             shell: bash
-    #     strategy:
-    #         matrix:
-    #             os:
-    #                 - ubuntu-latest
-    #                 - macos-latest
-    #             agent:
-    #                 - ${{ fromJson(needs.set-agents.outputs.matrix) }}
-    #     steps:
-    #         - name: Checkout [Pull Request]
-    #           uses: actions/checkout@v4
-    #           if: github.event_name == 'pull_request'
-    #           with:
-    #               ref: ${{ github.event.pull_request.head.sha }}
-    #               fetch-depth: 0
-    #
-    #         - name: Checkout [Main]
-    #           uses: actions/checkout@v4
-    #           if: github.event_name != 'pull_request'
-    #           with:
-    #               fetch-depth: 0
-    #
-    #         - name: Derive SHAs
-    #           uses: nrwl/nx-set-shas@v4
-    #
-    #         - name: Install Node
-    #           uses: actions/setup-node@v4
-    #           with:
-    #               node-version: lts/*
-    #
-    #         - name: Install pnpm
-    #           uses: pnpm/action-setup@v3
-    #           id: pnpm-install
-    #           with:
-    #               version: latest
-    #               run_install: false
-    #
-    #         - name: Get pnpm store directory
-    #           id: pnpm-cache
-    #           run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-    #
-    #         - name: Restore pnpm cache
-    #           uses: actions/cache/restore@v4
-    #           id: cache
-    #           with:
-    #               path: |
-    #                   ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-    #                   node_modules/
-    #               key: ${{ matrix.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-    #               restore-keys: |
-    #                   ${{ matrix.os }}-pnpm-store-
-    #
-    #         - name: Install dependencies
-    #           if: steps.cache.outputs.cache-hit != 'true'
-    #           run: pnpm install --no-frozen-lockfile
-    #
-    #         - name: Install linux dependencies (ubuntu-latest)
-    #           if: matrix.os == 'ubuntu-latest'
-    #           run: |
-    #               sudo apt-get update -y
-    #               sudo apt-get install gdb nasm -y
-    #
-    #         - name: Install macos dependencies (macos-latest)
-    #           if: matrix.os == 'macos-latest'
-    #           run: |
-    #               brew install llvm gdb nasm
-    #               ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
-    #               ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
-    #
-    #         - name: Run Agent (unix)
-    #           run: npx nx-cloud start-agent
-    #
-    # main:
-    #     strategy:
-    #         matrix:
-    #             os: [windows-latest, ubuntu-latest, macos-latest]
-    #         fail-fast: false
-    #     name: Main Job [${{ matrix.os }}]
-    #     env:
-    #         NX_CACHE_DIRECTORY: tmp/${{ matrix.os }}
-    #     permissions:
-    #         contents: read
-    #         actions: read
-    #     defaults:
-    #         run:
-    #             shell: bash
-    #     runs-on: ${{ matrix.os }}
-    #     needs: [set-agents, deps]
-    #     steps:
-    #         - name: Checkout [Pull Request]
-    #           uses: actions/checkout@v4
-    #           if: github.event_name == 'pull_request'
-    #           with:
-    #               ref: ${{ github.event.pull_request.head.sha }}
-    #               fetch-depth: 0
-    #
-    #         - name: Checkout [Main]
-    #           uses: actions/checkout@v4
-    #           if: github.event_name != 'pull_request'
-    #           with:
-    #               fetch-depth: 0
-    #
-    #         - name: Derive SHAs
-    #           uses: nrwl/nx-set-shas@v4
-    #
-    #         - name: Install Node
-    #           uses: actions/setup-node@v4
-    #           with:
-    #               node-version: lts/*
-    #
-    #         - name: Install pnpm
-    #           uses: pnpm/action-setup@v3
-    #           id: pnpm-install
-    #           with:
-    #               version: latest
-    #               run_install: false
-    #
-    #         - name: Get pnpm store directory
-    #           id: pnpm-cache
-    #           run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-    #
-    #         - name: Restore pnpm cache
-    #           uses: actions/cache/restore@v4
-    #           id: cache
-    #           with:
-    #               path: |
-    #                   ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-    #                   node_modules/
-    #               key: ${{ matrix.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-    #               restore-keys: |
-    #                   ${{ matrix.os }}-pnpm-store-
-    #
-    #         - name: Nx cache
-    #           uses: actions/cache@v4
-    #           id: nx_cache
-    #           with:
-    #               path: ${{ env.NX_CACHE_DIRECTORY }}
-    #               key: ${{ matrix.os }}-nx-cache-${{ hashFiles('tmp/**') }}
-    #               restore-keys: |
-    #                   ${{ matrix.os }}-nx-cache
-    #
-    #         - name: Install dependencies
-    #           if: steps.cache.outputs.cache-hit != 'true'
-    #           run: pnpm install --no-frozen-lockfile
-    #
-    #         - name: Start Agents (unix)
-    #           if: needs.agents.result != 'failure' &&
-    #               needs.agents.result != 'cancelled' &&
-    #               needs.agents.result != 'skipped' &&
-    #               matrix.os != 'windows-latest'
-    #           run: npx nx-cloud start-ci-run --stop-agents-after=e2e
-    #
-    #         - name: Run Test Agents (unix)
-    #           id: agents
-    #           run: |
-    #               pnpm nx affected \
-    #                   --nx-bail \
-    #                   --base=$NX_BASE \
-    #                   --head=$NX_HEAD \
-    #                   --configuration=ci \
-    #                   --output-style=stream \
-    #                   --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT \
-    #                   --no-cloud \
-    #                   -t lint build test
-    #
-    #         - name: Stop Agents
-    #           if: always()
-    #           run: npx nx-cloud stop-all-agents
-    #
-    #         - name: Upload coverage reports to Codecov
-    #           if: matrix.os == 'ubuntu-latest'
-    #           uses: codecov/codecov-action@v4
-    #           env:
-    #               CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-    #
-    #         - name: Tar dist
-    #           run: tar -cvf dist.tar dist
-    #
-    #         - name: Upload dist
-    #           if: matrix.os == 'ubuntu-latest'
-    #           uses: actions/upload-artifact@v4
-    #           with:
-    #               name: dist
-    #               path: dist.tar
-    #
-    # e2e:
-    #     name: E2E [${{ matrix.os }}]
-    #     needs: [main, agents]
-    #     runs-on: ${{ matrix.os }}
-    #     strategy:
-    #         matrix:
-    #             os: [windows-latest, ubuntu-latest, macos-latest]
-    #         fail-fast: false
-    #     env:
-    #         NX_CLOUD_DISTRIBUTED_EXECUTION: false
-    #         NX_CACHE_DIRECTORY: tmp/${{ matrix.os }}
-    #     permissions:
-    #         contents: read
-    #         actions: read
-    #     defaults:
-    #         run:
-    #             shell: bash
-    #     steps:
-    #         - name: Checkout [Pull Request]
-    #           uses: actions/checkout@v4
-    #           if: github.event_name == 'pull_request'
-    #           with:
-    #               ref: ${{ github.event.pull_request.head.sha }}
-    #               fetch-depth: 0
-    #
-    #         - name: Checkout [Main]
-    #           uses: actions/checkout@v4
-    #           if: github.event_name != 'pull_request'
-    #           with:
-    #               fetch-depth: 0
-    #
-    #         - name: Derive SHAs
-    #           uses: nrwl/nx-set-shas@v4
-    #
-    #         - name: Install Node
-    #           uses: actions/setup-node@v4
-    #           with:
-    #               node-version: lts/*
-    #
-    #         - name: Install pnpm
-    #           uses: pnpm/action-setup@v3
-    #           id: pnpm-install
-    #           with:
-    #               version: latest
-    #               run_install: false
-    #
-    #         - name: Get pnpm store directory
-    #           id: pnpm-cache
-    #           run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-    #
-    #         - name: Restore pnpm cache
-    #           uses: actions/cache/restore@v4
-    #           id: cache
-    #           with:
-    #               path: |
-    #                   ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-    #                   node_modules/
-    #               key: ${{ matrix.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-    #               restore-keys: |
-    #                   ${{ matrix.os }}-pnpm-store-
-    #
-    #         - name: Nx cache
-    #           uses: actions/cache@v4
-    #           id: nx_cache
-    #           with:
-    #               path: ${{ env.NX_CACHE_DIRECTORY }}
-    #               key: ${{ matrix.os }}-nx-cache-${{ hashFiles('tmp/**') }}
-    #               restore-keys: |
-    #                   ${{ matrix.os }}-nx-cache
-    #
-    #         - name: Install dependencies
-    #           if: steps.cache.outputs.cache-hit != 'true'
-    #           run: pnpm install --no-frozen-lockfile
-    #
-    #         - name: Download dist
-    #           uses: actions/download-artifact@v4
-    #           with:
-    #               name: dist
-    #
-    #         - name: Untar dist
-    #           run: tar xvf dist.tar
-    #
-    #         - name: Install linux dependencies (ubuntu-latest)
-    #           if: matrix.os == 'ubuntu-latest'
-    #           run: |
-    #               sudo apt-get update -y
-    #               sudo apt-get install gdb -y
-    #
-    #         - name: Install macos dependencies (macos-latest)
-    #           if: matrix.os == 'macos-latest'
-    #           run: |
-    #               brew install llvm gdb
-    #               ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
-    #               ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
-    #
-    #         - name: Install MSYS2 (windows-latest)
-    #           if: matrix.os == 'windows-latest'
-    #           shell: pwsh
-    #           run: |
-    #               Add-Content $env:GITHUB_PATH "C:\msys64"
-    #               Add-Content $env:GITHUB_PATH "C:\msys64\usr\bin"
-    #               Add-Content $env:GITHUB_PATH "C:\msys64\ucrt64\bin"
-    #
-    #         - name: Install windows dependencies (windows-latest)
-    #           if: matrix.os == 'windows-latest'
-    #           uses: msys2/setup-msys2@v2
-    #           with:
-    #               msystem: UCRT64
-    #               update: true
-    #               release: false
-    #               pacboy: >-
-    #                   gcc:u
-    #                   make:u
-    #                   cmake:u
-    #                   clang:u
-    #                   clang-tools-extra:u
-    #                   gdb:u
-    #
-    #         - name: Start registry
-    #           env:
-    #               NX_NO_CLOUD: true
-    #           run: pnpm nx local-registry &
-    #
-    #         - name: Run e2e
-    #           env:
-    #               NX_NO_CLOUD: true
-    #               SKIP: true
-    #           run: pnpm nx affected-e2e
-    #
-    #         - name: Stop registry
-    #           env:
-    #               NX_NO_CLOUD: true
-    #           run: pnpm nx stop-local-registry
-    #
+    deps:
+        strategy:
+            matrix:
+                os: [ubuntu-latest, macos-latest, windows-latest]
+        name: Deps [${{ matrix.os }}]
+        permissions:
+            contents: read
+            actions: read
+        runs-on: ${{ matrix.os }}
+        defaults:
+            run:
+                shell: bash
+        steps:
+            - name: Checkout [Pull Request]
+              uses: actions/checkout@v4
+              if: github.event_name == 'pull_request'
+              with:
+                  ref: ${{ github.event.pull_request.head.sha }}
+                  fetch-depth: 0
+
+            - name: Checkout [Main]
+              uses: actions/checkout@v4
+              if: github.event_name != 'pull_request'
+              with:
+                  fetch-depth: 0
+
+            - name: Derive SHAs
+              uses: nrwl/nx-set-shas@v4
+
+            - name: Install Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: lts/*
+
+            - name: Install pnpm
+              uses: pnpm/action-setup@v3
+              id: pnpm-install
+              with:
+                  version: latest
+                  run_install: false
+
+            - name: Get pnpm store directory
+              id: pnpm-cache
+              run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+            - name: Setup pnpm cache
+              uses: actions/cache@v4
+              id: cache
+              with:
+                  path: |
+                      ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+                      node_modules/
+                  key: ${{ matrix.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  restore-keys: |
+                      ${{ matrix.os }}-pnpm-store-
+
+            - name: Install dependencies
+              if: steps.cache.outputs.cache-hit != 'true'
+              run: pnpm install --no-frozen-lockfile
+
+            - name: Check format
+              run: pnpm nx format:check --all
+
+    set-agents:
+        name: Set Agent Matrix
+        runs-on: ubuntu-latest
+        outputs:
+            matrix: ${{ steps.set-matrix.outputs.matrix }}
+        steps:
+            - name: Calculate Matrix
+              id: set-matrix
+              run: |
+                  AGENTS_JSON_ARRAY=$(node -e "
+                    const agents = Array.from(new Array($NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT)).map((_, i) => i + 1);
+                    console.log(JSON.stringify(agents));
+                  ")
+                  echo $AGENTS_JSON_ARRAY
+                  echo "matrix=$AGENTS_JSON_ARRAY" >> $GITHUB_OUTPUT
+
+    agents:
+        name: Agent ${{ matrix.agent }} [${{ matrix.os }}]
+        needs: [set-agents, deps]
+        runs-on: ${{ matrix.os }}
+        permissions:
+            contents: read
+            actions: read
+        defaults:
+            run:
+                shell: bash
+        strategy:
+            matrix:
+                os:
+                    - ubuntu-latest
+                    - macos-latest
+                agent:
+                    - ${{ fromJson(needs.set-agents.outputs.matrix) }}
+        steps:
+            - name: Checkout [Pull Request]
+              uses: actions/checkout@v4
+              if: github.event_name == 'pull_request'
+              with:
+                  ref: ${{ github.event.pull_request.head.sha }}
+                  fetch-depth: 0
+
+            - name: Checkout [Main]
+              uses: actions/checkout@v4
+              if: github.event_name != 'pull_request'
+              with:
+                  fetch-depth: 0
+
+            - name: Derive SHAs
+              uses: nrwl/nx-set-shas@v4
+
+            - name: Install Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: lts/*
+
+            - name: Install pnpm
+              uses: pnpm/action-setup@v3
+              id: pnpm-install
+              with:
+                  version: latest
+                  run_install: false
+
+            - name: Get pnpm store directory
+              id: pnpm-cache
+              run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+            - name: Restore pnpm cache
+              uses: actions/cache/restore@v4
+              id: cache
+              with:
+                  path: |
+                      ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+                      node_modules/
+                  key: ${{ matrix.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  restore-keys: |
+                      ${{ matrix.os }}-pnpm-store-
+
+            - name: Install dependencies
+              if: steps.cache.outputs.cache-hit != 'true'
+              run: pnpm install --no-frozen-lockfile
+
+            - name: Install linux dependencies (ubuntu-latest)
+              if: matrix.os == 'ubuntu-latest'
+              run: |
+                  sudo apt-get update -y
+                  sudo apt-get install gdb nasm -y
+
+            - name: Install macos dependencies (macos-latest)
+              if: matrix.os == 'macos-latest'
+              run: |
+                  brew install llvm gdb nasm
+                  ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
+                  ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
+
+            - name: Run Agent (unix)
+              run: npx nx-cloud start-agent
+
+    main:
+        strategy:
+            matrix:
+                os: [windows-latest, ubuntu-latest, macos-latest]
+            fail-fast: false
+        name: Main Job [${{ matrix.os }}]
+        env:
+            NX_CACHE_DIRECTORY: tmp/${{ matrix.os }}
+        permissions:
+            contents: read
+            actions: read
+        defaults:
+            run:
+                shell: bash
+        runs-on: ${{ matrix.os }}
+        needs: [set-agents, deps]
+        steps:
+            - name: Checkout [Pull Request]
+              uses: actions/checkout@v4
+              if: github.event_name == 'pull_request'
+              with:
+                  ref: ${{ github.event.pull_request.head.sha }}
+                  fetch-depth: 0
+
+            - name: Checkout [Main]
+              uses: actions/checkout@v4
+              if: github.event_name != 'pull_request'
+              with:
+                  fetch-depth: 0
+
+            - name: Derive SHAs
+              uses: nrwl/nx-set-shas@v4
+
+            - name: Install Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: lts/*
+
+            - name: Install pnpm
+              uses: pnpm/action-setup@v3
+              id: pnpm-install
+              with:
+                  version: latest
+                  run_install: false
+
+            - name: Get pnpm store directory
+              id: pnpm-cache
+              run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+            - name: Restore pnpm cache
+              uses: actions/cache/restore@v4
+              id: cache
+              with:
+                  path: |
+                      ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+                      node_modules/
+                  key: ${{ matrix.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  restore-keys: |
+                      ${{ matrix.os }}-pnpm-store-
+
+            - name: Nx cache
+              uses: actions/cache@v4
+              id: nx_cache
+              with:
+                  path: ${{ env.NX_CACHE_DIRECTORY }}
+                  key: ${{ matrix.os }}-nx-cache-${{ hashFiles('tmp/**') }}
+                  restore-keys: |
+                      ${{ matrix.os }}-nx-cache
+
+            - name: Install dependencies
+              if: steps.cache.outputs.cache-hit != 'true'
+              run: pnpm install --no-frozen-lockfile
+
+            - name: Start Agents (unix)
+              if: needs.agents.result != 'failure' &&
+                  needs.agents.result != 'cancelled' &&
+                  needs.agents.result != 'skipped' &&
+                  matrix.os != 'windows-latest'
+              run: npx nx-cloud start-ci-run --stop-agents-after=e2e
+
+            - name: Run Test Agents (unix)
+              id: agents
+              run: |
+                  pnpm nx affected \
+                      --nx-bail \
+                      --base=$NX_BASE \
+                      --head=$NX_HEAD \
+                      --configuration=ci \
+                      --output-style=stream \
+                      --parallel=$NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT \
+                      --no-cloud \
+                      -t lint build test
+
+            - name: Stop Agents
+              if: always()
+              run: npx nx-cloud stop-all-agents
+
+            - name: Upload coverage reports to Codecov
+              if: matrix.os == 'ubuntu-latest'
+              uses: codecov/codecov-action@v4
+              env:
+                  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+            - name: Tar dist
+              run: tar -cvf dist.tar dist
+
+            - name: Upload dist
+              if: matrix.os == 'ubuntu-latest'
+              uses: actions/upload-artifact@v4
+              with:
+                  name: dist
+                  path: dist.tar
+
+    e2e:
+        name: E2E [${{ matrix.os }}]
+        needs: [main, agents]
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                os: [windows-latest, ubuntu-latest, macos-latest]
+            fail-fast: false
+        env:
+            NX_CLOUD_DISTRIBUTED_EXECUTION: false
+            NX_CACHE_DIRECTORY: tmp/${{ matrix.os }}
+        permissions:
+            contents: read
+            actions: read
+        defaults:
+            run:
+                shell: bash
+        steps:
+            - name: Checkout [Pull Request]
+              uses: actions/checkout@v4
+              if: github.event_name == 'pull_request'
+              with:
+                  ref: ${{ github.event.pull_request.head.sha }}
+                  fetch-depth: 0
+
+            - name: Checkout [Main]
+              uses: actions/checkout@v4
+              if: github.event_name != 'pull_request'
+              with:
+                  fetch-depth: 0
+
+            - name: Derive SHAs
+              uses: nrwl/nx-set-shas@v4
+
+            - name: Install Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: lts/*
+
+            - name: Install pnpm
+              uses: pnpm/action-setup@v3
+              id: pnpm-install
+              with:
+                  version: latest
+                  run_install: false
+
+            - name: Get pnpm store directory
+              id: pnpm-cache
+              run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+            - name: Restore pnpm cache
+              uses: actions/cache/restore@v4
+              id: cache
+              with:
+                  path: |
+                      ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+                      node_modules/
+                  key: ${{ matrix.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  restore-keys: |
+                      ${{ matrix.os }}-pnpm-store-
+
+            - name: Nx cache
+              uses: actions/cache@v4
+              id: nx_cache
+              with:
+                  path: ${{ env.NX_CACHE_DIRECTORY }}
+                  key: ${{ matrix.os }}-nx-cache-${{ hashFiles('tmp/**') }}
+                  restore-keys: |
+                      ${{ matrix.os }}-nx-cache
+
+            - name: Install dependencies
+              if: steps.cache.outputs.cache-hit != 'true'
+              run: pnpm install --no-frozen-lockfile
+
+            - name: Download dist
+              uses: actions/download-artifact@v4
+              with:
+                  name: dist
+
+            - name: Untar dist
+              run: tar xvf dist.tar
+
+            - name: Install linux dependencies (ubuntu-latest)
+              if: matrix.os == 'ubuntu-latest'
+              run: |
+                  sudo apt-get update -y
+                  sudo apt-get install gdb -y
+
+            - name: Install macos dependencies (macos-latest)
+              if: matrix.os == 'macos-latest'
+              run: |
+                  brew install llvm gdb
+                  ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
+                  ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
+
+            - name: Install MSYS2 (windows-latest)
+              if: matrix.os == 'windows-latest'
+              shell: pwsh
+              run: |
+                  Add-Content $env:GITHUB_PATH "C:\msys64"
+                  Add-Content $env:GITHUB_PATH "C:\msys64\usr\bin"
+                  Add-Content $env:GITHUB_PATH "C:\msys64\ucrt64\bin"
+
+            - name: Install windows dependencies (windows-latest)
+              if: matrix.os == 'windows-latest'
+              uses: msys2/setup-msys2@v2
+              with:
+                  msystem: UCRT64
+                  update: true
+                  release: false
+                  pacboy: >-
+                      gcc:u
+                      make:u
+                      cmake:u
+                      clang:u
+                      clang-tools-extra:u
+                      gdb:u
+
+            - name: Start registry
+              env:
+                  NX_NO_CLOUD: true
+              run: pnpm nx local-registry &
+
+            - name: Run e2e
+              env:
+                  NX_NO_CLOUD: true
+                  SKIP: true
+              run: pnpm nx affected-e2e
+
+            - name: Stop registry
+              env:
+                  NX_NO_CLOUD: true
+              run: pnpm nx stop-local-registry
+
     publish:
         name: Publish
         runs-on: ubuntu-latest
-        # needs: [e2e]
+        needs: [e2e]
         env:
             NX_CLOUD_DISTRIBUTED_EXECUTION: false
             NX_SKIP_NX_CACHE: true
