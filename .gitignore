@@ -54,3 +54,6 @@ Thumbs.db
 /CMakeLists.txt
 
 .nx/cache
+
+# Nix
+.direnv

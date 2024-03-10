@@ -16,7 +16,7 @@ async function main() {
     // TODO: update below to customize the workspace
     const { directory } = await createWorkspace(`nx-cmake@${version}`, {
         name,
-        nxCloud: false,
+        nxCloud: 'skip',
         packageManager: 'npm',
     });
 
