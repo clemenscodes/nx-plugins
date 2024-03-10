@@ -434,6 +434,7 @@ jobs:
         permissions:
             contents: write
             actions: write
+            id-token: write
         steps:
             - name: Checkout [Pull Request]
               uses: actions/checkout@v4
@@ -473,8 +474,7 @@ jobs:
             - name: Get pnpm store directory
               if: startsWith(github.ref, 'refs/heads/main')
               id: pnpm-cache
-              run: |
-                  echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+              run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
             - name: Restore pnpm cache
               uses: actions/cache/restore@v4
@@ -485,8 +485,7 @@ jobs:
                       ${{ steps.pnpm-cache.outputs.STORE_PATH }}
                       node_modules/
                   key: ubuntu-latest-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-                  restore-keys: |
-                      ubuntu-latest-pnpm-store-
+                  restore-keys: ubuntu-latest-pnpm-store-
 
             - name: Install dependencies
               if: startsWith(github.ref, 'refs/heads/main') && steps.cache.outputs.cache-hit != 'true'
@@ -500,13 +499,13 @@ jobs:
               if: startsWith(github.ref, 'refs/heads/main')
               uses: fregante/setup-git-user@v2
 
-            - name: Build packages
+            - name: Publish packages
               if: startsWith(github.ref, 'refs/heads/main')
-              run: pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t build
-
-            - name: Deploy packages
-              if: startsWith(github.ref, 'refs/heads/main')
-              run: pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t deploy --parallel 1
+              run: pnpm nx release publish
+              shell: bash
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+                  NPM_CONFIG_PROVENANCE: true
 
             - name: Delete Artifacts
               uses: geekyeggo/delete-artifact@v4

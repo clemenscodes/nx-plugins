@@ -11,6 +11,23 @@
     },
     "extends": "nx/presets/npm.json",
     "defaultProject": "verdaccio",
+    "release": {
+        "projects": ["plugins/*"],
+        "projectsRelationship": "independent",
+        "releaseTagPattern": "{projectName}-{version}",
+        "changelog": {
+            "workspaceChangelog": false,
+            "projectChangelogs": {
+                "createRelease": "github"
+            }
+        },
+        "git": {
+            "commitMessage": "chore({projectName}): release version {version} [skip ci]"
+        },
+        "version": {
+            "conventionalCommits": true
+        }
+    },
     "tasksRunnerOptions": {
         "default": {
             "runner": "nx-cloud",

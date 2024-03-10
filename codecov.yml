@@ -1,70 +1,47 @@
+codecov:
+    notify:
+        require_ci_to_pass: yes
+
+comment:
+    layout: 'header, diff, flags, components'
+
 coverage:
     precision: 2
     round: down
     status:
-        project:
-            nx-cmake:
-                target: 90%
-                flags:
-                    - nx-cmake
-            create-nx-cmake:
-                target: 90%
-                flags:
-                    - create-nx-cmake
-            command:
-                target: 90%
-                flags:
-                    - command
-            file:
-                target: 90%
-                flags:
-                    - file
-            log:
-                target: 90%
-                flags:
-                    - log
-            mocks:
-                target: 100%
-                flags:
-                    - mocks
-            util:
-                target: 90%
-                flags:
-                    - util
-            verdaccio:
-                target: 90%
-                flags:
-                    - verdaccio
-        patch:
-            default:
-                enabled: no
-                if_not_found: success
-        changes:
-            default:
-                enabled: no
-                if_not_found: success
-flags:
-    nx-cmake:
-        paths:
-            - plugins/nx-cmake/src
-    create-nx-cmake:
-        paths:
-            - plugins/create-nx-cmake/src
-    command:
-        paths:
-            - packages/command/src
-    file:
-        paths:
-            - packages/file/src
-    log:
-        paths:
-            - packages/log/src
-    mocks:
-        paths:
-            - packages/mocks/src
-    util:
-        paths:
-            - packages/util/src
-    verdaccio:
-        paths:
-            - packages/verdaccio/src
+        project: yes
+
+component_management:
+    default_rules:
+        statuses:
+            - type: patch
+              target: auto
+
+    individual_components:
+        - component_id: nx-cmake
+          paths:
+              - 'plugins/nx-cmake/**'
+        - component_id: create-nx-cmake
+          paths:
+              - 'plugins/create-nx-cmake/**'
+        - component_id: command
+          paths:
+              - 'packages/command/**'
+        - component_id: file
+          paths:
+              - 'packages/file/**'
+        - component_id: log
+          paths:
+              - 'packages/log/**'
+        - component_id: mocks
+          paths:
+              - 'packages/mocks/**'
+        - component_id: types
+          paths:
+              - 'packages/types/**'
+        - component_id: util
+          paths:
+              - 'packages/util/**'
+        - component_id: verdaccio
+          paths:
+              - 'packages/verdaccio/**'

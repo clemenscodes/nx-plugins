@@ -49,38 +49,6 @@
         "publish": {
             "dependsOn": ["build"],
             "command": "nx upload verdaccio --name={projectName} --ver=1.0.0 --tag=e2e"
-        },
-        "version": {
-            "executor": "@jscutlery/semver:version",
-            "options": {
-                "syncVersions": false,
-                "allowEmptyRelease": false,
-                "noVerify": true,
-                "trackDeps": false,
-                "skipRootChangelog": true,
-                "push": true,
-                "skipCommit": false,
-                "remote": "origin",
-                "baseBranch": "main",
-                "commitMessageFormat": "chore({projectName}): release v{version} [skip ci]",
-                "changelogHeader": "# Changelog ({projectName})\n",
-                "tagPrefix": "{projectName}-",
-                "skipCommitTypes": [
-                    "chore",
-                    "build",
-                    "ci",
-                    "docs",
-                    "refactor",
-                    "test"
-                ]
-            }
-        },
-        "deploy": {
-            "executor": "nx:run-commands",
-            "options": {
-                "cwd": "dist/{projectRoot}",
-                "commands": ["npm publish --access=public"]
-            }
         }
     },
     "tags": [],
