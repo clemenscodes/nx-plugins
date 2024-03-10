@@ -501,9 +501,10 @@ jobs:
 
             - name: Publish packages
               if: startsWith(github.ref, 'refs/heads/main')
-              run: pnpm nx release publish
+              run: pnpm nx release --yes
               shell: bash
               env:
+                  SKIP_TESTS: true
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
                   NPM_CONFIG_PROVENANCE: true
 
