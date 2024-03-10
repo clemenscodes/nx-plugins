@@ -501,7 +501,7 @@ jobs:
 
             - name: Publish packages
               if: startsWith(github.ref, 'refs/heads/main')
-              run: pnpm nx release --yes
+              run: pnpm nx release -d && pnpm nx release
               shell: bash
               env:
                   SKIP_TESTS: true
