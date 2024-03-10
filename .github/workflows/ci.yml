@@ -433,7 +433,7 @@ jobs:
             NX_SKIP_NX_CACHE: true
         permissions:
             contents: write
-            actions: read
+            actions: write
         steps:
             - name: Checkout [Pull Request]
               uses: actions/checkout@v4
