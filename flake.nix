@@ -1,7 +1,11 @@
 {
   inputs = {
-    utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    utils = {
+      url = "github:numtide/flake-utils";
+    };
+    nixpkgs = {
+      url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    };
   };
   outputs = {
     self,
@@ -19,6 +23,7 @@
             cmake
             gnumake
             gdb
+            gcc
             clang-tools
           ];
         };
