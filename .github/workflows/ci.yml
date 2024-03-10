@@ -499,14 +499,21 @@ jobs:
               if: startsWith(github.ref, 'refs/heads/main')
               uses: fregante/setup-git-user@v2
 
-            - name: Publish packages
+            - name: Semantic Versioning
               if: startsWith(github.ref, 'refs/heads/main')
-              run: pnpm nx release -d && pnpm nx release
+              run: pnpm nx release --skip-publish
               shell: bash
               env:
                   SKIP_TESTS: true
+
+            - name: Publish
+              if: startsWith(github.ref, 'refs/heads/main')
+              run: pnpm nx release publish
+              shell: bash
+              env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
                   NPM_CONFIG_PROVENANCE: true
+                  GITHUB_TOKEN: ${{ secrets.PAT }}
 
             - name: Delete Artifacts
               uses: geekyeggo/delete-artifact@v4
