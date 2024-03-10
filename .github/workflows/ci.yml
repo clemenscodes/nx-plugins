@@ -500,7 +500,8 @@ jobs:
               uses: fregante/setup-git-user@v2
 
             - name: Publish packages
-              run: npx nx release publish
+              if: startsWith(github.ref, 'refs/heads/main')
+              run: pnpm nx release publish
               shell: bash
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
