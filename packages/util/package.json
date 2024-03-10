@@ -2,8 +2,8 @@
     "name": "@/util",
     "version": "0.0.1",
     "dependencies": {
-        "tslib": "^2.3.0",
-        "@nx/devkit": "18.0.8"
+        "@nx/devkit": "18.0.8",
+        "tslib": "^2.6.2"
     },
     "private": true,
     "type": "commonjs",
