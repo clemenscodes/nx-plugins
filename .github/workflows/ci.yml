@@ -31,28 +31,28 @@ jobs:
                 shell: bash
         steps:
             - name: Checkout [Pull Request]
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               if: github.event_name == 'pull_request'
               with:
                   ref: ${{ github.event.pull_request.head.sha }}
                   fetch-depth: 0
 
             - name: Checkout [Main]
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               if: github.event_name != 'pull_request'
               with:
                   fetch-depth: 0
 
             - name: Derive SHAs
-              uses: nrwl/nx-set-shas@v3
+              uses: nrwl/nx-set-shas@v4
 
             - name: Install Node
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
                   node-version: lts/*
 
             - name: Install pnpm
-              uses: pnpm/action-setup@v2
+              uses: pnpm/action-setup@v3
               id: pnpm-install
               with:
                   version: latest
@@ -63,7 +63,7 @@ jobs:
               run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
             - name: Setup pnpm cache
-              uses: actions/cache@v3
+              uses: actions/cache@v4
               id: cache
               with:
                   path: |
@@ -115,28 +115,28 @@ jobs:
                     - ${{ fromJson(needs.set-agents.outputs.matrix) }}
         steps:
             - name: Checkout [Pull Request]
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               if: github.event_name == 'pull_request'
               with:
                   ref: ${{ github.event.pull_request.head.sha }}
                   fetch-depth: 0
 
             - name: Checkout [Main]
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               if: github.event_name != 'pull_request'
               with:
                   fetch-depth: 0
 
             - name: Derive SHAs
-              uses: nrwl/nx-set-shas@v3
+              uses: nrwl/nx-set-shas@v4
 
             - name: Install Node
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
                   node-version: lts/*
 
             - name: Install pnpm
-              uses: pnpm/action-setup@v2
+              uses: pnpm/action-setup@v3
               id: pnpm-install
               with:
                   version: latest
@@ -147,7 +147,7 @@ jobs:
               run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
             - name: Restore pnpm cache
-              uses: actions/cache/restore@v3
+              uses: actions/cache/restore@v4
               id: cache
               with:
                   path: |
@@ -195,28 +195,28 @@ jobs:
         needs: [set-agents, deps]
         steps:
             - name: Checkout [Pull Request]
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               if: github.event_name == 'pull_request'
               with:
                   ref: ${{ github.event.pull_request.head.sha }}
                   fetch-depth: 0
 
             - name: Checkout [Main]
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               if: github.event_name != 'pull_request'
               with:
                   fetch-depth: 0
 
             - name: Derive SHAs
-              uses: nrwl/nx-set-shas@v3
+              uses: nrwl/nx-set-shas@v4
 
             - name: Install Node
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
                   node-version: lts/*
 
             - name: Install pnpm
-              uses: pnpm/action-setup@v2
+              uses: pnpm/action-setup@v3
               id: pnpm-install
               with:
                   version: latest
@@ -227,7 +227,7 @@ jobs:
               run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
             - name: Restore pnpm cache
-              uses: actions/cache/restore@v3
+              uses: actions/cache/restore@v4
               id: cache
               with:
                   path: |
@@ -238,7 +238,7 @@ jobs:
                       ${{ matrix.os }}-pnpm-store-
 
             - name: Nx cache
-              uses: actions/cache@v3
+              uses: actions/cache@v4
               id: nx_cache
               with:
                   path: ${{ env.NX_CACHE_DIRECTORY }}
@@ -276,7 +276,7 @@ jobs:
 
             - name: Upload coverage reports to Codecov
               if: matrix.os == 'ubuntu-latest'
-              uses: codecov/codecov-action@v3
+              uses: codecov/codecov-action@v4
               env:
                   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
@@ -285,7 +285,7 @@ jobs:
 
             - name: Upload dist
               if: matrix.os == 'ubuntu-latest'
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                   name: dist
                   path: dist.tar
@@ -309,28 +309,28 @@ jobs:
                 shell: bash
         steps:
             - name: Checkout [Pull Request]
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               if: github.event_name == 'pull_request'
               with:
                   ref: ${{ github.event.pull_request.head.sha }}
                   fetch-depth: 0
 
             - name: Checkout [Main]
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               if: github.event_name != 'pull_request'
               with:
                   fetch-depth: 0
 
             - name: Derive SHAs
-              uses: nrwl/nx-set-shas@v3
+              uses: nrwl/nx-set-shas@v4
 
             - name: Install Node
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
                   node-version: lts/*
 
             - name: Install pnpm
-              uses: pnpm/action-setup@v2
+              uses: pnpm/action-setup@v3
               id: pnpm-install
               with:
                   version: latest
@@ -341,7 +341,7 @@ jobs:
               run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
             - name: Restore pnpm cache
-              uses: actions/cache/restore@v3
+              uses: actions/cache/restore@v4
               id: cache
               with:
                   path: |
@@ -352,7 +352,7 @@ jobs:
                       ${{ matrix.os }}-pnpm-store-
 
             - name: Nx cache
-              uses: actions/cache@v3
+              uses: actions/cache@v4
               id: nx_cache
               with:
                   path: ${{ env.NX_CACHE_DIRECTORY }}
@@ -365,7 +365,7 @@ jobs:
               run: pnpm install --no-frozen-lockfile
 
             - name: Download dist
-              uses: actions/download-artifact@v3
+              uses: actions/download-artifact@v4
               with:
                   name: dist
 
@@ -436,14 +436,14 @@ jobs:
             actions: read
         steps:
             - name: Checkout [Pull Request]
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               if: github.event_name == 'pull_request' && startsWith(github.ref, 'refs/heads/main')
               with:
                   ref: ${{ github.event.pull_request.head.sha }}
                   fetch-depth: 0
 
             - name: Checkout [Main]
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               if: github.event_name != 'pull_request' && startsWith(github.ref, 'refs/heads/main')
               with:
                   fetch-depth: 0
@@ -451,11 +451,11 @@ jobs:
 
             - name: Derive SHAs
               if: startsWith(github.ref, 'refs/heads/main')
-              uses: nrwl/nx-set-shas@v3
+              uses: nrwl/nx-set-shas@v4
 
             - name: Install Node
               if: startsWith(github.ref, 'refs/heads/main')
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
                   node-version: lts/*
                   registry-url: 'https://registry.npmjs.org'
@@ -464,7 +464,7 @@ jobs:
 
             - name: Install pnpm
               if: startsWith(github.ref, 'refs/heads/main')
-              uses: pnpm/action-setup@v2
+              uses: pnpm/action-setup@v3
               id: pnpm-install
               with:
                   version: latest
@@ -477,7 +477,7 @@ jobs:
                   echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
             - name: Restore pnpm cache
-              uses: actions/cache/restore@v3
+              uses: actions/cache/restore@v4
               if: startsWith(github.ref, 'refs/heads/main')
               id: cache
               with:
@@ -509,6 +509,6 @@ jobs:
               run: pnpm nx affected --base=$NX_BASE --head=$NX_HEAD -t deploy --parallel 1
 
             - name: Delete Artifacts
-              uses: geekyeggo/delete-artifact@v2
+              uses: geekyeggo/delete-artifact@v4
               with:
                   name: '*'
