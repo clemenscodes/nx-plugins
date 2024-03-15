@@ -9,6 +9,8 @@ function invariant(condition: boolean, message: string) {
     }
 }
 
+const registry = 'http://localhost:4873';
+
 // Executing publish script: node path/to/publish.mjs {name} --version {version} --tag {tag}
 // Default "tag" to "next" so we won't publish the "latest" tag by accident.
 const [, , name, version, tag = 'next'] = process.argv;
@@ -36,7 +38,6 @@ invariant(
 
 process.chdir(outputPath);
 
-// Updating the version in "package.json" before publishing
 try {
     const json = JSON.parse(readFileSync(`package.json`).toString());
     json.version = version;
@@ -45,21 +46,14 @@ try {
     console.error(`Error reading package.json file from library build output.`);
 }
 
-const host = 'localhost';
-const port = 4873;
-const registry = `http://${host}:${port}`;
-
-execSync(
-    `npm config set //${host}:${port}/:_authToken "secretVerdaccioToken"`,
-    {
-        encoding: 'utf-8',
-        stdio: 'inherit',
-        env: {
-            ...process.env,
-            npm_config_registry: registry,
-        },
+execSync(`npm config set //localhost:4873/:_authToken "secretVerdaccioToken"`, {
+    encoding: 'utf-8',
+    stdio: 'inherit',
+    env: {
+        ...process.env,
+        npm_config_registry: registry,
     },
-);
+});
 
 // Execute "npm publish" to publish
 execSync(`npm publish --access public --tag ${tag} --registry ${registry}`, {

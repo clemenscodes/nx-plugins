@@ -367,7 +367,7 @@ function createTestProject() {
     });
 
     execSync(
-        `npx --yes create-nx-workspace@latest ${projectName} --preset=${plugin} --nxCloud=skip --no-interactive`,
+        `npx create-nx-workspace@latest ${projectName} --preset=${plugin} --ci=skip --interactive=false --verbose`,
         {
             cwd: dirname(projectDirectory),
             stdio: 'inherit',

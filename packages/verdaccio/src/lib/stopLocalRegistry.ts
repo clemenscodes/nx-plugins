@@ -1,5 +1,4 @@
 import { ChildProcess, execSync } from 'child_process';
-import { port } from '../config/port';
 import { unsetLocalRegistry } from './unsetLocalRegistry';
 
 export const stopLocalRegistry = (childProcess: ChildProcess | null) => {
@@ -12,7 +11,7 @@ export const stopLocalRegistry = (childProcess: ChildProcess | null) => {
         childProcess.kill();
         return;
     }
-    execSync(`npx kill-port ${port}`, {
+    execSync(`npx kill-port 4873`, {
         env: {
             ...process.env,
             npm_config_registry: 'https://registry.npmjs.org',

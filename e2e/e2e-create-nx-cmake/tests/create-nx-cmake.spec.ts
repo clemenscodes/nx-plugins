@@ -43,7 +43,7 @@ function createTestProject(extraArgs = '') {
         recursive: true,
     });
 
-    execSync(`npx --yes create-nx-cmake@e2e ${projectName} ${extraArgs}`, {
+    execSync(`npx create-nx-cmake@e2e ${projectName} ${extraArgs}`, {
         cwd: dirname(projectDirectory),
         stdio: 'inherit',
         env: process.env,

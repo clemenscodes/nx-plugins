@@ -1,7 +1,4 @@
 import { ChildProcess, spawn } from 'child_process';
-import { localRegistryTarget } from './localRegistryTarget';
-import { port } from '../config/port';
-import { project } from '../config/project';
 import { setLocalRegistry } from './setLocalRegistry';
 
 export const startLocalRegistry = (): ChildProcess | null => {
@@ -9,15 +6,13 @@ export const startLocalRegistry = (): ChildProcess | null => {
         console.log('Skipping start');
         return null;
     }
-    const childProcess = spawn('nx', [localRegistryTarget, project], {
-        stdio: 'inherit',
+    setLocalRegistry();
+    const childProcess = spawn('nx', ['local-registry', 'verdaccio'], {
+        stdio: 'pipe',
         detached: true,
         env: {
             ...process.env,
         },
     });
-    childProcess.unref();
-    console.log('Local registry started on port ' + port);
-    setLocalRegistry();
     return childProcess;
 };

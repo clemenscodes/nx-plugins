@@ -1,3 +1,7 @@
 import { startLocalRegistry } from '../lib/startLocalRegistry';
 
-startLocalRegistry();
+const registryProcess = startLocalRegistry();
+if (registryProcess) {
+    console.log('Local registry started on port 4873');
+    registryProcess.unref();
+}

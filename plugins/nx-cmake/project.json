@@ -77,5 +77,6 @@
             "command": "nx upload verdaccio --name={projectName} --ver=1.0.0 --tag=e2e"
         }
     },
+    "implicitDependencies": ["verdaccio"],
     "tags": []
 }
