@@ -15,13 +15,18 @@ export const e2e = (procedure: 'affected' | 'run-many') => {
         ? `--base=${process.env['NX_BASE']}`
         : '';
     const cmd = `nx ${procedure} -t e2e --nx-bail --output-style=stream --configuration=ci ${base} ${head} ${parallel}`;
-    execSync(cmd, {
-        stdio: 'inherit',
-        env: {
-            ...process.env,
-            SKIP: 'true',
-        },
-    });
+    try {
+        execSync(cmd, {
+            stdio: 'inherit',
+            env: {
+                ...process.env,
+                SKIP: 'true',
+            },
+        });
+    } catch (e) {
+        stopLocalRegistry(registryProcess);
+        exit(1);
+    }
     stopLocalRegistry(registryProcess);
     exit(0);
 };

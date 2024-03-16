@@ -64,7 +64,7 @@ describe(plugin, () => {
 
         // The plugin has been built and published to a local registry in the jest globalSetup
         // Install the plugin built with the latest source code into the test repo
-        execCmd(`npm install ${plugin}@e2e`);
+        execCmd(`npm install ${plugin}`);
     });
 
     afterAll(() => {
@@ -367,11 +367,13 @@ function createTestProject() {
     });
 
     execSync(
-        `npx create-nx-workspace@latest ${projectName} --preset=${plugin} --ci=skip --interactive=false --verbose`,
+        `npx create-nx-workspace ${projectName} --preset=${plugin} --ci=skip --interactive=false --verbose --pm npm`,
         {
             cwd: dirname(projectDirectory),
             stdio: 'inherit',
-            env: process.env,
+            env: {
+                ...process.env,
+            },
         },
     );
     console.log(`Created test project in "${projectDirectory}"`);

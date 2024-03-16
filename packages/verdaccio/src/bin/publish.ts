@@ -55,12 +55,25 @@ execSync(`npm config set //localhost:4873/:_authToken "secretVerdaccioToken"`, {
     },
 });
 
-// Execute "npm publish" to publish
-execSync(`npm publish --access public --tag ${tag} --registry ${registry}`, {
-    encoding: 'utf-8',
-    stdio: 'inherit',
-    env: {
-        ...process.env,
-        npm_config_registry: registry,
-    },
-});
+try {
+    execSync(`npm ls ${name}`, {
+        encoding: 'utf-8',
+        stdio: 'ignore',
+        env: {
+            ...process.env,
+            npm_config_registry: registry,
+        },
+    });
+} catch (e) {
+    execSync(
+        `npm publish --access public --tag ${tag} --registry ${registry}`,
+        {
+            encoding: 'utf-8',
+            stdio: 'inherit',
+            env: {
+                ...process.env,
+                npm_config_registry: registry,
+            },
+        },
+    );
+}
