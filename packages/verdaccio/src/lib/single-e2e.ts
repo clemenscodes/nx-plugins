@@ -3,6 +3,8 @@ import { exit } from 'node:process';
 import { startLocalRegistry } from './startLocalRegistry';
 import { stopLocalRegistry } from './stopLocalRegistry';
 
+process.env['npm_config_registry'] = 'http://localhost:4873';
+
 export const e2eSingle = (target: string) => {
     const registryProcess = startLocalRegistry();
     const head = process.env['NX_HEAD']

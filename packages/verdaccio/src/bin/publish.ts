@@ -56,7 +56,7 @@ execSync(`npm config set //localhost:4873/:_authToken "secretVerdaccioToken"`, {
 });
 
 try {
-    execSync(`npm ls ${name}`, {
+    execSync(`npm view ${name}@0.0.0`, {
         encoding: 'utf-8',
         stdio: 'ignore',
         env: {

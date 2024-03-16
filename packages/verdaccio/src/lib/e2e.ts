@@ -3,6 +3,8 @@ import { exit } from 'node:process';
 import { startLocalRegistry } from './startLocalRegistry';
 import { stopLocalRegistry } from './stopLocalRegistry';
 
+process.env['npm_config_registry'] = 'http://localhost:4873';
+
 export const e2e = (procedure: 'affected' | 'run-many') => {
     const registryProcess = startLocalRegistry();
     const parallel = process.env['NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT']

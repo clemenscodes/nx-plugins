@@ -12,6 +12,7 @@ export const startLocalRegistry = (): ChildProcess | null => {
         detached: true,
         env: {
             ...process.env,
+            npm_config_registry: 'http://localhost:4873',
         },
     });
     return childProcess;
