@@ -1,10 +1,10 @@
 {
     "name": "create-nx-cmake",
     "version": "0.6.1",
+    "typings": "./bin/index.d.ts",
     "bin": {
         "create-nx-cmake": "./bin/index.js"
     },
-    "typings": "./bin/index.d.ts",
     "dependencies": {
         "create-nx-workspace": "18.0.8",
         "tslib": "^2.6.2"
