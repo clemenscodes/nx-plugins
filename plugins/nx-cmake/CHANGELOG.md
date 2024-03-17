@@ -1,3 +1,15 @@
+## 0.7.0 (2024-03-17)
+
+
+### 🚀 Features
+
+- **create-nx-cmake,nx-cmake:** support nx 18 ([01d0826](https://github.com/clemenscodes/nx-plugins/commit/01d0826))
+
+
+### ❤️  Thank You
+
+- Clemens Horn
+
 ## 0.6.1 (2024-03-17)
 
 
