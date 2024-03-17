@@ -52,6 +52,13 @@
                 "command": "ts-node {projectRoot}/src/bin/publish.ts {args.name} {args.ver} {args.tag}"
             }
         },
+        "single-e2e": {
+            "executor": "nx:run-commands",
+            "options": {
+                "color": true,
+                "command": "ts-node {projectRoot}/src/bin/single-e2e.ts {args.e2e}"
+            }
+        },
         "run-many-e2e": {
             "executor": "nx:run-commands",
             "options": {

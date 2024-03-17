@@ -3,7 +3,6 @@
     "description": "An Nx plugin to add CMake, C and C++ support for Nx workspaces",
     "version": "0.6.0",
     "license": "MIT",
-    "type": "commonjs",
     "main": "./src/index.js",
     "typings": "./src/index.d.ts",
     "generators": "./generators.json",
@@ -34,6 +33,6 @@
     },
     "dependencies": {
         "tslib": "^2.6.2",
-        "@nx/devkit": "18.0.8"
+        "@nx/devkit": "18.1.1"
     }
 }

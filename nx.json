@@ -1,32 +1,11 @@
 {
-    "pluginsConfig": {
-        "@nx/js": {
-            "analyzeSourceFiles": true
-        },
-        "nx-cmake": {
-            "language": "C",
-            "cmakeConfigDir": ".cmake",
-            "workspaceName": "workspace"
-        }
-    },
     "extends": "nx/presets/npm.json",
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "defaultBase": "origin/main",
     "defaultProject": "verdaccio",
-    "release": {
-        "projects": ["plugins/*"],
-        "projectsRelationship": "independent",
-        "releaseTagPattern": "{projectName}-{version}",
-        "changelog": {
-            "workspaceChangelog": false,
-            "projectChangelogs": {
-                "createRelease": "github"
-            }
-        },
-        "git": {
-            "commitMessage": "chore({projectName}): release version {version} [skip ci]"
-        },
-        "version": {
-            "conventionalCommits": true
-        }
+    "workspaceLayout": {
+        "appsDir": "bin",
+        "libsDir": "packages"
     },
     "tasksRunnerOptions": {
         "default": {
@@ -47,15 +26,6 @@
             }
         }
     },
-    "$schema": "./node_modules/nx/schemas/nx-schema.json",
-    "affected": {
-        "defaultBase": "origin/main"
-    },
-    "workspaceLayout": {
-        "appsDir": "bin",
-        "libsDir": "packages"
-    },
-    "plugins": ["nx-cmake"],
     "targetDefaults": {
         "build": {
             "dependsOn": ["lint", "^build"]
@@ -126,5 +96,33 @@
                 "generateTests": true
             }
         }
-    }
+    },
+    "release": {
+        "projects": ["plugins/*"],
+        "projectsRelationship": "independent",
+        "releaseTagPattern": "{projectName}-{version}",
+        "changelog": {
+            "workspaceChangelog": false,
+            "projectChangelogs": {
+                "createRelease": "github"
+            }
+        },
+        "git": {
+            "commitMessage": "chore({projectName}): release version {version} [skip ci]"
+        },
+        "version": {
+            "conventionalCommits": true
+        }
+    },
+    "pluginsConfig": {
+        "@nx/js": {
+            "analyzeSourceFiles": true
+        },
+        "nx-cmake": {
+            "language": "C",
+            "cmakeConfigDir": ".cmake",
+            "workspaceName": "workspace"
+        }
+    },
+    "plugins": ["nx-cmake"]
 }
