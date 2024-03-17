@@ -279,11 +279,11 @@ jobs:
             - name: Tar dist
               if: matrix.os == 'ubuntu-latest'
               run: |
-                if [ -d "dist" ]; then
-                  tar -cvf dist.tar dist
-                else
-                  true
-                fi
+                  if [ -d "dist" ]; then
+                    tar -cvf dist.tar dist
+                  else
+                    true
+                  fi
 
             - name: Upload dist
               if: matrix.os == 'ubuntu-latest'
