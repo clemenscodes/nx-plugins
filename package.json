@@ -24,7 +24,7 @@
     "devDependencies": {
         "@commitlint/cli": "^18.6.1",
         "@commitlint/config-conventional": "^18.6.1",
-        "@commitlint/config-nx-scopes": "^18.6.1",
+        "@commitlint/config-nx-scopes": "^19.1.0",
         "@commitlint/types": "^18.6.1",
         "@nx/eslint": "18.1.1",
         "@nx/eslint-plugin": "18.1.1",
