@@ -5,8 +5,8 @@ import { createNodes } from './graph/createNodes/createNodes';
 
 const nxPlugin: NxPluginV2 = {
     name,
-    createNodes,
     createDependencies,
+    createNodes,
 };
 
 export = nxPlugin;
