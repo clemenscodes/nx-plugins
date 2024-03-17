@@ -22,7 +22,6 @@ describe('generateClangPreset', () => {
             "Checks: 'clang-diagnostic-*,clang-analyzer-*'\n" +
             "WarningsAsErrors: ''\n" +
             "HeaderFilterRegex: ''\n" +
-            'AnalyzeTemporaryDtors: false\n' +
             'FormatStyle: none\n';
         expectedClangFormatFileContent =
             'BasedOnStyle: LLVM\n' +

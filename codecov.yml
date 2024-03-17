@@ -36,12 +36,6 @@ component_management:
         - component_id: mocks
           paths:
               - 'packages/mocks/**'
-        - component_id: types
-          paths:
-              - 'packages/types/**'
         - component_id: util
           paths:
               - 'packages/util/**'
-        - component_id: verdaccio
-          paths:
-              - 'packages/verdaccio/**'
