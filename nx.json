@@ -3,6 +3,7 @@
     "$schema": "./node_modules/nx/schemas/nx-schema.json",
     "defaultBase": "origin/main",
     "defaultProject": "verdaccio",
+    "nxCloudAccessToken": "ZTBkM2I2MjYtNTc4Mi00YjUxLTkzNDAtZWFlYjg1OGY0Y2UxfHJlYWQtd3JpdGU=",
     "workspaceLayout": {
         "appsDir": "bin",
         "libsDir": "packages"
@@ -21,14 +22,14 @@
                 ],
                 "canTrackAnalytics": false,
                 "showUsageWarnings": true,
-                "accessToken": "ZTBkM2I2MjYtNTc4Mi00YjUxLTkzNDAtZWFlYjg1OGY0Y2UxfHJlYWQtd3JpdGU=",
                 "useDaemonProcess": false
             }
         }
     },
     "targetDefaults": {
         "build": {
-            "dependsOn": ["lint", "^build"]
+            "dependsOn": ["lint", "^build"],
+            "cache": true
         },
         "lint": {
             "dependsOn": ["cmake"],
@@ -36,7 +37,6 @@
             "cache": true
         },
         "@nx/jest:jest": {
-            "cache": true,
             "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"],
             "options": {
                 "passWithNoTests": true
@@ -46,6 +46,14 @@
                     "ci": true,
                     "codeCoverage": true
                 }
+            },
+            "cache": true
+        },
+        "nx-release-publish": {
+            "dependsOn": ["build"],
+            "executor": "@nx/js:release-publish",
+            "options": {
+                "packageRoot": "dist/{projectRoot}"
             }
         }
     },
@@ -104,6 +112,7 @@
         "changelog": {
             "workspaceChangelog": false,
             "projectChangelogs": {
+                "file": "{projectRoot}/CHANGELOG.md",
                 "createRelease": "github"
             }
         },
