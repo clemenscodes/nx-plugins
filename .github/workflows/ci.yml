@@ -487,13 +487,13 @@ jobs:
               run: pnpm install --no-frozen-lockfile
 
             - name: Download dist
-              if: startsWith(github.ref, 'refs/heads/main') && steps.cache.outputs.cache-hit != 'true'
+              if: startsWith(github.ref, 'refs/heads/main')
               uses: actions/download-artifact@v4
               with:
                   name: dist
 
             - name: Untar dist
-              if: startsWith(github.ref, 'refs/heads/main') && steps.cache.outputs.cache-hit != 'true'
+              if: startsWith(github.ref, 'refs/heads/main')
               run: |
                   if [ -d "dist" ]; then
                     tar xvf dist.tar
