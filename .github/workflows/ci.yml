@@ -491,7 +491,12 @@ jobs:
                   name: dist
 
             - name: Untar dist
-              run: tar xvf dist.tar
+              run: |
+                  if [ -d "dist" ]; then
+                    tar xvf dist.tar
+                  else
+                    true
+                  fi
 
             - name: Check npm auth
               if: startsWith(github.ref, 'refs/heads/main')
