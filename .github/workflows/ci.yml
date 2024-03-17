@@ -70,8 +70,7 @@ jobs:
                       ${{ steps.pnpm-cache.outputs.STORE_PATH }}
                       node_modules/
                   key: ${{ matrix.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-                  restore-keys: |
-                      ${{ matrix.os }}-pnpm-store-
+                  restore-keys: ${{ matrix.os }}-pnpm-store-
 
             - name: Install dependencies
               if: steps.cache.outputs.cache-hit != 'true'
@@ -154,8 +153,7 @@ jobs:
                       ${{ steps.pnpm-cache.outputs.STORE_PATH }}
                       node_modules/
                   key: ${{ matrix.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-                  restore-keys: |
-                      ${{ matrix.os }}-pnpm-store-
+                  restore-keys: ${{ matrix.os }}-pnpm-store-
 
             - name: Install dependencies
               if: steps.cache.outputs.cache-hit != 'true'
@@ -234,8 +232,7 @@ jobs:
                       ${{ steps.pnpm-cache.outputs.STORE_PATH }}
                       node_modules/
                   key: ${{ matrix.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-                  restore-keys: |
-                      ${{ matrix.os }}-pnpm-store-
+                  restore-keys: ${{ matrix.os }}-pnpm-store-
 
             - name: Nx cache
               uses: actions/cache@v4
@@ -243,8 +240,7 @@ jobs:
               with:
                   path: ${{ env.NX_CACHE_DIRECTORY }}
                   key: ${{ matrix.os }}-nx-cache-${{ hashFiles('tmp/**') }}
-                  restore-keys: |
-                      ${{ matrix.os }}-nx-cache
+                  restore-keys: ${{ matrix.os }}-nx-cache
 
             - name: Install dependencies
               if: steps.cache.outputs.cache-hit != 'true'
@@ -281,6 +277,7 @@ jobs:
                   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
             - name: Tar dist
+              if: matrix.os == 'ubuntu-latest'
               run: tar -cvf dist.tar dist
 
             - name: Upload dist
@@ -348,8 +345,7 @@ jobs:
                       ${{ steps.pnpm-cache.outputs.STORE_PATH }}
                       node_modules/
                   key: ${{ matrix.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-                  restore-keys: |
-                      ${{ matrix.os }}-pnpm-store-
+                  restore-keys: ${{ matrix.os }}-pnpm-store-
 
             - name: Nx cache
               uses: actions/cache@v4
@@ -357,20 +353,11 @@ jobs:
               with:
                   path: ${{ env.NX_CACHE_DIRECTORY }}
                   key: ${{ matrix.os }}-nx-cache-${{ hashFiles('tmp/**') }}
-                  restore-keys: |
-                      ${{ matrix.os }}-nx-cache
+                  restore-keys: ${{ matrix.os }}-nx-cache
 
             - name: Install dependencies
               if: steps.cache.outputs.cache-hit != 'true'
               run: pnpm install --no-frozen-lockfile
-
-            - name: Download dist
-              uses: actions/download-artifact@v4
-              with:
-                  name: dist
-
-            - name: Untar dist
-              run: tar xvf dist.tar
 
             - name: Install linux dependencies (ubuntu-latest)
               if: matrix.os == 'ubuntu-latest'
@@ -408,21 +395,11 @@ jobs:
                       clang-tools-extra:u
                       gdb:u
 
-            - name: Start registry
-              env:
-                  NX_NO_CLOUD: true
-              run: pnpm nx local-registry &
-
             - name: Run e2e
               env:
                   NX_NO_CLOUD: true
                   SKIP: true
               run: pnpm nx affected-e2e
-
-            - name: Stop registry
-              env:
-                  NX_NO_CLOUD: true
-              run: pnpm nx stop-local-registry
 
     publish:
         name: Publish
@@ -491,6 +468,14 @@ jobs:
             - name: Install dependencies
               if: startsWith(github.ref, 'refs/heads/main') && steps.cache.outputs.cache-hit != 'true'
               run: pnpm install --no-frozen-lockfile
+
+            - name: Download dist
+              uses: actions/download-artifact@v4
+              with:
+                  name: dist
+
+            - name: Untar dist
+              run: tar xvf dist.tar
 
             - name: Check npm auth
               if: startsWith(github.ref, 'refs/heads/main')

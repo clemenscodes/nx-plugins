@@ -50,7 +50,6 @@
             "cache": true
         },
         "nx-release-publish": {
-            "dependsOn": ["build"],
             "executor": "@nx/js:release-publish",
             "options": {
                 "packageRoot": "dist/{projectRoot}"
