@@ -395,10 +395,21 @@ jobs:
                       clang-tools-extra:u
                       gdb:u
 
+            - name: Start registry
+              env:
+                  NX_NO_CLOUD: true
+              run: pnpm nx local-registry &
+
             - name: Run e2e
               env:
                   NX_NO_CLOUD: true
+                  SKIP: true
               run: pnpm nx affected-e2e
+
+            - name: Stop registry
+              env:
+                  NX_NO_CLOUD: true
+              run: pnpm nx stop-local-registry
 
     publish:
         name: Publish
