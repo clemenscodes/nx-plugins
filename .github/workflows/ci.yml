@@ -486,20 +486,18 @@ jobs:
               if: startsWith(github.ref, 'refs/heads/main') && steps.cache.outputs.cache-hit != 'true'
               run: pnpm install --no-frozen-lockfile
 
-            - name: Download dist
-              if: startsWith(github.ref, 'refs/heads/main')
-              uses: actions/download-artifact@v4
-              with:
-                  name: dist
-
-            - name: Untar dist
+            - name: Build packages
               if: startsWith(github.ref, 'refs/heads/main')
               run: |
-                  if [ -d "dist" ]; then
-                    tar xvf dist.tar
-                  else
-                    true
-                  fi
+                  pnpm nx run-many \
+                      --nx-bail \
+                      --configuration=ci \
+                      --output-style=stream \
+                      --no-dte \
+                      --no-cloud \
+                      --skip-nx-cache \
+                      --projects=plugins/* \
+                      -t build
 
             - name: Check npm auth
               if: startsWith(github.ref, 'refs/heads/main')
