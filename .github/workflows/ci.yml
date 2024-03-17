@@ -282,7 +282,8 @@ jobs:
                   if [ -d "dist" ]; then
                     tar -cvf dist.tar dist
                   else
-                    true
+                    mkdir dist
+                    tar -cvf dist.tar dist
                   fi
 
             - name: Upload dist
@@ -486,12 +487,19 @@ jobs:
               run: pnpm install --no-frozen-lockfile
 
             - name: Download dist
+              if: startsWith(github.ref, 'refs/heads/main') && steps.cache.outputs.cache-hit != 'true'
               uses: actions/download-artifact@v4
               with:
                   name: dist
 
             - name: Untar dist
-              run: tar xvf dist.tar
+              if: startsWith(github.ref, 'refs/heads/main') && steps.cache.outputs.cache-hit != 'true'
+              run: |
+                  if [ -d "dist" ]; then
+                    tar xvf dist.tar
+                  else
+                    true
+                  fi
 
             - name: Check npm auth
               if: startsWith(github.ref, 'refs/heads/main')
