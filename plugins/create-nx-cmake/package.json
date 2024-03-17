@@ -1,6 +1,6 @@
 {
     "name": "create-nx-cmake",
-    "version": "0.6.0",
+    "version": "0.6.1",
     "bin": {
         "create-nx-cmake": "./bin/index.js"
     },

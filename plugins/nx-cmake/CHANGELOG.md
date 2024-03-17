@@ -1,3 +1,17 @@
+## 0.6.1 (2024-03-17)
+
+
+### 🩹 Fixes
+
+- **verdaccio:** e2e pipeline, nx-cmake still needs fixing ([13e0d6b](https://github.com/clemenscodes/nx-plugins/commit/13e0d6b))
+
+- **create-nx-cmake,nx-cmake:** remove deprecated setting from .clang-tidy ([4fcd287](https://github.com/clemenscodes/nx-plugins/commit/4fcd287))
+
+
+### ❤️  Thank You
+
+- Clemens Horn
+
 ## 0.6.0 (2024-03-10)
 
 

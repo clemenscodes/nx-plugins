@@ -121,8 +121,8 @@ importers:
   packages/command:
     dependencies:
       '@nx/devkit':
-        specifier: 18.0.8
-        version: 18.0.8(nx@18.1.1)
+        specifier: 18.1.1
+        version: 18.1.1(nx@18.1.1)
       tslib:
         specifier: ^2.6.2
         version: 2.6.2
@@ -130,8 +130,8 @@ importers:
   packages/file:
     dependencies:
       '@nx/devkit':
-        specifier: 18.0.8
-        version: 18.0.8(nx@18.1.1)
+        specifier: 18.1.1
+        version: 18.1.1(nx@18.1.1)
       tslib:
         specifier: ^2.6.2
         version: 2.6.2
@@ -139,8 +139,8 @@ importers:
   packages/log:
     dependencies:
       '@nx/devkit':
-        specifier: 18.0.8
-        version: 18.0.8(nx@18.1.1)
+        specifier: 18.1.1
+        version: 18.1.1(nx@18.1.1)
       tslib:
         specifier: ^2.6.2
         version: 2.6.2
@@ -148,8 +148,8 @@ importers:
   packages/mocks:
     dependencies:
       '@nx/devkit':
-        specifier: 18.0.8
-        version: 18.0.8(nx@18.1.1)
+        specifier: 18.1.1
+        version: 18.1.1(nx@18.1.1)
       tslib:
         specifier: ^2.6.2
         version: 2.6.2
@@ -157,8 +157,8 @@ importers:
   packages/types:
     dependencies:
       '@nx/devkit':
-        specifier: 18.0.8
-        version: 18.0.8(nx@18.1.1)
+        specifier: 18.1.1
+        version: 18.1.1(nx@18.1.1)
       tslib:
         specifier: ^2.6.2
         version: 2.6.2
@@ -166,8 +166,8 @@ importers:
   packages/util:
     dependencies:
       '@nx/devkit':
-        specifier: 18.0.8
-        version: 18.0.8(nx@18.1.1)
+        specifier: 18.1.1
+        version: 18.1.1(nx@18.1.1)
       tslib:
         specifier: ^2.6.2
         version: 2.6.2
@@ -175,8 +175,8 @@ importers:
   packages/verdaccio:
     dependencies:
       '@nx/devkit':
-        specifier: 18.0.8
-        version: 18.0.8(nx@18.1.1)
+        specifier: 18.1.1
+        version: 18.1.1(nx@18.1.1)
       tslib:
         specifier: ^2.6.2
         version: 2.6.2
@@ -193,8 +193,8 @@ importers:
   plugins/nx-cmake:
     dependencies:
       '@nx/devkit':
-        specifier: 18.0.8
-        version: 18.0.8(nx@18.1.1)
+        specifier: 18.1.1
+        version: 18.1.1(nx@18.1.1)
       tslib:
         specifier: ^2.6.2
         version: 2.6.2
@@ -2213,14 +2213,6 @@ packages:
       fastq: 1.17.1
     dev: true
 
-  /@nrwl/devkit@18.0.8(nx@18.1.1):
-    resolution: {integrity: sha512-cKtXq2I/3y/t1I+jMn8XVfhtSjGxJHKGSmxStMdRPMcUim8iaS2V3fDUdF2CGrXrtbmDtYwBC8413YY+nVh0Gw==}
-    dependencies:
-      '@nx/devkit': 18.0.8(nx@18.1.1)
-    transitivePeerDependencies:
-      - nx
-    dev: false
-
   /@nrwl/devkit@18.1.1(nx@18.1.1):
     resolution: {integrity: sha512-CaOMlgun8D077PwEJOxD3gV/5/Hva+JK+XUI7kwf/RWl4MI3Oe1RzgWjigvony/AapkXadfAAzqmEAg5QD6AcA==}
     dependencies:
@@ -2343,22 +2335,6 @@ packages:
       - '@swc/core'
       - debug
     dev: true
-
-  /@nx/devkit@18.0.8(nx@18.1.1):
-    resolution: {integrity: sha512-df56bzmhF8yhVCCChe0ATjCsc9r9SNcpks5/bABGqR91vHVGfsz0H33RYO7P2jrPwFBRYnf+aWWFY1d6NpEdxw==}
-    peerDependencies:
-      nx: '>= 16 <= 18'
-    dependencies:
-      '@nrwl/devkit': 18.0.8(nx@18.1.1)
-      ejs: 3.1.9
-      enquirer: 2.3.6
-      ignore: 5.3.1
-      nx: 18.1.1(@swc-node/register@1.9.0)(@swc/core@1.4.6)
-      semver: 7.6.0
-      tmp: 0.2.3
-      tslib: 2.6.2
-      yargs-parser: 21.1.1
-    dev: false
 
   /@nx/devkit@18.1.1(nx@18.1.1):
     resolution: {integrity: sha512-loY9rSU9GiZU5+SBHY+zrF9j8/f422NcGVYIlWD4aZUTlEeJzaGVk2JtsLEbwyxWuJ8z+jZG7PkpCOp9tfIlbg==}
