@@ -6,7 +6,7 @@
         "create-nx-cmake": "./bin/index.js"
     },
     "dependencies": {
-        "create-nx-workspace": "18.0.8",
+        "create-nx-workspace": "18.1.1",
         "tslib": "^2.6.2"
     },
     "author": {
