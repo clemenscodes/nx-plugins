@@ -59,39 +59,40 @@ describe('generateLibFiles', () => {
             '\n' +
             'cmake_minimum_required(VERSION 3.21)\n' +
             '\n' +
+            `set(PROJECT_NAME ${options.libName})\n` +
             'set(PROJECT_TYPE LIB)\n' +
             `set(LANGUAGE CXX)\n` +
             '\n' +
-            `set_project_settings(${options.libName} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
+            `set_project_settings(\${PROJECT_NAME} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
             '\n' +
-            `project(${options.libName} LANGUAGES \${LANGUAGE} VERSION \${${options.libName}_VERSION})\n` +
+            `project(\${PROJECT_NAME} LANGUAGES \${LANGUAGE} VERSION \${\${PROJECT_NAME}_VERSION})\n` +
             '\n' +
-            `set_library_settings(${options.libName} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
+            `set_library_settings(\${PROJECT_NAME} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
             '\n' +
             'include(GNUInstallDirs)\n' +
             '\n' +
-            `set_library_install_destination(${options.libName})\n` +
+            `set_library_install_destination(\${PROJECT_NAME})\n` +
             '\n' +
-            `set_package_version(${options.libName} \${${options.libName}_VERSION})\n` +
+            `set_package_version(\${PROJECT_NAME} \${\${PROJECT_NAME}_VERSION})\n` +
             '\n' +
             'configure_package_config_file(\n' +
-            `    cmake/${options.libName}Config.cmake.in\n` +
-            `    \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}Config.cmake\n` +
-            `    INSTALL_DESTINATION \${${options.libName}_INSTALL_CMAKEDIR}\n` +
+            `    cmake/\${PROJECT_NAME}Config.cmake.in\n` +
+            `    \${CMAKE_CURRENT_BINARY_DIR}/\${PROJECT_NAME}Config.cmake\n` +
+            `    INSTALL_DESTINATION \${\${PROJECT_NAME}_INSTALL_CMAKEDIR}\n` +
             ')\n' +
             '\n' +
             'export(\n' +
-            `    EXPORT ${options.libName}_Targets\n` +
-            `    NAMESPACE ${options.libName}::\n` +
-            `    FILE \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}_Targets.cmake\n` +
+            `    EXPORT \${PROJECT_NAME}_Targets\n` +
+            `    NAMESPACE \${PROJECT_NAME}::\n` +
+            `    FILE \${CMAKE_CURRENT_BINARY_DIR}/\${PROJECT_NAME}_Targets.cmake\n` +
             ')\n' +
             '\n' +
-            `export(PACKAGE ${options.libName})\n` +
+            `export(PACKAGE \${PROJECT_NAME})\n` +
             '\n' +
             'install(FILES\n' +
-            `    \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}Config.cmake\n` +
-            `    \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}ConfigVersion.cmake\n` +
-            `    DESTINATION \${${options.libName}_INSTALL_CMAKEDIR}\n` +
+            `    \${CMAKE_CURRENT_BINARY_DIR}/\${PROJECT_NAME}Config.cmake\n` +
+            `    \${CMAKE_CURRENT_BINARY_DIR}/\${PROJECT_NAME}ConfigVersion.cmake\n` +
+            `    DESTINATION \${\${PROJECT_NAME}_INSTALL_CMAKEDIR}\n` +
             ')\n';
         expectedReadMeFile =
             '# libtest\n' +
@@ -153,39 +154,40 @@ describe('generateLibFiles', () => {
             '\n' +
             'cmake_minimum_required(VERSION 3.21)\n' +
             '\n' +
+            `set(PROJECT_NAME ${options.libName})\n` +
             'set(PROJECT_TYPE LIB)\n' +
             `set(LANGUAGE C)\n` +
             '\n' +
-            `set_project_settings(${options.libName} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
+            `set_project_settings(\${PROJECT_NAME} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
             '\n' +
-            `project(${options.libName} LANGUAGES \${LANGUAGE} VERSION \${${options.libName}_VERSION})\n` +
+            `project(\${PROJECT_NAME} LANGUAGES \${LANGUAGE} VERSION \${\${PROJECT_NAME}_VERSION})\n` +
             '\n' +
-            `set_library_settings(${options.libName} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
+            `set_library_settings(\${PROJECT_NAME} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
             '\n' +
             'include(GNUInstallDirs)\n' +
             '\n' +
-            `set_library_install_destination(${options.libName})\n` +
+            `set_library_install_destination(\${PROJECT_NAME})\n` +
             '\n' +
-            `set_package_version(${options.libName} \${${options.libName}_VERSION})\n` +
+            `set_package_version(\${PROJECT_NAME} \${\${PROJECT_NAME}_VERSION})\n` +
             '\n' +
             'configure_package_config_file(\n' +
-            `    cmake/${options.libName}Config.cmake.in\n` +
-            `    \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}Config.cmake\n` +
-            `    INSTALL_DESTINATION \${${options.libName}_INSTALL_CMAKEDIR}\n` +
+            `    cmake/\${PROJECT_NAME}Config.cmake.in\n` +
+            `    \${CMAKE_CURRENT_BINARY_DIR}/\${PROJECT_NAME}Config.cmake\n` +
+            `    INSTALL_DESTINATION \${\${PROJECT_NAME}_INSTALL_CMAKEDIR}\n` +
             ')\n' +
             '\n' +
             'export(\n' +
-            `    EXPORT ${options.libName}_Targets\n` +
-            `    NAMESPACE ${options.libName}::\n` +
-            `    FILE \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}_Targets.cmake\n` +
+            `    EXPORT \${PROJECT_NAME}_Targets\n` +
+            `    NAMESPACE \${PROJECT_NAME}::\n` +
+            `    FILE \${CMAKE_CURRENT_BINARY_DIR}/\${PROJECT_NAME}_Targets.cmake\n` +
             ')\n' +
             '\n' +
-            `export(PACKAGE ${options.libName})\n` +
+            `export(PACKAGE \${PROJECT_NAME})\n` +
             '\n' +
             'install(FILES\n' +
-            `    \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}Config.cmake\n` +
-            `    \${CMAKE_CURRENT_BINARY_DIR}/${options.libName}ConfigVersion.cmake\n` +
-            `    DESTINATION \${${options.libName}_INSTALL_CMAKEDIR}\n` +
+            `    \${CMAKE_CURRENT_BINARY_DIR}/\${PROJECT_NAME}Config.cmake\n` +
+            `    \${CMAKE_CURRENT_BINARY_DIR}/\${PROJECT_NAME}ConfigVersion.cmake\n` +
+            `    DESTINATION \${\${PROJECT_NAME}_INSTALL_CMAKEDIR}\n` +
             ')\n';
         expectedReadMeFile =
             '# libtest\n' +

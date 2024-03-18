@@ -69,16 +69,17 @@ describe('generateBinFiles', () => {
             '\n' +
             `cmake_minimum_required(VERSION 3.21)\n` +
             '\n' +
+            `set(PROJECT_NAME ${options.name})\n` +
             'set(PROJECT_TYPE BIN)\n' +
             `set(LANGUAGE CXX)\n` +
             '\n' +
-            'set_project_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n' +
+            `set_project_settings(\${PROJECT_NAME} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
             '\n' +
-            `project(${options.name} LANGUAGES \${LANGUAGE} VERSION \${${options.name}_VERSION})\n` +
+            `project(\${PROJECT_NAME} LANGUAGES \${LANGUAGE} VERSION \${\${PROJECT_NAME}_VERSION})\n` +
             '\n' +
-            `set_binary_settings(${options.name} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
+            `set_binary_settings(\${PROJECT_NAME} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
             '\n' +
-            `install(TARGETS ${options.name})\n`;
+            `install(TARGETS \${PROJECT_NAME})\n`;
         expectedIncludeFile =
             '#ifndef _TEST_TEST\n' + '#define _TEST_TEST\n' + '\n' + '#endif\n';
         expectedReadMeFile =
@@ -133,16 +134,17 @@ describe('generateBinFiles', () => {
             '\n' +
             `cmake_minimum_required(VERSION 3.21)\n` +
             '\n' +
+            `set(PROJECT_NAME ${options.name})\n` +
             'set(PROJECT_TYPE BIN)\n' +
             `set(LANGUAGE C)\n` +
             '\n' +
-            'set_project_settings(test ${CMAKE_CURRENT_SOURCE_DIR})\n' +
+            `set_project_settings(\${PROJECT_NAME} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
             '\n' +
-            `project(${options.name} LANGUAGES \${LANGUAGE} VERSION \${${options.name}_VERSION})\n` +
+            `project(\${PROJECT_NAME} LANGUAGES \${LANGUAGE} VERSION \${\${PROJECT_NAME}_VERSION})\n` +
             '\n' +
-            `set_binary_settings(${options.name} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
+            `set_binary_settings(\${PROJECT_NAME} \${CMAKE_CURRENT_SOURCE_DIR})\n` +
             '\n' +
-            `install(TARGETS ${options.name})\n`;
+            `install(TARGETS \${PROJECT_NAME})\n`;
         expectedReadMeFile =
             '# test\n' +
             '\n' +

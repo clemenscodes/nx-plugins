@@ -103,22 +103,23 @@ describe('generateLibTestFiles', () => {
             '\n' +
             'cmake_minimum_required(VERSION 3.21)\n' +
             '\n' +
+            `set(PROJECT_NAME ${resolvedOptions.testName})\n` +
             'set(PROJECT_TYPE TEST)\n' +
             'set(LANGUAGE C)\n' +
             '\n' +
-            'set_project_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
+            'set_project_settings(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             '\n' +
-            'project(testtest LANGUAGES ${LANGUAGE})\n' +
+            'project(${PROJECT_NAME} LANGUAGES ${LANGUAGE})\n' +
             '\n' +
-            'set_binary_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
+            'set_binary_settings(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             '\n' +
             'enable_testing()\n' +
             '\n' +
             'install_cmocka()\n' +
             '\n' +
-            'link_cmocka(${CMAKE_PROJECT_NAME})\n' +
+            'link_cmocka(${PROJECT_NAME})\n' +
             '\n' +
-            'add_test(UnitTests testtest)\n';
+            'add_test(UnitTests ${PROJECT_NAME})\n';
 
         expectedReadMeFile =
             '# testtest\n' +
@@ -190,23 +191,24 @@ describe('generateLibTestFiles', () => {
             '\n' +
             'cmake_minimum_required(VERSION 3.21)\n' +
             '\n' +
+            `set(PROJECT_NAME ${resolvedOptions.testName})\n` +
             'set(PROJECT_TYPE TEST)\n' +
             'set(LANGUAGE CXX)\n' +
             '\n' +
-            'set_project_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
+            'set_project_settings(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             '\n' +
-            'project(testtest LANGUAGES ${LANGUAGE})\n' +
+            'project(${PROJECT_NAME} LANGUAGES ${LANGUAGE})\n' +
             '\n' +
-            'set_binary_settings(testtest ${CMAKE_CURRENT_SOURCE_DIR})\n' +
+            'set_binary_settings(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})\n' +
             '\n' +
             'enable_testing()\n' +
             '\n' +
             'install_gtest()\n' +
             '\n' +
-            'link_gtest(${CMAKE_PROJECT_NAME})\n' +
+            'link_gtest(${PROJECT_NAME})\n' +
             '\n' +
             'include(GoogleTest)\n' +
-            'gtest_discover_tests(testtest)\n';
+            'gtest_discover_tests(${PROJECT_NAME})\n';
 
         expectedReadMeFile =
             '# testtest\n' +

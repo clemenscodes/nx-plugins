@@ -2,23 +2,24 @@ include(<%= relativeRootPath %><%= cmakeConfigDir %>/<%= workspaceName %>.cmake)
 
 cmake_minimum_required(VERSION 3.21)
 
+set(PROJECT_NAME <%= testName %>)
 set(PROJECT_TYPE TEST)
 set(LANGUAGE <%= cmakeC %>)
 
-set_project_settings(<%= testName %> ${CMAKE_CURRENT_SOURCE_DIR})
+set_project_settings(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})
 
-project(<%= testName %> LANGUAGES ${LANGUAGE})
+project(${PROJECT_NAME} LANGUAGES ${LANGUAGE})
 
-set_binary_settings(<%= testName %> ${CMAKE_CURRENT_SOURCE_DIR})
+set_binary_settings(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})
 
 enable_testing()
 
 install_<%= testLib %>()
 
-link_<%= testLib %>(${CMAKE_PROJECT_NAME})
+link_<%= testLib %>(${PROJECT_NAME})
 <% if (testLib === 'gtest') { %>
 include(GoogleTest)
-gtest_discover_tests(<%= testName %>)<%
+gtest_discover_tests(${PROJECT_NAME})<%
 } else { %>
-add_test(UnitTests <%= testName %>)<%
+add_test(UnitTests ${PROJECT_NAME})<%
 } %>

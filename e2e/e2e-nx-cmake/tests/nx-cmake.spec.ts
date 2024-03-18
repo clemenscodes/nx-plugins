@@ -67,14 +67,6 @@ describe(plugin, () => {
         execCmd(`npm install ${plugin}`);
     });
 
-    afterAll(() => {
-        // Cleanup the test project
-        rmSync(projectDirectory, {
-            recursive: true,
-            force: true,
-        });
-    });
-
     it('should be installed', () => {
         // npm ls will fail if the package is not installed properly
         execCmd(`npm ls ${plugin}`);
