@@ -1,3 +1,15 @@
+## 0.7.1 (2024-03-18)
+
+
+### 🩹 Fixes
+
+- **nx-cmake:** use PROJECT_NAME in CMake files ([7d6eefd](https://github.com/clemenscodes/nx-plugins/commit/7d6eefd))
+
+
+### ❤️  Thank You
+
+- Clemens Horn
+
 ## 0.7.0 (2024-03-17)
 
 
