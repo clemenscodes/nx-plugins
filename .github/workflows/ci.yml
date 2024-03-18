@@ -513,13 +513,6 @@ jobs:
               env:
                   SKIP_TESTS: true
 
-            - name: Checkout Release [Main]
-              uses: actions/checkout@v4
-              if: github.event_name != 'pull_request' && startsWith(github.ref, 'refs/heads/main')
-              with:
-                  fetch-depth: 0
-                  token: ${{ secrets.PAT }}
-
             - name: Publish
               if: startsWith(github.ref, 'refs/heads/main')
               run: pnpm nx release publish
