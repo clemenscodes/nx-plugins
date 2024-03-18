@@ -3,13 +3,14 @@ include(cmake/version.cmake)
 
 cmake_minimum_required(VERSION 3.21)
 
+set(PROJECT_NAME <%= name %>)
 set(PROJECT_TYPE BIN)
 set(LANGUAGE <%= cmakeC %>)
 
-set_project_settings(<%= name %> ${CMAKE_CURRENT_SOURCE_DIR})
+set_project_settings(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})
 
-project(<%= name %> LANGUAGES ${LANGUAGE} VERSION ${<%= name %>_VERSION})
+project(${PROJECT_NAME} LANGUAGES ${LANGUAGE} VERSION ${${PROJECT_NAME}_VERSION})
 
-set_binary_settings(<%= name %> ${CMAKE_CURRENT_SOURCE_DIR})
+set_binary_settings(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})
 
-install(TARGETS <%= name %>)
+install(TARGETS ${PROJECT_NAME})

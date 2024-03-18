@@ -7,7 +7,7 @@ import { LinkSchema } from '../../generator';
 
 export const getCmakeLink = (target: string): string => {
     const trimmedTarget = trimLib(target);
-    const cmakeLink = `link_library(\${CMAKE_PROJECT_NAME} ${trimmedTarget})\n`;
+    const cmakeLink = `link_library(\${PROJECT_NAME} ${trimmedTarget})\n`;
     return cmakeLink;
 };
 

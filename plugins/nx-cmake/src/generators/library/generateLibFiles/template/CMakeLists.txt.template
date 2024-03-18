@@ -3,37 +3,38 @@ include(cmake/version.cmake)
 
 cmake_minimum_required(VERSION 3.21)
 
+set(PROJECT_NAME <%= libName %>)
 set(PROJECT_TYPE LIB)
 set(LANGUAGE <%= cmakeC %>)
 
-set_project_settings(<%= libName %> ${CMAKE_CURRENT_SOURCE_DIR})
+set_project_settings(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})
 
-project(<%= libName %> LANGUAGES ${LANGUAGE} VERSION ${<%= libName %>_VERSION})
+project(${PROJECT_NAME} LANGUAGES ${LANGUAGE} VERSION ${${PROJECT_NAME}_VERSION})
 
-set_library_settings(<%= libName %> ${CMAKE_CURRENT_SOURCE_DIR})
+set_library_settings(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR})
 
 include(GNUInstallDirs)
 
-set_library_install_destination(<%= libName %>)
+set_library_install_destination(${PROJECT_NAME})
 
-set_package_version(<%= libName %> ${<%= libName %>_VERSION})
+set_package_version(${PROJECT_NAME} ${${PROJECT_NAME}_VERSION})
 
 configure_package_config_file(
-    cmake/<%= libName %>Config.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/<%= libName %>Config.cmake
-    INSTALL_DESTINATION ${<%= libName %>_INSTALL_CMAKEDIR}
+    cmake/${PROJECT_NAME}Config.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+    INSTALL_DESTINATION ${${PROJECT_NAME}_INSTALL_CMAKEDIR}
 )
 
 export(
-    EXPORT <%= libName %>_Targets
-    NAMESPACE <%= libName %>::
-    FILE ${CMAKE_CURRENT_BINARY_DIR}/<%= libName %>_Targets.cmake
+    EXPORT ${PROJECT_NAME}_Targets
+    NAMESPACE ${PROJECT_NAME}::
+    FILE ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_Targets.cmake
 )
 
-export(PACKAGE <%= libName %>)
+export(PACKAGE ${PROJECT_NAME})
 
 install(FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/<%= libName %>Config.cmake
-    ${CMAKE_CURRENT_BINARY_DIR}/<%= libName %>ConfigVersion.cmake
-    DESTINATION ${<%= libName %>_INSTALL_CMAKEDIR}
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+    DESTINATION ${${PROJECT_NAME}_INSTALL_CMAKEDIR}
 )
