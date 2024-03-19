@@ -1,3 +1,15 @@
+## 0.7.2 (2024-03-19)
+
+
+### 🩹 Fixes
+
+- **create-nx-cmake,nx-cmake:** bump nx to 18.1.2 ([563ec68](https://github.com/clemenscodes/nx-plugins/commit/563ec68))
+
+
+### ❤️  Thank You
+
+- Clemens Horn
+
 ## 0.7.1 (2024-03-18)
 
 
