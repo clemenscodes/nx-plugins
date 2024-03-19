@@ -2,7 +2,7 @@
     "name": "@/log",
     "version": "0.0.1",
     "dependencies": {
-        "@nx/devkit": "18.1.1",
+        "@nx/devkit": "18.1.2",
         "tslib": "^2.6.2"
     },
     "private": true,
