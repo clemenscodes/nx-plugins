@@ -6,7 +6,7 @@ import {
 
 describe('TEST_TARGET_NAME', () => {
     it('should have the correct value', () => {
-        expect(TEST_TARGET_NAME).toBe('test');
+        expect(TEST_TARGET_NAME).toBe(`nx-cmake:test`);
     });
 });
 
@@ -15,7 +15,7 @@ describe('getTestTargetDefault', () => {
 
     beforeEach(() => {
         expectedConfiguration = {
-            dependsOn: ['compile'],
+            dependsOn: ['nx-cmake:compile'],
             inputs: ['default'],
         };
     });

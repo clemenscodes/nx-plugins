@@ -1,6 +1,7 @@
+import { PLUGIN_NAME } from '../../name';
 import { CmakeTargetName } from '../getCmakeTargetDefault/getCmakeTargetDefault';
 
-export const COMPILE_TARGET_NAME = 'compile';
+export const COMPILE_TARGET_NAME = `${PLUGIN_NAME}:compile`;
 
 export type CompileTargetName = typeof COMPILE_TARGET_NAME;
 
@@ -15,7 +16,7 @@ export type CompileTargetConfiguration = {
 
 export const getCompileTargetDefault = (): CompileTargetConfiguration => {
     const compileTargetDefault: CompileTargetConfiguration = {
-        dependsOn: ['^cmake', '^compile', 'cmake'],
+        dependsOn: ['^nx-cmake:cmake', '^nx-cmake:compile', 'nx-cmake:cmake'],
         inputs: ['default'],
     };
     return compileTargetDefault;

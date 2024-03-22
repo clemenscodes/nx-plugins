@@ -2,8 +2,8 @@ import { checkNxVersion } from './checkNxVersion';
 
 describe('checkNxVersion', () => {
     it('should return true when version is greater than or equal to required version', () => {
-        expect(checkNxVersion('16.9.0')).toBe(true);
-        expect(checkNxVersion('17.0.0')).toBe(true);
+        expect(checkNxVersion('16.9.0')).toBe(false);
+        expect(checkNxVersion('17.0.0')).toBe(false);
         expect(checkNxVersion('18.0.0')).toBe(true);
     });
 

@@ -6,7 +6,7 @@ import {
 
 describe('EXECUTE_TARGET_NAME', () => {
     it('should have the correct value', () => {
-        expect(EXECUTE_TARGET_NAME).toBe('execute');
+        expect(EXECUTE_TARGET_NAME).toBe('nx-cmake:execute');
     });
 });
 
@@ -15,7 +15,7 @@ describe('getExecuteTargetDefault', () => {
 
     beforeEach(() => {
         expectedConfiguration = {
-            dependsOn: ['compile'],
+            dependsOn: ['nx-cmake:compile'],
             inputs: ['default'],
         };
     });

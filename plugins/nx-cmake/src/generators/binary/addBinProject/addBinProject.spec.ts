@@ -28,24 +28,21 @@ describe('addBinProject', () => {
             sourceRoot: 'bin/test/src',
             tags: ['cpp'],
             targets: {
-                cmake: {
-                    executor: 'nx-cmake:cmake',
+                'nx-cmake:cmake': {
                     defaultConfiguration: 'debug',
                     configurations: {
                         debug: { release: false, args: [] },
                         release: { release: true, args: [] },
                     },
                 },
-                compile: {
-                    executor: 'nx-cmake:compile',
+                'nx-cmake:compile': {
                     defaultConfiguration: 'debug',
                     configurations: {
                         debug: { release: false, args: [] },
                         release: { release: true, args: [] },
                     },
                 },
-                lint: {
-                    executor: 'nx-cmake:lint',
+                'nx-cmake:lint': {
                     defaultConfiguration: 'local',
                     configurations: {
                         local: { args: [] },
@@ -54,8 +51,7 @@ describe('addBinProject', () => {
                         },
                     },
                 },
-                fmt: {
-                    executor: 'nx-cmake:fmt',
+                'nx-cmake:fmt': {
                     defaultConfiguration: 'local',
                     configurations: {
                         local: {
@@ -70,16 +66,14 @@ describe('addBinProject', () => {
                         },
                     },
                 },
-                debug: {
-                    executor: 'nx-cmake:debug',
+                'nx-cmake:debug': {
                     defaultConfiguration: 'debug',
                     configurations: {
                         debug: { release: false, args: [] },
                         release: { release: true, args: [] },
                     },
                 },
-                execute: {
-                    executor: 'nx-cmake:execute',
+                'nx-cmake:execute': {
                     defaultConfiguration: 'debug',
                     configurations: {
                         debug: { release: false, args: [] },

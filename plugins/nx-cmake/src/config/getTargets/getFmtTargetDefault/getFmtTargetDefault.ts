@@ -1,4 +1,6 @@
-export const FMT_TARGET_NAME = 'fmt';
+import { PLUGIN_NAME } from '../../name';
+
+export const FMT_TARGET_NAME = `${PLUGIN_NAME}:fmt`;
 
 export type FmtTargetName = typeof FMT_TARGET_NAME;
 

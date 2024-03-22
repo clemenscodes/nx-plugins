@@ -5,32 +5,36 @@ describe('getTargetDefaults', () => {
     it('should return a TargetDefaults object with the correct structure', () => {
         const result = getTargetDefaults();
         const expectedDefaults: TargetDefaults = {
-            cmake: {
-                dependsOn: ['^cmake'],
+            'nx-cmake:cmake': {
+                dependsOn: ['^nx-cmake:cmake'],
                 inputs: ['cmake'],
             },
-            compile: {
-                dependsOn: ['^cmake', '^compile', 'cmake'],
+            'nx-cmake:compile': {
+                dependsOn: [
+                    '^nx-cmake:cmake',
+                    '^nx-cmake:compile',
+                    'nx-cmake:cmake',
+                ],
                 inputs: ['default'],
             },
-            fmt: {
+            'nx-cmake:fmt': {
                 dependsOn: [],
                 inputs: ['clangFormat'],
             },
-            lint: {
-                dependsOn: ['cmake'],
+            'nx-cmake:lint': {
+                dependsOn: ['nx-cmake:cmake'],
                 inputs: ['clangTidy'],
             },
-            test: {
-                dependsOn: ['compile'],
+            'nx-cmake:test': {
+                dependsOn: ['nx-cmake:compile'],
                 inputs: ['default'],
             },
-            execute: {
-                dependsOn: ['compile'],
+            'nx-cmake:execute': {
+                dependsOn: ['nx-cmake:compile'],
                 inputs: ['default'],
             },
-            debug: {
-                dependsOn: ['compile'],
+            'nx-cmake:debug': {
+                dependsOn: ['nx-cmake:compile'],
                 inputs: ['default'],
             },
         };

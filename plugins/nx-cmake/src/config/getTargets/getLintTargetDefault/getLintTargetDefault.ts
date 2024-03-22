@@ -1,6 +1,7 @@
+import { PLUGIN_NAME } from '../../name';
 import { CmakeTargetName } from '../getCmakeTargetDefault/getCmakeTargetDefault';
 
-export const LINT_TARGET_NAME = 'lint';
+export const LINT_TARGET_NAME = `${PLUGIN_NAME}:lint`;
 
 export type LintTargetName = typeof LINT_TARGET_NAME;
 
@@ -11,7 +12,7 @@ export type LintTargetConfiguration = {
 
 export const getLintTargetDefault = (): LintTargetConfiguration => {
     const lintTargetDefault: LintTargetConfiguration = {
-        dependsOn: ['cmake'],
+        dependsOn: ['nx-cmake:cmake'],
         inputs: ['clangTidy'],
     };
     return lintTargetDefault;

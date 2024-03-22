@@ -30,24 +30,21 @@ describe('addTestProjectConfig', () => {
             sourceRoot: 'bin/testtest/src',
             tags: ['c', 'test'],
             targets: {
-                cmake: {
-                    executor: 'nx-cmake:cmake',
+                'nx-cmake:cmake': {
                     defaultConfiguration: 'debug',
                     configurations: {
                         debug: { release: false, args: [] },
                         release: { release: true, args: [] },
                     },
                 },
-                compile: {
-                    executor: 'nx-cmake:compile',
+                'nx-cmake:compile': {
                     defaultConfiguration: 'debug',
                     configurations: {
                         debug: { release: false, args: [] },
                         release: { release: true, args: [] },
                     },
                 },
-                lint: {
-                    executor: 'nx-cmake:lint',
+                'nx-cmake:lint': {
                     defaultConfiguration: 'local',
                     configurations: {
                         local: { args: [] },
@@ -56,8 +53,7 @@ describe('addTestProjectConfig', () => {
                         },
                     },
                 },
-                fmt: {
-                    executor: 'nx-cmake:fmt',
+                'nx-cmake:fmt': {
                     defaultConfiguration: 'local',
                     configurations: {
                         local: {
@@ -72,8 +68,7 @@ describe('addTestProjectConfig', () => {
                         },
                     },
                 },
-                test: {
-                    executor: 'nx-cmake:test',
+                'nx-cmake:test': {
                     defaultConfiguration: 'debug',
                     configurations: {
                         debug: { release: false, args: [] },
