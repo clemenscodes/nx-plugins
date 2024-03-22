@@ -1,5 +1,4 @@
 {
-    "extends": "nx/presets/npm.json",
     "$schema": "./node_modules/nx/schemas/nx-schema.json",
     "defaultBase": "origin/main",
     "defaultProject": "verdaccio",
@@ -11,19 +10,7 @@
     "tasksRunnerOptions": {
         "default": {
             "runner": "nx-cloud",
-            "options": {
-                "cacheableOperations": [
-                    "cmake",
-                    "build",
-                    "test",
-                    "lint",
-                    "fmt",
-                    "compile"
-                ],
-                "canTrackAnalytics": false,
-                "showUsageWarnings": true,
-                "useDaemonProcess": false
-            }
+            "options": {}
         }
     },
     "targetDefaults": {
@@ -31,10 +18,115 @@
             "dependsOn": ["lint", "^build"],
             "cache": true
         },
-        "lint": {
+        "nx-cmake:cmake": {
+            "cache": true,
+            "dependsOn": ["^cmake"],
+            "inputs": ["c", "^c"],
+            "defaultConfiguration": "debug",
+            "configurations": {
+                "debug": {
+                    "release": false,
+                    "args": []
+                },
+                "release": {
+                    "release": true,
+                    "args": []
+                }
+            }
+        },
+        "nx-cmake:compile": {
+            "cache": true,
+            "dependsOn": ["^cmake", "^compile", "cmake"],
+            "inputs": ["c", "^c"],
+            "defaultConfiguration": "debug",
+            "configurations": {
+                "debug": {
+                    "release": false,
+                    "args": []
+                },
+                "release": {
+                    "release": true,
+                    "args": []
+                }
+            }
+        },
+        "nx-cmake:test": {
+            "cache": true,
+            "dependsOn": ["compile"],
+            "inputs": ["c", "^c"],
+            "defaultConfiguration": "debug",
+            "configurations": {
+                "debug": {
+                    "release": false,
+                    "args": []
+                },
+                "release": {
+                    "release": true,
+                    "args": []
+                }
+            }
+        },
+        "nx-cmake:lint": {
+            "cache": true,
             "dependsOn": ["cmake"],
-            "inputs": ["default", "clangTidy"],
-            "cache": true
+            "inputs": ["clangTidy", "c", "^c"],
+            "defaultConfiguration": "local",
+            "configurations": {
+                "local": {
+                    "args": []
+                },
+                "ci": {
+                    "args": ["--warnings-as-errors=*"]
+                }
+            }
+        },
+        "nx-cmake:fmt": {
+            "cache": true,
+            "dependsOn": [],
+            "inputs": ["clangFormat", "c", "^c"],
+            "defaultConfiguration": "local",
+            "configurations": {
+                "local": {
+                    "args": [],
+                    "verbose": true,
+                    "editFilesInPlace": true
+                },
+                "ci": {
+                    "args": ["--dry-run", "--ferror-limit=0", "-Werror"],
+                    "verbose": false,
+                    "editFilesInPlace": false
+                }
+            }
+        },
+        "nx-cmake:execute": {
+            "dependsOn": ["compile"],
+            "inputs": ["c", "^c"],
+            "defaultConfiguration": "debug",
+            "configurations": {
+                "debug": {
+                    "release": false,
+                    "args": []
+                },
+                "release": {
+                    "release": true,
+                    "args": []
+                }
+            }
+        },
+        "nx-cmake:debug": {
+            "dependsOn": ["compile"],
+            "inputs": ["c", "^c"],
+            "defaultConfiguration": "debug",
+            "configurations": {
+                "debug": {
+                    "release": false,
+                    "args": []
+                },
+                "release": {
+                    "release": true,
+                    "args": []
+                }
+            }
         },
         "@nx/jest:jest": {
             "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"],
@@ -57,31 +149,29 @@
         }
     },
     "namedInputs": {
-        "cmake": [
+        "c": [
             "{projectRoot}/**/*.cpp",
-            "{projectRoot}/**/*.hpp",
             "{projectRoot}/**/*.c",
             "{projectRoot}/**/*.h",
-            "{projectRoot}/CMakeLists.txt",
-            "{workspaceRoot}/CMakeLists.txt",
-            "{workspaceRoot}/cmake/**/*.cmake"
+            "cmake",
+            "nx-cmake"
         ],
         "clangFormat": [
             "{projectRoot}/.clang-format",
-            "{projectRoot}/.clang-format.yml",
-            "{projectRoot}/.clang-format.yaml",
-            "{workspaceRoot}/.clang-format",
-            "{workspaceRoot}/.clang-format.yml",
-            "{workspaceRoot}/.clang-format.yaml"
+            "{workspaceRoot}/.clang-format"
         ],
         "clangTidy": [
             "{projectRoot}/.clang-tidy",
-            "{projectRoot}/.clang-tidy.yml",
-            "{projectRoot}/.clang-tidy.yaml",
-            "{workspaceRoot}/.clang-tidy",
-            "{workspaceRoot}/.clang-tidy.yml",
-            "{workspaceRoot}/.clang-tidy.yaml"
-        ]
+            "{workspaceRoot}/.clang-tidy"
+        ],
+        "cmake": [
+            "{projectRoot}/CMakeLists.txt",
+            "{projectRoot}/cmake/**/*.cmake",
+            "{projectRoot}/cmake/**/*.cmake.in",
+            "{workspaceRoot}/CMakeLists.txt",
+            "{workspaceRoot}/.cmake/**/*.cmake"
+        ],
+        "nx-cmake": [{ "externalDependencies": ["nx-cmake"] }]
     },
     "generators": {
         "@nx/js": {
@@ -125,12 +215,16 @@
     "pluginsConfig": {
         "@nx/js": {
             "analyzeSourceFiles": true
-        },
-        "nx-cmake": {
-            "language": "C",
-            "cmakeConfigDir": ".cmake",
-            "workspaceName": "workspace"
         }
     },
-    "plugins": ["nx-cmake"]
+    "plugins": [
+        {
+            "plugin": "nx-cmake",
+            "options": {
+                "language": "C",
+                "cmakeConfigDir": ".cmake",
+                "workspaceName": "workspace"
+            }
+        }
+    ]
 }
