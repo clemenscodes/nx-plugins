@@ -6,7 +6,7 @@ import {
 
 describe('FMT_TARGET_NAME', () => {
     it('should have the correct value', () => {
-        expect(FMT_TARGET_NAME).toBe('fmt');
+        expect(FMT_TARGET_NAME).toBe('nx-cmake:fmt');
     });
 });
 

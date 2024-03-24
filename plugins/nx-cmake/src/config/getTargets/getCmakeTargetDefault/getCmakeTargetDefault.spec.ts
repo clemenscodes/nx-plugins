@@ -6,7 +6,7 @@ import {
 
 describe('CMAKE_TARGET_NAME', () => {
     it('should have the correct value', () => {
-        expect(CMAKE_TARGET_NAME).toBe('cmake');
+        expect(CMAKE_TARGET_NAME).toBe('nx-cmake:cmake');
     });
 });
 
@@ -15,7 +15,7 @@ describe('getCmakeTargetDefault', () => {
 
     beforeEach(() => {
         expectedConfiguration = {
-            dependsOn: ['^cmake'],
+            dependsOn: ['^nx-cmake:cmake'],
             inputs: ['cmake'],
         };
     });

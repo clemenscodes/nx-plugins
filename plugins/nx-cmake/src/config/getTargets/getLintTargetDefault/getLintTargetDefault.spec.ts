@@ -6,7 +6,7 @@ import {
 
 describe('LINT_TARGET_NAME', () => {
     it('should have the correct value', () => {
-        expect(LINT_TARGET_NAME).toBe('lint');
+        expect(LINT_TARGET_NAME).toBe('nx-cmake:lint');
     });
 });
 
@@ -15,7 +15,7 @@ describe('getLintTargetDefault', () => {
 
     beforeEach(() => {
         expectedConfiguration = {
-            dependsOn: ['cmake'],
+            dependsOn: ['nx-cmake:cmake'],
             inputs: ['clangTidy'],
         };
     });

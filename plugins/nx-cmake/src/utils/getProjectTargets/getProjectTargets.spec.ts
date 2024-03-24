@@ -12,8 +12,8 @@ describe('getProjectTargets', () => {
         const result = getProjectTargets(CProjectType.App);
         expect(result).toEqual({
             ...defaultTargets,
-            debug: debugTarget,
-            execute: executeTarget,
+            'nx-cmake:debug': debugTarget,
+            'nx-cmake:execute': executeTarget,
         });
     });
 
@@ -26,7 +26,7 @@ describe('getProjectTargets', () => {
         const result = getProjectTargets(CProjectType.Test);
         expect(result).toEqual({
             ...defaultTargets,
-            test: testTarget,
+            'nx-cmake:test': testTarget,
         });
     });
 });

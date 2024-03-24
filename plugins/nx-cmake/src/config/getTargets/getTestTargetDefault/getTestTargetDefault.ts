@@ -1,5 +1,7 @@
+import { PLUGIN_NAME } from '../../name';
 import { CompileTargetName } from '../getCompileTargetDefault/getCompileTargetDefault';
-export const TEST_TARGET_NAME = 'test';
+
+export const TEST_TARGET_NAME = `${PLUGIN_NAME}:test`;
 
 export type TestTargetName = typeof TEST_TARGET_NAME;
 
@@ -10,7 +12,7 @@ export type TestTargetConfiguration = {
 
 export const getTestTargetDefault = (): TestTargetConfiguration => {
     const testTargetDefault: TestTargetConfiguration = {
-        dependsOn: ['compile'],
+        dependsOn: ['nx-cmake:compile'],
         inputs: ['default'],
     };
     return testTargetDefault;

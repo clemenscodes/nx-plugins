@@ -16,32 +16,36 @@ describe('addTargetDefaults', () => {
 
         expectedNxJson = {
             targetDefaults: {
-                cmake: {
-                    dependsOn: ['^cmake'],
+                'nx-cmake:cmake': {
+                    dependsOn: ['^nx-cmake:cmake'],
                     inputs: ['cmake'],
                 },
-                compile: {
-                    dependsOn: ['^cmake', '^compile', 'cmake'],
+                'nx-cmake:compile': {
+                    dependsOn: [
+                        '^nx-cmake:cmake',
+                        '^nx-cmake:compile',
+                        'nx-cmake:cmake',
+                    ],
                     inputs: ['default'],
                 },
-                fmt: {
+                'nx-cmake:fmt': {
                     dependsOn: [],
                     inputs: ['clangFormat'],
                 },
-                lint: {
-                    dependsOn: ['cmake'],
+                'nx-cmake:lint': {
+                    dependsOn: ['nx-cmake:cmake'],
                     inputs: ['clangTidy'],
                 },
-                test: {
-                    dependsOn: ['compile'],
+                'nx-cmake:test': {
+                    dependsOn: ['nx-cmake:compile'],
                     inputs: ['default'],
                 },
-                debug: {
-                    dependsOn: ['compile'],
+                'nx-cmake:debug': {
+                    dependsOn: ['nx-cmake:compile'],
                     inputs: ['default'],
                 },
-                execute: {
-                    dependsOn: ['compile'],
+                'nx-cmake:execute': {
+                    dependsOn: ['nx-cmake:compile'],
                     inputs: ['default'],
                 },
             },
@@ -57,7 +61,7 @@ describe('addTargetDefaults', () => {
     it('should add target defaults for missing targets', () => {
         updatedNxJson = {
             targetDefaults: {
-                cmake: {},
+                'nx-cmake:cmake': {},
             },
         };
 
@@ -86,8 +90,8 @@ describe('addTargetDefaults', () => {
         if (!updatedNxJson.targetDefaults) {
             updatedNxJson.targetDefaults = {};
         }
-        if (!updatedNxJson.targetDefaults['cmake']) {
-            updatedNxJson.targetDefaults['cmake'] = {};
+        if (!updatedNxJson.targetDefaults['nx-cmake:cmake']) {
+            updatedNxJson.targetDefaults['nx-cmake:cmake'] = {};
         }
         if (!expectedNxJson.targetDefaults['build']) {
             expectedNxJson.targetDefaults['build'] = {};
@@ -95,10 +99,12 @@ describe('addTargetDefaults', () => {
         expectedNxJson.targetDefaults['build'] = {
             dependsOn: ['^build'],
         };
-        updatedNxJson.targetDefaults['cmake'].dependsOn = ['something else'];
-        expectedNxJson.targetDefaults['cmake'].dependsOn = [
+        updatedNxJson.targetDefaults['nx-cmake:cmake'].dependsOn = [
             'something else',
-            '^cmake',
+        ];
+        expectedNxJson.targetDefaults['nx-cmake:cmake'].dependsOn = [
+            'something else',
+            '^nx-cmake:cmake',
         ];
         const result = addTargetDefaults(updatedNxJson);
         expect(result).toEqual(expectedNxJson);

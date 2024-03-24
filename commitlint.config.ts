@@ -1,22 +1,5 @@
-const {
-    utils: { getProjects },
-} = require('@commitlint/config-nx-scopes');
-
 /** @type {import('cz-git').UserConfig} */
 module.exports = {
-    rules: {
-        // @see: https://commitlint.js.org/#/reference-rules
-        'scope-enum': async (ctx) => [
-            2,
-            'always',
-            [
-                ...getProjects(
-                    ctx,
-                    ({ name }) => !name.includes('e2e') && !name.includes('sb'),
-                ),
-            ],
-        ],
-    },
     prompt: {
         enableMultipleScopes: true,
         scopeEnumSeparator: ',',

@@ -6,7 +6,7 @@ import {
 
 describe('DEBUG_TARGET_NAME', () => {
     it('should have the correct value', () => {
-        expect(DEBUG_TARGET_NAME).toBe('debug');
+        expect(DEBUG_TARGET_NAME).toBe('nx-cmake:debug');
     });
 });
 
@@ -15,7 +15,7 @@ describe('getDebugTargetDefault', () => {
 
     beforeEach(() => {
         expectedConfiguration = {
-            dependsOn: ['compile'],
+            dependsOn: ['nx-cmake:compile'],
             inputs: ['default'],
         };
     });

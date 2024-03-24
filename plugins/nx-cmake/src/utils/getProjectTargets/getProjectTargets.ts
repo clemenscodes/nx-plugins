@@ -1,7 +1,6 @@
 import type { ProjectConfiguration } from '@nx/devkit';
 import { CProjectType } from '@/types';
 import {
-    PLUGIN_NAME,
     CMAKE_TARGET_NAME,
     COMPILE_TARGET_NAME,
     EXECUTE_TARGET_NAME,
@@ -26,32 +25,26 @@ export const defaultConfiguration = {
 };
 
 export const cmakeTarget = {
-    executor: `${PLUGIN_NAME}:${CMAKE_TARGET_NAME}`,
     ...defaultConfiguration,
 };
 
 export const compileTarget = {
-    executor: `${PLUGIN_NAME}:${COMPILE_TARGET_NAME}`,
     ...defaultConfiguration,
 };
 
 export const executeTarget = {
-    executor: `${PLUGIN_NAME}:${EXECUTE_TARGET_NAME}`,
     ...defaultConfiguration,
 };
 
 export const debugTarget = {
-    executor: `${PLUGIN_NAME}:${DEBUG_TARGET_NAME}`,
     ...defaultConfiguration,
 };
 
 export const testTarget = {
-    executor: `${PLUGIN_NAME}:${TEST_TARGET_NAME}`,
     ...defaultConfiguration,
 };
 
 export const lintTarget = {
-    executor: `${PLUGIN_NAME}:${LINT_TARGET_NAME}`,
     defaultConfiguration: 'local',
     configurations: {
         local: {
@@ -64,7 +57,6 @@ export const lintTarget = {
 };
 
 export const fmtTarget = {
-    executor: `${PLUGIN_NAME}:${FMT_TARGET_NAME}`,
     defaultConfiguration: 'local',
     configurations: {
         local: {
@@ -81,21 +73,21 @@ export const fmtTarget = {
 };
 
 export const defaultTargets = {
-    cmake: cmakeTarget,
-    compile: compileTarget,
-    lint: lintTarget,
-    fmt: fmtTarget,
+    [CMAKE_TARGET_NAME]: cmakeTarget,
+    [COMPILE_TARGET_NAME]: compileTarget,
+    [LINT_TARGET_NAME]: lintTarget,
+    [FMT_TARGET_NAME]: fmtTarget,
 };
 
 export const appTargets = {
     ...defaultTargets,
-    debug: debugTarget,
-    execute: executeTarget,
+    [DEBUG_TARGET_NAME]: debugTarget,
+    [EXECUTE_TARGET_NAME]: executeTarget,
 };
 
 export const testTargets = {
     ...defaultTargets,
-    test: testTarget,
+    [TEST_TARGET_NAME]: testTarget,
 };
 
 export const getProjectTargets = (
@@ -103,9 +95,15 @@ export const getProjectTargets = (
 ): ProjectConfiguration['targets'] => {
     const targets: ProjectConfiguration['targets'] = {
         ...defaultTargets,
-        ...(projectType === CProjectType.Test ? { test: testTarget } : {}),
-        ...(projectType === CProjectType.App ? { debug: debugTarget } : {}),
-        ...(projectType === CProjectType.App ? { execute: executeTarget } : {}),
+        ...(projectType === CProjectType.Test
+            ? { [TEST_TARGET_NAME]: testTarget }
+            : {}),
+        ...(projectType === CProjectType.App
+            ? { [DEBUG_TARGET_NAME]: debugTarget }
+            : {}),
+        ...(projectType === CProjectType.App
+            ? { [EXECUTE_TARGET_NAME]: executeTarget }
+            : {}),
     };
     return targets;
 };

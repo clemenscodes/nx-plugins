@@ -492,7 +492,7 @@ jobs:
                       --nx-bail \
                       --configuration=ci \
                       --output-style=stream \
-                      --no-dte \
+                      --no-agents \
                       --no-cloud \
                       --skip-nx-cache \
                       --projects=plugins/* \

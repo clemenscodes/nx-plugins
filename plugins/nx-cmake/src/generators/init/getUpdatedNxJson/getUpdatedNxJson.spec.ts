@@ -66,19 +66,35 @@ describe('getUpdatedNxJson', () => {
                 },
             },
             targetDefaults: {
-                cmake: { dependsOn: ['^cmake'], inputs: ['cmake'] },
-                compile: {
-                    dependsOn: ['^cmake', '^compile', 'cmake'],
+                'nx-cmake:cmake': {
+                    dependsOn: ['^nx-cmake:cmake'],
+                    inputs: ['cmake'],
+                },
+                'nx-cmake:compile': {
+                    dependsOn: [
+                        '^nx-cmake:cmake',
+                        '^nx-cmake:compile',
+                        'nx-cmake:cmake',
+                    ],
                     inputs: ['default'],
                 },
-                fmt: { dependsOn: [], inputs: ['clangFormat'] },
-                lint: {
-                    dependsOn: ['cmake'],
+                'nx-cmake:fmt': { dependsOn: [], inputs: ['clangFormat'] },
+                'nx-cmake:lint': {
+                    dependsOn: ['nx-cmake:cmake'],
                     inputs: ['clangTidy'],
                 },
-                test: { dependsOn: ['compile'], inputs: ['default'] },
-                debug: { dependsOn: ['compile'], inputs: ['default'] },
-                execute: { dependsOn: ['compile'], inputs: ['default'] },
+                'nx-cmake:test': {
+                    dependsOn: ['nx-cmake:compile'],
+                    inputs: ['default'],
+                },
+                'nx-cmake:debug': {
+                    dependsOn: ['nx-cmake:compile'],
+                    inputs: ['default'],
+                },
+                'nx-cmake:execute': {
+                    dependsOn: ['nx-cmake:compile'],
+                    inputs: ['default'],
+                },
             },
             namedInputs: {
                 clangFormat: [
