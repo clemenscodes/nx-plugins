@@ -1,7 +1,7 @@
 {
     "$schema": "./node_modules/nx/schemas/nx-schema.json",
     "defaultProject": "verdaccio",
-    "nxCloudAccessToken": "ZTBkM2I2MjYtNTc4Mi00YjUxLTkzNDAtZWFlYjg1OGY0Y2UxfHJlYWQtd3JpdGU=",
+    "nxCloudAccessToken": "NzU1N2M1YWQtZmZlYy00MjlmLTk3ZTAtNzFmMWFiMTc0ZTk2fHJlYWQ=",
     "workspaceLayout": {
         "appsDir": "bin",
         "libsDir": "packages"
